@@ -2,5 +2,8 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
+    # Pause routine version-update PRs in the competition mirror.
+    # Security updates use a separate limit and are not disabled here.
+    open-pull-requests-limit: 0
     schedule:
       interval: weekly
