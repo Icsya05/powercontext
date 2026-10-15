@@ -82,3 +82,9 @@ Pull requests should link the relevant issue or RFC, explain the rationale, summ
 ## Security & Configuration Tips
 
 Do not commit secrets, local virtual environments, caches, `.powercontext/`, `dist/`, or generated website output. Keep dependency changes reflected in `uv.lock`, and use `make check` to catch lock drift before review.
+
+## Competition Team Workflow
+
+- For work in this team's competition repository, read and follow [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md).
+- Target team pull requests at `master`; keep the existing project-specific development and testing guidance.
+- GitHub private-repository rulesets are currently not enforced by the account plan; do not claim that server-side protection is active.
