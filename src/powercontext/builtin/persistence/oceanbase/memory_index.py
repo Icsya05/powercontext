@@ -97,6 +97,64 @@ WHERE m.scope_id = :scope_id
 ORDER BY l2_distance(m.embedding, :query_vector) APPROXIMATE
 LIMIT :candidate_limit
 """
+_OCEANBASE_HYBRID_SEARCH_SQL = """
+SELECT candidates.memory_artifact_id, candidates.head_revision,
+       candidates.entry_id, candidates.entry_version_id,
+       v.text, candidates.channel, candidates.distance
+FROM (
+    (SELECT 'fts' AS channel, f.scope_id, f.memory_artifact_id, f.head_revision,
+            f.entry_id, f.entry_version_id, NULL AS distance,
+            -MATCH(f.searchable_text) AGAINST (:query) AS channel_order
+     FROM pc_memory_entry_heads AS f
+     WHERE f.scope_id = :scope_id
+       AND f.memory_artifact_id IN :memory_artifact_ids
+       AND MATCH(f.searchable_text) AGAINST (:query)
+       /* fts_tags */
+     ORDER BY MATCH(f.searchable_text) AGAINST (:query) DESC,
+              f.memory_artifact_id, f.entry_id, f.entry_version_id
+     LIMIT :candidate_limit)
+    UNION ALL
+    (SELECT 'vector' AS channel, m.scope_id, m.memory_artifact_id, m.head_revision,
+            m.entry_id, m.entry_version_id,
+            l2_distance(m.embedding, :query_vector) AS distance,
+            l2_distance(m.embedding, :query_vector) AS channel_order
+     FROM pc_memory_vector_entries AS m
+     WHERE m.scope_id = :scope_id
+       AND m.memory_artifact_id IN :memory_artifact_ids
+       /* vector_tags */
+     ORDER BY l2_distance(m.embedding, :query_vector) APPROXIMATE
+     LIMIT :candidate_limit)
+) AS candidates
+JOIN pc_memory_entry_versions AS v
+  ON v.scope_id = candidates.scope_id
+ AND v.memory_artifact_id = candidates.memory_artifact_id
+ AND v.entry_version_id = candidates.entry_version_id
+ORDER BY candidates.channel, candidates.channel_order,
+         candidates.memory_artifact_id, candidates.entry_id, candidates.entry_version_id
+"""
+# A scalar, uncorrelated tag set becomes a one-time expression in the native
+# vector pre-filter. Correlated EXISTS/COUNT/IN subplans run after ANN top-k and
+# can incorrectly discard all neighbors without finding the tagged replacements.
+_OCEANBASE_HYBRID_VECTOR_TAG_SQL = """
+AND JSON_CONTAINS(
+    COALESCE((
+        SELECT JSON_ARRAYAGG(JSON_OBJECT('artifact', eligible.artifact_id, 'entry', eligible.target_id))
+        FROM (
+            SELECT tags.artifact_id, tags.target_id
+            FROM pc_artifact_tags AS tags
+            WHERE tags.scope_id = :scope_id
+              AND tags.family = 'memory'
+              AND tags.artifact_id IN :memory_artifact_ids
+              AND tags.target_type = 'memory_entry'
+              AND tags.tag_key_hash IN :tag_hashes
+              AND tags.tag_key IN :tag_keys
+            GROUP BY tags.artifact_id, tags.target_id
+            HAVING COUNT(*) >= :tag_minimum
+        ) AS eligible
+    ), JSON_ARRAY()),
+    JSON_OBJECT('artifact', m.memory_artifact_id, 'entry', m.entry_id)
+)
+"""
 
 
 class OceanBaseMemoryFTSIndex:
@@ -243,6 +301,7 @@ class OceanBaseMemoryVectorIndex:
             tag_filter=True,
             fts=False,
             vector=True,
+            hybrid=True,
             embedding_profile=profile,
         )
         metadata = MetaData()
@@ -278,6 +337,20 @@ class OceanBaseMemoryVectorIndex:
         self._tagged_search_sql = text(
             _OCEANBASE_VECTOR_SEARCH_SQL.replace("ORDER BY", memory_tag_sql("m") + "ORDER BY").replace(
                 " APPROXIMATE", ""
+            )
+        ).bindparams(
+            bindparam("memory_artifact_ids", expanding=True),
+            bindparam("tag_keys", expanding=True),
+            bindparam("tag_hashes", expanding=True),
+            bindparam("query_vector", type_=VECTOR(profile.dimension)),
+        )
+        self._hybrid_search_sql = text(_OCEANBASE_HYBRID_SEARCH_SQL).bindparams(
+            bindparam("memory_artifact_ids", expanding=True),
+            bindparam("query_vector", type_=VECTOR(profile.dimension)),
+        )
+        self._tagged_hybrid_search_sql = text(
+            _OCEANBASE_HYBRID_SEARCH_SQL.replace("/* fts_tags */", memory_tag_sql("f")).replace(
+                "/* vector_tags */", _OCEANBASE_HYBRID_VECTOR_TAG_SQL
             )
         ).bindparams(
             bindparam("memory_artifact_ids", expanding=True),
@@ -377,9 +450,13 @@ class OceanBaseMemoryVectorIndex:
             raise CapabilityNotSupportedError("embedding-profile")
         if not await self.vector_complete(connection, scope_id, request.memories, self.profile):
             raise CapabilityNotSupportedError("vector")
+        if request.mode == "hybrid":
+            statement = self._hybrid_search_sql if request.tag_filter is None else self._tagged_hybrid_search_sql
+        else:
+            statement = self._search_sql if request.tag_filter is None else self._tagged_search_sql
         rows = (
             await connection.execute(
-                self._search_sql if request.tag_filter is None else self._tagged_search_sql,
+                statement,
                 {
                     "scope_id": scope_id,
                     "memory_artifact_ids": tuple(memory.artifact_id for memory in request.memories),
@@ -388,10 +465,17 @@ class OceanBaseMemoryVectorIndex:
                         dimension=self.profile.dimension,
                     ),
                     "candidate_limit": request.candidate_limit,
+                    "query": request.analyzed_query,
                     **memory_tag_parameters(request.tag_filter),
                 },
             )
         ).mappings()
+        if request.mode == "hybrid":
+            candidates = tuple(rows)
+            return MemorySearchChannels(
+                fts=memory_channel_hits((row for row in candidates if row["channel"] == "fts"), request.memories),
+                vector=memory_channel_hits((row for row in candidates if row["channel"] == "vector"), request.memories),
+            )
         return MemorySearchChannels(vector=memory_channel_hits(rows, request.memories))
 
     async def vector_complete(
