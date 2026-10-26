@@ -91,3 +91,79 @@ def test_namespace_identity_is_bounded_and_separates_session_event_pairs():
         identities.append(asyncio.run(registry.resolve(event)).name)
     assert len(set(identities)) == 3
     assert all(len(identity) <= 256 for identity in identities)
+
+
+@pytest.mark.asyncio
+async def test_off_branch_record_mutation_is_detected_before_new_submission(tmp_path):
+    from selftest_support.runtime_fixture import run_connector_persisted
+
+    from powercontext.sources import ConnectorBinding
+    from powercontext.sources.pi_session import PiSessionConnector
+
+    path = tmp_path / "session.jsonl"
+    records = [_message(), _message("left", "root", "left"), _message("right", "root", "right")]
+    path.write_bytes(_archive(records).content)
+    binding = ConnectorBinding(
+        scope_id="pi-test", binding_id="pi", connector_name="pi-session-history", connector_version="1"
+    )
+    first, _ = await run_connector_persisted(
+        tmp_path, PI_EVENT_SOURCE_DEFINITION, PiSessionConnector(path, "left"), binding
+    )
+    records[1]["extra"] = "rewritten off-branch metadata"
+    path.write_bytes(_archive(records).content)
+    with pytest.raises(ValueError):
+        await run_connector_persisted(tmp_path, PI_EVENT_SOURCE_DEFINITION, PiSessionConnector(path, "right"), binding)
+    del records[1]["extra"]
+    path.write_bytes(_archive(records).content)
+    repaired, entries = await run_connector_persisted(
+        tmp_path, PI_EVENT_SOURCE_DEFINITION, PiSessionConnector(path, "right"), binding
+    )
+    assert repaired.previous_checkpoint == first.committed_checkpoint
+    assert len(repaired.items) == 1 and len(entries) == 3
+
+
+@pytest.mark.asyncio
+async def test_failed_partial_ingestion_keeps_checkpoint_and_retry_is_idempotent(tmp_path):
+    from selftest_support.runtime_fixture import RuntimeCheckpoints, RuntimeSink
+
+    from powercontext.builtin.persistence.sqlite import SQLiteConfig
+    from powercontext.builtin.runtime import BuiltinConfig, open_builtin_contexts, open_builtin_runtime
+    from powercontext.builtin.scope import ScopeDraft
+    from powercontext.sources import ConnectorBinding, manifest_for_definition
+    from powercontext.sources.connectors import ConnectorLifecycle
+    from powercontext.sources.pi_session import PiSessionConnector
+
+    path = tmp_path / "partial.jsonl"
+    path.write_bytes(_archive([_message(), _message("second", "root", "second")]).content)
+    config = BuiltinConfig(database=SQLiteConfig(url=f"sqlite+aiosqlite:///{tmp_path / 'partial.db'}"))
+    registry = SourceDefinitionRegistry((PI_EVENT_SOURCE_DEFINITION,))
+    async with open_builtin_runtime(config) as runtime:
+        scope = await runtime.scopes.create(
+            ScopeDraft(title="Pi", summary="Failure recovery", idempotency_key="pi-failure")
+        )
+        await runtime.ingestion.register(manifest_for_definition(PI_EVENT_SOURCE_DEFINITION))
+        binding = ConnectorBinding(
+            scope_id=scope.scope_id, binding_id="pi", connector_name="pi-session-history", connector_version="1"
+        )
+        checkpoints = RuntimeCheckpoints(runtime)
+        sink = RuntimeSink(runtime, registry)
+
+        class FailSecond:
+            async def submit(self, binding, item_id, definition_name, value):
+                if value.event_id == "second":
+                    raise RuntimeError("injected ingestion failure")  # noqa: TRY003
+                return await sink.submit(binding, item_id, definition_name, value)
+
+        connector = PiSessionConnector(path)
+        with pytest.raises(RuntimeError):
+            await ConnectorLifecycle(sink=FailSecond(), checkpoints=checkpoints).run(connector, binding)
+        assert await checkpoints.load(binding) is None
+    async with open_builtin_runtime(config) as runtime:
+        checkpoints = RuntimeCheckpoints(runtime)
+        lifecycle = ConnectorLifecycle(sink=RuntimeSink(runtime, registry), checkpoints=checkpoints)
+        recovered = await lifecycle.run(PiSessionConnector(path), binding)
+        assert recovered.committed_checkpoint is not None
+        assert (await lifecycle.run(PiSessionConnector(path), binding)).items == ()
+    async with open_builtin_contexts(config) as contexts:
+        journal = await (await contexts.get(scope.scope_id)).sources.journal.entries()
+        assert len(journal) == 2

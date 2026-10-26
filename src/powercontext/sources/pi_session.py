@@ -2,13 +2,21 @@
 
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 from dataclasses import dataclass
+from pathlib import Path
 from typing import cast
 
 from pydantic import BaseModel, JsonValue, field_validator
 
+from powercontext.sources.connectors import (
+    ConnectorRunCompletion,
+    ConnectorRunSession,
+    ConnectorRunStatus,
+    ConnectorSubmissionStatus,
+)
 from powercontext.sources.definitions import AdapterSourceDefinition
 from powercontext.sources.models import Source, SourceMaterialization
 from powercontext.sources.projections import TEXT_EVIDENCE_PROJECTION_KEY, TextEvidence
@@ -131,7 +139,7 @@ def _read_records(content: bytes) -> list[_Record]:
     records: list[_Record] = []
     # JSONL splits only at LF; Unicode separators are legal inside JSON strings.
     for line in content.decode("utf-8-sig").split("\n"):
-        if not line.strip():
+        if not line.strip(" \t\r"):
             continue
         record = json.loads(line, object_pairs_hook=_unique_object, parse_constant=_invalid_constant)
         if not isinstance(record, dict):
@@ -232,3 +240,69 @@ class PiEventTextEvidenceProjection:
 PI_EVENT_SOURCE_DEFINITION = AdapterSourceDefinition[PiEventInput, PiEventSource, PiEventInput](
     PiEventSourceAdapter(), projections=(PiEventTextEvidenceProjection(),)
 )
+
+
+def _checkpoint_hashes(value: JsonValue) -> dict[str, str]:
+    if not isinstance(value, dict):
+        raise ValueError("Pi checkpoint event fingerprints must be an object")  # noqa: TRY003, TRY004
+    result = {}
+    for event_id, fingerprint in value.items():
+        _required_string(event_id)
+        if (
+            not isinstance(fingerprint, str)
+            or len(fingerprint) != 64
+            or any(char not in "0123456789abcdef" for char in fingerprint)
+        ):
+            raise ValueError("invalid Pi checkpoint event fingerprint")  # noqa: TRY003
+        result[event_id] = fingerprint
+    return result
+
+
+def _checkpoint_sessions(value: JsonValue | None) -> dict[str, dict[str, str]]:
+    if value is None:
+        return {}
+    if not isinstance(value, dict) or set(value) != {"version", "sessions"}:
+        raise ValueError("invalid Pi checkpoint format")  # noqa: TRY003
+    if type(value["version"]) is not int or value["version"] != 1 or not isinstance(value["sessions"], dict):
+        raise ValueError("unsupported Pi checkpoint version or sessions")  # noqa: TRY003
+    return {
+        _required_string(session_id): _checkpoint_hashes(records) for session_id, records in value["sessions"].items()
+    }
+
+
+class PiSessionConnector:
+    """Resume file snapshots using only lifecycle-owned durable checkpoints."""
+
+    name = "pi-session-history"
+    version = "1"
+    source_definitions = frozenset({"pi-event"})
+
+    def __init__(self, path: str | Path, leaf_id: str | None = None) -> None:
+        self._path = Path(path)
+        self._leaf_id = leaf_id
+
+    async def run(self, session: ConnectorRunSession, /) -> ConnectorRunCompletion:
+        content = await asyncio.to_thread(self._path.read_bytes)
+        archive = _parse_archive(PiSessionInput(content=content, leaf_id=self._leaf_id))
+        sessions = _checkpoint_sessions(session.checkpoint)
+        imported = sessions.setdefault(archive.session_id, {})
+        # Check every previously captured record, including the other branches,
+        # before any new submissions can produce side effects.
+        for event_id, fingerprint in imported.items():
+            original = archive.records.get(event_id)
+            if original is None or hashlib.sha256(_canonical(original)).hexdigest() != fingerprint:
+                raise ValueError("previously imported Pi event was removed or rewritten")  # noqa: TRY003
+        complete = True
+        for event in archive.events:
+            if event.event_id in imported:
+                continue
+            item_id = "pi:" + hashlib.sha256(_canonical((event.session_id, event.event_id))).hexdigest()
+            outcome = await session.submit(item_id, "pi-event", event)
+            if outcome.status is ConnectorSubmissionStatus.ACCEPTED:
+                imported[event.event_id] = hashlib.sha256(_canonical(event.record)).hexdigest()
+            else:
+                complete = False
+        return ConnectorRunCompletion(
+            status=ConnectorRunStatus.COMPLETE if complete else ConnectorRunStatus.INCOMPLETE,
+            checkpoint=cast(JsonValue, {"version": 1, "sessions": sessions}),
+        )
