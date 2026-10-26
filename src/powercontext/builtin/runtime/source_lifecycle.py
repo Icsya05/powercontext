@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import unicodedata
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, Literal
 
@@ -153,18 +154,29 @@ class ScopedSourceLifecycle:
             if any(parent not in nodes for parent in binding.parents):
                 raise SourceLifecycleError("missing-parent")
             # Requiring all parents to preexist makes cycles impossible in an immutable graph.
+            body_matches = True
             try:
                 ref = binding.reference
                 if isinstance(ref, SourceRef):
                     await self._runtime._records().get_source(self.scope_id, ref.source_type, ref.source_id)
                 elif isinstance(ref, MemoryCitation):
                     await context.artifacts.memory.validate_citation(ref)
+                    # An exact historical citation may remain readable after its logical
+                    # entry was revised. Such a body cannot be the current native state
+                    # target; reject it before reserving the lifecycle node identity.
+                    _, entries = await context.artifacts.memory.head_entries(ref.memory_ref.artifact_id)
+                    body_matches = any(
+                        entry.entry_id == ref.entry_id and entry.entry_version_id == ref.entry_version_id
+                        for entry in entries
+                    )
                 else:
                     await self._runtime._records().get_artifact_revision(
                         self.scope_id, ref.family, ref.artifact_id, ref.revision
                     )
             except Exception as error:
                 raise SourceLifecycleError("reference") from error
+            if not body_matches:
+                raise SourceLifecycleError("body-changed")
             supports = [nodes[parent][1] for parent in binding.parents]
             available = (
                 True if binding.kind == "source" else (all(supports) if binding.policy == "all" else any(supports))
@@ -223,6 +235,9 @@ class ScopedSourceLifecycle:
             return sorted(key for key, (_, available, _) in nodes.items() if available)
 
     async def _reconcile(self, nodes: _Nodes, *, reason: str = "Source lifecycle") -> None:
+        # The full event reason remains durable for replay identity. Native Memory
+        # audit reasons have their own smaller, normalized 512-code-point contract.
+        audit_reason = unicodedata.normalize("NFC", reason).strip()[:512]
         async with self._runtime._context(self.scope_id) as context:
             service = context.artifacts.memory
             for binding, available, _last in nodes.values():
@@ -234,7 +249,7 @@ class ScopedSourceLifecycle:
                 if entry is None or entry.entry_version_id != ref.entry_version_id:
                     raise SourceLifecycleError("body-changed")
                 transition = service.reactivate if available else service.forget
-                await transition(memory, entries=(entry,), reason=reason)
+                await transition(memory, entries=(entry,), reason=audit_reason)
 
     async def resolve(self, node_id: str, *, purpose: str) -> SourceRef | MemoryCitation | ArtifactRef:
         if purpose not in {"generation", "audit"}:

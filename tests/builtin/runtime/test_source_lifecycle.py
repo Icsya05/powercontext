@@ -15,6 +15,7 @@ from powercontext.builtin.runtime import (
     CaptureSource,
     GetMemoryEntryRequest,
     RememberMemoryRequest,
+    ReviseMemoryEntryRequest,
     open_builtin_runtime,
 )
 from powercontext.builtin.runtime.source_lifecycle import SourceLifecycleError, SourceLifecycleEvent
@@ -147,5 +148,67 @@ def test_failed_registration_does_not_reserve_identity_and_scopes_stay_independe
             assert (await runtime.memory.for_scope(scopes[0]).list()).entries == ()
             assert len((await runtime.memory.for_scope(scopes[1]).list()).entries) == 1
             assert await runtime.lifecycle.for_scope(scopes[1]).apply(observation(1, True)) == ["memory", "source"]
+
+    asyncio.run(run())
+
+
+def test_unbindable_historical_body_does_not_poison_graph():
+    async def run():
+        async with open_builtin_runtime(BuiltinConfig(database=SQLiteConfig())) as runtime:
+            scope = (
+                await runtime.scopes.create(ScopeDraft(title="History", summary="Old body", idempotency_key="old"))
+            ).scope_id
+            service = runtime.lifecycle.for_scope(scope)
+            source = await runtime.sources.for_scope(scope).capture(
+                CaptureSource(source_id="s", content="evidence", metadata={})
+            )
+            await service.register_source("source", source.source_ref, revision=3)
+            memory = runtime.memory.for_scope(scope)
+            original = await memory.remember(
+                RememberMemoryRequest(entries=(MemoryEntryInput(kind="fact", text="original body"),))
+            )
+            revised = await memory.revise(
+                ReviseMemoryEntryRequest(citation=original.entry.citation, kind="fact", text="revised body")
+            )
+            assert (
+                await memory.get(GetMemoryEntryRequest(citation=original.entry.citation))
+            ).entry.text == "original body"
+            with pytest.raises(SourceLifecycleError):
+                await service.register_memory("memory", original.entry.citation, parents=("source",), policy="all")
+            # Rejection must leave the identity usable and the accepted Source graph healthy.
+            with pytest.raises(SourceLifecycleError):
+                await service.resolve("memory", purpose="audit")
+            await service.register_memory("memory", revised.entry.citation, parents=("source",), policy="all")
+            assert await service.apply(observation(1, False)) == []
+            assert await service.resolve("memory", purpose="audit") == revised.entry.citation
+
+    asyncio.run(run())
+
+
+def test_long_event_reason_survives_native_projection_and_replay():
+    async def run():
+        async with open_builtin_runtime(BuiltinConfig(database=SQLiteConfig())) as runtime:
+            scope = (
+                await runtime.scopes.create(ScopeDraft(title="Reason", summary="Long reason", idempotency_key="reason"))
+            ).scope_id
+            service = runtime.lifecycle.for_scope(scope)
+            source = await runtime.sources.for_scope(scope).capture(
+                CaptureSource(source_id="s", content="evidence", metadata={})
+            )
+            await service.register_source("source", source.source_ref, revision=3)
+            result = await runtime.memory.for_scope(scope).remember(
+                RememberMemoryRequest(entries=(MemoryEntryInput(kind="fact", text="reason fact"),))
+            )
+            await service.register_memory("memory", result.entry.citation, parents=("source",), policy="all")
+            pending = SourceLifecycleEvent(
+                node_id="source", revision=3, sequence=1, available=False, reason="原因" * 600
+            )
+            assert await service.apply(pending) == []
+            before = (await runtime.memory.for_scope(scope).list(include_inactive=True)).memory_ref
+            assert await service.apply(pending) == []
+            assert (await runtime.memory.for_scope(scope).list(include_inactive=True)).memory_ref == before
+            with pytest.raises(SourceLifecycleError):
+                await service.apply(pending.model_copy(update={"reason": pending.reason[:512]}))
+            assert (await runtime.memory.for_scope(scope).list()).entries == ()
 
     asyncio.run(run())

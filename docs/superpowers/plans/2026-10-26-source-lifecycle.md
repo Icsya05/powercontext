@@ -43,3 +43,5 @@
 - Baseline official test collection fails because source_lifecycle module does not exist.
 - Ruling: retain accepted events and desired graph state before projection writes so same-event retry repairs partial native commits. Native state transitions themselves are idempotent.
 - Work stopped at the user's quota preservation request. No Task 2 tests or broad verification; see `HANDOFF_LIFECYCLE.md`. Ruff still has 19 TRY003 findings.
+
+- Resumed 2026-10-26: 11 native/validation regressions passed; independent review found two Important defects. Added reproductions (both RED), fixed pre-insert body compatibility and native reason adaptation; supported suite GREEN 87 passed/13 skipped, Ruff and new-module ty clean. Final integration remains separate. Historical superseded bodies are rejected before binding; complete event reasons stay durable.
