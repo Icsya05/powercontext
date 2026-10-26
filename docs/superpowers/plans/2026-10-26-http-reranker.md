@@ -24,8 +24,8 @@ No added runtime dependencies. Each original one-based rank is sent exactly once
 **Files:** Create `src/powercontext/builtin/artifacts/memory/http_reranker.py`, `tests/test_http_reranker.py`.
 **Interfaces:** Produce `HTTPMemoryReranker(endpoint, *, client, batch_size=32, policy_id='http-cross-encoder-v1')` and async `rerank(query, candidates, limit) -> MemoryRerankDecision`.
 
-- [ ] Run official public test before implementation; expect missing adapter module (observed).
-- [ ] Add strict response, invalid bounds, error and global ordering boundary tests.
-- [ ] Implement bounded sequential POSTs, exact response validation, one global sort and actual request usage.
-- [ ] Run public and focused tests, existing reranking tests and new-module lint/type checks; expect all pass.
-- [ ] Commit and prepare the actual repository/SHA for submission.
+- [x] Run official public test before implementation; expect missing adapter module (observed).
+- [x] Add strict response, invalid bounds, error and global ordering boundary tests.
+- [x] Implement bounded sequential POSTs, exact response validation, one global sort and actual request usage.
+- [x] Run public and focused tests, existing reranking tests and new-module lint/type checks; expect all pass.
+- [x] Commit and prepare the actual repository/SHA for submission.

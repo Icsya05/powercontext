@@ -32,11 +32,11 @@
 
 **Interfaces:** Consume Source, AdapterSourceDefinition and TextEvidence. Produce all models/functions/constants specified by the task, including `parse_csv_document(value) -> tuple[CSVRowInput, ...]` and `csv_row_source_id(document_id, primary_key_value) -> str`.
 
-- [ ] Add focused boundary tests covering the review focus; use the official public test as the integration contract.
-- [ ] Run focused and public tests before implementation; expect missing `powercontext.sources.csv_rows`.
-- [ ] Implement strict decoding/parsing, validation, stable IDs, captured adapter readback and the standard projection in the new module.
-- [ ] Run `make -C competition test-csv` plus focused tests; expect all pass including real runtime restart/citation lookup.
-- [ ] Run existing source/observation tests and lint/type checks appropriate to the new module; commit the implementation and tests.
+- [x] Add focused boundary tests covering the review focus; use the official public test as the integration contract.
+- [x] Run focused and public tests before implementation; expect missing `powercontext.sources.csv_rows`.
+- [x] Implement strict decoding/parsing, validation, stable IDs, captured adapter readback and the standard projection in the new module.
+- [x] Run `make -C competition test-csv` plus focused tests; expect all pass including real runtime restart/citation lookup.
+- [x] Run existing source/observation tests and lint/type checks appropriate to the new module; commit the implementation and tests.
 
 ## Execution record
 

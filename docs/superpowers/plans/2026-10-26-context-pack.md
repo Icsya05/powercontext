@@ -24,8 +24,8 @@ Exact v1 wire fields and schema names; canonical sorted compact UTF-8 JSON; stan
 **Files:** Create `src/powercontext/builtin/runtime/context_pack.py`, `tests/test_context_pack.py`; modify only ScopedContextApplication in `application.py`.
 **Interfaces:** ContextPack build/from_content/to_bytes/from_bytes; ContextPackDelta between/to_bytes/from_bytes; apply_context_pack_delta; async prepare_incremental(request, base_pack=None).
 
-- [ ] Observe all 14 official tests fail for missing module/method (observed).
-- [ ] Add decoding, byte-count and Unicode boundaries independent of implementation.
-- [ ] Implement deterministic bounded chunks, canonical codecs and prefix delta reconstruction; forward existing authorization in prepare_incremental.
-- [ ] Run official protocol/Runtime tests and focused tests; expect all pass.
-- [ ] Measure actual wire savings on a nontrivial repeated/changing context sequence without claiming hidden-workload acceptance; commit.
+- [x] Observe all 14 official tests fail for missing module/method (observed).
+- [x] Add decoding, byte-count and Unicode boundaries independent of implementation.
+- [x] Implement deterministic bounded chunks, canonical codecs and prefix delta reconstruction; forward existing authorization in prepare_incremental.
+- [x] Run official protocol/Runtime tests and focused tests; expect all pass.
+- [x] Measure actual wire savings on a nontrivial repeated/changing context sequence without claiming hidden-workload acceptance; commit.

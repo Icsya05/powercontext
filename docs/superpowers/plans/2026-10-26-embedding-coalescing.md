@@ -24,8 +24,8 @@ No new dependencies or online models. Preserve repeated positions and original o
 **Files:** Create `src/powercontext/builtin/inference/coalescing.py` and `tests/test_embedding_coalescing.py`.
 **Interfaces:** Produce `CoalescingEmbeddingModel(model, *, max_batch_size=64, coalesce_ms=5.0, cache_size=1024)` with profile and async embed returning EmbeddingResult.
 
-- [ ] Observe official public tests fail for the absent module (observed).
-- [ ] Add late-waiter/partial-failure/cancellation and mixed-result regression scenarios.
-- [ ] Implement shared futures, independent bounded provider tasks, LRU and unique-batch usage aggregation.
-- [ ] Run official embedding and native request-budget tests plus focused tests; expect all pass.
-- [ ] Run lint/type checks and relevant inference regression tests, then commit.
+- [x] Observe official public tests fail for the absent module (observed).
+- [x] Add late-waiter/partial-failure/cancellation and mixed-result regression scenarios.
+- [x] Implement shared futures, independent bounded provider tasks, LRU and unique-batch usage aggregation.
+- [x] Run official embedding and native request-budget tests plus focused tests; expect all pass.
+- [x] Run lint/type checks and relevant inference regression tests, then commit.
