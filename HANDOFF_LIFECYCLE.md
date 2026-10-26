@@ -19,7 +19,7 @@ The complete event reason is preserved in durable event identity. Native Memory 
 - Independent review of `f7eb7323b3a3b32cbbf7514bca8b836c72333402` identified two Important defects: superseded-body binding persisted before rejection; oversized event reason permanently failed native propagation. Both have public API reproductions that failed before their fixes and passed afterward in the supported suite.
 - Ruff changed source/table/Topic/test checks pass. `ty check --python <fixed-venv> src/powercontext/builtin/runtime/source_lifecycle.py` passes.
 - Optional server-related `test_topic_memory_application.py` and `test_topic_memory_security.py` cannot collect in the fixed contest environment because `platformdirs` is absent. The wider repository previously had optional dependency collection errors. No whole-repository pass is claimed.
-- A final integration suite must run after cherry-picking into the combined branch. No official platform submission, hidden acceptance, or score is claimed.
+- Final combined code 15edc33bc3f3c2f7e6c30adcafb89d36a675a28a passed all 95 public tests across ten tasks and 247 focused regressions (13 skipped). No official platform submission, hidden acceptance, or score is claimed. See CORE_IMPLEMENTATION_STATUS.md for the final handoff.
 
 Verification uses Python3.12 and the fixed competition dependencies on Linux filesystem copies whose bytes are checked against the worktree. Native worker timings on `/mnt/c` are not treated as equivalent to native Linux storage. Do not modify official tests, fixtures, fixed dependencies, or synchronized project sources.
 

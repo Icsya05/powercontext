@@ -20,3 +20,8 @@ Add a strict, default-false flag and immutable fragment results to the existing 
 - Previous baseline evidence tests fail because PrepareContextRequest rejects evidence_selection.
 - Lifecycle changes are on a separate worktree and do not change the builder interface; integrate only after its review.
 - Ruling: lexical offline selection is a reproducible baseline within the fixed dependency set; hidden evidence quality remains unmeasured.
+
+- Final: implementation commit 2a8947de passed 108 related tests and Ruff/ty. Independent review: no Critical/Important; reviewer ran 96 related tests and 48 extra cases. Combined code15edc33b passed95public +247focused/13skip.
+- Final: minor (deferred): evidence_selection probe_budget counters follow ordinary selection; align the diagnostic path in a separate follow-up.
+- Final: Ruling: generated HTTP flag parity is deferred because the binding task requires Python runtime/builder; remote clients cannot request this mode yet.
+- Final: Ruling: hidden SciFact quality is unverified, and malformed candidate identities or latency guarantees outside the supplied workload are not claimed. No labels were read.
