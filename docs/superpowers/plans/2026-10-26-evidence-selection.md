@@ -25,3 +25,5 @@ Add a strict, default-false flag and immutable fragment results to the existing 
 - Final: minor (deferred): evidence_selection probe_budget counters follow ordinary selection; align the diagnostic path in a separate follow-up.
 - Final: Ruling: generated HTTP flag parity is deferred because the binding task requires Python runtime/builder; remote clients cannot request this mode yet.
 - Final: Ruling: hidden SciFact quality is unverified, and malformed candidate identities or latency guarantees outside the supplied workload are not claimed. No labels were read.
+
+- User requested award-focused follow-up review. Resolved deferred probe mismatch in39a12dbf:4budget testsRED then153relatedGREEN; freshindependentreview nofindings. Finalcode39a12dbf:95publicpass and251focusedpass/13skip. Work stopped at user's low-battery request; no new tasks started.
