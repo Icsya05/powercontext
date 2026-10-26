@@ -99,3 +99,18 @@ def test_default_prepare_is_unchanged_by_explicit_false():
     )
     assert implicit == explicit
     assert implicit.fragments == ()
+
+
+@pytest.mark.parametrize("budget", [512, 700, 1200, 1800])
+def test_budget_probe_counts_the_actual_selected_fragments(budget):
+    builder = PreparedContextBuilder()
+    groups = (group("local", "Alpha evidence. Unrelated padding. Omega evidence."),)
+    request = PrepareContextRequest(query="Alpha Omega", max_bytes=budget, evidence_selection=True)
+    result = builder.build_scopes_result(request=request, current_scope_id="local", memory_candidates=groups)
+    probe = builder.probe_budget(request=request, current_scope_id="local", memory_candidates=groups)
+    if budget >= 1200:
+        assert len(result.fragments) == 2
+    assert probe.delivered_items == len(result.fragments)
+    assert probe.unused_bytes == budget - result.context.content_bytes
+    assert probe.truncated_items == result.omissions.truncated_items
+    assert probe.dropped_items == result.omissions.dropped_items
