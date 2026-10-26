@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from typing import TYPE_CHECKING, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, field_validator
@@ -19,6 +20,30 @@ if TYPE_CHECKING:
 
 class SourceLifecycleError(ValueError):
     """Invalid lifecycle registration, event, or resolution request."""
+
+    def __init__(self, code: str) -> None:
+        messages = {
+            "database": "lifecycle requires a relational database",
+            "source": "invalid Source registration",
+            "memory": "invalid Memory citation",
+            "topic": "invalid Topic reference",
+            "policy": "invalid dependency policy or parents",
+            "parents": "invalid parents",
+            "named-parents": "derived nodes require named parents",
+            "cycle": "duplicate or cyclic dependency",
+            "node-id": "invalid node id",
+            "binding": "node id already bound",
+            "missing-parent": "parent must already be registered",
+            "reference": "registered reference must exist and be readable",
+            "event-type": "expected SourceLifecycleEvent",
+            "revision": "unknown Source or lifecycle revision mismatch",
+            "sequence": "event sequence is stale or conflicts",
+            "persisted-cycle": "cyclic persisted dependencies",
+            "body-changed": "registered Memory body changed",
+            "purpose": "unknown resolution purpose",
+            "unavailable": "unknown or unavailable node",
+        }
+        super().__init__(messages.get(code, code))
 
 
 class SourceLifecycleEvent(BaseModel):
@@ -48,6 +73,9 @@ class _Binding(BaseModel):
     revision: int = 1
 
 
+_Nodes = dict[str, tuple[_Binding, bool, SourceLifecycleEvent | None]]
+
+
 class ScopedSourceLifecycle:
     """Manage one immutable DAG; native writes are retryable projections."""
 
@@ -58,42 +86,49 @@ class ScopedSourceLifecycle:
 
     def _db(self) -> AsyncDatabase:
         if self._database is None:
-            raise SourceLifecycleError("lifecycle requires a relational database")
+            raise SourceLifecycleError("database")
         return self._database
 
     async def register_source(self, node_id: str, source_ref: SourceRef, *, revision: int) -> None:
         if type(revision) is not int or revision <= 0 or not isinstance(source_ref, SourceRef):
-            raise SourceLifecycleError("invalid Source registration")
+            raise SourceLifecycleError("source")
         await self._register(node_id, _Binding(kind="source", reference=source_ref, revision=revision))
 
     async def register_memory(
         self, node_id: str, citation: MemoryCitation, *, parents: tuple[str, ...], policy: str
     ) -> None:
         if not isinstance(citation, MemoryCitation):
-            raise SourceLifecycleError("invalid Memory citation")
+            raise SourceLifecycleError("memory")
         await self._register_derived(node_id, "memory", citation, parents, policy)
 
     async def register_topic(
         self, node_id: str, artifact_ref: ArtifactRef, *, parents: tuple[str, ...], policy: str
     ) -> None:
         if not isinstance(artifact_ref, ArtifactRef) or artifact_ref.family != "topic-memory":
-            raise SourceLifecycleError("invalid Topic reference")
+            raise SourceLifecycleError("topic")
         await self._register_derived(node_id, "topic", artifact_ref, parents, policy)
 
-    async def _register_derived(self, node_id, kind, reference, parents, policy) -> None:
+    async def _register_derived(
+        self,
+        node_id: str,
+        kind: Literal["memory", "topic"],
+        reference: MemoryCitation | ArtifactRef,
+        parents: Iterable[str],
+        policy: str,
+    ) -> None:
         if policy not in {"all", "any"} or isinstance(parents, str):
-            raise SourceLifecycleError("invalid dependency policy or parents")
+            raise SourceLifecycleError("policy")
         try:
             parents = tuple(parents)
         except TypeError as error:
-            raise SourceLifecycleError("invalid parents") from error
+            raise SourceLifecycleError("parents") from error
         if not parents or any(not isinstance(parent, str) or not parent.strip() for parent in parents):
-            raise SourceLifecycleError("derived nodes require named parents")
+            raise SourceLifecycleError("named-parents")
         if len(set(parents)) != len(parents) or node_id in parents:
-            raise SourceLifecycleError("duplicate or cyclic dependency")
+            raise SourceLifecycleError("cycle")
         await self._register(node_id, _Binding(kind=kind, reference=reference, parents=parents, policy=policy))
 
-    async def _load(self):
+    async def _load(self) -> _Nodes:
         async with self._db().transaction() as connection:
             rows = (await connection.execute(select(NODES).where(NODES.c.scope_id == self.scope_id))).mappings()
             return {
@@ -107,16 +142,16 @@ class ScopedSourceLifecycle:
 
     async def _register(self, node_id: str, binding: _Binding) -> None:
         if not isinstance(node_id, str) or not node_id.strip():
-            raise SourceLifecycleError("invalid node id")
+            raise SourceLifecycleError("node-id")
         async with self._runtime._context(self.scope_id) as context, self._runtime._locked(self.scope_id):
             nodes = await self._load()
             if node_id in nodes:
                 if nodes[node_id][0] != binding:
-                    raise SourceLifecycleError("node id already bound")
+                    raise SourceLifecycleError("binding")
                 await self._reconcile(nodes)
                 return
             if any(parent not in nodes for parent in binding.parents):
-                raise SourceLifecycleError("parent must already be registered")
+                raise SourceLifecycleError("missing-parent")
             # Requiring all parents to preexist makes cycles impossible in an immutable graph.
             try:
                 ref = binding.reference
@@ -129,7 +164,7 @@ class ScopedSourceLifecycle:
                         self.scope_id, ref.family, ref.artifact_id, ref.revision
                     )
             except Exception as error:
-                raise SourceLifecycleError("registered reference must exist and be readable") from error
+                raise SourceLifecycleError("reference") from error
             supports = [nodes[parent][1] for parent in binding.parents]
             available = (
                 True if binding.kind == "source" else (all(supports) if binding.policy == "all" else any(supports))
@@ -149,24 +184,24 @@ class ScopedSourceLifecycle:
 
     async def apply(self, event: SourceLifecycleEvent) -> list[str]:
         if not isinstance(event, SourceLifecycleEvent):
-            raise SourceLifecycleError("expected SourceLifecycleEvent")
+            raise SourceLifecycleError("event-type")
         async with self._runtime._context(self.scope_id), self._runtime._locked(self.scope_id):
             nodes = await self._load()
             node = nodes.get(event.node_id)
             if node is None or node[0].kind != "source" or node[0].revision != event.revision:
-                raise SourceLifecycleError("unknown Source or lifecycle revision mismatch")
+                raise SourceLifecycleError("revision")
             previous = node[2]
             if previous is not None and (
                 event.sequence < previous.sequence or (event.sequence == previous.sequence and event != previous)
             ):
-                raise SourceLifecycleError("event sequence is stale or conflicts")
+                raise SourceLifecycleError("sequence")
             nodes[event.node_id] = (node[0], event.available, event)
             pending = set(nodes)
             visited = set()
             while pending:
                 ready = sorted(key for key in pending if set(nodes[key][0].parents) <= visited)
                 if not ready:
-                    raise SourceLifecycleError("cyclic persisted dependencies")
+                    raise SourceLifecycleError("persisted-cycle")
                 for key in ready:
                     binding, available, last = nodes[key]
                     if binding.kind != "source":
@@ -187,7 +222,7 @@ class ScopedSourceLifecycle:
             await self._reconcile(nodes, reason=event.reason)
             return sorted(key for key, (_, available, _) in nodes.items() if available)
 
-    async def _reconcile(self, nodes, *, reason: str = "Source lifecycle") -> None:
+    async def _reconcile(self, nodes: _Nodes, *, reason: str = "Source lifecycle") -> None:
         async with self._runtime._context(self.scope_id) as context:
             service = context.artifacts.memory
             for binding, available, _last in nodes.values():
@@ -197,17 +232,17 @@ class ScopedSourceLifecycle:
                 memory, entries = await service.head_entries(ref.memory_ref.artifact_id)
                 entry = next((entry for entry in entries if entry.entry_id == ref.entry_id), None)
                 if entry is None or entry.entry_version_id != ref.entry_version_id:
-                    raise SourceLifecycleError("registered Memory body changed")
+                    raise SourceLifecycleError("body-changed")
                 transition = service.reactivate if available else service.forget
                 await transition(memory, entries=(entry,), reason=reason)
 
-    async def resolve(self, node_id: str, *, purpose: str):
+    async def resolve(self, node_id: str, *, purpose: str) -> SourceRef | MemoryCitation | ArtifactRef:
         if purpose not in {"generation", "audit"}:
-            raise SourceLifecycleError("unknown resolution purpose")
+            raise SourceLifecycleError("purpose")
         async with self._runtime._scope_operation(self.scope_id):
             node = (await self._load()).get(node_id)
             if node is None or (purpose == "generation" and not node[1]):
-                raise SourceLifecycleError("unknown or unavailable node")
+                raise SourceLifecycleError("unavailable")
             return node[0].reference
 
 
