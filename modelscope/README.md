@@ -1,0 +1,101 @@
+# 魔搭社区（ModelScope）发布记录
+
+对应赛题：**上传并分享自己的 Skill**（总分 20），提交产物为该 Skill 在魔搭的**网址或编号**——个人主页、账号 ID、Skill 名称都不算。
+
+本目录保存发布材料与状态。**作品尚未上传**，原因见文末「卡点」。
+
+## 作品信息
+
+| 项目 | 内容 |
+| --- | --- |
+| 作品名称（Skill name） | `nearby-walk-recommendations` |
+| 显示名 | 周边去哪儿 |
+| 作品网址 | ⬜ 待上传后填写：`https://modelscope.cn/skills/@<owner>/nearby-walk-recommendations` |
+| 作品编号 | ⬜ 待上传后填写 |
+| 来源仓库 | `https://github.com/Icsya05/powercontext`（私有），分支 `ecosystem/wyd-gaode-modelscope`，路径 `gaode/SKILL.md` |
+| 许可 | Apache-2.0 |
+| 分类（category） | `other` |
+| 公开文件范围 | **仅 `SKILL.md` 一个文件**。不含评测数据、不含仓库其他代码、不含任何凭据 |
+| 状态 | ✅ 已准备 / ⬜ 已上传 / ⬜ 已提测 |
+
+## 与高德赛题是同一份文件
+
+魔搭题允许复用自己已写的 Skill。这里直接使用 `gaode/SKILL.md`，**同一份文件、内容完全一致**，避免两处维护出现差异。
+
+重新打包（每次改完 `gaode/SKILL.md` 都要重打）：
+
+```bash
+cd gaode && zip -j ../modelscope/nearby-walk-recommendations.zip SKILL.md
+```
+
+⚠️ 魔搭要求：**zip 根目录必须只有 1 个 `SKILL.md`，不能带其他文件**（`docs`/`README`/子目录都不行）。所以这里用 `-j` 只装文件本身，不带 `gaode/` 目录层。整个包需 ≤ 5 MB（本包约 8 KB）。
+
+## 上传方式
+
+### 方式一：网页（最直观）
+
+1. 登录 <https://www.modelscope.cn>。
+2. 进入 Skills 页面，选择创建 / 上传 Skill。
+3. 上传上面那个 zip，填写显示名、描述、分类、许可、来源 URL。
+4. 上传后**重新打开作品页**，确认能看到 SKILL.md 内容，再复制完整网址。
+
+### 方式二：OpenAPI（不需要浏览器，本机已验证 `modelscope.cn` 可达）
+
+两步：先传 zip 拿到文件 id，再用它创建 Skill。
+
+```bash
+export MODELSCOPE_API_KEY=<你自己的 API Key>   # 在 魔搭 → 我的 → API-KEY 创建
+python modelscope/publish_skill.py --owner <你的用户名>
+```
+
+脚本会依次完成：打包 → 上传 → 创建 → 回查确认 → 打印作品网址。加 `--dry-run` 只打包不上传。
+
+也可以手写 HTTP：
+
+```bash
+# 第 1 步：上传 zip，取返回的 data.id（注意键名是 id，不是 file_id）
+curl -X POST "https://modelscope.cn/openapi/v1/files/upload" \
+  -H "Authorization: Bearer $MODELSCOPE_API_KEY" \
+  -F "file=@nearby-walk-recommendations.zip" -F "type=skill"
+
+# 第 2 步：创建 Skill
+curl -X POST "https://modelscope.cn/openapi/v1/skills" \
+  -H "Authorization: Bearer $MODELSCOPE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"owner":"<用户名>","skill_name":"nearby-walk-recommendations",
+       "display_name":"周边去哪儿","description":"...","skill_file":"<第1步的id>",
+       "category":"other","license":"Apache-2.0"}'
+```
+
+`skill_name` 只能用小写字母、数字和连字符，创建后不可改；`owner` 同样不可改。需要改名或换包时用 PATCH `/openapi/v1/skills/{owner}/{skill_name}/settings`，可改 `display_name`、`description`、`skill_file`、`tags`、`source_url`、`category`、`license`。
+
+## 建议填写的描述与标签
+
+描述（1–2 句，说清做什么、什么时候用）：
+
+> 根据用户给出的城市、起点坐标和自然语言需求，调用高德 MCP 的地点搜索与步行路线规划，推荐最多 3 个从同一起点出发的备选地点，给出实测步行距离、耗时和逐条理由；步行时间只用路线规划结果，超时、无结果、路线失败分别如实说明。
+
+标签：`gaode`、`amap`、`walking-distance`、`poi-search`、`travel`、`skill`
+
+使用示例（填在作品说明里）：
+
+> 我在杭州，起点 120.150000,30.270000，想找家咖啡馆，步行不超过 15 分钟，最多 2 家，优先近一点的。
+
+## 提交到大赛平台
+
+上传成功、拿到网址后：
+
+1. 登录 <https://open.oceanbase.com/train/detail/21>，进入魔搭社区赛题入口。
+2. 把**作品完整网址**（或编号）填进对应字段并保存。
+3. 回读一次已提交内容，确认它指向的是自己的作品，不是个人主页或 Skill 名称。
+4. 把网址和提交时间回填到本文件上表。
+
+## 卡点（需要账号本人操作）
+
+| 卡点 | 说明 | 最少操作 |
+| --- | --- | --- |
+| 魔搭账号登录 | 上传需要本人账号；本机没有 `${MODELSCOPE_API_KEY}`，也没有已登录的会话 | 在魔搭创建 API Key，自行 `export` 到终端后运行上面的脚本；或直接用网页上传 |
+| 可能触发实名/条款 | 平台可能在首次上传时要求实名认证或勾选协议 | 由本人在页面上确认 |
+| 大赛平台提交 | 需要登录 open.oceanbase.com 并选择对应赛题目录 | 本人提交，网址见上表 |
+
+上述凭据**没有**出现在本仓库任何文件中；本文件也不记录 Token 值。
