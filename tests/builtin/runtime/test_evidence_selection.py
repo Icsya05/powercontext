@@ -80,6 +80,28 @@ def test_long_unpunctuated_sentence_selects_a_late_window():
     assert result.context.content_bytes <= 1200
 
 
+@pytest.mark.parametrize("budget", [1200, 1400, 1800])
+def test_long_sentence_prefers_complete_query_cluster_over_isolated_early_match(budget):
+    text = "magnesium " + "unrelated laboratory bookkeeping " * 100 + "magnesium channel blocks calcium influx"
+    result = build("magnesium channel calcium", (group("local", text),), budget)
+    assert result.fragments
+    fragment = result.fragments[0]
+    assert all(term in fragment.text for term in ("magnesium", "channel", "calcium"))
+    assert fragment.text == text[fragment.start : fragment.end]
+    assert result.context.content_bytes <= budget
+
+
+def test_window_cluster_ranking_accounts_for_unicode_byte_cost():
+    wide = "alpha " + "汉" * 160 + " beta " + "汉" * 160 + " gamma " + "汉" * 900
+    text = wide * 12 + "汉" * 1500 + " alpha beta"
+    result = build("alpha beta gamma", (group("local", text),), 1200)
+    assert result.fragments
+    covered = {word for word in ("alpha", "beta", "gamma") if word in result.fragments[0].text.split()}
+    assert len(covered) >= 2
+    assert result.fragments[0].text == text[result.fragments[0].start:result.fragments[0].end]
+    assert result.context.content_bytes <= 1200
+
+
 @pytest.mark.parametrize("value", [1, "true", None])
 def test_selection_flag_is_strict(value):
     with pytest.raises(ValidationError):

@@ -19,9 +19,10 @@ from __future__ import annotations
 import json
 import math
 import re
-from collections import Counter
+from collections import Counter, deque
 from collections.abc import Sequence
 from dataclasses import dataclass, replace
+from heapq import heappop, heappush
 from itertools import chain, pairwise
 from typing import TypeVar
 
@@ -857,15 +858,47 @@ def _evidence_candidates(
     return spans
 
 
-def _fit_evidence_window(
-    fragment: PreparedEvidenceFragment, source: str, weights: dict[str, float], max_bytes: int
-) -> tuple[PreparedEvidenceFragment, ...]:
-    """Fit a literal window around a query occurrence when its sentence is too large."""
+def _evidence_window_anchors(
+    fragment: PreparedEvidenceFragment, weights: dict[str, float], max_bytes: int
+) -> tuple[int, ...]:
+    """Keep eight compact query clusters with bounded state and a linear token scan."""
 
-    matches = [match for match in re.finditer(r"[^\W_]+", fragment.text) if _evidence_term(match[0]) in weights]
-    if not matches:
-        return ()
-    anchor = max(matches, key=lambda match: weights[_evidence_term(match[0])]).start() + fragment.start
+    window: deque[tuple[int, int, str]] = deque()
+    counts: Counter[str] = Counter()
+    best: list[tuple[float, int, int]] = []
+    coverage = 0.0
+    for match in re.finditer(r"[^\W_]+", fragment.text):
+        term = _evidence_term(match[0])
+        if term not in weights:
+            continue
+        window.append((match.start(), match.end(), term))
+        counts[term] += 1
+        if counts[term] == 1:
+            coverage += weights[term]
+        # A byte-limited literal can never span more than max_bytes Python characters.
+        # Actual UTF-8, citation and JSON costs are checked by the fitter below.
+        while window and match.end() - window[0][0] > max_bytes:
+            removed = window.popleft()[2]
+            counts[removed] -= 1
+            if not counts[removed]:
+                coverage -= weights[removed]
+        while len(window) > 1 and counts[window[0][2]] > 1:
+            counts[window.popleft()[2]] -= 1
+        if not window:
+            continue
+        width = window[-1][1] - window[0][0]
+        center = fragment.start + (window[0][0] + window[-1][1]) // 2
+        heappush(best, (coverage, -width, -center))
+        if len(best) > 8:
+            heappop(best)
+    return tuple(dict.fromkeys(-item[2] for item in sorted(best, reverse=True)))
+
+
+def _fit_centered_evidence(
+    fragment: PreparedEvidenceFragment, source: str, anchor: int, max_bytes: int
+) -> tuple[PreparedEvidenceFragment, ...]:
+    """Measure the entire output while fitting a literal, nested character window."""
+
     low, high = 1, fragment.end - fragment.start
     selected: tuple[PreparedEvidenceFragment, ...] = ()
     while low <= high:
@@ -877,6 +910,24 @@ def _fit_evidence_window(
             low = size + 1
         else:
             high = size - 1
+    return selected
+
+
+def _fit_evidence_window(
+    fragment: PreparedEvidenceFragment, source: str, weights: dict[str, float], max_bytes: int
+) -> tuple[PreparedEvidenceFragment, ...]:
+    """Prefer exact fitted windows covering more distinct weighted query terms."""
+
+    selected: tuple[PreparedEvidenceFragment, ...] = ()
+    best_quality = (0.0, 0)
+    for anchor in _evidence_window_anchors(fragment, weights, max_bytes):
+        fitted = _fit_centered_evidence(fragment, source, anchor, max_bytes)
+        if not fitted:
+            continue
+        terms = _evidence_terms(fitted[0].text)
+        quality = (sum(weight for term, weight in weights.items() if term in terms), len(fitted[0].text))
+        if quality > best_quality:
+            selected, best_quality = fitted, quality
     return selected
 
 
