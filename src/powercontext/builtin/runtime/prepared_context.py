@@ -929,14 +929,19 @@ def _fit_centered_evidence(
 ) -> tuple[PreparedEvidenceFragment, ...]:
     """Measure the entire output while fitting a literal, nested character window."""
 
+    # Only content and decimal coordinates change between attempts. Zero coordinates
+    # each cost one byte; retain all citation, escaping and envelope overhead exactly.
+    fixed_bytes = len(_render_evidence((replace(fragment, text="", start=0, end=0),)).encode("utf-8")) - 2
     low, high = 1, fragment.end - fragment.start
     selected: tuple[PreparedEvidenceFragment, ...] = ()
     while low <= high:
         size = (low + high) // 2
         start = max(fragment.start, min(anchor - size // 2, fragment.end - size))
-        clipped = PreparedEvidenceFragment(fragment.address, start, start + size, source[start : start + size])
-        if len(_render_evidence((clipped,)).encode("utf-8")) <= max_bytes:
-            selected = (clipped,)
+        text = source[start : start + size]
+        body_bytes = len(_encode_evidence_json(text).encode("utf-8")) - 2
+        total_bytes = fixed_bytes + len(str(start)) + len(str(start + size)) + body_bytes
+        if total_bytes <= max_bytes:
+            selected = (PreparedEvidenceFragment(fragment.address, start, start + size, text),)
             low = size + 1
         else:
             high = size - 1
