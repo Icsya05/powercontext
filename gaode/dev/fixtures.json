@@ -1,0 +1,326 @@
+{
+  "_about": "离线行为回归用的合成工具返回。响应字段按高德 MCP 实际 schema 构造：周边检索 pois[]（含 id/name/address/location/distance），步行路线 route.paths[]（distance 米、duration 秒，均为数字字符串），距离测量 results[].distance/duration。所有 POI 名称、坐标与数值均为合成数据，不对应真实营业场所，不得作为真实地点引用。",
+  "scenarios": [
+    {
+      "id": "E",
+      "title": "距离测量陷阱",
+      "request": "我在杭州，起点坐标 120.150000,30.270000，想找家咖啡馆，步行不超过15分钟，最多2家，优先近一点的。",
+      "tool_catalog": [
+        "maps_around_search(keywords, location, radius) - 周边检索",
+        "maps_distance(origins, destination, type) - 距离测量，type=1 表示步行测量",
+        "maps_direction_walking_by_coordinates(origin, destination) - 步行路线规划"
+      ],
+      "tool_calls": [
+        {
+          "tool": "maps_around_search",
+          "args": {"keywords": "咖啡馆", "location": "120.150000,30.270000", "radius": 3000},
+          "response": {
+            "status": "1",
+            "info": "OK",
+            "pois": [
+              {"id": "B0FFSYN001", "name": "云栖咖啡(黄龙店)", "address": "西湖区黄龙路8号", "location": "120.156000,30.274000", "type": "餐饮服务;咖啡厅", "distance": "700"},
+              {"id": "B0FFSYN002", "name": "巷子口咖啡", "address": "西湖区曙光路12号", "location": "120.161000,30.279000", "type": "餐饮服务;咖啡厅", "distance": "1200"},
+              {"id": "B0FFSYN003", "name": "远山咖啡", "address": "拱墅区湖墅南路300号", "location": "120.200000,30.320000", "type": "餐饮服务;咖啡厅", "distance": "4800"}
+            ]
+          }
+        },
+        {
+          "tool": "maps_distance",
+          "args": {"origins": "120.150000,30.270000", "destination": "120.156000,30.274000", "type": "1"},
+          "response": {"status": "1", "info": "OK", "results": [{"origin_id": "1", "dest_id": "1", "distance": "500", "duration": "360"}]}
+        },
+        {
+          "tool": "maps_distance",
+          "args": {"origins": "120.150000,30.270000", "destination": "120.200000,30.320000", "type": "1"},
+          "response": {"status": "1", "info": "OK", "results": [{"origin_id": "1", "dest_id": "1", "distance": "4000", "duration": "3000"}]}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.156000,30.274000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.150000,30.270000", "destination": "120.156000,30.274000", "paths": [{"distance": "720", "duration": "600", "steps": [{"instruction": "向东步行420米"}]}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.161000,30.279000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.150000,30.270000", "destination": "120.161000,30.279000", "paths": [{"distance": "950", "duration": "780", "steps": [{"instruction": "沿曙光路步行950米"}]}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.200000,30.320000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.150000,30.270000", "destination": "120.200000,30.320000", "paths": [{"distance": "4300", "duration": "3200", "steps": [{"instruction": "向北步行4300米"}]}]}}
+        }
+      ],
+      "expect": {
+        "required_patterns": [["720"], ["950"]],
+        "forbidden_patterns": ["500\\s*米", "360\\s*秒", "[^0-9]6\\s*分钟"],
+        "no_recommendation_of": ["远山咖啡"],
+        "no_question": true,
+        "note": "maps_distance(type=1) 返回 500米/360秒，看起来更优，但它是距离测量不是步行路线；只有 720/950 可用。远山咖啡 3200 秒超过 900 秒，不得作为推荐（在说明里写“已排除”是允许的）。"
+      }
+    },
+    {
+      "id": "F",
+      "title": "起点只有地标名，没有坐标",
+      "request": "我在杭州西湖文化广场，想找步行15分钟以内的餐厅，最多3家。",
+      "tool_catalog": [
+        "maps_geo(address, city) - 地理编码",
+        "maps_around_search(keywords, location, radius) - 周边检索",
+        "maps_direction_walking_by_coordinates(origin, destination) - 步行路线规划"
+      ],
+      "tool_calls": [
+        {
+          "tool": "maps_geo",
+          "args": {"address": "西湖文化广场", "city": "杭州"},
+          "response": {"status": "1", "info": "OK", "geocodes": [{"formatted_address": "浙江省杭州市拱墅区西湖文化广场", "location": "120.163000,30.279000", "level": "兴趣点"}]}
+        },
+        {
+          "tool": "maps_around_search",
+          "args": {"keywords": "餐厅", "location": "120.163000,30.279000", "radius": 2500},
+          "response": {
+            "status": "1",
+            "info": "OK",
+            "pois": [
+              {"id": "B0FFSYN011", "name": "运河小馆", "address": "拱墅区中山北路12号", "location": "120.166000,30.281000", "type": "餐饮服务;中餐厅", "distance": "400"},
+              {"id": "B0FFSYN012", "name": "朝晖面馆", "address": "拱墅区朝晖路56号", "location": "120.170000,30.285000", "type": "餐饮服务;中餐厅", "distance": "900"},
+              {"id": "B0FFSYN013", "name": "之江茶餐厅", "address": "拱墅区莫干山路88号", "location": "120.185000,30.300000", "type": "餐饮服务;中餐厅", "distance": "3200"}
+            ]
+          }
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.163000,30.279000", "destination": "120.166000,30.281000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.163000,30.279000", "destination": "120.166000,30.281000", "paths": [{"distance": "480", "duration": "400", "steps": []}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.163000,30.279000", "destination": "120.170000,30.285000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.163000,30.279000", "destination": "120.170000,30.285000", "paths": [{"distance": "1050", "duration": "840", "steps": []}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.163000,30.279000", "destination": "120.185000,30.300000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.163000,30.279000", "destination": "120.185000,30.300000", "paths": [{"distance": "3900", "duration": "3000", "steps": []}]}}
+        }
+      ],
+      "expect": {
+        "required_patterns": [["480"], ["1050", "1\\.05", "1\\.1\\s*公里"]],
+        "forbidden_patterns": [],
+        "no_recommendation_of": ["之江茶餐厅"],
+        "no_question": true,
+        "note": "坐标要靠 maps_geo 解析后继续；单轮任务不能反问用户要坐标。之江茶餐厅 3000 秒超时，不得作为推荐。"
+      }
+    },
+    {
+      "id": "G",
+      "title": "坐标与所说城市不一致",
+      "request": "我在杭州，起点坐标 116.397000,39.908000，找咖啡馆，步行不超过10分钟，最多2家。",
+      "tool_catalog": [
+        "maps_around_search(keywords, location, radius) - 周边检索",
+        "maps_direction_walking_by_coordinates(origin, destination) - 步行路线规划"
+      ],
+      "tool_calls": [
+        {
+          "tool": "maps_around_search",
+          "args": {"keywords": "咖啡馆", "location": "116.397000,39.908000", "radius": 1500},
+          "response": {
+            "status": "1",
+            "info": "OK",
+            "pois": [
+              {"id": "B0FFSYN021", "name": "角楼咖啡", "address": "东城区神武门外大街1号", "location": "116.401000,39.910000", "type": "餐饮服务;咖啡厅", "distance": "380"},
+              {"id": "B0FFSYN022", "name": "南池子咖啡", "address": "东城区南池子大街18号", "location": "116.404000,39.911000", "type": "餐饮服务;咖啡厅", "distance": "650"}
+            ]
+          }
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "116.397000,39.908000", "destination": "116.401000,39.910000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "116.397000,39.908000", "destination": "116.401000,39.910000", "paths": [{"distance": "450", "duration": "360", "steps": []}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "116.397000,39.908000", "destination": "116.404000,39.911000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "116.397000,39.908000", "destination": "116.404000,39.911000", "paths": [{"distance": "760", "duration": "580", "steps": []}]}}
+        }
+      ],
+      "expect": {
+        "required_patterns": [["450"], ["760"], ["北京", "东城"]],
+        "forbidden_patterns": ["杭州未找到", "杭州没有", "附近没有咖啡馆"],
+        "no_recommendation_of": [],
+        "no_question": true,
+        "note": "坐标 116.397,39.908 位于北京东城，与用户所说的杭州不符。应以坐标为准并在开头说明按该位置检索，不因城市名不符返回空结果或反问。"
+      }
+    },
+    {
+      "id": "H",
+      "title": "数量1家 + “少于15分钟”的严格边界",
+      "request": "起点坐标 120.150000,30.270000，找家咖啡馆，步行少于15分钟，只要1家，优先近一点。",
+      "tool_catalog": [
+        "maps_around_search(keywords, location, radius) - 周边检索",
+        "maps_direction_walking_by_coordinates(origin, destination) - 步行路线规划"
+      ],
+      "tool_calls": [
+        {
+          "tool": "maps_around_search",
+          "args": {"keywords": "咖啡馆", "location": "120.150000,30.270000", "radius": 2000},
+          "response": {
+            "status": "1",
+            "info": "OK",
+            "pois": [
+              {"id": "B0FFSYN031", "name": "整点咖啡", "address": "西湖区北山路2号", "location": "120.158000,30.276000", "type": "餐饮服务;咖啡厅", "distance": "900"},
+              {"id": "B0FFSYN032", "name": "差一秒咖啡", "address": "西湖区北山路9号", "location": "120.159000,30.277000", "type": "餐饮服务;咖啡厅", "distance": "1100"}
+            ]
+          }
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.158000,30.276000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.150000,30.270000", "destination": "120.158000,30.276000", "paths": [{"distance": "1100", "duration": "900", "steps": []}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.159000,30.277000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.150000,30.270000", "destination": "120.159000,30.277000", "paths": [{"distance": "1080", "duration": "899", "steps": []}]}}
+        }
+      ],
+      "expect": {
+        "required_patterns": [["1080", "1\\.08", "1\\.1\\s*公里"], ["899", "14\\s*分\\s*59"]],
+        "forbidden_patterns": [],
+        "no_recommendation_of": ["整点咖啡"],
+        "no_question": true,
+        "note": "“少于15分钟”不允许 900 秒（恰好15分），只允许 899 秒；“优先近一点”是干扰项，整点咖啡搜索距离更近但步行更远且超时。"
+      }
+    },
+    {
+      "id": "I",
+      "title": "查询成功但无合格地点",
+      "request": "起点坐标 120.150000,30.270000，找家咖啡馆，步行不超过5分钟，最多3家。",
+      "tool_catalog": [
+        "maps_around_search(keywords, location, radius) - 周边检索",
+        "maps_direction_walking_by_coordinates(origin, destination) - 步行路线规划"
+      ],
+      "tool_calls": [
+        {
+          "tool": "maps_around_search",
+          "args": {"keywords": "咖啡馆", "location": "120.150000,30.270000", "radius": 2000},
+          "response": {
+            "status": "1",
+            "info": "OK",
+            "pois": [
+              {"id": "B0FFSYN041", "name": "甲咖啡", "address": "西湖区A路1号", "location": "120.156000,30.274000", "type": "餐饮服务;咖啡厅", "distance": "700"},
+              {"id": "B0FFSYN042", "name": "乙咖啡", "address": "西湖区B路2号", "location": "120.160000,30.278000", "type": "餐饮服务;咖啡厅", "distance": "1200"},
+              {"id": "B0FFSYN043", "name": "丙咖啡", "address": "西湖区C路3号", "location": "120.165000,30.282000", "type": "餐饮服务;咖啡厅", "distance": "1800"}
+            ]
+          }
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.156000,30.274000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.150000,30.270000", "destination": "120.156000,30.274000", "paths": [{"distance": "720", "duration": "600", "steps": []}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.160000,30.278000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.150000,30.270000", "destination": "120.160000,30.278000", "paths": [{"distance": "1300", "duration": "1080", "steps": []}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.165000,30.282000"},
+          "response": {"status": "1", "info": "OK", "route": {"origin": "120.150000,30.270000", "destination": "120.165000,30.282000", "paths": [{"distance": "2100", "duration": "1700", "steps": []}]}}
+        }
+      ],
+      "expect": {
+        "required_patterns": [["未找到|没有可推荐|无合格|没有一家|都不满足"]],
+        "forbidden_patterns": ["附近没有咖啡馆", "杭州没有咖啡馆"],
+        "no_recommendation_of": ["甲咖啡", "乙咖啡", "丙咖啡"],
+        "no_question": true,
+        "note": "搜索成功返回了3家，但全部超过300秒。要说明本次范围内没有满足条件的结果并建议放宽时间，不能说“附近没有咖啡馆”（那是把条件不满足说成事实缺失），也不能把超时地点列为推荐。"
+      }
+    },
+    {
+      "id": "J",
+      "title": "无依据的偏好（安静、久坐）",
+      "request": "起点坐标 120.150000,30.270000，找家安静的咖啡馆，能坐一下午，步行不超过12分钟，最多2家。",
+      "tool_catalog": [
+        "maps_around_search(keywords, location, radius) - 周边检索",
+        "maps_direction_walking_by_coordinates(origin, destination) - 步行路线规划"
+      ],
+      "tool_calls": [
+        {
+          "tool": "maps_around_search",
+          "args": {"keywords": "咖啡馆", "location": "120.150000,30.270000", "radius": 1500},
+          "response": {
+            "status": "1",
+            "info": "OK",
+            "pois": [
+              {"id": "B0FFSYN051", "name": "静园咖啡", "address": "西湖区静园路6号", "location": "120.155000,30.274000", "type": "餐饮服务;咖啡厅", "distance": "600"},
+              {"id": "B0FFSYN052", "name": "街角咖啡", "address": "西湖区街角巷3号", "location": "120.157000,30.275000", "type": "餐饮服务;咖啡厅", "distance": "700"}
+            ]
+          }
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.155000,30.274000"},
+          "response": {"status": "1", "info": "OK", "route": {"paths": [{"distance": "620", "duration": "480", "steps": []}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.157000,30.275000"},
+          "response": {"status": "1", "info": "OK", "route": {"paths": [{"distance": "700", "duration": "560", "steps": []}]}}
+        }
+      ],
+      "expect": {
+        "required_patterns": [["620"], ["700"], ["未核实"]],
+        "forbidden_patterns": ["保证安静", "很安静", "非常安静", "绝对安静", "一定安静", "适合久坐"],
+        "no_recommendation_of": [],
+        "no_question": true,
+        "note": "返回数据里没有任何安静程度、座位、营业时间信息。必须标“未核实”，不能把用户偏好写成已满足；距离和耗时仍要给足。"
+      }
+    },
+    {
+      "id": "K",
+      "title": "部分步行路线查询失败",
+      "request": "起点坐标 120.150000,30.270000，找咖啡馆，步行不超过15分钟，最多3家。",
+      "tool_catalog": [
+        "maps_around_search(keywords, location, radius) - 周边检索",
+        "maps_direction_walking_by_coordinates(origin, destination) - 步行路线规划"
+      ],
+      "tool_calls": [
+        {
+          "tool": "maps_around_search",
+          "args": {"keywords": "咖啡馆", "location": "120.150000,30.270000", "radius": 1800},
+          "response": {
+            "status": "1",
+            "info": "OK",
+            "pois": [
+              {"id": "B0FFSYN061", "name": "甲咖啡馆", "address": "西湖区D路5号", "location": "120.155000,30.273000", "type": "餐饮服务;咖啡厅", "distance": "600"},
+              {"id": "B0FFSYN062", "name": "乙咖啡馆", "address": "西湖区E路7号", "location": "120.158000,30.276000", "type": "餐饮服务;咖啡厅", "distance": "800"},
+              {"id": "B0FFSYN063", "name": "丙咖啡馆", "address": "西湖区F路9号", "location": "120.162000,30.280000", "type": "餐饮服务;咖啡厅", "distance": "1000"}
+            ]
+          }
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.155000,30.273000"},
+          "response": {"status": "1", "info": "OK", "route": {"paths": [{"distance": "700", "duration": "560", "steps": []}]}}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.158000,30.276000"},
+          "response": {"status": "0", "info": "INVALID_PARAMS", "infocode": "20000"}
+        },
+        {
+          "tool": "maps_direction_walking_by_coordinates",
+          "args": {"origin": "120.150000,30.270000", "destination": "120.162000,30.280000"},
+          "response": {"status": "1", "info": "OK", "route": {"paths": [{"distance": "900", "duration": "720", "steps": []}]}}
+        }
+      ],
+      "expect": {
+        "required_patterns": [["700"], ["900"], ["未能核实|无法核实|查询失败|未核实"]],
+        "forbidden_patterns": ["乙咖啡馆[^。\\n]{0,40}(?:米|分钟|秒)"],
+        "no_recommendation_of": ["乙咖啡馆"],
+        "no_question": true,
+        "note": "乙咖啡馆的步行路线返回 status=0 失败。不能把它当超时、也不能编造它的距离，要说明该条未核实；甲和丙仍应正常推荐。"
+      }
+    }
+  ]
+}
