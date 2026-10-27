@@ -145,10 +145,26 @@ class Console:
         return str(confirmed["app_id"])
 
     def export_dsl(self, app_id: str) -> str:
+        """Return the exported DSL as YAML text.
+
+        Dify's export endpoint answers with a JSON envelope
+        (``{"data": "<yaml text>"}`` - see ``AppExportResponse`` in
+        ``api/controllers/console/app/app.py``), so the payload has to be
+        unwrapped before it can be parsed or re-imported.
+        """
         status, body = self._request("GET", f"/console/api/apps/{app_id}/export")
         if status != 200:
             raise ValidationError(f"DSL export failed: HTTP {status} {body[:400]!r}")
-        return body.decode("utf-8", errors="replace")
+        text = body.decode("utf-8", errors="replace")
+        stripped = text.lstrip()
+        if stripped.startswith("{"):
+            try:
+                envelope = json.loads(text)
+            except json.JSONDecodeError:
+                return text
+            if isinstance(envelope, dict) and isinstance(envelope.get("data"), str):
+                return envelope["data"]
+        return text
 
     def publish(self, app_id: str) -> None:
         self.json_request(
@@ -518,6 +534,16 @@ def write_report(results: list[dict[str, Any]]) -> None:
 
 
 def main() -> int:
+    # Allow the console credentials to live in the git-ignored dify/.env so the
+    # validation can be reproduced with a single command.  Values that are
+    # already exported win over the env file.
+    try:
+        from dify.service.config import load_env_file
+
+        load_env_file(REPO_ROOT / "dify" / ".env")
+    except Exception:  # noqa: BLE001 - the env file is optional
+        pass
+
     parser = argparse.ArgumentParser(description="Validate the Dify app end to end.")
     parser.add_argument("--dify-url", default=os.getenv("DIFY_URL", "http://localhost"))
     parser.add_argument("--email", default=os.getenv("DIFY_EMAIL", ""))
