@@ -1,0 +1,24 @@
+# Build-context ignore for `docker build -f dify/service/Dockerfile .`
+#
+# The context is the repository root, so these patterns are repo-root relative.
+# The goal is to keep local secrets and scratch files out of the image layer.
+#
+# dify/.env holds the real seekdb root password and is git-ignored; it must
+# never be baked into the image.
+dify/.env
+dify/.env.*
+!dify/.env.example
+
+# local run artefacts
+dify/deploy/data/
+dify/deploy/seekdb-data/
+dify/export/
+
+# python caches
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+
+# vcs metadata
+.git
+.gitignore

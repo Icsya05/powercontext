@@ -16,7 +16,10 @@ services:
   seekdb:
     image: oceanbase/seekdb:1.4.0-100000172026082615
     container_name: dify-seekdb
-    command: ["-e", "ROOT_PASSWORD=${SEEKDB_ROOT_PASSWORD}"]
+    # The root password is read from the ROOT_PASSWORD *environment variable*
+    # by the image's /root/start.sh.  It must NOT be passed as a command
+    # argument: any argument would be interpreted by start.sh as a SQL
+    # statement to execute and the container would exit immediately.
     environment:
       ROOT_PASSWORD: ${SEEKDB_ROOT_PASSWORD}
       # The application database is created by the image at start-up.

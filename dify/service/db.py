@@ -17,7 +17,7 @@ import json
 import os
 import re
 from contextlib import contextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Iterator, Sequence
 
@@ -46,16 +46,30 @@ class InvalidPlayerId(ValueError):
 
 @dataclass(frozen=True)
 class StoreConfig:
-    """Connection settings, all overridable through environment variables."""
+    """Connection settings, all overridable through environment variables.
 
-    host: str = os.getenv("SEEKDB_HOST", "127.0.0.1")
-    port: int = int(os.getenv("SEEKDB_PORT", "2881"))
-    user: str = os.getenv("SEEKDB_USER", "root")
-    password: str = os.getenv("SEEKDB_PASSWORD", "")
-    tenant: str = os.getenv("SEEKDB_TENANT", "sys")
-    database: str = os.getenv("SEEKDB_DATABASE", "npc_memory")
-    connect_timeout: int = int(os.getenv("SEEKDB_CONNECT_TIMEOUT", "5"))
-    read_timeout: int = int(os.getenv("SEEKDB_READ_TIMEOUT", "15"))
+    The defaults are resolved when an instance is created, not when this
+    module is imported: the deploy scripts load ``dify/.env`` *after* the
+    import, so binding the environment at class-creation time would silently
+    discard every value from the env file.
+    """
+
+    host: str = field(default_factory=lambda: os.getenv("SEEKDB_HOST", "127.0.0.1"))
+    port: int = field(default_factory=lambda: int(os.getenv("SEEKDB_PORT", "2881")))
+    user: str = field(default_factory=lambda: os.getenv("SEEKDB_USER", "root"))
+    # The compose file maps SEEKDB_ROOT_PASSWORD onto SEEKDB_PASSWORD for the
+    # container; the host-side scripts read the env file directly, so accept
+    # either name for the same secret.
+    password: str = field(
+        default_factory=lambda: os.getenv("SEEKDB_PASSWORD")
+        or os.getenv("SEEKDB_ROOT_PASSWORD", "")
+    )
+    tenant: str = field(default_factory=lambda: os.getenv("SEEKDB_TENANT", "sys"))
+    database: str = field(default_factory=lambda: os.getenv("SEEKDB_DATABASE", "npc_memory"))
+    connect_timeout: int = field(
+        default_factory=lambda: int(os.getenv("SEEKDB_CONNECT_TIMEOUT", "5"))
+    )
+    read_timeout: int = field(default_factory=lambda: int(os.getenv("SEEKDB_READ_TIMEOUT", "15")))
 
     @property
     def full_user(self) -> str:
