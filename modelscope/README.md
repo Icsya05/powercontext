@@ -10,7 +10,7 @@
 | --- | --- |
 | 作品名称（Skill name） | `nearby-walk-recommendations` |
 | 显示名 | 周边去哪儿 |
-| 作品网址 | ✅ `https://modelscope.cn/skills/@BadFallen/nearby-walk-recommendations` |
+| 作品网址 | ✅ `https://modelscope.cn/skills/BadFallen/nearby-walk-recommendations`（⚠️ **不带 `@`**，带 `@` 会 404） |
 | 作品编号 | ✅ `BadFallen/nearby-walk-recommendations` |
 | 来源仓库 | `https://github.com/Icsya05/powercontext`（私有），分支 `ecosystem/wyd-gaode-modelscope`，路径 `gaode/SKILL.md` |
 | 许可 | Apache-2.0 |
@@ -33,7 +33,21 @@
 | 作品页 HTTP 状态 | 200（`modelscope.cn` 与 `www.modelscope.cn` 均可） |
 | 安装命令（平台生成） | `npx skills add https://modelscope.cn/skills/BadFallen/nearby-walk-recommendations` |
 
-**仍待人工确认的一项**：作品页里 `SKILL.md` 正文是否完整显示。接口只能确认元数据，页面渲染需要人眼看一眼。
+## 二次核验（2026-10-27，补做）
+
+首次核验用“HTTP 200”判断页面可访问，这个方法**不可靠**：魔搭是单页应用，不存在的路径同样返回 200（实测
+`/skills/this-skill-does-not-exist-xyz` 也是 200）。改用下面三项才算确证：
+
+| 检查 | 方法 | 结果 |
+| --- | --- | --- |
+| 内容真的进了仓库 | `git clone https://modelscope.cn/skills/BadFallen/nearby-walk-recommendations.git` | 有提交 `Init Skill`，仓库内**只有** `SKILL.md` |
+| 页面真的渲染出来 | 抓 HTML 看 `<title>` 与正文关键词 | `<title>Skill 详情 - 其他 - nearby-walk-recommendations</title>`，含“周边去哪儿”，14.8 KB |
+| URL 写法 | 对比带 `@` 与不带 `@` | **不带 `@` 正确**；带 `@` 只返回 5 KB 空壳（`<title>ModelScope 魔搭社区</title>`），表现为 404 |
+
+仓库里的 `SKILL.md` 是 7713 字节，本地是 7648 字节：差值 65 正好等于行数减一，是平台把 LF 换成 CRLF 导致的，
+内容一致，不是上传损坏。
+
+**仍待人工确认**：页面正文里 `SKILL.md` 的各小节是否完整显示（接口与 HTML 只能确认标题与摘要级信息）。
 
 ## 与高德赛题是同一份文件
 

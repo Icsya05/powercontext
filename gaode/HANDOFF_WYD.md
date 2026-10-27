@@ -56,7 +56,8 @@ python dev/score_answer.py dev/answers/
 
 - 高德题：**未提交**。文件已就绪，未在平台上传。
 - 魔搭题：**已上传，未提测**。作品已发布并核验：编号 `BadFallen/nearby-walk-recommendations`，
-  网址 <https://modelscope.cn/skills/@BadFallen/nearby-walk-recommendations>（公开可见，页面 200）。
+  网址 <https://modelscope.cn/skills/BadFallen/nearby-walk-recommendations>（公开可见，页面标题正常渲染。**注意不带 `@`**，
+  带 `@` 的写法会 404）。
   尚未把该网址提交到大赛的魔搭题入口。
 - 无任何平台成绩，不宣称得分。
 
