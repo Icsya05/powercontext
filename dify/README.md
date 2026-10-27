@@ -269,6 +269,19 @@ python dify/validation/service_checks.py --base-url http://127.0.0.1:8077
 
 输出写入 `dify/validation/service_checks.md` 与 `.json`。
 
+Dify 侧的端到端检查（导入 DSL → 真跑 → 导出 → 重新导入 → 再跑）：
+
+```bash
+python dify/validation/workflow_checks.py \
+    --dify-url http://localhost \
+    --email YOUR_DIFY_EMAIL --password YOUR_DIFY_PASSWORD \
+    --memory-url http://127.0.0.1:8077
+```
+
+它使用 Dify 控制台 API（与 Dify 官方 e2e 同一套流程）完成导入、发布、运行、导出、重新导入，
+并用记忆服务接口核对数据库里的真实行。报告写入 `dify/validation/workflow_checks.md`，
+导出的 DSL 写入 `dify/validation/dsl_exported.yml`。
+
 ---
 
 ## 7. 记忆服务接口
