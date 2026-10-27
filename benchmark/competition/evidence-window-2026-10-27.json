@@ -1,0 +1,919 @@
+{
+  "benchmark": "64 independently generated cases; no official workload or labels",
+  "metric_limit": "query-term coverage is NOT evidence token recall or official acceptance",
+  "baseline_commit": "39a12dbf95da799c7160bb9a7528cbc944215a47",
+  "baseline": {
+    "mean_query_coverage": 0.4375,
+    "complete_query_requests": 8,
+    "requests": 64,
+    "p50_ms": 0.6802590000347664,
+    "p95_ms": 4.01666799996292,
+    "cases": [
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1199
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1797
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 618
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1199
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1797
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 618
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1199
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1797
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 619
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1398
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1798
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 621
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1398
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1798
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 621
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1199
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1797
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 620
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1199
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1797
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 622
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1198
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1399
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 0.3333333333333333,
+        "complete_query": false,
+        "bytes": 1800
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 620
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      }
+    ]
+  },
+  "candidate": {
+    "mean_query_coverage": 0.9375,
+    "complete_query_requests": 56,
+    "requests": 64,
+    "p50_ms": 3.4632795000106853,
+    "p95_ms": 6.062696999947548,
+    "cases": [
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1198
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1398
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 618
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1198
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1398
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 618
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1199
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1399
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 619
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1798
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 621
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1798
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 621
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1797
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 620
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1198
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1399
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1799
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 622
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1200,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1200
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1400
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1800
+      },
+      {
+        "kind": "long",
+        "budget": 1800,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 1797
+      },
+      {
+        "kind": "short-control",
+        "budget": 1400,
+        "query_coverage": 1.0,
+        "complete_query": true,
+        "bytes": 620
+      },
+      {
+        "kind": "separated-control",
+        "budget": 1200,
+        "query_coverage": 0.5,
+        "complete_query": false,
+        "bytes": 1200
+      }
+    ]
+  }
+}

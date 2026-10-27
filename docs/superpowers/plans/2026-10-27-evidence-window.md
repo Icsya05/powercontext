@@ -18,3 +18,8 @@ The long-sentence fallback currently centers a literal window on the first highe
 
 - Start2677f566 / code39a12dbf. Existing95public+251focused/13skip passed.
 - Ruling: improve a demonstrated local query-coverage failure; no claim that this establishes hidden SciFact evidence recall/completeness.
+
+- RED threebudgets→GREEN; firstindependentreviewfoundzero-querymid-gapregression. Addedfailingpublicguard; byte-awareclusterbound+occurrencefallback+positivecoveragefix.
+- Unicodeenvelopeline-separatortestRED→GREEN. Finalcode d458a7f3:316relatedpass/13skip, Ruff/format/tyclean. Independent64cases querycoverage.4375→.9375 withnoindividualdrop; p50.68→3.46ms. Hiddenqualityunverified; floatingpointnear-tieMinor deferred. Wholepublicsuitependingcompletion.
+
+- Final:d458a7f3 frozenmirrorfull95publicGREEN and316relatedGREEN/13skip;sourceRuff/format/tyclean. UTF8JSONseparators3charactersescapedandbudgetaccounted. Floatingpointnear-tieMinor deferred; hiddenSciFactunverified. Independentpackingtradeoffreproducedbutnotimplemented. Finalstophandoffpreparedfor14:00.

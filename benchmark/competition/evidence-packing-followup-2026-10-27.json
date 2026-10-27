@@ -1,0 +1,26 @@
+{
+  "status": "design tradeoff reproduced; algorithm change NOT implemented",
+  "full_candidates": {
+    "bytes": 1200,
+    "fragments": [
+      {
+        "entry": "long",
+        "start": 0,
+        "end": 646,
+        "complete_entry": false
+      }
+    ]
+  },
+  "short_candidate_alone": {
+    "bytes": 613,
+    "fragments": [
+      {
+        "entry": "short",
+        "start": 0,
+        "end": 58,
+        "complete_entry": true
+      }
+    ]
+  },
+  "next_step": "compare whole-sentence-first versus immediate clipping on independent quality data; preserve a baseline"
+}
