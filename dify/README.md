@@ -168,9 +168,45 @@ dify/
 | Dify | **1.17.1** | 官方插件 README 的 CI 固定版本；DSL 版本 `0.7.0` |
 | seekdb | `oceanbase/seekdb:1.4.0-100000172026082615` | 对应 seekdb v1.4.0 |
 | Python | 3.12 | 与 Dify 插件运行时一致；仅本机跑脚本时需要 |
-| 模型服务 | 任意 OpenAI 兼容 Chat 模型 | 在 Dify「模型提供商」里配置；**唯一可能产生费用的项** |
+| 模型服务 | 任意 OpenAI 兼容 Chat 模型（本作品实测 MiniMax-M3） | 在 Dify「模型提供商」里配置；**唯一可能产生费用的项** |
+| 现成插件 | **`langgenius/openai_api_compatible` 0.0.73** | 安装来源：Dify 官方插件市场 marketplace.dify.ai；DSL 的 `dependencies` 已声明，导入时会自动安装 |
 
 不需要 Embedding / Rerank 服务：语义召回用 seekdb 的中文全文索引实现。
+
+**资源条件**（实测配置，非最低要求）
+
+| 项 | 本作品实测 | 说明 |
+| --- | --- | --- |
+| 内存 | 32 GB（可用约 16 GB） | seekdb 限 4 GB（`SEEKDB_MEMORY_LIMIT`），Dify 栈约 6–8 GB，其余留给宿主 |
+| CPU | 16 核 | seekdb `CPU_COUNT=4`，其余给 Dify |
+| 磁盘 | 约 15 GB | Dify 镜像约 5 GB + seekdb 镜像 819 MB + Postgres/Redis/weaviate 数据卷 |
+| 端口 | `80`（Dify nginx）、`2881`/`2886`（seekdb）、`8077`（记忆服务） | `2881`/`2886` 可通过 `.env` 改，`80` 改 `EXPOSE_NGINX_PORT` |
+| 平台 | Windows 11 x64 / Linux x64 | Windows 需 WSL2（Docker Desktop 后端） |
+
+**网络条件**
+
+- Dify 容器访问记忆服务走宿主机网关 `host.docker.internal`，因此**必须**设置
+  `SSRF_PROXY_ALLOW_PRIVATE_DOMAINS=host.docker.internal`（见 §5.6），否则请求会被 Squid 拦掉。
+- 安装模型供应商插件时需要能访问 Dify 官方插件市场 `marketplace.dify.ai`。
+- 模型服务地址需从 Dify 容器可达（OpenAI 兼容端点，例如 `https://api.minimax.io/v1`）。
+
+---
+
+## 4.1 交付文件与导入顺序
+
+本作品**只有一个 DSL 文件**，导入顺序如下：
+
+| 顺序 | 文件 | 用途 | 导入方式 |
+| --- | --- | --- | --- |
+| 1 | `dify/workflow.yml` | 唯一的 Dify 应用（Workflow 模式，13 节点） | Dify 控制台 → 应用 → 导入 DSL 文件 → 选这个文件 → 确认导入 |
+
+导入顺序说明：
+
+1. **先起 seekdb 与记忆服务**（§5.2–§5.3）—— 工作流的第二个节点立刻就要读记忆服务，库没起来会走错误分支。
+2. **再起 Dify 并配置模型**（§5.4–§5.5）—— 导入前必须先装好 OpenAI 兼容模型供应商插件并建好模型，否则 `llm_ache` 节点解析不到模型。
+3. **最后导入 `dify/workflow.yml`**（本节）—— 导入后点一次「发布」，再到「访问 API」里开启 API。
+
+不需要再导入任何知识库、工具或其他 DSL。DSL 里不含知识库内容（本作品用 seekdb 存记忆，不建 Dify 知识库）。
 
 ---
 
@@ -375,6 +411,32 @@ Dify 控制台 → **工作室 → 创建应用 → 导入 DSL 文件** → 选�
 ```
 
 ### 6.1 手动验证样例
+
+**初始状态与恢复方式**（官方验收要求「如果样例依赖连续操作，应说明执行顺序及如何恢复初始状态」）
+
+本作品的记忆全部落在 seekdb 的 `npc_player` / `npc_turn` 两张表里，因此初始状态就是
+「这两张表为空」。任何时候想回到初始状态，有三种办法，效果完全相同：
+
+```bash
+# 方式 1：只重置某个玩家（不影响别人）—— 走记忆服务接口
+curl -X POST "http://127.0.0.1:8077/api/turn?action=reset" \
+     -H "Content-Type: application/json" \
+     -d "{\"player_id\": \"demo_001\"}"
+
+# 方式 2：在 Dify 应用里跑一次「操作 = reset」，工作流会调用同一个接口
+
+# 方式 3：清空全部测试数据（直接操作 seekdb）
+python dify/deploy/capture_evidence.py   # 脚本末尾会清理自己写入的数据
+```
+
+样例的执行顺序（详见 `examples/walkthrough.md`）：
+
+1. 场景 1：新玩家首次到店 → 初始状态为空 → 输入 → 预期 `visit_count` 从 0 变 1；
+2. 场景 2：**换一个会话**（新的 `user`）用同一张卡号再跑 → 预期 `visit_count` 变 2，
+   且回复里能引用上一次的对话 —— 这一条证明记忆来自 seekdb 而不是 Dify 会话；
+3. 场景 3：换第二张卡号跑 → 预期第二张卡号 `visit_count` 是 1，互不影响；
+4. 场景 4：对卡号 1 执行 reset → 预期卡号 1 的行被清空，卡号 2 不受影响；
+5. 场景 5：停掉 seekdb 容器再跑 → 预期返回明确的「记忆库不可用」错误，而不是假装记得。
 
 完整的验证样例（初始状态、输入、操作顺序、预期表现）在 **`examples/walkthrough.md`**，
 覆盖赛题验收要求的五条：
