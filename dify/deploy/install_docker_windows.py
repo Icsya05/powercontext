@@ -44,7 +44,9 @@ def is_admin() -> bool:
 
 def run(cmd: list[str], timeout: float = 1800.0) -> int:
     print(f"$ {' '.join(cmd)}")
-    result = subprocess.run(cmd, text=True, capture_output=True, timeout=timeout)
+    result = subprocess.run(
+        cmd, text=True, capture_output=True, timeout=timeout, errors="replace"
+    )
     if result.stdout.strip():
         print(result.stdout.strip())
     if result.stderr.strip():
@@ -55,7 +57,11 @@ def run(cmd: list[str], timeout: float = 1800.0) -> int:
 def wsl_works() -> bool:
     try:
         result = subprocess.run(
-            ["wsl.exe", "--version"], text=True, capture_output=True, timeout=30
+            ["wsl.exe", "--version"],
+            text=True,
+            capture_output=True,
+            timeout=30,
+            errors="replace",
         )
     except Exception:
         return False
