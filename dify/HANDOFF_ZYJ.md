@@ -93,14 +93,18 @@
    - 配置阶段 CMake 会误用 PATH 里的 mingw `ld.exe`，报 `cannot find shell32.lib`；
      需要让 clang-cl 走 `lld-link` 并指向 Windows SDK 的 import lib。
    - 结论：这条路能做，但比 Docker 麻烦；正式交付仍以 Docker 路线为准。
-7. **git 不读 Windows 的系统代理。** 这台机器开了 clash（系统代理 `127.0.0.1:7897`），
-   所以 `Invoke-WebRequest` 能访问 github，但 `git push` 会一直失败
-   （`Failed to connect to github.com:443`）。修法：
+7. **git 不读 Windows 的系统代理，代理本身还可能把 TLS 搞坏。**
+   这台机器开了 clash（系统代理 `127.0.0.1:7897`）。两种情况都遇到过：
+   - 直连时 git push 失败（`Failed to connect to github.com:443`），
+     加代理后正常：`git config --global http.proxy http://127.0.0.1:7897`（https.proxy 同理）；
+   - 代理本身抽风时，git 报 `schannel: failed to receive handshake`，
+     这时**去掉代理反而能通**：`git config --global --unset http.proxy`。
+
+   所以遇到 push 失败时，两种配置都试一遍再下结论，不要直接判断"网络坏了"。
+   提测前务必确认远端 commit 和本地一致：
    ```bash
-   git config --global http.proxy  http://127.0.0.1:7897
-   git config --global https.proxy http://127.0.0.1:7897
+   git ls-remote origin refs/heads/ecosystem/zyj-dify
    ```
-   配完之后 push 秒成。队友在同一个网络上提交时注意这一点。
 
 ## 6. 卡点与本人最少操作
 
