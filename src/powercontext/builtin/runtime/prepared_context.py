@@ -794,6 +794,16 @@ def _literal_sentences(text: str) -> list[tuple[int, int]]:
     return spans
 
 
+def _encode_evidence_json(value: object) -> str:
+    """Keep the envelope payload on one line without changing decoded evidence."""
+
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":")).translate({
+        0x85: r"\u0085",
+        0x2028: r"\u2028",
+        0x2029: r"\u2029",
+    })
+
+
 def _render_evidence(fragments: Sequence[PreparedEvidenceFragment]) -> str:
     items = [
         {
@@ -809,7 +819,7 @@ def _render_evidence(fragments: Sequence[PreparedEvidenceFragment]) -> str:
         }
         for fragment in fragments
     ]
-    encoded = json.dumps({"trust": "untrusted_history", "items": items}, ensure_ascii=False, separators=(",", ":"))
+    encoded = _encode_evidence_json({"trust": "untrusted_history", "items": items})
     return "\n\n".join((TRUST_POLICY, f"{_BEGIN_MARKER}\n{encoded}\n{_END_MARKER}"))
 
 
@@ -866,9 +876,9 @@ def _query_occurrences(text: str, weights: dict[str, float]) -> Iterator[tuple[i
         term = _evidence_term(match[0])
         if term not in weights:
             continue
-        byte_offset += len(json.dumps(text[cursor : match.start()], ensure_ascii=False).encode("utf-8")) - 2
+        byte_offset += len(_encode_evidence_json(text[cursor : match.start()]).encode("utf-8")) - 2
         byte_start = byte_offset
-        byte_offset += len(json.dumps(match[0], ensure_ascii=False).encode("utf-8")) - 2
+        byte_offset += len(_encode_evidence_json(match[0]).encode("utf-8")) - 2
         cursor = match.end()
         yield match.start(), match.end(), term, byte_start, byte_offset
 

@@ -119,6 +119,16 @@ def test_widely_separated_query_terms_do_not_produce_an_irrelevant_window():
     assert result.fragments[0].text == text[result.fragments[0].start : result.fragments[0].end]
 
 
+def test_unicode_line_separators_keep_the_envelope_json_on_one_line():
+    text = "photon\u0085 detector\u2028 signal\u2029 measurements"
+    result = build("photon detector signal", (group("local", text),), 1200)
+    assert result.fragments
+    payload = json.loads(result.context.content.splitlines()[-2])
+    assert payload["items"][0]["content"] == text
+    assert result.fragments[0].text == text
+    assert result.context.content_bytes == len(result.context.content.encode("utf-8")) <= 1200
+
+
 @pytest.mark.parametrize("value", [1, "true", None])
 def test_selection_flag_is_strict(value):
     with pytest.raises(ValidationError):
