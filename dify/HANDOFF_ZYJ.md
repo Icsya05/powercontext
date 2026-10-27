@@ -200,25 +200,34 @@
 6. ⬜ 队长决定生态分支合流方式（见 §9），合流后提测分支才同时含 `dify/`、`gaode/`、`modelscope/`
 7. ⬜ （可选）把 §4.1 的真实对话整理成截图，作为评审证据
 
-## 9. ⚠️ 需要团队层面处理的一件事：分支合流
+## 9. ✅ 分支合流（已完成）
 
-本分支 `ecosystem/zyj-dify` 与队友的 `ecosystem/wyd-gaode-modelscope` **是并列的两条分支**，
-互相不包含：
+本分支 `ecosystem/zyj-dify` 与队友的 `ecosystem/wyd-gaode-modelscope` 原先是并列的两条分支。
+因为提测平台是按「你填的那个分支」来 clone 的，只提交其中一条就等于队友的作品没交，
+所以两条分支已经合并：
 
 ```text
 d647275c  (官方基线 2026-competition-ecosystem)
    └── 9ce99250  competition/nearby-skill        ← 共同起点
-         ├── ab7ac1da..<HEAD>    ecosystem/zyj-dify                （本任务：dify/）
-         └── 80a052d7            ecosystem/wyd-gaode-modelscope     （xjl：gaode/ + modelscope/）
+         ├── e1b4bd9d  ecosystem/zyj-dify              （dify/，zyj）
+         └── 46d2d9cc  ecosystem/wyd-gaode-modelscope （gaode/ + modelscope/，xjl）
+               ╲      ╱
+                e46544f2  ecosystem/zyj-dify  ← 合并后的提交（同时含三份资产）
 ```
 
-`git diff origin/ecosystem/wyd-gaode-modelscope ecosystem/zyj-dify -- gaode modelscope`
-会看到 xjl 的 15 个文件在本分支上「不存在」——这是正常的，因为本任务没有也不会合并他们的分支。
+合流方式与影响：
 
-但**提测平台要求提交的分支/commit hash 是「生态」的合流版本**（官方题面：提交分支须基于
-`2026-competition-ecosystem`，相关资产放入对应目录）。因此在提测前需要有人把三条生态分支
-（`zyj-dify`、`wyd-gaode-modelscope`，以及后续可能新增的）合并到一条提交分支上。
+| 项目 | 说明 |
+| --- | --- |
+| 方式 | `git merge --no-ff origin/ecosystem/wyd-gaode-modelscope` |
+| 冲突 | **零冲突**（两边只在自己的目录里加文件，目录不重叠） |
+| 是否改写他人历史 | **没有**。`--no-ff` 保留双方全部原始提交，xjl 的 commit 一个都没动 |
+| 合并后 `dify/` | 与合并前**逐字节一致**（`git diff e1b4bd9d e46544f2 -- dify/` 为空） |
+| 合并后 `gaode/` `modelscope/` | 与 xjl 分支**逐字节一致**（`git diff origin/ecosystem/wyd-gaode-modelscope e46544f2 -- gaode modelscope` 为空） |
+| 官方基线 | `d647275c` 仍是合并后 HEAD 的祖先 ✅ |
+| 合并后目录 | `dify` 37 个文件、`gaode` 13 个文件、`modelscope` 3 个文件 |
 
-建议由**核心负责人 / 队长**执行合流（例如各人分别提 PR 到团队指定的合流分支），
-避免任何一方直接改写他人的提交历史。合流后提测平台填的分支/commit 才同时包含
-`dify/`、`gaode/`、`modelscope/` 三份资产。
+提测时在平台上填 **分支 `ecosystem/zyj-dify`** 和 **commit `e46544f2`**（或之后的任何后续提交）
+即可，评测方 clone 到手的仓库同时含有三份生态资产。
+
+> 若 xjl 之后还有新提交，再 merge 一次即可（同样零冲突）；不需要 force push，也不改写任何历史。
