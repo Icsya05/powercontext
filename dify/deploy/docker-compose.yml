@@ -1,0 +1,74 @@
+# Midnight Convenience Store - local runtime for the Dify entry.
+#
+#   docker compose -f dify/deploy/docker-compose.yml --env-file dify/.env up -d
+#
+# Two services:
+#   seekdb        - the database that stores the NPC's long-term memory
+#   memory-service- the HTTP bridge that the Dify workflow calls
+#
+# The Dify instance itself is started separately with the official
+# docker-compose stack (see dify/README.md); it only needs to reach
+# memory-service on port 8077.
+
+name: dify-npc-memory
+
+services:
+  seekdb:
+    image: oceanbase/seekdb:1.4.0-100000172026082615
+    container_name: dify-seekdb
+    command: ["-e", "ROOT_PASSWORD=${SEEKDB_ROOT_PASSWORD}"]
+    environment:
+      ROOT_PASSWORD: ${SEEKDB_ROOT_PASSWORD}
+      # The application database is created by the image at start-up.
+      SEEKDB_DATABASE: ${SEEKDB_DATABASE:-npc_memory}
+      CPU_COUNT: "4"
+      MEMORY_LIMIT: ${SEEKDB_MEMORY_LIMIT:-4G}
+      DATAFILE_SIZE: ${SEEKDB_DATAFILE_SIZE:-2G}
+      DATAFILE_NEXT: ${SEEKDB_DATAFILE_NEXT:-2G}
+      DATAFILE_MAXSIZE: ${SEEKDB_DATAFILE_MAXSIZE:-16G}
+    ports:
+      # 2881 = MySQL protocol (what the memory service speaks)
+      # 2886 = seekdb HTTP service
+      - "${SEEKDB_PORT:-2881}:2881"
+      - "${SEEKDB_HTTP_PORT:-2886}:2886"
+    volumes:
+      # Images based on seekdb 1.4+ use /var/lib/seekdb.
+      # On Windows a named volume is required (host bind mounts are unreliable).
+      - seekdb-data:/var/lib/seekdb
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -P 2881 -uroot -p\"$$ROOT_PASSWORD\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+    restart: unless-stopped
+
+  memory-service:
+    build:
+      context: ../..
+      dockerfile: dify/service/Dockerfile
+    container_name: dify-npc-memory
+    environment:
+      SEEKDB_HOST: seekdb
+      SEEKDB_PORT: "2881"
+      SEEKDB_USER: ${SEEKDB_USER:-root}
+      SEEKDB_PASSWORD: ${SEEKDB_ROOT_PASSWORD}
+      SEEKDB_TENANT: ${SEEKDB_TENANT:-sys}
+      SEEKDB_DATABASE: ${SEEKDB_DATABASE:-npc_memory}
+      SEEKDB_CONNECT_TIMEOUT: "10"
+      SEEKDB_READ_TIMEOUT: "20"
+    ports:
+      - "${MEMORY_SERVICE_PORT:-8077}:8077"
+    depends_on:
+      seekdb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8077/api/health', timeout=5).status==200 else 1)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+
+volumes:
+  seekdb-data:

@@ -1,0 +1,6 @@
+# Pinned runtime dependencies for the NPC memory service.
+# Python 3.12 (matches the Dify plugin daemon / SDK runtime used by the contest).
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+PyMySQL==1.1.1

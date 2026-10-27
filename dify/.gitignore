@@ -1,0 +1,13 @@
+# Local run artefacts - never commit these.
+.env
+*.log
+__pycache__/
+*.py[cod]
+
+# seekdb data volume when the compose file is run from this directory
+deploy/data/
+deploy/seekdb-data/
+
+# Dify import/export scratch space (contains nothing worth committing, but
+# keeps the working tree clean while exporting the DSL)
+export/

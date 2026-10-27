@@ -1,0 +1,891 @@
+app:
+  description: 午夜便利店 - 阿澈会记得你。Dify 负责编排，seekdb 负责记住每一个常客。
+  icon: 🌃
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 午夜便利店 · 阿澈会记得你
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.7.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      batch_count_limit: 5
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: start-to-build-request
+      source: start
+      sourceHandle: source
+      target: code_build_request
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: build-request-to-read-state
+      source: code_build_request
+      sourceHandle: source
+      target: http_read_state
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: read-state-to-check-read
+      source: http_read_state
+      sourceHandle: source
+      target: code_check_read
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: check-read-to-if-db
+      source: code_check_read
+      sourceHandle: source
+      target: if_else_db
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: if-db-true-to-db-error
+      source: if_else_db
+      sourceHandle: 'true'
+      target: code_db_error
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: db-error-to-end-error
+      source: code_db_error
+      sourceHandle: source
+      target: end_error
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: if-db-false-to-build-context
+      source: if_else_db
+      sourceHandle: 'false'
+      target: code_build_context
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: build-context-to-llm
+      source: code_build_context
+      sourceHandle: source
+      target: llm_ache
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: llm-to-parse-llm
+      source: llm_ache
+      sourceHandle: source
+      target: code_parse_llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: parse-llm-to-save-turn
+      source: code_parse_llm
+      sourceHandle: source
+      target: http_save_turn
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: save-turn-to-final
+      source: http_save_turn
+      sourceHandle: source
+      target: code_final
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: final-to-end-ok
+      source: code_final
+      sourceHandle: source
+      target: end_ok
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: 玩家的输入。会员卡号用来区分玩家，本轮输入会参与全文检索召回。
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 会员卡号
+          max_length: 64
+          options: []
+          required: true
+          type: text-input
+          variable: player_id
+        - label: 这一轮玩家说的话
+          max_length: 500
+          options: []
+          required: true
+          type: text-input
+          variable: player_input
+        - label: 操作
+          max_length: 48
+          options:
+          - continue
+          - reset
+          required: true
+          type: select
+          variable: action
+      height: 116
+      id: start
+      position:
+        x: 30
+        y: 300
+      positionAbsolute:
+        x: 30
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import json
+
+          def main(player_id: str = "", player_input: str = "", action: str = "") -> dict:
+              pid = str(player_id or "").strip()
+              text = str(player_input or "").strip()
+              act = str(action or "continue").strip().lower()
+              if "reset" in act or "重置" in act:
+                  act = "reset"
+              else:
+                  act = "continue"
+              read_body = json.dumps({"player_id": pid, "query": text}, ensure_ascii=False)
+              return {
+                  "read_body": read_body,
+                  "player_id": pid,
+                  "player_input": text,
+                  "action": act,
+              }
+        code_language: python3
+        desc: 把玩家输入整理成记忆服务的请求体（用 JSON 编码，避免中文进入 query string）。
+        outputs:
+          action:
+            children: null
+            type: string
+          player_id:
+            children: null
+            type: string
+          player_input:
+            children: null
+            type: string
+          read_body:
+            children: null
+            type: string
+        selected: false
+        title: 整理请求
+        type: code
+        variables:
+        - value_selector:
+          - start
+          - action
+          variable: action
+        - value_selector:
+          - start
+          - player_id
+          variable: player_id
+        - value_selector:
+          - start
+          - player_input
+          variable: player_input
+      height: 54
+      id: code_build_request
+      position:
+        x: 334
+        y: 300
+      positionAbsolute:
+        x: 334
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          type: no-auth
+        body:
+          data: '{{#code_build_request.read_body#}}'
+          type: json
+        desc: 从 seekdb 读取该玩家的状态，并用中文全文检索召回相关往事。
+        headers: 'Content-Type:application/json'
+        method: post
+        params: ''
+        retry_config:
+          enabled: true
+          exponential_backoff:
+            enabled: false
+            max_interval: 10000
+            multiplier: 2
+          max_retries: 2
+          retry_interval: 1000
+        selected: false
+        timeout:
+          connect: 10
+          read: 30
+          write: 30
+        title: 读取记忆
+        type: http-request
+        url: http://host.docker.internal:8077/api/state
+        variables: []
+      height: 122
+      id: http_read_state
+      position:
+        x: 638
+        y: 300
+      positionAbsolute:
+        x: 638
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import json
+
+          def main(body: str = "") -> dict:
+              raw = str(body or "")
+              try:
+                  data = json.loads(raw)
+              except Exception:
+                  return {"db_status": "ERROR", "db_message": "记忆服务返回了无法解析的内容。", "state_json": "{}"}
+              if not isinstance(data, dict):
+                  return {"db_status": "ERROR", "db_message": "记忆服务返回了无法解析的内容。", "state_json": "{}"}
+              if data.get("ok") is not True:
+                  message = str(data.get("message") or "记忆库暂时不可用。")
+                  return {"db_status": "ERROR", "db_message": message, "state_json": "{}"}
+              return {"db_status": "OK", "db_message": "", "state_json": raw}
+        code_language: python3
+        desc: 判断记忆是否读取成功，失败时给出可理解的错误而不是继续假装记得。
+        outputs:
+          db_message:
+            children: null
+            type: string
+          db_status:
+            children: null
+            type: string
+          state_json:
+            children: null
+            type: string
+        selected: false
+        title: 校验读取结果
+        type: code
+        variables:
+        - value_selector:
+          - http_read_state
+          - body
+          variable: body
+      height: 54
+      id: code_check_read
+      position:
+        x: 942
+        y: 300
+      positionAbsolute:
+        x: 942
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 0a1b2c3d-4e5f-4a6b-8c7d-9e0f1a2b3c4d
+            value: ERROR
+            varType: string
+            variable_selector:
+            - code_check_read
+            - db_status
+          id: 'true'
+          logical_operator: and
+        desc: 记忆库不可用时走错误分支，明确告诉玩家这一轮没有被记住。
+        selected: false
+        title: 记忆可用？
+        type: if-else
+      height: 126
+      id: if_else_db
+      position:
+        x: 1246
+        y: 300
+      positionAbsolute:
+        x: 1246
+        y: 300
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          def main(db_message: str = "") -> dict:
+              reason = str(db_message or "记忆库暂时不可用。")
+              text = (
+                  "⚠️ " + reason + "\n\n"
+                  "这一轮既没有读到任何记忆，也没有被写进账本——阿澈不会假装自己记住了你。\n"
+                  "请检查 seekdb 服务是否在运行，然后重新发起一次对话。"
+              )
+              return {"error_text": text}
+        code_language: python3
+        desc: 生成可理解的错误提示。
+        outputs:
+          error_text:
+            children: null
+            type: string
+        selected: false
+        title: 记忆库不可用
+        type: code
+        variables:
+        - value_selector:
+          - code_check_read
+          - db_message
+          variable: db_message
+      height: 54
+      id: code_db_error
+      position:
+        x: 1550
+        y: 150
+      positionAbsolute:
+        x: 1550
+        y: 150
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - code_db_error
+          - error_text
+          value_type: string
+          variable: error
+        selected: false
+        title: 结束（记忆库不可用）
+        type: end
+      height: 90
+      id: end_error
+      position:
+        x: 1854
+        y: 150
+      positionAbsolute:
+        x: 1854
+        y: 150
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import json
+
+          def main(state_json: str = "", player_id: str = "", player_input: str = "", action: str = "") -> dict:
+              try:
+                  payload = json.loads(state_json or "{}")
+              except Exception:
+                  payload = {}
+              state = payload.get("state") or {}
+              memories = payload.get("memories") or []
+              recall_mode = payload.get("recall_mode") or ""
+              found = bool(payload.get("found"))
+
+              lines = []
+              if str(action or "").strip().lower() == "reset":
+                  lines.append("【本轮操作】重置记忆（注销会员卡）")
+              else:
+                  lines.append("【本轮操作】正常对话")
+              lines.append("【玩家会员卡号】" + str(player_id))
+              lines.append("【玩家这一轮说】" + (str(player_input) if str(player_input).strip() else "（他只是推门进来，没说话）"))
+
+              if not found:
+                  lines.append("【阿澈对这位客人的记忆】空——这是他第一次来这家店，你还不认识他。")
+              else:
+                  lines.append("【阿澈对这位客人的记忆】（来自 seekdb）")
+                  lines.append("- 到店次数：" + str(state.get("visit_count")))
+                  lines.append("- 羁绊值：" + str(state.get("bond_score")))
+                  lines.append("- 当前章节：" + str(state.get("chapter")))
+                  lines.append("- 常点：" + (str(state.get("favourite")) if state.get("favourite") else "（还没常点过什么）"))
+                  lines.append("- 专属梗：" + (str(state.get("running_joke")) if state.get("running_joke") else "（还没有）"))
+                  lines.append("- 上次他说：" + (str(state.get("last_input")) if state.get("last_input") else "（没有）"))
+                  lines.append("- 上次你回他：" + (str(state.get("last_reply")) if state.get("last_reply") else "（没有）"))
+                  lines.append("- 上次到店时间：" + str(state.get("last_seen_at")))
+
+              if memories:
+                  lines.append("【从历史对话里召回的往事】（seekdb 中文全文检索，召回方式：" + str(recall_mode) + "）")
+                  for index, memory in enumerate(memories, 1):
+                      lines.append(
+                          str(index) + ". [第" + str(memory.get("turn_no")) + "回合·" + str(memory.get("chapter") or "")
+                          + "] 玩家：" + str(memory.get("player_input") or "")
+                          + " ／ 阿澈：" + str(memory.get("npc_reply") or "")
+                      )
+              else:
+                  lines.append("【从历史对话里召回的往事】没有召回到任何往事。")
+
+              lines.append("")
+              lines.append("请以阿澈的身份回应。记忆为空就当第一次见面；记忆里有往事时，必须明确用上其中至少一条具体细节。")
+              return {"context": "\n".join(lines)}
+        code_language: python3
+        desc: 把 seekdb 里读到的状态与召回的往事，组装成给模型的上下文。
+        outputs:
+          context:
+            children: null
+            type: string
+        selected: false
+        title: 组装记忆上下文
+        type: code
+        variables:
+        - value_selector:
+          - code_build_request
+          - action
+          variable: action
+        - value_selector:
+          - code_build_request
+          - player_id
+          variable: player_id
+        - value_selector:
+          - code_build_request
+          - player_input
+          variable: player_input
+        - value_selector:
+          - code_check_read
+          - state_json
+          variable: state_json
+      height: 54
+      id: code_build_context
+      position:
+        x: 1550
+        y: 450
+      positionAbsolute:
+        x: 1550
+        y: 450
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 阿澈依据「记忆上下文」生成这一轮的回应。
+        memory:
+          enabled: false
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            max_tokens: 1024
+            temperature: 0.9
+          mode: chat
+          name: gpt-4o-mini
+          provider: openai_api_compatible
+          type: llm
+        prompt_template:
+        - role: system
+          text: |
+            你是深夜便利店的夜班店员「阿澈」，二十四岁，说话简短、有点冷幽默，但很在意每一个常客。
+            值夜班的时候，你会把客人的事记在收银机下面那本账本里——这本账本就是 seekdb 里的记忆。
+
+            规则：
+            1. 只输出一个 JSON 对象，不要输出任何解释文字，不要用 markdown 代码块。
+            2. JSON 字段固定为：reply、choices、chapter、bond_delta、favourite、running_joke。
+            3. reply 是你对客人的话，60~160 字，口语化，可以用 *…* 写一个简短动作。
+            4. choices 是 3~4 个客人接下来可以做的事，每条不超过 24 字，彼此不同、具体可做。
+            5. chapter 是当前的章节名，不超过 8 个字。
+            6. bond_delta 是 -3 到 3 之间的整数。
+            7. favourite 是这位客人常点的东西；没有就写空字符串。
+            8. running_joke 是你和这位客人之间的专属梗；没有就写空字符串。
+            9. 如果上下文写着「这是他第一次来」，你不能假装认识他。
+            10. 如果上下文里有召回的往事，你必须至少用到其中一条具体细节（他上次点了什么、说过什么、你们的梗）。
+        - role: user
+          text: '{{#code_build_context.context#}}'
+        retry_config:
+          enabled: false
+          exponential_backoff:
+            enabled: false
+            max_interval: 10000
+            multiplier: 2
+          max_retries: 1
+          retry_interval: 1000
+        selected: false
+        structured_output:
+          enabled: false
+        title: 阿澈回应
+        type: llm
+        variables: []
+        vision:
+          configs:
+            variable_selector: []
+          enabled: false
+      height: 98
+      id: llm_ache
+      position:
+        x: 1854
+        y: 450
+      positionAbsolute:
+        x: 1854
+        y: 450
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import json
+
+          def main(llm_text: str = "", player_id: str = "", player_input: str = "", action: str = "") -> dict:
+              raw = str(llm_text or "").strip()
+              text = raw
+              if text.startswith("```"):
+                  parts = text.split("```")
+                  text = parts[1] if len(parts) > 1 else text
+                  if text.lstrip().lower().startswith("json"):
+                      text = text.lstrip()[4:]
+              data = None
+              try:
+                  data = json.loads(text)
+              except Exception:
+                  start = text.find("{")
+                  end = text.rfind("}")
+                  if start != -1 and end > start:
+                      try:
+                          data = json.loads(text[start:end + 1])
+                      except Exception:
+                          data = None
+              note = "parsed"
+              if not isinstance(data, dict):
+                  data = {}
+                  note = "fallback"
+              reply = str(data.get("reply") or "").strip()
+              if not reply:
+                  reply = raw if raw else "……夜班的灯管闪了一下，阿澈什么也没说。"
+                  note = "fallback"
+              choices = data.get("choices")
+              if not isinstance(choices, list):
+                  choices = []
+              choices = [str(choice).strip() for choice in choices if str(choice).strip()][:4]
+              chapter = str(data.get("chapter") or "").strip()[:64]
+              try:
+                  bond = int(data.get("bond_delta") or 0)
+              except Exception:
+                  bond = 0
+              if bond > 3:
+                  bond = 3
+              if bond < -3:
+                  bond = -3
+              favourite = str(data.get("favourite") or "").strip()[:128]
+              running_joke = str(data.get("running_joke") or "").strip()[:256]
+              payload = {
+                  "player_id": str(player_id or ""),
+                  "player_input": str(player_input or ""),
+                  "npc_reply": reply[:1000],
+                  "choices": choices,
+                  "chapter": chapter,
+                  "bond_delta": bond,
+                  "favourite": favourite,
+                  "running_joke": running_joke,
+                  "action": str(action or "continue"),
+              }
+              return {
+                  "save_body": json.dumps(payload, ensure_ascii=False),
+                  "reply": reply,
+                  "choices_text": "\n".join("- " + choice for choice in choices),
+                  "parse_note": note,
+              }
+        code_language: python3
+        desc: 解析模型返回的 JSON，并组装写回 seekdb 的请求体。
+        outputs:
+          choices_text:
+            children: null
+            type: string
+          parse_note:
+            children: null
+            type: string
+          reply:
+            children: null
+            type: string
+          save_body:
+            children: null
+            type: string
+        selected: false
+        title: 解析模型输出
+        type: code
+        variables:
+        - value_selector:
+          - code_build_request
+          - action
+          variable: action
+        - value_selector:
+          - code_build_request
+          - player_id
+          variable: player_id
+        - value_selector:
+          - code_build_request
+          - player_input
+          variable: player_input
+        - value_selector:
+          - llm_ache
+          - text
+          variable: llm_text
+      height: 54
+      id: code_parse_llm
+      position:
+        x: 2158
+        y: 450
+      positionAbsolute:
+        x: 2158
+        y: 450
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          type: no-auth
+        body:
+          data: '{{#code_parse_llm.save_body#}}'
+          type: json
+        desc: 把这一轮对话写回 seekdb（action=reset 时执行重置）。
+        headers: 'Content-Type:application/json'
+        method: post
+        params: ''
+        retry_config:
+          enabled: true
+          exponential_backoff:
+            enabled: false
+            max_interval: 10000
+            multiplier: 2
+          max_retries: 2
+          retry_interval: 1000
+        selected: false
+        timeout:
+          connect: 10
+          read: 30
+          write: 30
+        title: 写回记忆
+        type: http-request
+        url: http://host.docker.internal:8077/api/turn
+        variables: []
+      height: 122
+      id: http_save_turn
+      position:
+        x: 2462
+        y: 450
+      positionAbsolute:
+        x: 2462
+        y: 450
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: |
+          import json
+
+          def main(save_body: str = "", reply: str = "", choices_text: str = "", action: str = "") -> dict:
+              try:
+                  result = json.loads(save_body or "{}")
+              except Exception:
+                  result = {}
+              if result.get("ok") is not True:
+                  reason = str(result.get("message") or "记忆库写入失败，本轮对话没有被保存。")
+                  return {
+                      "answer": "⚠️ " + reason + "\n\n阿澈的话已经说出口，但没有写进账本——他不会假装自己记住了你。\n"
+                                "请检查 seekdb 服务后重试。"
+                  }
+              if str(action or "").strip().lower() == "reset":
+                  return {
+                      "answer": "🧾 会员卡 " + str(result.get("player_id") or "") + " 已注销，阿澈把记着你的那几页撕掉了。\n\n"
+                                + str(reply)
+                  }
+              state = result.get("state") or {}
+              lines = [str(reply), ""]
+              if str(choices_text or "").strip():
+                  lines.append("你可以：")
+                  lines.append(str(choices_text))
+              lines.append("")
+              lines.append(
+                  "（已记在账本里：第 " + str(state.get("visit_count")) + " 次到店 ｜ 羁绊 "
+                  + str(state.get("bond_score")) + " ｜ 章节「" + str(state.get("chapter")) + "」）"
+              )
+              return {"answer": "\n".join(lines)}
+        code_language: python3
+        desc: 组合最终答复；写入失败时明确说明这一轮没有被记住。
+        outputs:
+          answer:
+            children: null
+            type: string
+        selected: false
+        title: 生成答复
+        type: code
+        variables:
+        - value_selector:
+          - code_build_request
+          - action
+          variable: action
+        - value_selector:
+          - code_parse_llm
+          - choices_text
+          variable: choices_text
+        - value_selector:
+          - code_parse_llm
+          - reply
+          variable: reply
+        - value_selector:
+          - http_save_turn
+          - body
+          variable: save_body
+      height: 54
+      id: code_final
+      position:
+        x: 2766
+        y: 450
+      positionAbsolute:
+        x: 2766
+        y: 450
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - code_final
+          - answer
+          value_type: string
+          variable: answer
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: end_ok
+      position:
+        x: 3070
+        y: 450
+      positionAbsolute:
+        x: 3070
+        y: 450
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.6
