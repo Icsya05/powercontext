@@ -84,6 +84,26 @@
 > 且尚未进入 `langgenius/dify-plugins`（追踪 issue #1837），评审侧无法稳定复现。
 > 赛题允许 seekdb / PowerContext 二选一，因此选择更易复现的 seekdb 路线。详见 `REQUIREMENTS.md` §5.1。
 
+### 2.1 seekdb 具体承担什么（对应官方题面「按依赖补充的材料」）
+
+官方题面允许 seekdb 有两种用法：**(a) 作为 Dify 部署时的数据库**，或 **(b) 为应用提供数据存储、
+查询与检索能力**。本作品选 **(b)**，所以：
+
+| 项 | 本作品的做法 |
+| --- | --- |
+| Dify 版本 / 适配分支 | **1.17.1**（官方插件 README 的 CI 固定版本）。**未做任何 Dify 适配改动**，不需要适配分支 |
+| seekdb 版本 | `oceanbase/seekdb:1.4.0-100000172026082615`（对应 seekdb v1.4.0） |
+| 数据库用途 | **应用数据存储 + 检索**：`npc_player` 玩家聚合状态、`npc_turn` 对话日志，外加中文全文索引用于召回往事。**不**承担 Dify 自身的元数据存储 |
+| 部署配置 | `dify/deploy/docker-compose.yml`（含数据卷、健康检查、依赖顺序） |
+| 初始化方式 | `python dify/deploy/init_db.py --env dify/.env`（建库、建表、建全文索引，幂等） |
+| 实际读写验证 | `python dify/validation/service_checks.py`（真实写入 / 读回 / 全文检索召回 / 隔离 / 重置 / 故障），证据见 `dify/validation/` |
+| 适配修改源码 | 无（未改 Dify 源码，故无需附源码） |
+
+> 为什么不用 (a)：让 seekdb 顶替 Dify 的 PostgreSQL 需要改 Dify 的 SQL 方言与迁移逻辑，
+> 官方题面称之为「适配分支」并要求附源码。风险、工期和评审环境复现难度都远高于收益，
+> 且不利于把 seekdb 的能力用在「应用功能」上（题面明确说「指定技术必须在应用功能或部署运行中
+> 实际发挥作用」，本作品让 seekdb 直接参与每一轮对话的读写与召回）。
+
 ---
 
 ## 3. 目录结构
