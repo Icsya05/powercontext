@@ -137,13 +137,25 @@ dify/
 ├── deploy/
 │   ├── docker-compose.yml        seekdb + 记忆服务
 │   ├── init_db.py                建库建表建索引
-│   └── check_dsl.py              DSL 静态检查（离线可用）
+│   ├── capture_evidence.py       行级数据库证据导出（真写真读 + 全文召回 + 隔离）
+│   ├── setup_dify_console.py     一次性创建 Dify 控制台管理员账号
+│   ├── install_model_provider_plugin.py  安装 OpenAI 兼容模型供应商插件
+│   ├── dump_state.py             导出当前表 / 索引 / 玩家
+│   ├── check_dsl.py              DSL 静态检查（离线可用）
+│   ├── check_packaging.py        部署包静态检查（离线可用）
+│   └── start_dify.py             Dify 启动 + SSRF 白名单写入
 ├── examples/
 │   └── walkthrough.md            完整验证样例（初始状态 / 输入 / 步骤 / 预期）
 └── validation/
     ├── service_checks.py         记忆服务端到端检查（真实读写 / 隔离 / 重置 / 故障）
     ├── service_checks.md         上一次运行的证据
-    └── service_checks.json       上一次运行的原始数据
+    ├── service_checks.json       上一次运行的原始数据
+    ├── dsl_roundtrip.py          DSL 往返检查（导入 / 导出 / 重导入 / 逐字节比对）
+    ├── dsl_roundtrip.md          上一次运行的证据
+    ├── dsl_roundtrip.json        上一次运行的原始数据
+    ├── workflow_checks.py        Dify 全链路检查（导入 / 真跑 / 导出 / 重导入 / 再跑）
+    ├── workflow_checks.md        上一次运行的证据
+    └── workflow_checks.json      上一次运行的原始数据
 ```
 
 ---
@@ -217,12 +229,55 @@ python dify/deploy/start_dify.py --dify-src /path/to/dify
 Dify 默认入口：<http://localhost/install>（首次访问设置管理员账号），
 控制台 <http://localhost/apps>。
 
-### 5.5 配置模型
+### 5.5 配置模型（MiniMax，OpenAI 兼容）
 
-Dify 控制台 → 右上角头像 → **设置 → 模型供应商** → 安装并配置任意 OpenAI 兼容提供商
-（例如 `openai_api_compatible`，填入自己的 API Key 与 Base URL）。
+> 模型 Key 只填在 Dify 界面里。**不要**写进本仓库的任何文件，也不要发到聊天里。
 
-> 模型 Key 只填在 Dify 界面里。**不要**写进本仓库的任何文件。
+**第一步：安装 OpenAI 兼容模型供应商插件**（不需要任何凭据，可以脚本化）
+
+```bash
+python dify/deploy/install_model_provider_plugin.py --dify-url http://localhost
+```
+
+脚本会从 Dify 官方 marketplace 查最新包标识并安装 `langgenius/openai_api_compatible`。
+也可以在界面里手动装：**设置 → 模型供应商 → 安装模型供应商 → 搜 "OpenAI-API-compatible"**。
+
+**第二步：在界面上录入 MiniMax 凭据**
+
+Dify 控制台 → 右上角头像 → **设置 → 模型供应商** → 找到
+**OpenAI-API-compatible** → **设置模型**。表单字段与填法：
+
+| 表单字段（中文 / 英文） | 填什么 | 说明 |
+| --- | --- | --- |
+| 模型显示名称 / Model display name | 例如 `MiniMax-M2-her` | 界面里显示的名字，随便起 |
+| API Key | 你的 MiniMax API Key | 密码框。**只填在 Dify 里** |
+| API Base URL / Endpoint URL | 见下方表格 | 必填 |
+| 模型名称 / Model Name | 例如 `MiniMax-M3` | 必须是接口里真实存在的模型全称 |
+| 对话类型 / Completion mode | `chat` | 默认即可 |
+| 模型上下文长度 / Context size | `1000000`（M3）或 `204800`（M2.x）或 `65536`（M2-her） | 必填，默认是 4096，要改 |
+
+**MiniMax 的 OpenAI 兼容地址（按账号注册区域二选一，不要混用）**
+
+| 账号区域 | API Base URL | Chat Completions 路径 |
+| --- | --- | --- |
+| 国际 / Global | `https://api.minimax.io/v1` | `https://api.minimax.io/v1/chat/completions` |
+| 中国大陆 | `https://api.minimaxi.com/v1` | `https://api.minimaxi.com/v1/chat/completions` |
+
+> MiniMax 官方文档明确：**全球站的 Key 发到中国大陆域名（或反过来）会认证失败**。
+> 请按你账号的注册区域选，且不要把两边的 Key 混用。
+
+**可用模型名**（以你账号实际开通的为准）
+
+`MiniMax-M3`（1,000,000 上下文）、`MiniMax-M2.7` / `MiniMax-M2.7-highspeed`、
+`MiniMax-M2.5` / `MiniMax-M2.5-highspeed`、`MiniMax-M2.1` / `MiniMax-M2.1-highspeed`、
+`MiniMax-M2`、`M2-her`（64K，官方定位就是「面向对话场景，支持角色扮演与多轮对话」）。
+
+> 本作品的 NPC 需要多轮角色扮演与一致性，**`M2-her` 是最贴合的模型**；
+> 需要更强推理时用 `MiniMax-M3`。
+
+**第三步：把模型绑进工作流**
+
+打开应用 → 画布上点 `llm_ache` 节点 → 模型下拉框选你刚建的 MiniMax 模型 → 保存并发布。
 
 ### 5.6 放行记忆服务的网络地址（**必做**，否则 HTTP 节点会被 SSRF 拦截）
 
@@ -320,6 +375,33 @@ python dify/validation/workflow_checks.py \
 它使用 Dify 控制台 API（与 Dify 官方 e2e 同一套流程）完成导入、发布、运行、导出、重新导入，
 并用记忆服务接口核对数据库里的真实行。报告写入 `dify/validation/workflow_checks.md`，
 导出的 DSL 写入 `dify/validation/dsl_exported.yml`。
+
+**不需要模型也能跑的 DSL 往返检查**（只要 Dify 起来了就能做，用来证明「DSL 可导入、可导出、
+可重新导入且逐字节一致」）：
+
+```bash
+python dify/validation/dsl_roundtrip.py --dify-url http://localhost
+```
+
+报告写入 `dify/validation/dsl_roundtrip.md` 与 `.json`。
+
+**行级数据库证据导出**（把 seekdb 里真实存在的对话行打出来）：
+
+```bash
+python dify/deploy/capture_evidence.py
+```
+
+它会通过 HTTP 接口写入两轮对话，再用 PyMySQL 直接读回 `npc_turn` / `npc_player` 的原始行，
+并演示 `MATCH ... AGAINST` 的中文全文召回与玩家隔离，最后清理测试数据。
+
+**首次安装 Dify 控制台管理员账号**（一次性）：
+
+```bash
+python dify/deploy/setup_dify_console.py --dify-url http://localhost
+```
+
+账号密码会写进 git-ignored 的 `dify/.env`（`DIFY_EMAIL` / `DIFY_PASSWORD`），
+验证脚本会自动读取，不需要每次手敲参数。
 
 ---
 
