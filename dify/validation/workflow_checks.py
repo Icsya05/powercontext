@@ -161,13 +161,23 @@ class Console:
         self.json_request("POST", f"/console/api/apps/{app_id}/api-enable", json_body={"enable_api": True})
 
     def create_app_api_key(self, app_id: str) -> str | None:
-        """Best effort: mint an app API key so the service API can be used."""
-        for payload in ({"type": "app"}, {}):
-            status, body = self.json_request("POST", f"/console/api/apps/{app_id}/api-keys", json_body=payload)
-            if status in (200, 201):
-                token = body.get("token") or body.get("api_key")
-                if token:
-                    return str(token)
+        """Best effort: mint an app API key so the service API can be used.
+
+        Dify's ``POST /console/api/apps/<id>/api-keys`` handler takes no
+        request body - it creates a key and returns it.
+        """
+        for payload in (None, {"type": "app"}):
+            status, body = self.json_request(
+                "POST", f"/console/api/apps/{app_id}/api-keys", json_body=payload
+            )
+            if status not in (200, 201):
+                continue
+            candidates = body if isinstance(body, list) else [body]
+            for candidate in candidates:
+                if isinstance(candidate, dict):
+                    token = candidate.get("token") or candidate.get("api_key")
+                    if token:
+                        return str(token)
         return None
 
     def workflow_runs(self, app_id: str) -> list[dict[str, Any]]:
