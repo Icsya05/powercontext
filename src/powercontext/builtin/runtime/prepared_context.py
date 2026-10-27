@@ -20,7 +20,7 @@ import json
 import math
 import re
 from collections import Counter, deque
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from dataclasses import dataclass, replace
 from heapq import heappop, heappush
 from itertools import chain, pairwise
@@ -858,26 +858,43 @@ def _evidence_candidates(
     return spans
 
 
-def _evidence_window_anchors(
-    fragment: PreparedEvidenceFragment, weights: dict[str, float], max_bytes: int
-) -> tuple[int, ...]:
-    """Keep eight compact query clusters with bounded state and a linear token scan."""
+def _query_occurrences(text: str, weights: dict[str, float]) -> Iterator[tuple[int, int, str, int, int]]:
+    """Yield query positions and cumulative JSON-escaped UTF-8 content offsets."""
 
-    window: deque[tuple[int, int, str]] = deque()
-    counts: Counter[str] = Counter()
-    best: list[tuple[float, int, int]] = []
-    coverage = 0.0
-    for match in re.finditer(r"[^\W_]+", fragment.text):
+    cursor = byte_offset = 0
+    for match in re.finditer(r"[^\W_]+", text):
         term = _evidence_term(match[0])
         if term not in weights:
             continue
-        window.append((match.start(), match.end(), term))
+        byte_offset += len(json.dumps(text[cursor : match.start()], ensure_ascii=False).encode("utf-8")) - 2
+        byte_start = byte_offset
+        byte_offset += len(json.dumps(match[0], ensure_ascii=False).encode("utf-8")) - 2
+        cursor = match.end()
+        yield match.start(), match.end(), term, byte_start, byte_offset
+
+
+def _evidence_window_anchors(
+    fragment: PreparedEvidenceFragment, weights: dict[str, float], max_bytes: int
+) -> tuple[int, ...]:
+    """Keep seven fitting query clusters and one occurrence fallback."""
+
+    window: deque[tuple[int, int, str, int, int]] = deque()
+    counts: Counter[str] = Counter()
+    best: list[tuple[float, int, int]] = []
+    fallback: tuple[float, int] | None = None
+    coverage = 0.0
+    metadata_bytes = len(_render_evidence((replace(fragment, text=""),)).encode("utf-8"))
+    # Reserve the largest possible start-coordinate width for this sentence.
+    metadata_bytes += len(str(fragment.end)) - len(str(fragment.start))
+    body_bytes = max(0, max_bytes - metadata_bytes)
+    for start, end, term, byte_start, byte_end in _query_occurrences(fragment.text, weights):
+        if fallback is None or weights[term] > fallback[0]:
+            fallback = (weights[term], fragment.start + (start + end) // 2)
+        window.append((start, end, term, byte_start, byte_end))
         counts[term] += 1
         if counts[term] == 1:
             coverage += weights[term]
-        # A byte-limited literal can never span more than max_bytes Python characters.
-        # Actual UTF-8, citation and JSON costs are checked by the fitter below.
-        while window and match.end() - window[0][0] > max_bytes:
+        while window and byte_end - window[0][3] > body_bytes:
             removed = window.popleft()[2]
             counts[removed] -= 1
             if not counts[removed]:
@@ -889,9 +906,12 @@ def _evidence_window_anchors(
         width = window[-1][1] - window[0][0]
         center = fragment.start + (window[0][0] + window[-1][1]) // 2
         heappush(best, (coverage, -width, -center))
-        if len(best) > 8:
+        if len(best) > 7:
             heappop(best)
-    return tuple(dict.fromkeys(-item[2] for item in sorted(best, reverse=True)))
+    anchors = [-item[2] for item in sorted(best, reverse=True)]
+    if fallback is not None:
+        anchors.append(fallback[1])
+    return tuple(dict.fromkeys(anchors))
 
 
 def _fit_centered_evidence(
@@ -926,7 +946,7 @@ def _fit_evidence_window(
             continue
         terms = _evidence_terms(fitted[0].text)
         quality = (sum(weight for term, weight in weights.items() if term in terms), len(fitted[0].text))
-        if quality > best_quality:
+        if quality[0] > 0 and quality > best_quality:
             selected, best_quality = fitted, quality
     return selected
 

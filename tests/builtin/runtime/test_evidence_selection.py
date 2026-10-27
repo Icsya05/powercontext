@@ -102,6 +102,23 @@ def test_window_cluster_ranking_accounts_for_unicode_byte_cost():
     assert result.context.content_bytes <= 1200
 
 
+def test_oversized_unicode_clusters_do_not_hide_a_compact_fitting_cluster():
+    wide = "alpha " + "汉" * 400 + " beta " + "汉" * 400 + " gamma " + "汉" * 400 + " delta "
+    text = (wide + "汉" * 2200) * 10 + " alpha beta gamma"
+    result = build("alpha beta gamma delta", (group("local", text),), 1800)
+    selected = set(result.fragments[0].text.split())
+    assert len(selected & {"alpha", "beta", "gamma", "delta"}) >= 3
+    assert result.context.content_bytes <= 1800
+
+
+def test_widely_separated_query_terms_do_not_produce_an_irrelevant_window():
+    text = " ".join(["alpha " + "noise " * 150 + "beta " + "noise " * 230] * 10)
+    result = build("alpha beta", (group("local", text),), 1200)
+    assert result.fragments
+    assert {"alpha", "beta"} & set(result.fragments[0].text.split())
+    assert result.fragments[0].text == text[result.fragments[0].start : result.fragments[0].end]
+
+
 @pytest.mark.parametrize("value", [1, "true", None])
 def test_selection_flag_is_strict(value):
     with pytest.raises(ValidationError):
