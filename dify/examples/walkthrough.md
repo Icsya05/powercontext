@@ -17,6 +17,13 @@
 > 核对数据库用：
 >
 > ```bash
+> # 方式 0：直接查 seekdb 并打印真实行（最快）
+> python dify/deploy/dump_state.py --env dify/.env
+> python dify/deploy/dump_state.py --env dify/.env --player-id demo_001 --json
+> ```
+>
+>
+> ```bash
 > # 方式 A：服务接口（不需要 mysql 客户端）
 > curl http://127.0.0.1:8077/api/admin/players
 > curl "http://127.0.0.1:8077/api/admin/turns?player_id=demo_001"

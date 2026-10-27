@@ -175,6 +175,12 @@ cp .env.example .env
 docker compose up -d
 ```
 
+或者用仓库里准备好的脚本（会自动生成 `SECRET_KEY` 并写入 §5.6 需要的 SSRF 放行规则）：
+
+```bash
+python dify/deploy/start_dify.py --dify-src /path/to/dify
+```
+
 Dify 默认入口：<http://localhost/install>（首次访问设置管理员账号），
 控制台 <http://localhost/apps>。
 

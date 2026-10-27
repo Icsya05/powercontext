@@ -85,6 +85,14 @@
    `body.data` 是字符串（`type: json` 时是 JSON 文本）。为避免中文进 query string，
    本作品改用 `POST` + JSON body，并由 code 节点用 `json.dumps` 生成，
    顺带解决用户输入里带引号会破坏 JSON 的问题。
+6. **在 Windows 上原生编译 seekdb 的两个坑**（本机没有 Docker 时试过，供参考）：
+   - 源码路径含中文时，CMake 配置阶段会以 `0xC0000409` 直接崩溃（无报错信息）。
+     用 `subst S: <目录>` 映射成纯 ASCII 盘符后即可正常配置。
+   - 依赖初始化会从 `https://mirrors.oceanbase.com/oceanbase/development-kit/windows/11/x86_64`
+     下载 cmake / ninja / LLVM 18 / flex-bison / vcpkg 等（约 367 秒），工具链随仓库走。
+   - 配置阶段 CMake 会误用 PATH 里的 mingw `ld.exe`，报 `cannot find shell32.lib`；
+     需要让 clang-cl 走 `lld-link` 并指向 Windows SDK 的 import lib。
+   - 结论：这条路能做，但比 Docker 麻烦；正式交付仍以 Docker 路线为准。
 
 ## 6. 卡点与本人最少操作
 
