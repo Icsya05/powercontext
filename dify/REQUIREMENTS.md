@@ -56,10 +56,10 @@
 
 | 编号 | 要求 | 本任务落实 | 状态 |
 | --- | --- | --- | --- |
-| A1 | DSL 可导入；模型、插件、数据、后端可按说明配置；应用能接收输入并返回结果 | `workflow.yml` + `README.md` 部署步骤 | 待真实 Dify 验证 |
-| A2 | 至少一组完整验证样例：初始条件、输入、操作步骤、预期表现 | `examples/walkthrough.md` + `validation/` | 样例文档已写，待真实运行补证据 |
-| A3 | 技术结合有效：可由数据库读写记录、节点执行记录、查询结果核对 | `dify/validation/service_checks.py` + `workflow_checks.py` | 服务侧已实现，真实运行待 Docker |
-| A4 | 过程可复现：评审不依赖作者本地未交付的数据 / 配置 / 服务状态 | `deploy/docker-compose.yml` + `.env.example` + 初始化脚本 | 已实现，待真实运行验证 |
+| A1 | DSL 可导入；模型、插件、数据、后端可按说明配置；应用能接收输入并返回结果 | `workflow.yml` + `README.md` 部署步骤 | ✅ **已在真实 Dify 1.17.1 上验证**：导入 → 发布 → 真跑（MiniMax-M3，`status=succeeded`）→ 导出 → 干净应用重导入 → 再跑仍成功；`workflow_checks.py` 16/16 |
+| A2 | 至少一组完整验证样例：初始条件、输入、操作步骤、预期表现 | `examples/walkthrough.md` + `validation/` | ✅ 文档 + **真实运行证据**齐备（`service_checks.md` 10/10、`workflow_checks.md` 16/16、`dsl_roundtrip.md` 7/7） |
+| A3 | 技术结合有效：可由数据库读写记录、节点执行记录、查询结果核对 | `dify/validation/service_checks.py` + `workflow_checks.py` | ✅ **已核对真实记录**：seekdb 行级证据（`capture_evidence.py` 直读 `npc_turn` / `npc_player`）+ Dify 节点级执行轨迹 |
+| A4 | 过程可复现：评审不依赖作者本地未交付的数据 / 配置 / 服务状态 | `deploy/docker-compose.yml` + `.env.example` + 初始化脚本 | ✅ **已验证**：`compose` 两服务起得来、`.env.example` 全占位值、DSL 带 `dependencies` 导入时自动装插件 |
 | A5 | （附加，官方未写但会决定成败）Dify 的 SSRF 代理默认拒绝私有地址，本地后端必须显式放行 | `README.md` §5.6：`SSRF_PROXY_ALLOW_PRIVATE_DOMAINS=host.docker.internal` | ✅ 已从 Dify 1.17.1 源码核实（`docker/ssrf_proxy/squid.conf.template` 有 `http_access deny to_private_networks`；`docker-entrypoint.sh` 依据 `SSRF_PROXY_ALLOW_PRIVATE_IPS` / `SSRF_PROXY_ALLOW_PRIVATE_DOMAINS` 生成放行规则） |
 
 ### 2.4 提交材料（S1 §4）
@@ -73,8 +73,8 @@
 | M5 | 外部服务获取与配置、Dify 访问服务所需网络条件、资源条件、已知限制 | `README.md` | 已实现 |
 | M6 | 配置示例只用占位值，不提交真实 API Key / 密码 | `.env.example`（`YOUR_*` 占位） | ✅ 已遵守 |
 | M7 | 复用公开工作流 / 代码 / 数据须注明来源与改动 | `README.md` §来源与许可 | 已实现 |
-| M8 | 验证样例：初始状态、输入与顺序、预期交互、实际运行结果与截图/日志证据 | `examples/`、`validation/` | 文档已写，真实证据待补 |
-| M9 | 说明 seekdb / PowerContext 在应用功能或部署运行中的作用及对应记录 | `README.md`、`validation/service_checks.md` | 待真实运行 |
+| M8 | 验证样例：初始状态、输入与顺序、预期交互、实际运行结果与截图/日志证据 | `examples/`、`validation/` | ✅ 文档 + **真实证据**齐备：`validation/service_checks.md`（10/10）、`validation/workflow_checks.md`（16/16，含真实 NPC 回复原文）、`validation/dsl_roundtrip.md`（7/7）、`validation/dsl_exported.yml` |
+| M9 | 说明 seekdb / PowerContext 在应用功能或部署运行中的作用及对应记录 | `README.md`、`validation/service_checks.md` | ✅ 已说明且**有真实记录**：seekdb 承载 `npc_player` + `npc_turn` + `FULLTEXT INDEX ... WITH PARSER ik`，每轮对话真实 INSERT/UPDATE/SELECT，召回走 `MATCH(content) AGAINST` |
 | M10 | 涉及 seekdb 部署 Dify 时须补 Dify 版本/适配分支、seekdb 版本、数据库用途、部署配置、初始化方式、实际读写验证步骤 | ➖ 本作品**不**用 seekdb 部署 Dify，而是用 seekdb 作应用数据存储，因此不适用；但仍提供 seekdb 版本、用途、部署配置与读写验证 | 见 `README.md` §seekdb 章节 |
 | M11 | 自定义后端：源码、依赖清单、配置示例、启动说明 | `dify/service/`、`dify/deploy/` | 已实现 |
 
@@ -177,10 +177,13 @@
 | 分支建立 | ✅ `ecosystem/zyj-dify`，祖先含官方基线 `d647275c` |
 | 记忆服务代码 | ✅ 已实现（`dify/service/`） |
 | 错误处理 | ✅ 已实现并**已真实验证**（服务在 seekdb 不可达时返回 `DB_UNAVAILABLE` 与可读中文提示） |
-| Dify DSL | ✅ 已编写（`dify/workflow.yml`），**待真实 Dify 导入 / 导出 / 再导入验证** |
-| seekdb 真实读写 | ⏳ 待 Docker 就绪后执行 |
-| 完整验证样例 | ⏳ 文档已写，真实运行证据待补 |
-| 提测 | ❌ 未开始（需 U2–U4） |
+| Dify DSL | ✅ **已完成真实验证**：`dify/workflow.yml` 现为 Dify 真实导出版；`workflow_checks.py` **16/16 通过**（含真跑、真写库、新会话恢复、玩家隔离、重置、导出、干净应用重导入、再跑）；`dsl_roundtrip.py` **7/7 通过**（重导入后再导出**逐字节一致**） |
+| seekdb 真实读写 | ✅ **已完成**：`oceanbase/seekdb:1.4.0-100000172026082615` 容器 healthy，`db.ok=true`，`full-text parser: ik`，`service_checks.py` **10/10 通过** |
+| 真实模型对话 | ✅ **已完成**：MiniMax-M3（`langgenius/openai_api_compatible/openai_api_compatible`）真实生成回复，`status=succeeded`，11 节点全执行 |
+| 本机运行环境 | ✅ Docker Desktop 4.97.0.244584 + WSL 3.0.4.0 已装（官方 SHA256 校验通过），引擎 `hello-world` 通过 |
+| 完整验证样例 | ✅ 文档 + 真实证据齐备（`examples/walkthrough.md` + `validation/*.md` / `*.json` + `dsl_exported.yml`） |
+| 提测 | ❌ 未开始（需 zyj 登录平台 + PAT，见 `HANDOFF_ZYJ.md` §6） |
+| 生态分支合流 | ❌ 未开始（需队长决定，见 `HANDOFF_ZYJ.md` §9） |
 | 官方成绩 | ❌ 无（不预��任何分数） |
 
 ---

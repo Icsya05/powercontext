@@ -5,6 +5,15 @@
 
 所有样例都可以在 Dify 应用的「运行 / 测试运行」面板里按顺序执行。
 
+> ✅ **这些样例已经在真实环境跑过了**，对应的实际输出见：
+> - `dify/validation/workflow_checks.md`（16/16 通过，含真实 NPC 回复原文与 seekdb 行级记录）
+> - `dify/validation/service_checks.md`（10/10 通过）
+> - `dify/validation/dsl_roundtrip.md`（7/7 通过，导出后重导入逐字节一致）
+> - `dify/validation/dsl_exported.yml`（Dify 真实导出的 DSL）
+>
+> 运行环境：Docker Desktop 4.97.0.244584 + Dify 1.17.1 + `oceanbase/seekdb:1.4.0-100000172026082615`
+> + MiniMax-M3。
+
 > 运行前提：`dify/README.md` §5.1–§5.7 已完成（seekdb + 记忆服务 + Dify + 模型 + 导入 DSL）。
 >
 > ⚠️ **最容易踩的坑**：Dify 的 HTTP 节点走自带的 Squid SSRF 代理，默认拒绝一切私有地址。

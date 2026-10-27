@@ -555,8 +555,8 @@ workflow:
             max_tokens: 1024
             temperature: 0.9
           mode: chat
-          name: gpt-4o-mini
-          provider: openai_api_compatible
+          name: MiniMax-M3
+          provider: langgenius/openai_api_compatible/openai_api_compatible
           type: llm
         prompt_template:
         - role: system

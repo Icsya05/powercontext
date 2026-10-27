@@ -277,7 +277,12 @@ Dify 控制台 → 右上角头像 → **设置 → 模型供应商** → 找到
 
 **第三步：把模型绑进工作流**
 
-打开应用 → 画布上点 `llm_ache` 节点 → 模型下拉框选你刚建的 MiniMax 模型 → 保存并发布。
+交付的 `dify/workflow.yml` 已经把 `llm_ache` 节点绑到
+`langgenius/openai_api_compatible/openai_api_compatible` 的 `MiniMax-M3`。
+你按上表建好同名模型后，导入 DSL 就能直接跑，**不需要再改画布**。
+
+如果你用的模型名和上面不一样（比如 `M2-her`），导入后在画布上点 `llm_ache` 节点 →
+模型下拉框改成你的模型 → 保存并发布即可（改完记得重新导出 DSL）。
 
 ### 5.6 放行记忆服务的网络地址（**必做**，否则 HTTP 节点会被 SSRF 拦截）
 
@@ -345,6 +350,31 @@ Dify 控制台 → **工作室 → 创建应用 → 导入 DSL 文件** → 选�
 ---
 
 ## 6. 验证样例
+
+### 6.0 本机真实跑出来的结果
+
+以下都是**真实执行**的输出，不是模拟：
+
+| 检查 | 命令 | 结果 |
+| --- | --- | --- |
+| DSL 静态检查 | `python dify/deploy/check_dsl.py` | `DSL OK: 13 nodes, 12 edges`；6 个 code 节点全部实际执行 |
+| 部署包静态检查 | `python dify/deploy/check_packaging.py` | `packaging OK` |
+| 记忆服务端到端 | `python dify/validation/service_checks.py --base-url http://127.0.0.1:8077` | **10 / 10 通过** |
+| Dify 全链路 | `python dify/validation/workflow_checks.py --dify-url http://localhost` | **16 / 16 通过** |
+| DSL 往返 | `python dify/validation/dsl_roundtrip.py --dify-url http://localhost` | **7 / 7 通过**（重导入后再导出逐字节一致） |
+| 行级数据库证据 | `python dify/deploy/capture_evidence.py` | 打印 `npc_turn` / `npc_player` 真实行；`recall_memories(player,'伞') -> mode=fulltext` |
+
+运行环境：Docker Desktop 4.97.0.244584（Server 29.9.2）+ Dify 1.17.1（16 容器）
++ `oceanbase/seekdb:1.4.0-100000172026082615`，模型 MiniMax-M3。
+
+真实对话片段（`status=succeeded`，11 个节点全执行，1390 tokens）：
+
+```
+*玻璃门一开，裹进来的雨气把关东煮的热雾撞散了些。我从保温柜里摸出一瓶热牛奶，瓶身还烫。*
+"第一次来？先把湿外套甩到肩上，别滴到货架上。热牛奶五块，扫码还是现金？"
+```
+
+### 6.1 手动验证样例
 
 完整的验证样例（初始状态、输入、操作顺序、预期表现）在 **`examples/walkthrough.md`**，
 覆盖赛题验收要求的五条：

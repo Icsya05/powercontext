@@ -1,6 +1,6 @@
 # Dify DSL 往返验证记录（导入 → 发布 → 导出 → 重导入 → 再导出）
 
-- 运行时间：2026-10-27T19:45:36
+- 运行时间：2026-10-27T22:04:28
 - 结果：**7 通过 / 0 失败**
 
 | # | 检查项 | 结果 | 说明 |
@@ -28,8 +28,8 @@
 
 ```json
 {
-  "app_id": "4ada9b02-7143-45da-be28-fb7839946da6",
-  "dsl_bytes": 28944
+  "app_id": "e88c96eb-a7e2-42c1-aefc-840615502830",
+  "dsl_bytes": 29271
 }
 ```
 
@@ -46,7 +46,7 @@
 
 ```json
 {
-  "export_bytes": 29021,
+  "export_bytes": 29271,
   "dsl_version": "0.7.0",
   "app_mode": "workflow",
   "nodes": 13,
@@ -67,8 +67,8 @@
       "id": "llm_ache",
       "type": "llm",
       "title": "阿澈回应",
-      "model_provider": "openai_api_compatible",
-      "model_name": "gpt-4o-mini",
+      "model_provider": "langgenius/openai_api_compatible/openai_api_compatible",
+      "model_name": "MiniMax-M3",
       "url": null,
       "method": null
     }
@@ -100,7 +100,7 @@
 
 ```json
 {
-  "new_app_id": "eb2088af-843a-4115-90c8-664354e17c90"
+  "new_app_id": "e00b58e1-6a2e-4d3e-bec8-cc3df4176cca"
 }
 ```
 
@@ -109,7 +109,7 @@
 ```json
 {
   "identical": true,
-  "bytes": 29021,
-  "app_id": "eb2088af-843a-4115-90c8-664354e17c90"
+  "bytes": 29271,
+  "app_id": "e00b58e1-6a2e-4d3e-bec8-cc3df4176cca"
 }
 ```

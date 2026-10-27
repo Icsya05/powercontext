@@ -44,6 +44,12 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = Path(__file__).resolve().parent
 DEFAULT_DSL = REPO_ROOT / "dify" / "workflow.yml"
 
+# Make ``dify.service.config`` importable when this file is run directly
+# (``python dify/validation/workflow_checks.py``): without this the script
+# starts with ``dify/validation`` on sys.path and the import below fails.
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 
 class ValidationError(RuntimeError):
     """Raised when a validation step does not meet its expectation."""
@@ -306,15 +312,16 @@ def run_checks(args: argparse.Namespace) -> list[dict[str, Any]]:
 
     app_id = app_id_holder["app_id"]
 
-    record(
-        "publish_and_enable_api",
-        "发布工作流并开启 API 访问",
-        lambda: {
-            "published": console.publish(app_id),
-            "api_enabled": console.enable_api(app_id),
-            "app_api_key": bool(api_key),
-        },
-    )
+    # Publish and enable the API *before* minting the key: the key endpoint
+    # only returns a key for a published app.
+    publish_evidence: dict[str, Any] = {}
+
+    def do_publish() -> dict[str, Any]:
+        publish_evidence["published"] = console.publish(app_id)
+        publish_evidence["api_enabled"] = console.enable_api(app_id)
+        return dict(publish_evidence)
+
+    record("publish_and_enable_api", "发布工作流并开启 API 访问", do_publish)
 
     api_key = args.app_api_key or console.create_app_api_key(app_id)
     if not api_key:
@@ -541,8 +548,9 @@ def main() -> int:
         from dify.service.config import load_env_file
 
         load_env_file(REPO_ROOT / "dify" / ".env")
-    except Exception:  # noqa: BLE001 - the env file is optional
-        pass
+    except Exception as exc:  # noqa: BLE001 - the env file is optional
+        print(f"note: could not read dify/.env ({type(exc).__name__}: {exc}); "
+              "pass --email/--password instead")
 
     parser = argparse.ArgumentParser(description="Validate the Dify app end to end.")
     parser.add_argument("--dify-url", default=os.getenv("DIFY_URL", "http://localhost"))
