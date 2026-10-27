@@ -129,6 +129,52 @@ def test_unicode_line_separators_keep_the_envelope_json_on_one_line():
     assert result.context.content_bytes == len(result.context.content.encode("utf-8")) <= 1200
 
 
+def test_unused_budget_preserves_an_immediate_anaphoric_continuation():
+    evidence = "The photon detector records the calibrated signal."
+    continuation = "These measurements remained stable across all repeated trials."
+    unrelated = "Warehouse inventory follows a separate reporting schedule."
+    text = f"{evidence} {continuation} {unrelated}"
+    result = build("photon detector signal", (group("local", text),), 1400)
+    assert len(result.fragments) == 1
+    assert result.fragments[0].text == f"{evidence} {continuation}"
+    assert result.fragments[0].text == text[result.fragments[0].start : result.fragments[0].end]
+    assert tuple(fragment.address for fragment in result.fragments) == result.origins
+    assert result.context.content_bytes == len(result.context.content.encode("utf-8")) <= 1400
+
+
+def test_continuation_never_displaces_evidence_at_the_exact_utf8_budget():
+    evidence = 'The photon detector records "calibrated" signal 🌊.'
+    continuation = 'These measurements include "重复" trials 🌊 and stable observations.'
+    text = f"{evidence} {continuation}"
+    full = build("photon detector signal", (group("local", text),), 1400)
+    assert full.fragments[0].text == text
+    exact = build("photon detector signal", (group("local", text),), full.context.content_bytes)
+    assert exact == full
+    smaller = build("photon detector signal", (group("local", text),), full.context.content_bytes - 1)
+    assert smaller.fragments[0].text == evidence
+    assert smaller.context.content_bytes <= full.context.content_bytes - 1
+
+
+def test_continuation_is_immediate_and_does_not_recursively_append():
+    evidence = "The photon detector records the calibrated signal."
+    first = "These measurements remained stable."
+    second = "Their duration exceeded expectations."
+    result = build("photon detector signal", (group("local", f"{evidence} {first} {second}"),), 4000)
+    assert result.fragments[0].text == f"{evidence} {first}"
+    unrelated = "Warehouse inventory follows a separate schedule."
+    result = build("photon detector signal", (group("local", f"{evidence} {unrelated} {first}"),), 4000)
+    assert result.fragments[0].text == evidence
+
+
+def test_continuations_preserve_scope_identity_and_origin_order():
+    text = "The photon detector records a calibrated signal. These measurements remained stable."
+    result = build("photon detector signal", (group("local", text), group("shared", text)), 4000)
+    assert len(result.fragments) == 2
+    assert {fragment.address.memory.scope_id for fragment in result.fragments} == {"local", "shared"}
+    assert all(fragment.text == text for fragment in result.fragments)
+    assert tuple(fragment.address for fragment in result.fragments) == result.origins
+
+
 @pytest.mark.parametrize("value", [1, "true", None])
 def test_selection_flag_is_strict(value):
     with pytest.raises(ValidationError):

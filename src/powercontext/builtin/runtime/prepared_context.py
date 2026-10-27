@@ -966,6 +966,47 @@ def _fit_evidence_window(
     return selected
 
 
+def _evidence_address_key(address: MemoryEntryAddress) -> tuple[str, str, str, int, str, str]:
+    artifact = address.memory.artifact
+    return (
+        address.memory.scope_id,
+        artifact.family,
+        artifact.artifact_id,
+        artifact.revision,
+        address.entry_id,
+        address.entry_version_id,
+    )
+
+
+def _extend_evidence_continuations(
+    selected: tuple[PreparedEvidenceFragment, ...],
+    sources: dict[tuple[str, str, str, int, str, str], str],
+    max_bytes: int,
+) -> tuple[PreparedEvidenceFragment, ...]:
+    """Use spare bytes for one immediate referring sentence without displacing evidence."""
+
+    for fragment in selected:
+        source = sources[_evidence_address_key(fragment.address)]
+        whitespace = re.match(r"\s+", source[fragment.end :])
+        if whitespace is None:
+            continue
+        if source[fragment.end - 1] not in ".!?。！？" and "\n" not in whitespace[0]:  # noqa: RUF001
+            continue
+        start = fragment.end + whitespace.end()
+        if not re.match(r"(?:this|these|those|such|it|they|their|therefore|thus|consequently)\b", source[start:], re.I):
+            continue
+        boundary = re.search(r"(?<=[.!?。！？])\s+|\n+", source[start:])  # noqa: RUF001
+        end = len(source) if boundary is None else start + boundary.start()
+        end = start + len(source[start:end].rstrip())
+        if start >= end:
+            continue
+        following = PreparedEvidenceFragment(fragment.address, start, end, source[start:end])
+        proposal = _merge_evidence(selected, following, source)
+        if len(_render_evidence(proposal).encode("utf-8")) <= max_bytes:
+            selected = proposal
+    return selected
+
+
 def _select_evidence(
     request: PrepareContextRequest, groups: Sequence[PreparedMemoryCandidates]
 ) -> PreparedContextBuild:
@@ -993,6 +1034,9 @@ def _select_evidence(
             selected = proposal
         elif not selected:
             selected = _fit_evidence_window(fragment, source, weights, request.max_bytes)
+    selected = _extend_evidence_continuations(
+        selected, {_evidence_address_key(fragment.address): source for fragment, source, _ in spans}, request.max_bytes
+    )
     if not selected:
         return PreparedContextBuild(context=PreparedContext(status="empty", content=None, content_bytes=0), origins=())
     content = _render_evidence(selected)
