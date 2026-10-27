@@ -98,7 +98,7 @@ def test_window_cluster_ranking_accounts_for_unicode_byte_cost():
     assert result.fragments
     covered = {word for word in ("alpha", "beta", "gamma") if word in result.fragments[0].text.split()}
     assert len(covered) >= 2
-    assert result.fragments[0].text == text[result.fragments[0].start:result.fragments[0].end]
+    assert result.fragments[0].text == text[result.fragments[0].start : result.fragments[0].end]
     assert result.context.content_bytes <= 1200
 
 
