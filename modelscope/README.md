@@ -10,13 +10,30 @@
 | --- | --- |
 | 作品名称（Skill name） | `nearby-walk-recommendations` |
 | 显示名 | 周边去哪儿 |
-| 作品网址 | ⬜ 待上传后填写：`https://modelscope.cn/skills/@<owner>/nearby-walk-recommendations` |
-| 作品编号 | ⬜ 待上传后填写 |
+| 作品网址 | ✅ `https://modelscope.cn/skills/@BadFallen/nearby-walk-recommendations` |
+| 作品编号 | ✅ `BadFallen/nearby-walk-recommendations` |
 | 来源仓库 | `https://github.com/Icsya05/powercontext`（私有），分支 `ecosystem/wyd-gaode-modelscope`，路径 `gaode/SKILL.md` |
 | 许可 | Apache-2.0 |
 | 分类（category） | `other` |
 | 公开文件范围 | **仅 `SKILL.md` 一个文件**。不含评测数据、不含仓库其他代码、不含任何凭据 |
-| 状态 | ✅ 已准备 / ⬜ 已上传 / ⬜ 已提测 |
+| 状态 | ✅ 已准备 / ✅ 已上传（2026-10-27，公开接口核验通过）/ ⬜ 已提测 |
+
+## 上传结果（2026-10-27 核验）
+
+用魔搭公开读接口 `GET /openapi/v1/skills/BadFallen/nearby-walk-recommendations` 回查：
+
+| 字段 | 返回值 |
+| --- | --- |
+| id | `BadFallen/nearby-walk-recommendations` |
+| display_name | 周边去哪儿 |
+| category / license | `other` / `Apache-2.0` |
+| private | `false`（公开可见） |
+| source_url | `https://github.com/Icsya05/powercontext` |
+| tags | `custom_tag:gaode`、`amap`、`walking-distance`、`poi-search`、`travel` |
+| 作品页 HTTP 状态 | 200（`modelscope.cn` 与 `www.modelscope.cn` 均可） |
+| 安装命令（平台生成） | `npx skills add https://modelscope.cn/skills/BadFallen/nearby-walk-recommendations` |
+
+**仍待人工确认的一项**：作品页里 `SKILL.md` 正文是否完整显示。接口只能确认元数据，页面渲染需要人眼看一眼。
 
 ## 与高德赛题是同一份文件
 
@@ -94,8 +111,9 @@ curl -X POST "https://modelscope.cn/openapi/v1/skills" \
 
 | 卡点 | 说明 | 最少操作 |
 | --- | --- | --- |
-| 魔搭账号登录 | 上传需要本人账号；本机没有 `${MODELSCOPE_API_KEY}`，也没有已登录的会话 | 在魔搭创建 API Key，自行 `export` 到终端后运行上面的脚本；或直接用网页上传 |
-| 可能触发实名/条款 | 平台可能在首次上传时要求实名认证或勾选协议 | 由本人在页面上确认 |
-| 大赛平台提交 | 需要登录 open.oceanbase.com 并选择对应赛题目录 | 本人提交，网址见上表 |
+| ~~魔搭账号登录~~ | ✅ 已完成：用账号 `BadFallen` 的写权限令牌，通过 `publish_skill.py` 发布 | 无需操作 |
+| ~~可能触发实名/条款~~ | ✅ 未触发 | 无需操作 |
+| 大赛平台提交 | 需要登录 open.oceanbase.com 并进入魔搭赛题目录 | 本人提交，作品网址见上表 |
+| 页面正文人工确认 | 接口只能确认元数据，`SKILL.md` 正文是否完整显示要人眼看 | 打开作品页看一眼 |
 
 上述凭据**没有**出现在本仓库任何文件中；本文件也不记录 Token 值。

@@ -55,7 +55,9 @@ python dev/score_answer.py dev/answers/
 ## 5. 上传与提测状态
 
 - 高德题：**未提交**。文件已就绪，未在平台上传。
-- 魔搭题：**未上传、未提测**。作品包已可生成（约 4 KB，zip 根目录仅 `SKILL.md`，符合魔搭“只能有一个 SKILL.md”的要求）。
+- 魔搭题：**已上传，未提测**。作品已发布并核验：编号 `BadFallen/nearby-walk-recommendations`，
+  网址 <https://modelscope.cn/skills/@BadFallen/nearby-walk-recommendations>（公开可见，页面 200）。
+  尚未把该网址提交到大赛的魔搭题入口。
 - 无任何平台成绩，不宣称得分。
 
 ## 6. 卡点与本人最少操作
