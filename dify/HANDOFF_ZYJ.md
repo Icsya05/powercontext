@@ -122,3 +122,26 @@
 3. 导出 DSL → 在干净的新应用里重新导入 → 再跑一遍 → 把两份 DSL 的差异记录下来。
 4. 用导出的 DSL **替换** `dify/workflow.yml`（保证交付的是真跑过的那份），再提交。
 5. 用户登录平台 + 提供 PAT → 按提测指南提交，核对提交记录。
+
+## 9. ⚠️ 需要团队层面处理的一件事：分支合流
+
+本分支 `ecosystem/zyj-dify` 与队友的 `ecosystem/wyd-gaode-modelscope` **是并列的两条分支**，
+互相不包含：
+
+```text
+d647275c  (官方基线 2026-competition-ecosystem)
+   └── 9ce99250  competition/nearby-skill        ← 共同起点
+         ├── ab7ac1da..e7865dd2  ecosystem/zyj-dify                （本任务：dify/）
+         └── 80a052d7            ecosystem/wyd-gaode-modelscope     （xjl：gaode/ + modelscope/）
+```
+
+`git diff origin/ecosystem/wyd-gaode-modelscope ecosystem/zyj-dify -- gaode modelscope`
+会看到 xjl 的 15 个文件在本分支上「不存在」——这是正常的，因为本任务没有也不会合并他们的分支。
+
+但**提测平台要求提交的分支/commit hash 是「生态」的合流版本**（官方题面：提交分支须基于
+`2026-competition-ecosystem`，相关资产放入对应目录）。因此在提测前需要有人把三条生态分支
+（`zyj-dify`、`wyd-gaode-modelscope`，以及后续可能新增的）合并到一条提交分支上。
+
+建议由**核心负责人 / 队长**执行合流（例如各人分别提 PR 到团队指定的合流分支），
+避免任何一方直接改写他人的提交历史。合流后提测平台填的分支/commit 才同时包含
+`dify/`、`gaode/`、`modelscope/` 三份资产。
