@@ -6,8 +6,8 @@
 
 - 仓库 HTTPS URL：`https://github.com/Icsya05/powercontext`
 - 工作分支：`competition/prelim-integration`
-- 已测试代码 commit：`d458a7f33f3679c9bca61af634bebedc25c6b154`
-- 该版本的 `src/` Git tree：`25cb35e1873c96c6a0e79fb170d35a90683c66cd`
+- 已测试代码 commit：`448f5d0e2aa3d4f36236389568446d5555852f2b`
+- 该版本的 `src/` Git tree：`e0bdc0fd02c3804c54849bface8adb6be256c1de`
 - 冻结基线：`9db1753434162c0aa7c9f1189a1722e617880a52`，已确认在历史中，官方 `check-baseline` 通过。
 
 默认 `master` 没有这些比赛实现。代码题提交要填写上面的完整代码 commit，不能只填仓库后任由平台读取默认分支。仓库准备题仅填仓库 URL。后续只增加交接文档的 commit 不改变上述已测试代码。
@@ -29,7 +29,7 @@
 | `context-01-evidence-selection` | 查询驱动原文片段、精确坐标与完整字节预算 | 3 |
 | `context-02-incremental-pack` | 可还原的增量上下文包 | 14 |
 
-同一整合副本的来源、连接器、Memory 服务、上下文、数量触发和各题自有测试：**316 passed, 13 skipped，32.06 秒**。跳过项按测试原有条件保留，不改测试让它通过。整合公开数量触发测试 238.15 秒；整合真实 seekdb 混合检索测试 29.11 秒；生命周期 23.39 秒。
+同一整合副本的来源、连接器、Memory 服务、上下文、数量触发和各题自有测试：**320 passed, 13 skipped，32.06 秒**。跳过项按测试原有条件保留，不改测试让它通过。整合公开数量触发测试 238.15 秒；整合真实 seekdb 混合检索测试 29.11 秒；生命周期 23.39 秒。
 
 官方 `competition/` 题面、测试、样例、依赖及评分资产与已获取的官方比赛分支 `dab240063bfcfa7917898dc44da4baadb3747bd0` 对比，无修改。
 
@@ -40,7 +40,7 @@
 1. 旧正文引用虽仍可审计，但已不是当前正文时，注册原来会先持久化再失败，永久占用节点编号。现在在写入前拒绝这种绑定。正文版本仍相同的历史修订引用可正常绑定。
 2. 生命周期 reason 没有题面长度上限，原生 Memory 审计 reason 上限为 512 字符。现在完整事件照常持久化并参与重放身份比较，传给原生写入的审计摘要先规范化再截至其上限。
 
-修复后的生命周期相关独立套件 87 passed、13 skipped；整合后又通过上面的 95 项公开和 316 项相关回归。
+修复后的生命周期相关独立套件 87 passed、13 skipped；整合后又通过上面的 95 项公开和 320 项相关回归。
 
 证据选择先观察到缺少接口的失败，再实现 strict 默认关闭开关、不可变片段结果、基于查询和词项稀有程度的句段选择、相邻区间合并、长句中的原文窗口和逐次完整输出计费。原文、坐标、scope、引用及 origins 一致。独立审查没有 Critical/Important 问题；审查者另跑了 96 项相关测试、48 组 Unicode/预算/空输入和区间合并排列检查。
 
@@ -51,7 +51,7 @@
 - PDF、重排、混合检索的完整隐藏质量/延迟门槛，以及官方完整增量序列，未取得平台验证。
 - 固定比赛依赖不是全仓开发依赖。全仓 pytest 曾有 110 个可选依赖收集错误；本轮两个服务测试文件也因缺少 `platformdirs` 无法收集。不能声称全仓测试通过。不要为此擅改固定比赛依赖。
 - 新增生命周期、证据选择源码的 Ruff/类型检查通过。对大文件整体检查时，原有 AsyncIterator 弃用诊断及既有 datetime.max 诊断须单独记录，不能掩盖成全仓质量检查通过。
-- **预算探针问题已修复**：四档预算测试先失败后通过；证据 probe 复用实际输出路径。相关证据、普通上下文、召回与增量套件153项通过，修改经独立审查，随后完整95项公开及316项回归通过。详见 AWARD_REVIEW.md。
+- **预算探针问题已修复**：四档预算测试先失败后通过；证据 probe 复用实际输出路径。相关证据、普通上下文、召回与增量套件153项通过，修改经独立审查，随后完整95项公开及320项回归通过。详见 AWARD_REVIEW.md。
 - **非阻塞接口缺口**：HTTP/client 生成的 PrepareContextRequest 尚无该开关，本题实现按 Python runtime/builder 接口交付。扩展 HTTP 时应改 OpenAPI 源契约再生成，不能手改生成代码。
 - 生命周期 Topic 过滤发生在通道候选取回之后、融合之前。题面四个 Topic 规模已验证；不承诺大量停用 Topic 下的候选不饥饿。并发写者、绑定后外部改正文及同一原生引用的多节点别名语义未扩展。
 - seekdb 内核赛题和其余需要特定平台/硬件的生态题，不能视为本文件中已完成。原电脑的数据库/遥测工作保留原侧，不是两位队友的前置依赖。
@@ -65,7 +65,7 @@
 ```bash
 git clone https://github.com/Icsya05/powercontext.git
 cd powercontext
-git checkout d458a7f33f3679c9bca61af634bebedc25c6b154
+git checkout 448f5d0e2aa3d4f36236389568446d5555852f2b
 make -C competition install
 make -C competition check-baseline
 make -C competition test-csv test-pi test-rerank test-embedding test-incremental test-pdf test-count-trigger test-hybrid test-evidence test-lifecycle
@@ -90,4 +90,10 @@ make -C competition test-csv test-pi test-rerank test-embedding test-incremental
 
 ## 2026-10-27 长句窗口优化
 
-当前检查点加入按查询词聚集区选择长句窗口、完整转义字节约束、实际关键词后备与零覆盖防护，并修复Unicode分隔符导致JSON按行解析失败的问题。最终316项扩展回归包含召回判断和部分官方上下文测试，与95项公开测试有重叠，不能相加当作不重复测试数。64组独立生成样例的查询词覆盖率43.75%→93.75%，不是隐藏evidence质量指标。耗时与未完成预算分配实验见EVIDENCE_WINDOW_OPTIMIZATION.md及benchmark/competition/记录。未通过正式验收的状态不变。
+当前检查点加入按查询词聚集区选择长句窗口、完整转义字节约束、实际关键词后备与零覆盖防护，并修复Unicode分隔符导致JSON按行解析失败的问题。最终320项扩展回归包含召回判断和部分官方上下文测试，与95项公开测试有重叠，不能相加当作不重复测试数。64组独立生成样例的查询词覆盖率43.75%→93.75%，不是隐藏evidence质量指标。耗时与未完成预算分配实验见EVIDENCE_WINDOW_OPTIMIZATION.md及benchmark/competition/记录。未通过正式验收的状态不变。
+
+## 最新：承接句与资源受限整合验证
+
+代码448f5d0e在保留全部已选原文区间的前提下，利用剩余字节补充紧邻承接句；长句窗口复用固定格式开销，保持精确输出与截取结果。95项公开与320项相关回归（13跳过）在1核CPU/2GiB内存限制下通过，进程退出0，峰值约1.23GiB。428个跟踪源码文件与受测副本逐项核对，仅允许换行格式差异。
+
+局部原型的64组窗口耗时中位数约2.77ms降到2.06ms；96组专门构造的承接句样例完整覆盖从16次增到96次。这些是独立开发样例，不能代替隐藏SciFact质量验收。说明、限制与复现证据见EVIDENCE_CONTINUATION_OPTIMIZATION.md及benchmark/competition/。

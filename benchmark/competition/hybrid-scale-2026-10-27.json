@@ -1,0 +1,1047 @@
+{
+  "status": "real embedded seekdb with generated corpus and topic vectors",
+  "documents_per_scope": 173,
+  "dimension": 384,
+  "scopes": 3,
+  "queries": 60,
+  "seed": "document index and topic-derived seeds",
+  "control": "current independent fts/vector statements, shared fusion; not claimed as full frozen product",
+  "limitations": "Synthetic topic relevance, not SciFact semantic quality, not official acceptance or score.",
+  "summary": {
+    "candidate": {
+      "p50_ms": 52.03422799996815,
+      "p95_ms": 92.61550400003671,
+      "mean_recall_at_10": 1.0,
+      "mean_mrr_at_10": 1.0
+    },
+    "control": {
+      "p50_ms": 53.07820900003435,
+      "p95_ms": 92.55293000001075,
+      "mean_recall_at_10": 1.0,
+      "mean_mrr_at_10": 1.0
+    }
+  },
+  "same_order_queries": 60,
+  "cases": [
+    {
+      "scope": "independent-scope-0",
+      "topic": 0,
+      "latency_ms": {
+        "candidate": 83.29002199991464,
+        "control": 81.61650900001405
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 1,
+      "latency_ms": {
+        "control": 81.71330900006524,
+        "candidate": 124.2784070000198
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 2,
+      "latency_ms": {
+        "candidate": 75.67915700008143,
+        "control": 77.83245399991756
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 3,
+      "latency_ms": {
+        "control": 76.52263500006029,
+        "candidate": 82.80746499997349
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 4,
+      "latency_ms": {
+        "candidate": 74.74295400004394,
+        "control": 73.40452099992945
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 5,
+      "latency_ms": {
+        "control": 95.14470500005245,
+        "candidate": 93.1702079999468
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 6,
+      "latency_ms": {
+        "candidate": 94.47605399998338,
+        "control": 92.55293000001075
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 7,
+      "latency_ms": {
+        "control": 95.5925920000027,
+        "candidate": 89.47525999997197
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 8,
+      "latency_ms": {
+        "candidate": 72.09860800003298,
+        "control": 78.7737370000059
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 9,
+      "latency_ms": {
+        "control": 75.1503279999497,
+        "candidate": 72.76824799998849
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 10,
+      "latency_ms": {
+        "candidate": 81.84248199995636,
+        "control": 82.61812800003554
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 11,
+      "latency_ms": {
+        "control": 86.80475400001342,
+        "candidate": 76.72796500003187
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 12,
+      "latency_ms": {
+        "candidate": 82.27801700002146,
+        "control": 79.84023100004833
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 13,
+      "latency_ms": {
+        "control": 82.57369800003289,
+        "candidate": 81.16713799995523
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 14,
+      "latency_ms": {
+        "candidate": 92.61550400003671,
+        "control": 83.72304200008784
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 15,
+      "latency_ms": {
+        "control": 59.32950399994752,
+        "candidate": 55.931170000008024
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 16,
+      "latency_ms": {
+        "candidate": 50.37475300002825,
+        "control": 88.77959599999485
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 17,
+      "latency_ms": {
+        "control": 58.05334699994091,
+        "candidate": 45.38014299998849
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 18,
+      "latency_ms": {
+        "candidate": 47.60617500005537,
+        "control": 50.37135999998554
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-0",
+      "topic": 19,
+      "latency_ms": {
+        "control": 53.39635799998632,
+        "candidate": 46.64113800004088
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 0,
+      "latency_ms": {
+        "control": 44.07536300004722,
+        "candidate": 48.72985300005439
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 1,
+      "latency_ms": {
+        "candidate": 46.98860999997123,
+        "control": 53.12631000003876
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 2,
+      "latency_ms": {
+        "control": 48.877205999929174,
+        "candidate": 50.15468499993858
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 3,
+      "latency_ms": {
+        "candidate": 47.3157319999018,
+        "control": 52.60123699997621
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 4,
+      "latency_ms": {
+        "control": 51.672413999995115,
+        "candidate": 47.650541000052726
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 5,
+      "latency_ms": {
+        "candidate": 46.376711999982945,
+        "control": 53.166329000077894
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 6,
+      "latency_ms": {
+        "control": 94.4852100000162,
+        "candidate": 57.3350440000695
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 7,
+      "latency_ms": {
+        "candidate": 51.30156600000646,
+        "control": 46.937139999954525
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 8,
+      "latency_ms": {
+        "control": 47.9344199999332,
+        "candidate": 50.411682000003566
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 9,
+      "latency_ms": {
+        "candidate": 50.64968500005307,
+        "control": 48.74338700005865
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 10,
+      "latency_ms": {
+        "control": 47.72882700001446,
+        "candidate": 50.83677599998282
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 11,
+      "latency_ms": {
+        "candidate": 54.85439899996436,
+        "control": 48.7107469999728
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 12,
+      "latency_ms": {
+        "control": 49.33226000002833,
+        "candidate": 58.05557600001521
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 13,
+      "latency_ms": {
+        "candidate": 59.82936800000971,
+        "control": 65.7852729999604
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 14,
+      "latency_ms": {
+        "control": 51.893556999971224,
+        "candidate": 50.37285899993549
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 15,
+      "latency_ms": {
+        "candidate": 45.5533499999774,
+        "control": 56.91334800008008
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 16,
+      "latency_ms": {
+        "control": 55.67006700005095,
+        "candidate": 46.92893100002493
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 17,
+      "latency_ms": {
+        "candidate": 42.68827999999303,
+        "control": 49.90000400005101
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 18,
+      "latency_ms": {
+        "control": 53.03010800002994,
+        "candidate": 45.84187299997211
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-1",
+      "topic": 19,
+      "latency_ms": {
+        "candidate": 48.64822700005789,
+        "control": 45.26695100003053
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 0,
+      "latency_ms": {
+        "candidate": 44.63424899995516,
+        "control": 50.24439400006031
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 1,
+      "latency_ms": {
+        "control": 50.637855999980275,
+        "candidate": 43.8500440000098
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 2,
+      "latency_ms": {
+        "candidate": 47.27282399994692,
+        "control": 44.071701000007124
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 3,
+      "latency_ms": {
+        "control": 45.220896000046196,
+        "candidate": 48.74578399994789
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 4,
+      "latency_ms": {
+        "candidate": 62.060886999915965,
+        "control": 55.42601399997693
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 5,
+      "latency_ms": {
+        "control": 59.66787900001691,
+        "candidate": 51.08603100006803
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 6,
+      "latency_ms": {
+        "candidate": 49.11541899991789,
+        "control": 56.64990599996145
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 7,
+      "latency_ms": {
+        "control": 59.78064999999333,
+        "candidate": 49.439774000006764
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 8,
+      "latency_ms": {
+        "candidate": 51.31485200001862,
+        "control": 51.82650599999761
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 9,
+      "latency_ms": {
+        "control": 88.82562899998447,
+        "candidate": 57.21527600007903
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 10,
+      "latency_ms": {
+        "candidate": 50.79304999992473,
+        "control": 47.116497000047275
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 11,
+      "latency_ms": {
+        "control": 51.913761000037084,
+        "candidate": 54.63237599997228
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 12,
+      "latency_ms": {
+        "candidate": 60.95613900004082,
+        "control": 48.658320999948046
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 13,
+      "latency_ms": {
+        "control": 48.31822800008467,
+        "candidate": 55.216861999952016
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 14,
+      "latency_ms": {
+        "candidate": 54.93359199999759,
+        "control": 47.32936699997481
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 15,
+      "latency_ms": {
+        "control": 48.04797700001018,
+        "candidate": 55.75720000001638
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 16,
+      "latency_ms": {
+        "candidate": 50.67515000007461,
+        "control": 52.04106100006811
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 17,
+      "latency_ms": {
+        "control": 50.85446700002194,
+        "candidate": 55.088053999952535
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 18,
+      "latency_ms": {
+        "candidate": 61.18179999998574,
+        "control": 50.143688000048314
+      },
+      "recall": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "mrr": {
+        "candidate": 1.0,
+        "control": 1.0
+      },
+      "same_order": true
+    },
+    {
+      "scope": "independent-scope-2",
+      "topic": 19,
+      "latency_ms": {
+        "control": 48.17305999995369,
+        "candidate": 52.75360399991769
+      },
+      "recall": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "mrr": {
+        "control": 1.0,
+        "candidate": 1.0
+      },
+      "same_order": true
+    }
+  ]
+}

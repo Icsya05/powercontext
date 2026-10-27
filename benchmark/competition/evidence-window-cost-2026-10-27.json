@@ -1,0 +1,18 @@
+{
+  "status": "experimental only; product unchanged",
+  "seed": 20261027,
+  "exact_fitter_comparisons": 3382,
+  "public_builder_cases": 64,
+  "timing_repetitions": 7,
+  "baseline": {
+    "p50_ms": 2.7746190000002002,
+    "p95_ms": 5.81518299999928,
+    "coverage": 0.9375
+  },
+  "candidate": {
+    "p50_ms": 2.0606624999999212,
+    "p95_ms": 4.753051999999869,
+    "coverage": 0.9375
+  },
+  "limitations": "Synthetic local measurements; no hidden evidence labels or platform score; not merged."
+}

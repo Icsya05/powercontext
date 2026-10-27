@@ -1,3 +1,5 @@
+最新代码与资源验证见 `EVIDENCE_CONTINUATION_OPTIMIZATION.md`；以下保留早期窗口对照的原始测量。
+
 # 2026-10-27 证据窗口优化记录
 
 本轮基于 `39a12dbf95da799c7160bb9a7528cbc944215a47`，优化代码检查点为 `d458a7f33f3679c9bca61af634bebedc25c6b154`。这是长句窗口回退路径的局部改进，未替代隐藏 SciFact 质量验收，也未取得平台成绩。
