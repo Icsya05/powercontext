@@ -22,6 +22,7 @@ import subprocess
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -220,8 +221,11 @@ def run_checks(base_url: str) -> list[dict[str, Any]]:
 
     # 6 ------------------------------------------------------------------
     def check_recall() -> dict[str, Any]:
+        # The recall keyword is Chinese, so it has to be percent-encoded before
+        # it can go into a request line.
+        query = urllib.parse.quote("热可可")
         status, body = http_json(
-            "GET", f"{base_url}/api/state?player_id={player_a}&query=热可可"
+            "GET", f"{base_url}/api/state?player_id={urllib.parse.quote(player_a)}&query={query}"
         )
         if status != 200 or not body.get("ok"):
             raise CheckFailure(f"recall failed: {body}")
