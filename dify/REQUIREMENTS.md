@@ -60,6 +60,7 @@
 | A2 | 至少一组完整验证样例：初始条件、输入、操作步骤、预期表现 | `examples/walkthrough.md` + `validation/` | 样例文档已写，待真实运行补证据 |
 | A3 | 技术结合有效：可由数据库读写记录、节点执行记录、查询结果核对 | `dify/validation/service_checks.py` + `workflow_checks.py` | 服务侧已实现，真实运行待 Docker |
 | A4 | 过程可复现：评审不依赖作者本地未交付的数据 / 配置 / 服务状态 | `deploy/docker-compose.yml` + `.env.example` + 初始化脚本 | 已实现，待真实运行验证 |
+| A5 | （附加，官方未写但会决定成败）Dify 的 SSRF 代理默认拒绝私有地址，本地后端必须显式放行 | `README.md` §5.6：`SSRF_PROXY_ALLOW_PRIVATE_DOMAINS=host.docker.internal` | ✅ 已从 Dify 1.17.1 源码核实（`docker/ssrf_proxy/squid.conf.template` 有 `http_access deny to_private_networks`；`docker-entrypoint.sh` 依据 `SSRF_PROXY_ALLOW_PRIVATE_IPS` / `SSRF_PROXY_ALLOW_PRIVATE_DOMAINS` 生成放行规则） |
 
 ### 2.4 提交材料（S1 §4）
 
