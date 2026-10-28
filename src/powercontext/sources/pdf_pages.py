@@ -147,6 +147,10 @@ async def search_pdf_pages(
     queries = [question]
     if len(terms) > 2:
         queries.extend(" ".join(terms[index : index + 2]) for index in range(0, len(terms), 2))
+    # Fiscal-year notation is common in questions, while table headers usually
+    # contain bare years. Retain every original view for pages using the prefix.
+    years = tuple(dict.fromkeys(re.findall(r"\bfy(\d{4})\b", question, flags=re.IGNORECASE)))
+    queries.extend(" ".join(years[index : index + 2]) for index in range(0, len(years), 2))
     candidates: dict[tuple[str, str, str], MemoryHit] = {}
     for query in queries:
         page = await memory.search(SearchMemoryRequest(query=query, mode="fts", limit=max(100, limit * 10)))

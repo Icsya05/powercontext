@@ -11,8 +11,18 @@ from powercontext.sources import SourceDefinitionRegistry
 from powercontext.sources.pdf_pages import PDF_PAGE_SOURCE_DEFINITION, PDFDocumentInput, parse_pdf_document
 
 
-def test_long_financial_question_retrieves_concise_table_page(tmp_path):
-    """Narrative instructions must not exclude the table needed to answer a question."""
+@pytest.mark.parametrize(
+    "question",
+    [
+        "What were capital expenditures for Acme in fiscal 2024? "
+        "Please explain the calculation using dollars rather than percentages, "
+        "considering an analyst perspective and providing a concise response with supporting references.",
+        "What is FY2024?",
+    ],
+    ids=["long-narrative", "fiscal-year"],
+)
+def test_question_retrieves_concise_table_page(tmp_path, question):
+    """Natural wording must not exclude a table containing the requested financial year."""
     from powercontext.builtin.artifacts.memory import MemoryEntryInput
     from powercontext.builtin.persistence.sqlite import SQLiteConfig
     from powercontext.builtin.runtime import (
@@ -57,9 +67,7 @@ def test_long_financial_question_retrieves_concise_table_page(tmp_path):
             await memory.flush()
             citations = await search_pdf_pages(
                 memory,
-                "What were capital expenditures for Acme in fiscal 2024? "
-                "Please explain the calculation using dollars rather than percentages, "
-                "considering an analyst perspective and providing a concise response with supporting references.",
+                question,
                 limit=20,
             )
             assert len(citations) == 1
