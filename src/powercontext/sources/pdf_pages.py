@@ -140,10 +140,22 @@ async def search_pdf_pages(
     """Return actual persisted distinct-page citations, never synthetic references."""
     if type(limit) is not int or limit < 1 or not question.strip():
         raise ValueError("question must be nonblank and limit must be a positive integer")  # noqa: TRY003
-    page = await memory.search(SearchMemoryRequest(query=question, mode="fts", limit=max(100, limit * 10)))
+    # A table may contain just a few content words from a long natural-language
+    # question. The shared FTS admission floor measures whole-query coverage,
+    # so collect short lexical views before ranking against the complete question.
+    terms = tuple(dict.fromkeys(analyze_fts_query(question).split()))
+    queries = [question]
+    if len(terms) > 2:
+        queries.extend(" ".join(terms[index : index + 2]) for index in range(0, len(terms), 2))
+    candidates: dict[tuple[str, str, str], MemoryHit] = {}
+    for query in queries:
+        page = await memory.search(SearchMemoryRequest(query=query, mode="fts", limit=max(100, limit * 10)))
+        for hit in page.hits:
+            identity = (hit.memory_ref.artifact_id, hit.entry_id, hit.entry_version_id)
+            candidates.setdefault(identity, hit)
     selected: list[MemoryCitation] = []
     seen: set[str] = set()
-    for hit in _rank_pages(page.hits, question):
+    for hit in _rank_pages(tuple(candidates.values()), question):
         citation = MemoryCitation(
             memory_ref=hit.memory_ref, entry_id=hit.entry_id, entry_version_id=hit.entry_version_id
         )
