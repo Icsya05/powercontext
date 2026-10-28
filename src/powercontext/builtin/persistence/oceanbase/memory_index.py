@@ -132,28 +132,26 @@ JOIN pc_memory_entry_versions AS v
 ORDER BY candidates.channel, candidates.channel_order,
          candidates.memory_artifact_id, candidates.entry_id, candidates.entry_version_id
 """
-# A scalar, uncorrelated tag set becomes a one-time expression in the native
-# vector pre-filter. Correlated EXISTS/COUNT/IN subplans run after ANN top-k and
-# can incorrectly discard all neighbors without finding the tagged replacements.
-_OCEANBASE_HYBRID_VECTOR_TAG_SQL = """
-AND JSON_CONTAINS(
-    COALESCE((
-        SELECT JSON_ARRAYAGG(JSON_OBJECT('artifact', eligible.artifact_id, 'entry', eligible.target_id))
-        FROM (
-            SELECT tags.artifact_id, tags.target_id
-            FROM pc_artifact_tags AS tags
-            WHERE tags.scope_id = :scope_id
-              AND tags.family = 'memory'
-              AND tags.artifact_id IN :memory_artifact_ids
-              AND tags.target_type = 'memory_entry'
-              AND tags.tag_key_hash IN :tag_hashes
-              AND tags.tag_key IN :tag_keys
-            GROUP BY tags.artifact_id, tags.target_id
-            HAVING COUNT(*) >= :tag_minimum
-        ) AS eligible
-    ), JSON_ARRAY()),
-    JSON_OBJECT('artifact', m.memory_artifact_id, 'entry', m.entry_id)
-)
+# Join eligible identities before ANN runs. A scalar JSON membership predicate
+# can drop sparse tagged matches in seekdb's native vector pre-filter. Keep
+# eligible keys on the left of a parameterized nested loop: a merge join can
+# instead discard neighbors after ANN has already selected its limited rows.
+_OCEANBASE_HYBRID_VECTOR_TAG_FROM_SQL = """
+FROM (
+    SELECT tags.artifact_id, tags.target_id
+    FROM pc_artifact_tags AS tags
+    WHERE tags.scope_id = :scope_id
+      AND tags.family = 'memory'
+      AND tags.artifact_id IN :memory_artifact_ids
+      AND tags.target_type = 'memory_entry'
+      AND tags.tag_key_hash IN :tag_hashes
+      AND tags.tag_key IN :tag_keys
+    GROUP BY tags.artifact_id, tags.target_id
+    HAVING COUNT(*) >= :tag_minimum
+) AS eligible
+JOIN pc_memory_vector_entries AS m
+  ON m.memory_artifact_id = eligible.artifact_id
+ AND m.entry_id = eligible.target_id
 """
 
 
@@ -349,8 +347,13 @@ class OceanBaseMemoryVectorIndex:
             bindparam("query_vector", type_=VECTOR(profile.dimension)),
         )
         self._tagged_hybrid_search_sql = text(
-            _OCEANBASE_HYBRID_SEARCH_SQL.replace("/* fts_tags */", memory_tag_sql("f")).replace(
-                "/* vector_tags */", _OCEANBASE_HYBRID_VECTOR_TAG_SQL
+            _OCEANBASE_HYBRID_SEARCH_SQL
+            .replace("/* fts_tags */", memory_tag_sql("f"))
+            .replace("/* vector_tags */", "")
+            .replace("FROM pc_memory_vector_entries AS m", _OCEANBASE_HYBRID_VECTOR_TAG_FROM_SQL)
+            .replace(
+                "SELECT 'vector'",
+                "SELECT /*+ LEADING(eligible m) USE_NL(m) NO_MERGE(eligible) */ 'vector'",
             )
         ).bindparams(
             bindparam("memory_artifact_ids", expanding=True),
