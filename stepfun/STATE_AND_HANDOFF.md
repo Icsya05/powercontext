@@ -4,6 +4,25 @@
 >
 > 这份报告接在 `HANDOFF_ZYJ.md`（前一个会话写的赛题解读）与 `AGENT_PROMPT.md`（可直接粘贴的提示词）之后。
 > 前两份文档回答「这题要做什么」；本份回答「**现在到哪一步了、哪些结论已经被真实验证过、还有哪些是未验证的假设**」。
+>
+> ---
+>
+> ## ⚠️ 后续更新（23:5x）
+>
+> **阶段 0 已执行完毕**，结果写在 **`stepfun/PHASE0_VERIFIED.md`**（本文件的下文未同步改写，以那份为准）。
+>
+> 一句话：**原 §8 列的 8 条假设，5 条已变成实测事实，1 条（假设 3 / `@seekdb/bm25`）被否证并已给出替代方案，还剩 3 条待验。**
+>
+> | 结论 | 状态 |
+> |---|---|
+> | 混合检索确实由 seekdb 内部完成（`DBMS_HYBRID_SEARCH.GET_SQL` + `FULL JOIN`） | ✅ 已验证，**§2.3.2 红线成立** |
+> | `refresh_index()` 不调用则向量检索返回空 | ✅ 已验证（这是 §2.3.3 的关键） |
+> | npm 装不上 `seekdb`（`workspace:*`）、必须 pnpm | ✅ 已复现并定位根因 |
+> | `seekdb` 的 7 个关键导出齐全 | ✅ 已验证 |
+> | `Key` ≠ `K`（README 写错了） | ✅ 已验证 |
+> | Transformers.js dtype / device 选项名 | ✅ 已验证 |
+> | `@seekdb/bm25` | ❌ **装不上，已决定放弃第三路，改用 稠密+全文 两路** |
+> | 浏览器下模型下载 / Playwright / WebGPU 真跑 | ⏳ 仍未验证 |
 
 ---
 
@@ -241,22 +260,43 @@ seekdb：稠密向量列 + HNSW ｜ 原文列 + ik 全文索引 ｜ BM25 稀疏�
 
 ---
 
-## 8. 我**没有**验证的假设（下一位必须自己先确认）
+## 8. 假设的验证状态（阶段 0 之后）
 
-| # | 假设 | 来源 | 风险 |
+> 详细实测见 **`stepfun/PHASE0_VERIFIED.md`**。这里是结论摘要。
+
+### 8.1 已变成事实 ✅
+
+| # | 原假设 | 实测结论 |
+|---|---|---|
+| 1 | `seekdb` 导出 `Schema` / `VectorIndexConfig` / `FulltextIndexConfig` / `SparseVectorIndexConfig` / `K` | **全部存在**（共 33 个导出）。⚠️ 运行时要用 `Key.DOCUMENT`，**不是** `K.DOCUMENT` —— `K !== Key` |
+| 2 | `collection.hybridSearch({query, knn, nResults})` 的签名与行为 | **跑通**。机制是 `SET @search_parm` → `DBMS_HYBRID_SEARCH.GET_SQL()` 生成 `FULL JOIN` 两腿的 SQL → 在库里执行。**融合在 seekdb 内完成，§2.3.2 红线成立**。⚠️ `whereDocument` 只约束**全文腿**，最终是两腿并集（不是全局过滤） |
+| 4 | Transformers.js 的 dtype 选项名 | **`['fp32','fp16','int8','uint8','q8','q4']`**（官方类型文档原文）；`device` 为 **`'wasm' \| 'webgpu'`** |
+| 5 | `seekdb-js` 能装上并连上 28811 | **能连上**，但**必须用 pnpm**（`npm install seekdb` 报 `EUNSUPPORTEDPROTOCOL: workspace:*`，已复现）。pnpm 12 还要加 `--ignore-scripts` |
+
+### 8.2 被否证并已给出替代 ❌
+
+| # | 原假设 | 实测结论 |
+|---|---|---|
+| 3 | `@seekdb/bm25` 的 `Bm25EmbeddingFunction` 用法 | **装不上**：发布 tarball 的 `peerDependencies` 是 `{"@seekdb/common":"workspace:*","seekdb":"workspace:*"}`，npm 和 pnpm 都拒绝。**决定放弃 BM25 第三路**，用已验证可用的 **稠密向量 + ik 全文两路混合**（题面未要求第三路） |
+
+### 8.3 仍未验证 ⏳
+
+| # | 假设 | 风险 | 怎么验 |
 |---|---|---|---|
-| 1 | `seekdb@1.4.0` 导出 `Schema` / `VectorIndexConfig` / `FulltextIndexConfig` / `SparseVectorIndexConfig` / `K` | 前一个会话读 README | 中 —— API 名可能对不上 |
-| 2 | `collection.hybridSearch({ query, knn, nResults })` 的签名与行为 | 前一个会话读 README | **高** —— 混合检索是合规红线，签名不对要重做 |
-| 3 | `@seekdb/bm25` 的 `Bm25EmbeddingFunction` 用法 | 前一个会话读 README | 低（第三路，可选） |
-| 4 | Transformers.js 4.3.2 的 dtype 选项名（`fp32`/`fp16`/`q8`/`int8`/`uint8`） | 常识推断 | 中 —— 名字错了就切不了精度 |
-| 5 | `seekdb-js` 端到端能装上并连上 28811 | 未验证 | **高** —— `workspace:` 协议要用 pnpm 解决 |
-| 6 | 浏览器里能下载 HF 模型（`huggingface.co` 出网 + 代理） | 未验证 | 中 —— 评审环境也要能下 |
-| 7 | Playwright / Chromium 能装能跑（做自动化计时与 Network 取证） | 未验证 | 中 —— 装不动就只能手工计时 |
-| 8 | 本机浏览器有没有 WebGPU | 未验证 | 中 —— 影响「WebGPU 可用」那行怎么测 |
+| 6 | 浏览器里能下载 HF 模型（`huggingface.co` 出网 + 代理） | 中 —— 评审环境也要能下 | 浏览器里跑一次 `pipeline()` |
+| 7 | Playwright / Chromium 能装能跑（自动化计时 + Network 取证） | 中 —— 装不动就只能手工计时 | `corepack pnpm dlx playwright install chromium`；本机 `ms-playwright` 目录目前是空的（只有 `.links`） |
+| 8 | 本机浏览器有没有 WebGPU | **部分已定**：本机**只有 Edge 156.0.4314.50**（没装 Chrome），`navigator.gpu` **存在 ✅**；但 `requestAdapter()` 能否真拿到适配器**未验** | 浏览器里 `await navigator.gpu.requestAdapter()` |
 
-> **阶段 0 就是专门干这个的。** 先把 1/2/4/5 变成事实，再动手写应用 —— 否则容易写完才发现 API 对不上。
+### 8.4 阶段 0 额外挖到、必须知道的实现细节
 
----
+| 细节 | 说明 |
+|---|---|
+| **`refresh_index()` 是必须的** | `add()` 后不刷新，向量检索返回**空**。实测 4 条数据刷新耗时 **714 ms**（这正是 §3.2 要测的「写入与索引刷新」） |
+| **返回结构双层 vs 单层** | `query()` / `hybridSearch()` → `ids: [[...]]`（双层）；`get({ids})` → `ids: [...]`（单层） |
+| **真实表结构** | `c$v2$<collection_id>` 表，`_id varbinary(512)` / `document string` / `embedding VECTOR(384)` / `metadata json`，带 `idx_fts`（ik，ik_mode=smart）与 `idx_vec`（VSAG HNSW，SYNC_MODE=ASYNC）。另有 `sdk_collections` 存集合设置。**表名带 `$`**，mysql CLI 查询要转义，用 pymysql/SDK 没问题 |
+| **底层 SQL 可直接用** | `match(document) against('%词%' in natural language mode)` 精确命中并带分数；`cosine_distance(embedding,'[...]')` 正常。**可直接用于 §3.1-5 的行级证据导出** |
+| **两个不可靠的 API** | `client.listCollections()` 集合存在也返回 `[]`；`collection.describe()` 只给 `{name,dimension,distance}`。**都别用** |
+| **`$contains` 的值不要带 `%`** | SDK 原样拼进 `against('<值>' ...)`，带 `%` 会让 Python 驱动报 `not enough arguments for format string` |
 
 ## 9. 给下一位的一页速查
 
@@ -293,6 +333,7 @@ corepack pnpm --version          # 12.16.1
 | `stepfun/HANDOFF_ZYJ.md` | 前一个会话写的赛题解读 + 三个坑 + seekdb-js API 速查（**先读这个**） |
 | `stepfun/AGENT_PROMPT.md` | 可整段粘贴给新 agent 的提示词（287 行） |
 | `stepfun/STATE_AND_HANDOFF.md` | **本文件**：已验证事实 / 剩余工作 / 未验证假设 |
+| `stepfun/PHASE0_VERIFIED.md` | **阶段 0 实测报告**（新建）：8 条假设的逐条实测结论 + 真实表结构 + 实现硬性清单 |
 | 官方赛题 | https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/kw9wfx4bu9pyvat9 |
 | 提交材料说明 | https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/lhfslihtnnb8yqh6 |
 | GitHub 使用说明（PAT/提测） | https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/qs1povt8zbza6hts |
