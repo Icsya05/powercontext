@@ -117,7 +117,12 @@ def main() -> int:
     # the last patch is the one that applies cleanly
     chosen = None
     for candidate in reversed(patches):
-        result = apply_patch(config, candidate.read_text(encoding="utf-8", errors="replace"), recorder)
+        result = apply_patch(
+            config,
+            candidate.read_text(encoding="utf-8", errors="replace"),
+            recorder,
+            patch_path=candidate,
+        )
         if result["exit_code"] == 0:
             chosen = candidate
             print(f"  applied {candidate.name}")

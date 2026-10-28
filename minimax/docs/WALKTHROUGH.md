@@ -145,11 +145,11 @@ FAILED tests/test_matches.py::TestMatches::test_r6_type_error_message_includes_v
 ```bash
 cd minimax/sample_project/jmespath
 python -m pytest tests/test_matches.py -q   # 6 passed
-python -m pytest tests/ -q                  # 996 passed, 1 skipped
+python -m pytest tests/ -q                  # 997 passed, 1 skipped
 ```
 
 **期望：目标测试全绿，回归测试全绿。**
-回归基线是 991 passed + 1 skipped，新增 6 个目标测试 → 997 个用例中 996 通过、1 跳过。
+回归基线是 991 passed + 1 skipped，新增 6 个目标测试 → 998 个用例中 997 通过、1 跳过。
 
 完整输出：[`../evidence/test-after-tests-test_matches.py_-q.txt`](../evidence/test-after-tests-test_matches.py_-q.txt)、
 [`../evidence/test-after-tests-_-q.txt`](../evidence/test-after-tests-_-q.txt)。

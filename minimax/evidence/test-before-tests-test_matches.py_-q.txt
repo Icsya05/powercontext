@@ -2,7 +2,7 @@
 # command: python -m pytest tests/test_matches.py -q
 # cwd: minimax/sample_project/jmespath
 # exit code: 1
-# generated: 2026-10-28T22:46:15
+# generated: 2026-10-28T23:00:07
 
 FFFFFF                                                                   [100%]
 ================================== FAILURES ===================================
@@ -51,7 +51,7 @@ E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches(
 jmespath\functions.py:76: UnknownFunctionError
 _____ TestMatches.test_r2_returns_true_for_a_match_and_false_for_no_match _____
 
-self = <jmespath.functions.Functions object at 0x000002A5A613C4D0>
+self = <jmespath.functions.Functions object at 0x00000160A7B6C4D0>
 function_name = 'matches', resolved_args = ['abc', 'b']
 
     def call_function(self, function_name, resolved_args):
@@ -88,7 +88,7 @@ jmespath\visitor.py:171: in visit_function_expression
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-self = <jmespath.functions.Functions object at 0x000002A5A613C4D0>
+self = <jmespath.functions.Functions object at 0x00000160A7B6C4D0>
 function_name = 'matches', resolved_args = ['abc', 'b']
 
     def call_function(self, function_name, resolved_args):
@@ -102,7 +102,7 @@ E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches(
 jmespath\functions.py:76: UnknownFunctionError
 _____________ TestMatches.test_r3_uses_python_re_search_semantics _____________
 
-self = <jmespath.functions.Functions object at 0x000002A5A590E390>
+self = <jmespath.functions.Functions object at 0x00000160A732B890>
 function_name = 'matches', resolved_args = ['abc', 'b']
 
     def call_function(self, function_name, resolved_args):
@@ -139,7 +139,7 @@ jmespath\visitor.py:171: in visit_function_expression
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-self = <jmespath.functions.Functions object at 0x000002A5A590E390>
+self = <jmespath.functions.Functions object at 0x00000160A732B890>
 function_name = 'matches', resolved_args = ['abc', 'b']
 
     def call_function(self, function_name, resolved_args):
@@ -196,7 +196,7 @@ E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches(
 jmespath\functions.py:76: UnknownFunctionError
 ____________ TestMatches.test_r5_can_be_used_as_a_filter_predicate ____________
 
-self = <jmespath.functions.Functions object at 0x000002A5A613ECF0>
+self = <jmespath.functions.Functions object at 0x00000160A7B6EED0>
 function_name = 'matches', resolved_args = ['alice', '^a']
 
     def call_function(self, function_name, resolved_args):
@@ -246,7 +246,7 @@ jmespath\visitor.py:171: in visit_function_expression
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-self = <jmespath.functions.Functions object at 0x000002A5A613ECF0>
+self = <jmespath.functions.Functions object at 0x00000160A7B6EED0>
 function_name = 'matches', resolved_args = ['alice', '^a']
 
     def call_function(self, function_name, resolved_args):
@@ -319,4 +319,4 @@ FAILED tests/test_matches.py::TestMatches::test_r3_uses_python_re_search_semanti
 FAILED tests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error
 FAILED tests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate
 FAILED tests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types
-6 failed, 6 warnings in 0.27s
+6 failed, 6 warnings in 0.25s

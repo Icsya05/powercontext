@@ -8,6 +8,7 @@ because it lives in PowerContext.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import subprocess
@@ -251,18 +252,27 @@ def revert_to_before_snapshot(config: Config, recorder: EvidenceRecorder) -> dic
     return result
 
 
-def apply_patch(config: Config, patch: str, recorder: EvidenceRecorder) -> dict[str, Any]:
+def apply_patch(
+    config: Config,
+    patch: str,
+    recorder: EvidenceRecorder,
+    patch_path: Path | None = None,
+) -> dict[str, Any]:
     """Apply a unified diff to the working tree with ``git apply``.
 
     ``--recount`` is used because a model generated diff sometimes declares
     the wrong number of lines in a hunk header.  With ``--recount`` git
     recomputes the counts from the hunk body instead of rejecting the patch
     as corrupt.  The plain call is kept as a fallback.
+
+    ``patch_path`` applies an existing file instead of writing a new one, so
+    that the evidence directory keeps one file per model attempt.
     """
     PATCH_DIR.mkdir(parents=True, exist_ok=True)
-    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    patch_path = PATCH_DIR / f"{stamp}.patch"
-    patch_path.write_text(patch, encoding="utf-8")
+    if patch_path is None:
+        stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        patch_path = PATCH_DIR / f"{stamp}.patch"
+        patch_path.write_text(patch, encoding="utf-8")
 
     attempts: list[dict[str, Any]] = []
     process = None
@@ -445,6 +455,18 @@ def save_state(
     return payload
 
 
+def _source_id(task_id: str, kind: str, content: str) -> str:
+    """Derive a stable Source id from the content.
+
+    PowerContext binds a Source identity to its content: writing the same
+    ``source_id`` with different content is rejected.  Deriving the id from a
+    digest of the content keeps repeated runs idempotent while still allowing
+    a genuinely different outcome to be recorded.
+    """
+    digest = hashlib.sha256(content.encode("utf-8")).hexdigest()[:12]
+    return f"sddctx:{task_id}:{kind}:{digest}"
+
+
 def record_outcome(
     config: Config,
     task: Task,
@@ -459,7 +481,9 @@ def record_outcome(
 ) -> dict[str, Any]:
     """Record one step outcome in PowerContext."""
     client = pc_client or PowerContextClient(config.powercontext, recorder=recorder)
-    scope = client.ensure_scope(task.task_id, f"sdd task {task.task_id}", f"SDD development task {task.task_id}")
+    scope = client.ensure_scope(
+        task.task_id, f"sdd task {task.task_id}", f"SDD development task {task.task_id}"
+    )
     outcome = {
         "schema": "powercontext.task-outcome.v1",
         "trust": "untrusted_observation",
@@ -482,10 +506,9 @@ def record_outcome(
         "produced_artifacts": [],
         "remaining_work": remaining,
     }
-    receipt = client.record_outcome(
-        scope.scope_id, f"sddctx:{task.task_id}:outcome:{source_suffix}", outcome
-    )
-    recorder.record("outcome.recorded", scope_id=scope.scope_id, outcome=outcome, receipt=receipt)
+    source_id = _source_id(task.task_id, f"outcome:{source_suffix}", json.dumps(outcome, sort_keys=True))
+    receipt = client.record_outcome(scope.scope_id, source_id, outcome)
+    recorder.record("outcome.recorded", scope_id=scope.scope_id, source_id=source_id, outcome=outcome, receipt=receipt)
     return receipt
 
 

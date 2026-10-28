@@ -2,7 +2,7 @@
 # command: python -m pytest tests/ -q
 # cwd: minimax/sample_project/jmespath
 # exit code: 0
-# generated: 2026-10-28T22:46:17
+# generated: 2026-10-28T23:00:09
 
 ........................................................................ [  7%]
 ........................................................................ [ 14%]
@@ -26,4 +26,4 @@ tests/test_matches.py: 21 warnings
     warnings.warn("deprecated string literal syntax",
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-997 passed, 1 skipped, 35 warnings in 0.87s
+997 passed, 1 skipped, 35 warnings in 0.85s

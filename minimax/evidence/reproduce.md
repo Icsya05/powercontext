@@ -1,7 +1,7 @@
 # Reproduction evidence
 
 Run: `reproduce`
-Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evidence/raw/20261028-224612-reproduce.jsonl`
+Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evidence/raw/20261028-230005-reproduce.jsonl`
 
 ## patch.reverted
 
@@ -27,7 +27,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
   "command": "python -m pytest tests/test_matches.py -q",
   "exit_code": 1,
   "passed": false,
-  "stdout_tail": "tions object at 0x000002A5A613ECF0>\nfunction_name = 'matches', resolved_args = ['alice', '^a']\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n>           raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\nE           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()\n\njmespath\\functions.py:76: UnknownFunctionError\n_ TestMatches.test_r6_type_error_message_includes_value_type_and_expected_types _\n\n    def call_function(self, function_name, resolved_args):\n        try:\n>           spec = self.FUNCTION_TABLE[function_name]\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           KeyError: 'matches'\n\njmespath\\functions.py:74: KeyError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <tests.test_matches.TestMatches testMethod=test_r6_type_error_message_includes_value_type_and_expected_types>\n\n    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n>           jmespath.search('matches(@, `pattern`)', 42)\n\ntests\\test_matches.py:81: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\njmespath\\__init__.py:12: in search\n    return parser.Parser().parse(expression).search(data, options=options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\parser.py:516: in search\n    result = interpreter.visit(self.parsed, value)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:94: in visit\n    return method(node, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:171: in visit_function_expression\n    return self._functions.call_function(node['value'], resolved_args)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n>           raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\nE           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()\n\njmespath\\functions.py:76: UnknownFunctionError\n============================== warnings summary ===============================\ntests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match\ntests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match\ntests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error\ntests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error\ntests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate\ntests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types\n  D:\\ZhuYijing\\Documents\\minimax工作文件夹\\powercontext\\minimax\\sample_project\\jmespath\\jmespath\\lexer.py:169: PendingDeprecationWarning: deprecated string literal syntax\n    warnings.warn(\"deprecated string literal syntax\",\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_matches.py::TestMatches::test_r1_requires_exactly_two_string_arguments\nFAILED tests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match\nFAILED tests/test_matches.py::TestMatches::test_r3_uses_python_re_search_semantics\nFAILED tests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error\nFAILED tests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate\nFAILED tests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types\n6 failed, 6 warnings in 0.27s\n",
+  "stdout_tail": "tions object at 0x00000160A7B6EED0>\nfunction_name = 'matches', resolved_args = ['alice', '^a']\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n>           raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\nE           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()\n\njmespath\\functions.py:76: UnknownFunctionError\n_ TestMatches.test_r6_type_error_message_includes_value_type_and_expected_types _\n\n    def call_function(self, function_name, resolved_args):\n        try:\n>           spec = self.FUNCTION_TABLE[function_name]\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           KeyError: 'matches'\n\njmespath\\functions.py:74: KeyError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <tests.test_matches.TestMatches testMethod=test_r6_type_error_message_includes_value_type_and_expected_types>\n\n    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n>           jmespath.search('matches(@, `pattern`)', 42)\n\ntests\\test_matches.py:81: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\njmespath\\__init__.py:12: in search\n    return parser.Parser().parse(expression).search(data, options=options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\parser.py:516: in search\n    result = interpreter.visit(self.parsed, value)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:94: in visit\n    return method(node, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:171: in visit_function_expression\n    return self._functions.call_function(node['value'], resolved_args)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n>           raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\nE           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()\n\njmespath\\functions.py:76: UnknownFunctionError\n============================== warnings summary ===============================\ntests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match\ntests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match\ntests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error\ntests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error\ntests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate\ntests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types\n  D:\\ZhuYijing\\Documents\\minimax工作文件夹\\powercontext\\minimax\\sample_project\\jmespath\\jmespath\\lexer.py:169: PendingDeprecationWarning: deprecated string literal syntax\n    warnings.warn(\"deprecated string literal syntax\",\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_matches.py::TestMatches::test_r1_requires_exactly_two_string_arguments\nFAILED tests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match\nFAILED tests/test_matches.py::TestMatches::test_r3_uses_python_re_search_semantics\nFAILED tests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error\nFAILED tests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate\nFAILED tests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types\n6 failed, 6 warnings in 0.25s\n",
   "stderr_tail": ""
 }
 ```
@@ -39,7 +39,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
   "command": "python -m pytest tests/ -q",
   "exit_code": 1,
   "passed": false,
-  "stdout_tail": "py:94: in visit\n    return method(node, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:171: in visit_function_expression\n    return self._functions.call_function(node['value'], resolved_args)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <jmespath.functions.Functions object at 0x000002C5A8589DF0>\nfunction_name = 'matches', resolved_args = ['alice', '^a']\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n>           raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\nE           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()\n\njmespath\\functions.py:76: UnknownFunctionError\n_ TestMatches.test_r6_type_error_message_includes_value_type_and_expected_types _\n\n    def call_function(self, function_name, resolved_args):\n        try:\n>           spec = self.FUNCTION_TABLE[function_name]\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           KeyError: 'matches'\n\njmespath\\functions.py:74: KeyError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <tests.test_matches.TestMatches testMethod=test_r6_type_error_message_includes_value_type_and_expected_types>\n\n    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n>           jmespath.search('matches(@, `pattern`)', 42)\n\ntests\\test_matches.py:81: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\njmespath\\__init__.py:12: in search\n    return parser.Parser().parse(expression).search(data, options=options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\parser.py:516: in search\n    result = interpreter.visit(self.parsed, value)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:94: in visit\n    return method(node, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:171: in visit_function_expression\n    return self._functions.call_function(node['value'], resolved_args)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n>           raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\nE           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()\n\njmespath\\functions.py:76: UnknownFunctionError\n============================== warnings summary ===============================\ntests/test_compliance.py: 11 warnings\ntests/test_lexer.py: 3 warnings\ntests/test_matches.py: 6 warnings\n  D:\\ZhuYijing\\Documents\\minimax工作文件夹\\powercontext\\minimax\\sample_project\\jmespath\\jmespath\\lexer.py:169: PendingDeprecationWarning: deprecated string literal syntax\n    warnings.warn(\"deprecated string literal syntax\",\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_matches.py::TestMatches::test_r1_requires_exactly_two_string_arguments\nFAILED tests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match\nFAILED tests/test_matches.py::TestMatches::test_r3_uses_python_re_search_semantics\nFAILED tests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error\nFAILED tests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate\nFAILED tests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types\n6 failed, 991 passed, 1 skipped, 20 warnings in 1.10s\n",
+  "stdout_tail": "py:94: in visit\n    return method(node, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:171: in visit_function_expression\n    return self._functions.call_function(node['value'], resolved_args)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nself = <jmespath.functions.Functions object at 0x000002E68D3D9EB0>\nfunction_name = 'matches', resolved_args = ['alice', '^a']\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n>           raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\nE           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()\n\njmespath\\functions.py:76: UnknownFunctionError\n_ TestMatches.test_r6_type_error_message_includes_value_type_and_expected_types _\n\n    def call_function(self, function_name, resolved_args):\n        try:\n>           spec = self.FUNCTION_TABLE[function_name]\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           KeyError: 'matches'\n\njmespath\\functions.py:74: KeyError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <tests.test_matches.TestMatches testMethod=test_r6_type_error_message_includes_value_type_and_expected_types>\n\n    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n>           jmespath.search('matches(@, `pattern`)', 42)\n\ntests\\test_matches.py:81: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\njmespath\\__init__.py:12: in search\n    return parser.Parser().parse(expression).search(data, options=options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\parser.py:516: in search\n    result = interpreter.visit(self.parsed, value)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:94: in visit\n    return method(node, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\njmespath\\visitor.py:171: in visit_function_expression\n    return self._functions.call_function(node['value'], resolved_args)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n>           raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\nE           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()\n\njmespath\\functions.py:76: UnknownFunctionError\n============================== warnings summary ===============================\ntests/test_compliance.py: 11 warnings\ntests/test_lexer.py: 3 warnings\ntests/test_matches.py: 6 warnings\n  D:\\ZhuYijing\\Documents\\minimax工作文件夹\\powercontext\\minimax\\sample_project\\jmespath\\jmespath\\lexer.py:169: PendingDeprecationWarning: deprecated string literal syntax\n    warnings.warn(\"deprecated string literal syntax\",\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_matches.py::TestMatches::test_r1_requires_exactly_two_string_arguments\nFAILED tests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match\nFAILED tests/test_matches.py::TestMatches::test_r3_uses_python_re_search_semantics\nFAILED tests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error\nFAILED tests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate\nFAILED tests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types\n6 failed, 991 passed, 1 skipped, 20 warnings in 1.02s\n",
   "stderr_tail": ""
 }
 ```
@@ -48,7 +48,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
 
 ```json
 {
-  "patch_path": "minimax/evidence/patches/20261028-224615.patch",
+  "patch_path": "minimax/evidence/patches/20261028-223255.patch",
   "exit_code": 0,
   "stdout": "",
   "stderr": "",
@@ -91,7 +91,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
   "command": "python -m pytest tests/ -q",
   "exit_code": 0,
   "passed": true,
-  "stdout_tail": "........................................................................ [  7%]\n........................................................................ [ 14%]\n........................................................................ [ 21%]\n........................................................................ [ 28%]\n........................................................................ [ 36%]\n........................................................................ [ 43%]\n........................................................................ [ 50%]\n........................................................................ [ 57%]\n........................................................................ [ 64%]\n........................................................................ [ 72%]\n........................................................................ [ 79%]\n........................................................................ [ 86%]\n........................................................................ [ 93%]\n.............................................................s           [100%]\n============================== warnings summary ===============================\ntests/test_compliance.py: 11 warnings\ntests/test_lexer.py: 3 warnings\ntests/test_matches.py: 21 warnings\n  D:\\ZhuYijing\\Documents\\minimax工作文件夹\\powercontext\\minimax\\sample_project\\jmespath\\jmespath\\lexer.py:169: PendingDeprecationWarning: deprecated string literal syntax\n    warnings.warn(\"deprecated string literal syntax\",\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n997 passed, 1 skipped, 35 warnings in 0.87s\n",
+  "stdout_tail": "........................................................................ [  7%]\n........................................................................ [ 14%]\n........................................................................ [ 21%]\n........................................................................ [ 28%]\n........................................................................ [ 36%]\n........................................................................ [ 43%]\n........................................................................ [ 50%]\n........................................................................ [ 57%]\n........................................................................ [ 64%]\n........................................................................ [ 72%]\n........................................................................ [ 79%]\n........................................................................ [ 86%]\n........................................................................ [ 93%]\n.............................................................s           [100%]\n============================== warnings summary ===============================\ntests/test_compliance.py: 11 warnings\ntests/test_lexer.py: 3 warnings\ntests/test_matches.py: 21 warnings\n  D:\\ZhuYijing\\Documents\\minimax工作文件夹\\powercontext\\minimax\\sample_project\\jmespath\\jmespath\\lexer.py:169: PendingDeprecationWarning: deprecated string literal syntax\n    warnings.warn(\"deprecated string literal syntax\",\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n997 passed, 1 skipped, 35 warnings in 0.85s\n",
   "stderr_tail": ""
 }
 ```
@@ -132,7 +132,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "40",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:17.743965"
+    "2026-10-28 23:00:10.093124"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -154,7 +154,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "48",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:17.837706"
+    "2026-10-28 23:00:10.220858"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -176,7 +176,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "53",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:17.847108"
+    "2026-10-28 23:00:10.247076"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -198,7 +198,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "62",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:17.891226"
+    "2026-10-28 23:00:10.354545"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -220,7 +220,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "69",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:17.925399"
+    "2026-10-28 23:00:10.365109"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -242,7 +242,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "79",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:17.935919"
+    "2026-10-28 23:00:10.419261"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -264,7 +264,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "87",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:17.945870"
+    "2026-10-28 23:00:10.431014"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -286,7 +286,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "93",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:17.972769"
+    "2026-10-28 23:00:10.441795"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -308,7 +308,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "99",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:18.001636"
+    "2026-10-28 23:00:10.464067"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -330,7 +330,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "106",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:18.012716"
+    "2026-10-28 23:00:10.495358"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -352,7 +352,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "111",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:18.033859"
+    "2026-10-28 23:00:10.504491"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -374,7 +374,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
     "117",
     "matches(subject, pattern) 正则谓词函数",
-    "2026-10-28 22:46:18.064471"
+    "2026-10-28 23:00:10.525656"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -395,7 +395,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import sys\nimport json\nimport argparse\nfrom pprint import pformat\n\nimport jmespath\nfrom jmespath import exceptions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/bin/jp.py",
     "3",
-    "2026-10-28 22:46:18.129015"
+    "2026-10-28 23:00:10.587205"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -416,7 +416,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument('expression')\n    parser.add_argument('-f', '--filename',\n                        help=('The filename containing the input data.  '\n                              'If a filename is not given then data is '\n                              'read from stdin.'))\n    parser.add_argument('--ast', action='store_true',\n                        help=('Pretty print the AST, do not search the data.'))\n    args = parser.parse_args()\n    expression = args.expression\n    if args.ast:\n        # Only print the AST\n        expression = jmespath.compile(args.expression)\n        sys.stdout.write(pformat(expression.parsed))\n        sys.stdout.write('\\n')\n        return 0\n    if args.filename:\n        with open(args.filename, 'r') as f:\n            data = json.load(f)\n    else:\n        data = sys.stdin.read()\n        data = json.loads(data)\n    try:\n        sys.stdout.write(json.dumps(\n            jmespath.search(expression, data), indent=4, ensure_ascii=False))\n        sys.stdout.write('\\n')\n    except exceptions.ArityError as e:\n        sys.stderr.write(\"invalid-arity: %s\\n\" % e)\n        return 1\n    except exceptions.JMESPathTypeError as e:\n        sys.stderr.write(\"invalid-type: %s\\n\" % e)\n        return 1\n    except exceptions.UnknownFunctionError as e:\n        sys.stderr.write(\"unknown-function: %s\\n\" % e)\n        return 1\n    except exceptions.ParseError as e:\n        sys.stderr.write(\"syntax-error: %s\\n\" % e)\n        return 1",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/bin/jp.py",
     "12",
-    "2026-10-28 22:46:18.161273"
+    "2026-10-28 23:00:10.609516"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -437,7 +437,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import os\nimport numbers\n\nfrom hypothesis import given, settings, assume, HealthCheck\nimport hypothesis.strategies as st\n\nfrom jmespath import lexer\nfrom jmespath import parser\nfrom jmespath import exceptions\nfrom jmespath.functions import Functions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "5",
-    "2026-10-28 22:46:18.193567"
+    "2026-10-28 23:00:10.635619"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -458,7 +458,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_lexer_api(expr):\n    try:\n        tokens = list(lexer.Lexer().tokenize(expr))\n    except exceptions.EmptyExpressionError:\n        return\n    except exceptions.LexerError as e:\n        assert e.lex_position >= 0, e.lex_position\n        assert e.lex_position < len(expr), e.lex_position\n        if expr:\n            assert expr[e.lex_position] == e.token_value[0], (\n                \"Lex position does not match first token char.\\n\"\n                \"Expression: %s\\n%s != %s\" % (expr, expr[e.lex_position],\n                                              e.token_value[0])\n            )\n        return\n    except Exception as e:\n        raise AssertionError(\"Non JMESPathError raised: %s\" % e)\n    assert isinstance(tokens, list)\n    # Token starting positions must be unique, can't have two\n    # tokens with the same start position.\n    start_locations = [t['start'] for t in tokens]\n    assert len(set(start_locations)) == len(start_locations), (\n        \"Tokens must have unique starting locations.\")\n    # Starting positions must be increasing (i.e sorted).\n    assert sorted(start_locations) == start_locations, (\n        \"Tokens must have increasing start locations.\")\n    # Last token is always EOF.\n    assert tokens[-1]['type'] == 'eof'",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "39",
-    "2026-10-28 22:46:18.204511"
+    "2026-10-28 23:00:10.667663"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -479,7 +479,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_parser_api_from_str(expr):\n    # Same a lexer above with the assumption that we're parsing\n    # a valid sequence of tokens.\n    try:\n        list(lexer.Lexer().tokenize(expr))\n    except exceptions.JMESPathError as e:\n        # We want to try to parse things that tokenize\n        # properly.\n        assume(False)\n    try:\n        ast = parser.Parser().parse(expr)\n    except exceptions.JMESPathError as e:\n        return\n    except Exception as e:\n        raise AssertionError(\"Non JMESPathError raised: %s\" % e)\n    assert isinstance(ast.parsed, dict)\n    assert 'type' in ast.parsed\n    assert 'children' in ast.parsed\n    assert isinstance(ast.parsed['children'], list)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "71",
-    "2026-10-28 22:46:18.221676"
+    "2026-10-28 23:00:10.705951"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -500,7 +500,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_search_api(expr, data):\n    try:\n        ast = parser.Parser().parse(expr)\n    except exceptions.JMESPathError as e:\n        # We want to try to parse things that tokenize\n        # properly.\n        assume(False)\n    try:\n        ast.search(data)\n    except exceptions.JMESPathError as e:\n        return\n    except Exception as e:\n        raise AssertionError(\"Non JMESPathError raised: %s\" % e)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "94",
-    "2026-10-28 22:46:18.233209"
+    "2026-10-28 23:00:10.730651"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -521,7 +521,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_abs(arg):\n    assert Functions().call_function('abs', [arg]) >= 0",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "112",
-    "2026-10-28 22:46:18.243138"
+    "2026-10-28 23:00:10.762105"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -542,7 +542,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_avg(arg):\n    result = Functions().call_function('avg', [arg])\n    if result is not None:\n        assert isinstance(result, numbers.Number)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "117",
-    "2026-10-28 22:46:18.266283"
+    "2026-10-28 23:00:10.791489"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -563,7 +563,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_not_null(arg):\n    result = Functions().call_function('not_null', arg)\n    if result is not None:\n        assert result in arg",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "125",
-    "2026-10-28 22:46:18.297556"
+    "2026-10-28 23:00:10.823260"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -584,7 +584,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_to_number(arg):\n    result = Functions().call_function('to_number', [arg])\n    if result is not None:\n        assert isinstance(result, numbers.Number)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "132",
-    "2026-10-28 22:46:18.308488"
+    "2026-10-28 23:00:10.837749"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -605,7 +605,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "from jmespath import parser\nfrom jmespath.visitor import Options",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/__init__.py",
     "1",
-    "2026-10-28 22:46:18.329752"
+    "2026-10-28 23:00:10.849389"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -626,7 +626,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def compile(expression):\n    return parser.Parser().parse(expression)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/__init__.py",
     "7",
-    "2026-10-28 22:46:18.341437"
+    "2026-10-28 23:00:10.861587"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -647,7 +647,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def search(expression, data, options=None):\n    return parser.Parser().parse(expression).search(data, options=options)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/__init__.py",
     "11",
-    "2026-10-28 22:46:18.351245"
+    "2026-10-28 23:00:10.882380"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -668,7 +668,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def comparator(name, first, second):\n    return {'type': 'comparator', 'children': [first, second], 'value': name}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "5",
-    "2026-10-28 22:46:18.375665"
+    "2026-10-28 23:00:10.915971"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -689,7 +689,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def current_node():\n    return {'type': 'current', 'children': []}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "9",
-    "2026-10-28 22:46:18.406598"
+    "2026-10-28 23:00:10.947096"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -710,7 +710,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def expref(expression):\n    return {'type': 'expref', 'children': [expression]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "13",
-    "2026-10-28 22:46:18.436427"
+    "2026-10-28 23:00:10.976816"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -731,7 +731,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def function_expression(name, args):\n    return {'type': 'function_expression', 'children': args, 'value': name}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "17",
-    "2026-10-28 22:46:18.467070"
+    "2026-10-28 23:00:10.987835"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -752,7 +752,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def field(name):\n    return {\"type\": \"field\", \"children\": [], \"value\": name}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "21",
-    "2026-10-28 22:46:18.499996"
+    "2026-10-28 23:00:10.996836"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -773,7 +773,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def filter_projection(left, right, comparator):\n    return {'type': 'filter_projection', 'children': [left, right, comparator]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "25",
-    "2026-10-28 22:46:18.508863"
+    "2026-10-28 23:00:11.022659"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -794,7 +794,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def flatten(node):\n    return {'type': 'flatten', 'children': [node]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "29",
-    "2026-10-28 22:46:18.530022"
+    "2026-10-28 23:00:11.055963"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -815,7 +815,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def identity():\n    return {\"type\": \"identity\", 'children': []}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "33",
-    "2026-10-28 22:46:18.561844"
+    "2026-10-28 23:00:11.085406"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -836,7 +836,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def index(index):\n    return {\"type\": \"index\", \"value\": index, \"children\": []}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "37",
-    "2026-10-28 22:46:18.574057"
+    "2026-10-28 23:00:11.117198"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -857,7 +857,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def index_expression(children):\n    return {\"type\": \"index_expression\", 'children': children}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "41",
-    "2026-10-28 22:46:18.606553"
+    "2026-10-28 23:00:11.128045"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -878,7 +878,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def key_val_pair(key_name, node):\n    return {\"type\": \"key_val_pair\", 'children': [node], \"value\": key_name}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "45",
-    "2026-10-28 22:46:18.637603"
+    "2026-10-28 23:00:11.139357"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -899,7 +899,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def literal(literal_value):\n    return {'type': 'literal', 'value': literal_value, 'children': []}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "49",
-    "2026-10-28 22:46:18.648622"
+    "2026-10-28 23:00:11.154257"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -920,7 +920,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def multi_select_dict(nodes):\n    return {\"type\": \"multi_select_dict\", \"children\": nodes}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "53",
-    "2026-10-28 22:46:18.669656"
+    "2026-10-28 23:00:11.165243"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -941,7 +941,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def multi_select_list(nodes):\n    return {\"type\": \"multi_select_list\", \"children\": nodes}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "57",
-    "2026-10-28 22:46:18.680941"
+    "2026-10-28 23:00:11.174999"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -962,7 +962,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def or_expression(left, right):\n    return {\"type\": \"or_expression\", \"children\": [left, right]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "61",
-    "2026-10-28 22:46:18.691080"
+    "2026-10-28 23:00:11.196885"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -983,7 +983,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def and_expression(left, right):\n    return {\"type\": \"and_expression\", \"children\": [left, right]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "65",
-    "2026-10-28 22:46:18.702455"
+    "2026-10-28 23:00:11.209141"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1004,7 +1004,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def not_expression(expr):\n    return {\"type\": \"not_expression\", \"children\": [expr]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "69",
-    "2026-10-28 22:46:18.731313"
+    "2026-10-28 23:00:11.222042"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1025,7 +1025,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def pipe(left, right):\n    return {'type': 'pipe', 'children': [left, right]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "73",
-    "2026-10-28 22:46:18.762069"
+    "2026-10-28 23:00:11.233264"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1046,7 +1046,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def projection(left, right):\n    return {'type': 'projection', 'children': [left, right]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "77",
-    "2026-10-28 22:46:18.792697"
+    "2026-10-28 23:00:11.256227"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1067,7 +1067,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def subexpression(children):\n    return {\"type\": \"subexpression\", 'children': children}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "81",
-    "2026-10-28 22:46:18.823706"
+    "2026-10-28 23:00:11.286601"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1088,7 +1088,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def slice(start, end, step):\n    return {\"type\": \"slice\", \"children\": [start, end, step]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "85",
-    "2026-10-28 22:46:18.855023"
+    "2026-10-28 23:00:11.318645"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1109,7 +1109,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def value_projection(left, right):\n    return {'type': 'value_projection', 'children': [left, right]}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/ast.py",
     "89",
-    "2026-10-28 22:46:18.884831"
+    "2026-10-28 23:00:11.355204"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1130,7 +1130,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import sys\nimport inspect\nfrom itertools import zip_longest",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/compat.py",
     "1",
-    "2026-10-28 22:46:18.895562"
+    "2026-10-28 23:00:11.366098"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1151,7 +1151,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def with_str_method(cls):\n    # In python3, we don't need to do anything, we return a str type.\n    return cls",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/compat.py",
     "10",
-    "2026-10-28 22:46:18.916047"
+    "2026-10-28 23:00:11.396836"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1172,7 +1172,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def with_repr_method(cls):\n    return cls",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/compat.py",
     "14",
-    "2026-10-28 22:46:18.946466"
+    "2026-10-28 23:00:11.405770"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1193,7 +1193,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def get_methods(cls):\n    for name, method in inspect.getmembers(cls, predicate=inspect.isfunction):\n        yield name, method",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/compat.py",
     "17",
-    "2026-10-28 22:46:18.976508"
+    "2026-10-28 23:00:11.425907"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1214,7 +1214,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "from jmespath.compat import with_str_method",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "1",
-    "2026-10-28 22:46:19.008315"
+    "2026-10-28 23:00:11.458329"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1235,7 +1235,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class JMESPathError(ValueError):\n    pass",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "4",
-    "2026-10-28 22:46:19.038022"
+    "2026-10-28 23:00:11.469174"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1256,7 +1256,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class ParseError(JMESPathError):\n    _ERROR_MESSAGE = 'Invalid jmespath expression'\n    def __init__(self, lex_position, token_value, token_type,\n                 msg=_ERROR_MESSAGE):\n        super(ParseError, self).__init__(lex_position, token_value, token_type)\n        self.lex_position = lex_position\n        self.token_value = token_value\n        self.token_type = token_type.upper()\n        self.msg = msg\n        # Whatever catches the ParseError can fill in the full expression\n        self.expression = None\n\n    def __str__(self):\n        # self.lex_position +1 to account for the starting double quote char.\n        underline = ' ' * (self.lex_position + 1) + '^'\n        return (\n            '%s: Parse error at column %s, '\n            'token \"%s\" (%s), for expression:\\n\"%s\"\\n%s' % (\n                self.msg, self.lex_position, self.token_value, self.token_type,\n                self.expression, underline))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "9",
-    "2026-10-28 22:46:19.049439"
+    "2026-10-28 23:00:11.479573"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1277,7 +1277,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, lex_position, token_value, token_type,\n                 msg=_ERROR_MESSAGE):\n        super(ParseError, self).__init__(lex_position, token_value, token_type)\n        self.lex_position = lex_position\n        self.token_value = token_value\n        self.token_type = token_type.upper()\n        self.msg = msg\n        # Whatever catches the ParseError can fill in the full expression\n        self.expression = None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "11",
-    "2026-10-28 22:46:19.069190"
+    "2026-10-28 23:00:11.506503"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1298,7 +1298,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __str__(self):\n        # self.lex_position +1 to account for the starting double quote char.\n        underline = ' ' * (self.lex_position + 1) + '^'\n        return (\n            '%s: Parse error at column %s, '\n            'token \"%s\" (%s), for expression:\\n\"%s\"\\n%s' % (\n                self.msg, self.lex_position, self.token_value, self.token_type,\n                self.expression, underline))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "21",
-    "2026-10-28 22:46:19.098049"
+    "2026-10-28 23:00:11.517950"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1319,7 +1319,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class IncompleteExpressionError(ParseError):\n    def set_expression(self, expression):\n        self.expression = expression\n        self.lex_position = len(expression)\n        self.token_type = None\n        self.token_value = None\n\n    def __str__(self):\n        # self.lex_position +1 to account for the starting double quote char.\n        underline = ' ' * (self.lex_position + 1) + '^'\n        return (\n            'Invalid jmespath expression: Incomplete expression:\\n'\n            '\"%s\"\\n%s' % (self.expression, underline))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "32",
-    "2026-10-28 22:46:19.129536"
+    "2026-10-28 23:00:11.550211"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1340,7 +1340,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def set_expression(self, expression):\n        self.expression = expression\n        self.lex_position = len(expression)\n        self.token_type = None\n        self.token_value = None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "33",
-    "2026-10-28 22:46:19.141549"
+    "2026-10-28 23:00:11.562889"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1361,7 +1361,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __str__(self):\n        # self.lex_position +1 to account for the starting double quote char.\n        underline = ' ' * (self.lex_position + 1) + '^'\n        return (\n            'Invalid jmespath expression: Incomplete expression:\\n'\n            '\"%s\"\\n%s' % (self.expression, underline))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "39",
-    "2026-10-28 22:46:19.151597"
+    "2026-10-28 23:00:11.573665"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1382,7 +1382,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class LexerError(ParseError):\n    def __init__(self, lexer_position, lexer_value, message, expression=None):\n        self.lexer_position = lexer_position\n        self.lexer_value = lexer_value\n        self.message = message\n        super(LexerError, self).__init__(lexer_position,\n                                         lexer_value,\n                                         message)\n        # Whatever catches LexerError can set this.\n        self.expression = expression\n\n    def __str__(self):\n        underline = ' ' * self.lexer_position + '^'\n        return 'Bad jmespath expression: %s:\\n%s\\n%s' % (\n            self.message, self.expression, underline)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "48",
-    "2026-10-28 22:46:19.176984"
+    "2026-10-28 23:00:11.597983"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1403,7 +1403,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, lexer_position, lexer_value, message, expression=None):\n        self.lexer_position = lexer_position\n        self.lexer_value = lexer_value\n        self.message = message\n        super(LexerError, self).__init__(lexer_position,\n                                         lexer_value,\n                                         message)\n        # Whatever catches LexerError can set this.\n        self.expression = expression",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "49",
-    "2026-10-28 22:46:19.189959"
+    "2026-10-28 23:00:11.609206"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1424,7 +1424,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __str__(self):\n        underline = ' ' * self.lexer_position + '^'\n        return 'Bad jmespath expression: %s:\\n%s\\n%s' % (\n            self.message, self.expression, underline)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "59",
-    "2026-10-28 22:46:19.200572"
+    "2026-10-28 23:00:11.619361"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1445,7 +1445,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class ArityError(ParseError):\n    def __init__(self, expected, actual, name):\n        self.expected_arity = expected\n        self.actual_arity = actual\n        self.function_name = name\n        self.expression = None\n\n    def __str__(self):\n        return (\"Expected %s %s for function %s(), \"\n                \"received %s\" % (\n                    self.expected_arity,\n                    self._pluralize('argument', self.expected_arity),\n                    self.function_name,\n                    self.actual_arity))\n\n    def _pluralize(self, word, count):\n        if count == 1:\n            return word\n        else:\n            return word + 's'",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "66",
-    "2026-10-28 22:46:19.224347"
+    "2026-10-28 23:00:11.631105"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1466,7 +1466,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, expected, actual, name):\n        self.expected_arity = expected\n        self.actual_arity = actual\n        self.function_name = name\n        self.expression = None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "67",
-    "2026-10-28 22:46:19.234716"
+    "2026-10-28 23:00:11.659194"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1487,7 +1487,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __str__(self):\n        return (\"Expected %s %s for function %s(), \"\n                \"received %s\" % (\n                    self.expected_arity,\n                    self._pluralize('argument', self.expected_arity),\n                    self.function_name,\n                    self.actual_arity))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "73",
-    "2026-10-28 22:46:19.268746"
+    "2026-10-28 23:00:11.671515"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1508,7 +1508,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _pluralize(self, word, count):\n        if count == 1:\n            return word\n        else:\n            return word + 's'",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "81",
-    "2026-10-28 22:46:19.299760"
+    "2026-10-28 23:00:11.705178"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1529,7 +1529,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class VariadictArityError(ArityError):\n    def __str__(self):\n        return (\"Expected at least %s %s for function %s(), \"\n                \"received %s\" % (\n                    self.expected_arity,\n                    self._pluralize('argument', self.expected_arity),\n                    self.function_name,\n                    self.actual_arity))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "89",
-    "2026-10-28 22:46:19.333182"
+    "2026-10-28 23:00:11.735180"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1550,7 +1550,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __str__(self):\n        return (\"Expected at least %s %s for function %s(), \"\n                \"received %s\" % (\n                    self.expected_arity,\n                    self._pluralize('argument', self.expected_arity),\n                    self.function_name,\n                    self.actual_arity))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "90",
-    "2026-10-28 22:46:19.361939"
+    "2026-10-28 23:00:11.746082"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1571,7 +1571,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class JMESPathTypeError(JMESPathError):\n    def __init__(self, function_name, current_value, actual_type,\n                 expected_types):\n        self.function_name = function_name\n        self.current_value = current_value\n        self.actual_type = actual_type\n        self.expected_types = expected_types\n\n    def __str__(self):\n        return ('In function %s(), invalid type for value: %s, '\n                'expected one of: %s, received: \"%s\"' % (\n                    self.function_name, self.current_value,\n                    self.expected_types, self.actual_type))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "100",
-    "2026-10-28 22:46:19.392220"
+    "2026-10-28 23:00:11.766326"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1592,7 +1592,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, function_name, current_value, actual_type,\n                 expected_types):\n        self.function_name = function_name\n        self.current_value = current_value\n        self.actual_type = actual_type\n        self.expected_types = expected_types",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "101",
-    "2026-10-28 22:46:19.424787"
+    "2026-10-28 23:00:11.777792"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1613,7 +1613,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __str__(self):\n        return ('In function %s(), invalid type for value: %s, '\n                'expected one of: %s, received: \"%s\"' % (\n                    self.function_name, self.current_value,\n                    self.expected_types, self.actual_type))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "108",
-    "2026-10-28 22:46:19.435716"
+    "2026-10-28 23:00:11.797262"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1634,7 +1634,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class EmptyExpressionError(JMESPathError):\n    def __init__(self):\n        super(EmptyExpressionError, self).__init__(\n            \"Invalid JMESPath expression: cannot be empty.\")",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "115",
-    "2026-10-28 22:46:19.469502"
+    "2026-10-28 23:00:11.829155"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1655,7 +1655,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self):\n        super(EmptyExpressionError, self).__init__(\n            \"Invalid JMESPath expression: cannot be empty.\")",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "116",
-    "2026-10-28 22:46:19.501008"
+    "2026-10-28 23:00:11.858921"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1676,7 +1676,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class UnknownFunctionError(JMESPathError):\n    pass",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/exceptions.py",
     "121",
-    "2026-10-28 22:46:19.530797"
+    "2026-10-28 23:00:11.890857"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1697,7 +1697,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import math\nimport json\nimport re\n\nfrom jmespath import exceptions\nfrom jmespath.compat import string_type as STRING_TYPE\nfrom jmespath.compat import get_methods",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "1",
-    "2026-10-28 22:46:19.562448"
+    "2026-10-28 23:00:11.900700"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1718,7 +1718,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def signature(*arguments):\n    def _record_signature(func):\n        func.signature = arguments\n        return func\n    return _record_signature",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "39",
-    "2026-10-28 22:46:19.595034"
+    "2026-10-28 23:00:11.926152"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1739,7 +1739,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class FunctionRegistry(type):\n    def __init__(cls, name, bases, attrs):\n        cls._populate_function_table()\n        super(FunctionRegistry, cls).__init__(name, bases, attrs)\n\n    def _populate_function_table(cls):\n        function_table = {}\n        # Any method with a @signature decorator that also\n        # starts with \"_func_\" is registered as a function.\n        # _func_max_by -> max_by function.\n        for name, method in get_methods(cls):\n            if not name.startswith('_func_'):\n                continue\n            signature = getattr(method, 'signature', None)\n            if signature is not None:\n                function_table[name[6:]] = {\n                    'function': method,\n                    'signature': signature,\n                }\n        cls.FUNCTION_TABLE = function_table",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "46",
-    "2026-10-28 22:46:19.606920"
+    "2026-10-28 23:00:11.935567"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1760,7 +1760,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(cls, name, bases, attrs):\n        cls._populate_function_table()\n        super(FunctionRegistry, cls).__init__(name, bases, attrs)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "47",
-    "2026-10-28 22:46:19.639869"
+    "2026-10-28 23:00:11.970953"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1781,7 +1781,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _populate_function_table(cls):\n        function_table = {}\n        # Any method with a @signature decorator that also\n        # starts with \"_func_\" is registered as a function.\n        # _func_max_by -> max_by function.\n        for name, method in get_methods(cls):\n            if not name.startswith('_func_'):\n                continue\n            signature = getattr(method, 'signature', None)\n            if signature is not None:\n                function_table[name[6:]] = {\n                    'function': method,\n                    'signature': signature,\n                }\n        cls.FUNCTION_TABLE = function_table",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "51",
-    "2026-10-28 22:46:19.651628"
+    "2026-10-28 23:00:11.981033"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1802,7 +1802,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class Functions(metaclass=FunctionRegistry):\n\n    FUNCTION_TABLE = {\n    }\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n            raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\n        function = spec['function']\n        signature = spec['signature']\n        self._validate_arguments(resolved_args, signature, function_name)\n        return function(self, *resolved_args)\n\n    def _validate_arguments(self, args, signature, function_name):\n        if signature and signature[-1].get('variadic'):\n            if len(args) < len(signature):\n                raise exceptions.VariadictArityError(\n                    len(signature), len(args), function_name)\n        elif len(args) != len(signature):\n            raise exceptions.ArityError(\n                len(signature), len(args), function_name)\n        return self._type_check(args, signature, function_name)\n\n    def _type_check(self, actual, signature, function_name):\n        for i in range(len(signature)):\n            allowed_types = signature[i]['types']\n            if allowed_types:\n                self._type_check_single(actual[i], allowed_types,\n                                        function_name)\n\n    def _type_check_single(self, current, types, function_name):\n        # Type checking involves checking the top level type,\n        # and in the case of arrays, potentially checking the types\n        # of each element.\n        allowed_types, allowed_subtypes = self._get_allowed_pytypes(types)\n        # We're not using isinstance() on purpose.\n        # The type model for jmespath does not map\n        # 1-1 with python types (booleans are considered\n        # integers in python for example).\n        actual_typename = type(current).__name__\n        if actual_typename not in allowed_types:\n            raise exceptions.JMESPathTypeError(\n                function_name, current,\n                self._convert_to_jmespath_type(actual_typename), types)\n        # If we're dealing with a list type, we can have\n        # additional restrictions on the type of the list\n        # elements (for example a function can require a\n        # list of numbers or a list of strings).\n        # Arrays are the only types that can have subtypes.\n        if allowed_subtypes:\n            self._subtype_check(current, allowed_subtypes,\n                                types, function_name)\n\n    def _get_allowed_pytypes(self, types):\n        allowed_types = []\n        allowed_subtypes = []\n        for t in types:\n            type_ = t.split('-', 1)\n            if len(type_) == 2:\n                type_, subtype = type_\n                allowed_subtypes.append(REVERSE_TYPES_MAP[subtype])\n            else:\n                type_ = type_[0]\n            allowed_types.extend(REVERSE_TYPES_MAP[type_])\n        return allowed_types, allowed_subtypes\n\n    def _subtype_check(self, current, allowed_subtypes, types, function_name):\n        if len(allowed_subtypes) == 1:\n            # The easy case, we know up front what type\n            # we need to validate.\n            allowed_subtypes = allowed_subtypes[0]\n            for element in current:\n                actual_typename = type(element).__name__\n                if actual_typename not in allowed_subtypes:\n                    raise exceptions.JMESPathTypeError(\n                        function_name, element, actual_typename, types)\n        elif len(allowed_subtypes) > 1 and current:\n            # Dynamic type validation.  Based on the first\n            # type we see, we validate that the remaining types\n            # match.\n            first = type(current[0]).__name__\n            for subtypes in allowed_subtypes:\n                if first in subtypes:\n                    allowed = subtypes\n                    break\n            else:\n                raise exceptions.JMESPathTypeError(\n                    function_name, current[0], first, types)\n            for element in current:\n                actual_typename = type(element).__name__\n                if actual_typename not in allowed:\n                    raise exceptions.JMESPathTypeError(\n                        function_name, element, actual_typename, types)\n\n    @signature({'types': ['number']})\n    def _func_abs(self, arg):\n        return abs(arg)\n\n    @signature({'types': ['array-number']})\n    def _func_avg(self, arg):\n        if arg:\n            return sum(arg) / len(arg)\n        else:\n            return None\n\n    @signature({'types': [], 'variadic': True})\n    def _func_not_null(self, *arguments):\n        for argument in arguments:\n            if argument is not None:\n                return argument\n\n    @signature({'types': []})\n    def _func_to_array(self, arg):\n        if isinstance(arg, list):\n            return arg\n        else:\n            return [arg]\n\n    @signature({'types': []})\n    def _func_to_string(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return arg\n        else:\n            return json.dumps(arg, separators=(',', ':'),\n                              default=str)\n\n    @signature({'types': []})\n    def _func_to_number(self, arg):\n        if isinstance(arg, (list, dict, bool)):\n            return None\n        elif arg is None:\n            return None\n        elif isinstance(arg, (int, float)):\n            return arg\n        else:\n            try:\n                return int(arg)\n            except ValueError:\n                try:\n                    return float(arg)\n                except ValueError:\n                    return None\n\n    @signature({'types': ['array', 'string']}, {'types': []})\n    def _func_contains(self, subject, search):\n        return search in subject\n\n    @signature({'types': ['string', 'array', 'object']})\n    def _func_length(self, arg):\n        return len(arg)\n\n    @signature({'types': ['string']}, {'types': ['string']})\n    def _func_ends_with(self, search, suffix):\n        return search.endswith(suffix)\n\n    @signature({'types': ['string']}, {'types': ['string']})\n    def _func_starts_with(self, search, suffix):\n        return search.startswith(suffix)\n\n    @signature({'types': ['string']}, {'types': ['string']})\n    def _func_matches(self, subject, pattern):\n        try:\n            return re.search(pattern, subject) is not None\n        except re.error:\n            raise exceptions.JMESPathTypeError(\n                'matches', pattern, 'string', ['string'])\n\n    @signature({'types': ['array', 'string']})\n    def _func_reverse(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return arg[::-1]\n        else:\n            return list(reversed(arg))\n\n    @signature({\"types\": ['number']})\n    def _func_ceil(self, arg):\n        return math.ceil(arg)\n\n    @signature({\"types\": ['number']})\n    def _func_floor(self, arg):\n        return math.floor(arg)\n\n    @signature({\"types\": ['string']}, {\"types\": ['array-string']})\n    def _func_join(self, separator, array):\n        return separator.join(array)\n\n    @signature({'types': ['expref']}, {'types': ['array']})\n    def _func_map(self, expref, arg):\n        result = []\n        for element in arg:\n            result.append(expref.visit(expref.expression, element))\n        return result\n\n    @signature({\"types\": ['array-number', 'array-string']})\n    def _func_max(self, arg):\n        if arg:\n            return max(arg)\n        else:\n            return None\n\n    @signature({\"types\": [\"object\"], \"variadic\": True})\n    def _func_merge(self, *arguments):\n        merged = {}\n        for arg in arguments:\n            merged.update(arg)\n        return merged\n\n    @signature({\"types\": ['array-number', 'array-string']})\n    def _func_min(self, arg):\n        if arg:\n            return min(arg)\n        else:\n            return None\n\n    @signature({\"types\": ['array-string', 'array-number']})\n    def _func_sort(self, arg):\n        return list(sorted(arg))\n\n    @signature({\"types\": ['array-number']})\n    def _func_sum(self, arg):\n        return sum(arg)\n\n    @signature({\"types\": ['object']})\n    def _func_keys(self, arg):\n        # To be consistent with .values()\n        # should we also return the indices of a list?\n        return list(arg.keys())\n\n    @signature({\"types\": ['object']})\n    def _func_values(self, arg):\n        return list(arg.values())\n\n    @signature({'types': []})\n    def _func_type(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return \"string\"\n        elif isinstance(arg, bool):\n            return \"boolean\"\n        elif isinstance(arg, list):\n            return \"array\"\n        elif isinstance(arg, dict):\n            return \"object\"\n        elif isinstance(arg, (float, int)):\n            return \"number\"\n        elif arg is None:\n            return \"null\"\n\n    @signature({'types': ['array']}, {'types': ['expref']})\n    def _func_sort_by(self, array, expref):\n        if not array:\n            return array\n        # sort_by allows for the expref to be either a number of\n        # a string, so we have some special logic to handle this.\n        # We evaluate the first array element and verify that it's\n        # either a string of a number.  We then create a key function\n        # that validates that type, which requires that remaining array\n        # elements resolve to the same type as the first element.\n        required_type = self._convert_to_jmespath_type(\n            type(expref.visit(expref.expression, array[0])).__name__)\n        if required_type not in ['number', 'string']:\n            raise exceptions.JMESPathTypeError(\n                'sort_by', array[0], required_type, ['string', 'number'])\n        keyfunc = self._create_key_func(expref,\n                                        [required_type],\n                                        'sort_by')\n        return list(sorted(array, key=keyfunc))\n\n    @signature({'types': ['array']}, {'types': ['expref']})\n    def _func_min_by(self, array, expref):\n        keyfunc = self._create_key_func(expref,\n                                        ['number', 'string'],\n                                        'min_by')\n        if array:\n            return min(array, key=keyfunc)\n        else:\n            return None\n\n    @signature({'types': ['array']}, {'types': ['expref']})\n    def _func_max_by(self, array, expref):\n        keyfunc = self._create_key_func(expref,\n                                        ['number', 'string'],\n                                        'max_by')\n        if array:\n            return max(array, key=keyfunc)\n        else:\n            return None\n\n    def _create_key_func(self, expref, allowed_types, function_name):\n        def keyfunc(x):\n            result = expref.visit(expref.expression, x)\n            actual_typename = type(result).__name__\n            jmespath_type = self._convert_to_jmespath_type(actual_typename)\n            # allowed_types is in term of jmespath types, not python types.\n            if jmespath_type not in allowed_types:\n                raise exceptions.JMESPathTypeError(\n                    function_name, result, jmespath_type, allowed_types)\n            return result\n        return keyfunc\n\n    def _convert_to_jmespath_type(self, pyobject):\n        return TYPES_MAP.get(pyobject, 'unknown')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "68",
-    "2026-10-28 22:46:19.685856"
+    "2026-10-28 23:00:12.016707"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1823,7 +1823,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n            raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\n        function = spec['function']\n        signature = spec['signature']\n        self._validate_arguments(resolved_args, signature, function_name)\n        return function(self, *resolved_args)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "73",
-    "2026-10-28 22:46:19.731193"
+    "2026-10-28 23:00:12.064688"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1844,7 +1844,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _validate_arguments(self, args, signature, function_name):\n        if signature and signature[-1].get('variadic'):\n            if len(args) < len(signature):\n                raise exceptions.VariadictArityError(\n                    len(signature), len(args), function_name)\n        elif len(args) != len(signature):\n            raise exceptions.ArityError(\n                len(signature), len(args), function_name)\n        return self._type_check(args, signature, function_name)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "84",
-    "2026-10-28 22:46:19.763009"
+    "2026-10-28 23:00:12.091744"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1865,7 +1865,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _type_check(self, actual, signature, function_name):\n        for i in range(len(signature)):\n            allowed_types = signature[i]['types']\n            if allowed_types:\n                self._type_check_single(actual[i], allowed_types,\n                                        function_name)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "94",
-    "2026-10-28 22:46:19.790664"
+    "2026-10-28 23:00:12.123451"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1886,7 +1886,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _type_check_single(self, current, types, function_name):\n        # Type checking involves checking the top level type,\n        # and in the case of arrays, potentially checking the types\n        # of each element.\n        allowed_types, allowed_subtypes = self._get_allowed_pytypes(types)\n        # We're not using isinstance() on purpose.\n        # The type model for jmespath does not map\n        # 1-1 with python types (booleans are considered\n        # integers in python for example).\n        actual_typename = type(current).__name__\n        if actual_typename not in allowed_types:\n            raise exceptions.JMESPathTypeError(\n                function_name, current,\n                self._convert_to_jmespath_type(actual_typename), types)\n        # If we're dealing with a list type, we can have\n        # additional restrictions on the type of the list\n        # elements (for example a function can require a\n        # list of numbers or a list of strings).\n        # Arrays are the only types that can have subtypes.\n        if allowed_subtypes:\n            self._subtype_check(current, allowed_subtypes,\n                                types, function_name)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "101",
-    "2026-10-28 22:46:19.802640"
+    "2026-10-28 23:00:12.153815"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1907,7 +1907,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _get_allowed_pytypes(self, types):\n        allowed_types = []\n        allowed_subtypes = []\n        for t in types:\n            type_ = t.split('-', 1)\n            if len(type_) == 2:\n                type_, subtype = type_\n                allowed_subtypes.append(REVERSE_TYPES_MAP[subtype])\n            else:\n                type_ = type_[0]\n            allowed_types.extend(REVERSE_TYPES_MAP[type_])\n        return allowed_types, allowed_subtypes",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "124",
-    "2026-10-28 22:46:19.819502"
+    "2026-10-28 23:00:12.190669"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1928,7 +1928,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _subtype_check(self, current, allowed_subtypes, types, function_name):\n        if len(allowed_subtypes) == 1:\n            # The easy case, we know up front what type\n            # we need to validate.\n            allowed_subtypes = allowed_subtypes[0]\n            for element in current:\n                actual_typename = type(element).__name__\n                if actual_typename not in allowed_subtypes:\n                    raise exceptions.JMESPathTypeError(\n                        function_name, element, actual_typename, types)\n        elif len(allowed_subtypes) > 1 and current:\n            # Dynamic type validation.  Based on the first\n            # type we see, we validate that the remaining types\n            # match.\n            first = type(current[0]).__name__\n            for subtypes in allowed_subtypes:\n                if first in subtypes:\n                    allowed = subtypes\n                    break\n            else:\n                raise exceptions.JMESPathTypeError(\n                    function_name, current[0], first, types)\n            for element in current:\n                actual_typename = type(element).__name__\n                if actual_typename not in allowed:\n                    raise exceptions.JMESPathTypeError(\n                        function_name, element, actual_typename, types)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "137",
-    "2026-10-28 22:46:19.851387"
+    "2026-10-28 23:00:12.215298"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1949,7 +1949,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_abs(self, arg):\n        return abs(arg)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "166",
-    "2026-10-28 22:46:19.884303"
+    "2026-10-28 23:00:12.227162"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1970,7 +1970,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_avg(self, arg):\n        if arg:\n            return sum(arg) / len(arg)\n        else:\n            return None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "170",
-    "2026-10-28 22:46:19.918307"
+    "2026-10-28 23:00:12.246686"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -1991,7 +1991,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_not_null(self, *arguments):\n        for argument in arguments:\n            if argument is not None:\n                return argument",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "177",
-    "2026-10-28 22:46:19.929905"
+    "2026-10-28 23:00:12.277502"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2012,7 +2012,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_to_array(self, arg):\n        if isinstance(arg, list):\n            return arg\n        else:\n            return [arg]",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "183",
-    "2026-10-28 22:46:19.962022"
+    "2026-10-28 23:00:12.309054"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2033,7 +2033,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_to_string(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return arg\n        else:\n            return json.dumps(arg, separators=(',', ':'),\n                              default=str)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "190",
-    "2026-10-28 22:46:19.990839"
+    "2026-10-28 23:00:12.339570"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2054,7 +2054,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_to_number(self, arg):\n        if isinstance(arg, (list, dict, bool)):\n            return None\n        elif arg is None:\n            return None\n        elif isinstance(arg, (int, float)):\n            return arg\n        else:\n            try:\n                return int(arg)\n            except ValueError:\n                try:\n                    return float(arg)\n                except ValueError:\n                    return None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "198",
-    "2026-10-28 22:46:20.021875"
+    "2026-10-28 23:00:12.371698"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2075,7 +2075,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_contains(self, subject, search):\n        return search in subject",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "215",
-    "2026-10-28 22:46:20.053720"
+    "2026-10-28 23:00:12.403379"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2096,7 +2096,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_length(self, arg):\n        return len(arg)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "219",
-    "2026-10-28 22:46:20.083614"
+    "2026-10-28 23:00:12.414314"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2117,7 +2117,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_ends_with(self, search, suffix):\n        return search.endswith(suffix)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "223",
-    "2026-10-28 22:46:20.117531"
+    "2026-10-28 23:00:12.424438"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2138,7 +2138,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_starts_with(self, search, suffix):\n        return search.startswith(suffix)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "227",
-    "2026-10-28 22:46:20.146058"
+    "2026-10-28 23:00:12.435088"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2159,7 +2159,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_matches(self, subject, pattern):\n        try:\n            return re.search(pattern, subject) is not None\n        except re.error:\n            raise exceptions.JMESPathTypeError(\n                'matches', pattern, 'string', ['string'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "231",
-    "2026-10-28 22:46:20.156507"
+    "2026-10-28 23:00:12.465046"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2180,7 +2180,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_reverse(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return arg[::-1]\n        else:\n            return list(reversed(arg))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "239",
-    "2026-10-28 22:46:20.167491"
+    "2026-10-28 23:00:12.495627"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2201,7 +2201,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_ceil(self, arg):\n        return math.ceil(arg)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "246",
-    "2026-10-28 22:46:20.192102"
+    "2026-10-28 23:00:12.505531"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2222,7 +2222,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_floor(self, arg):\n        return math.floor(arg)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "250",
-    "2026-10-28 22:46:20.222484"
+    "2026-10-28 23:00:12.526688"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2243,7 +2243,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_join(self, separator, array):\n        return separator.join(array)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "254",
-    "2026-10-28 22:46:20.232692"
+    "2026-10-28 23:00:12.562980"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2264,7 +2264,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_map(self, expref, arg):\n        result = []\n        for element in arg:\n            result.append(expref.visit(expref.expression, element))\n        return result",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "258",
-    "2026-10-28 22:46:20.253314"
+    "2026-10-28 23:00:12.588856"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2285,7 +2285,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_max(self, arg):\n        if arg:\n            return max(arg)\n        else:\n            return None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "265",
-    "2026-10-28 22:46:20.284023"
+    "2026-10-28 23:00:12.618725"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2306,7 +2306,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_merge(self, *arguments):\n        merged = {}\n        for arg in arguments:\n            merged.update(arg)\n        return merged",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "272",
-    "2026-10-28 22:46:20.296672"
+    "2026-10-28 23:00:12.629931"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2327,7 +2327,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_min(self, arg):\n        if arg:\n            return min(arg)\n        else:\n            return None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "279",
-    "2026-10-28 22:46:20.329928"
+    "2026-10-28 23:00:12.649433"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2348,7 +2348,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_sort(self, arg):\n        return list(sorted(arg))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "286",
-    "2026-10-28 22:46:20.362897"
+    "2026-10-28 23:00:12.681471"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2369,7 +2369,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_sum(self, arg):\n        return sum(arg)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "290",
-    "2026-10-28 22:46:20.392670"
+    "2026-10-28 23:00:12.692383"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2390,7 +2390,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_keys(self, arg):\n        # To be consistent with .values()\n        # should we also return the indices of a list?\n        return list(arg.keys())",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "294",
-    "2026-10-28 22:46:20.424128"
+    "2026-10-28 23:00:12.711566"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2411,7 +2411,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_values(self, arg):\n        return list(arg.values())",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "300",
-    "2026-10-28 22:46:20.436091"
+    "2026-10-28 23:00:12.744820"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2432,7 +2432,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_type(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return \"string\"\n        elif isinstance(arg, bool):\n            return \"boolean\"\n        elif isinstance(arg, list):\n            return \"array\"\n        elif isinstance(arg, dict):\n            return \"object\"\n        elif isinstance(arg, (float, int)):\n            return \"number\"\n        elif arg is None:\n            return \"null\"",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "304",
-    "2026-10-28 22:46:20.454753"
+    "2026-10-28 23:00:12.774660"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2453,7 +2453,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_sort_by(self, array, expref):\n        if not array:\n            return array\n        # sort_by allows for the expref to be either a number of\n        # a string, so we have some special logic to handle this.\n        # We evaluate the first array element and verify that it's\n        # either a string of a number.  We then create a key function\n        # that validates that type, which requires that remaining array\n        # elements resolve to the same type as the first element.\n        required_type = self._convert_to_jmespath_type(\n            type(expref.visit(expref.expression, array[0])).__name__)\n        if required_type not in ['number', 'string']:\n            raise exceptions.JMESPathTypeError(\n                'sort_by', array[0], required_type, ['string', 'number'])\n        keyfunc = self._create_key_func(expref,\n                                        [required_type],\n                                        'sort_by')\n        return list(sorted(array, key=keyfunc))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "319",
-    "2026-10-28 22:46:20.487069"
+    "2026-10-28 23:00:12.806653"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2474,7 +2474,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_min_by(self, array, expref):\n        keyfunc = self._create_key_func(expref,\n                                        ['number', 'string'],\n                                        'min_by')\n        if array:\n            return min(array, key=keyfunc)\n        else:\n            return None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "339",
-    "2026-10-28 22:46:20.502839"
+    "2026-10-28 23:00:12.841819"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2495,7 +2495,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_max_by(self, array, expref):\n        keyfunc = self._create_key_func(expref,\n                                        ['number', 'string'],\n                                        'max_by')\n        if array:\n            return max(array, key=keyfunc)\n        else:\n            return None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "349",
-    "2026-10-28 22:46:20.532665"
+    "2026-10-28 23:00:12.852261"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2516,7 +2516,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _create_key_func(self, expref, allowed_types, function_name):\n        def keyfunc(x):\n            result = expref.visit(expref.expression, x)\n            actual_typename = type(result).__name__\n            jmespath_type = self._convert_to_jmespath_type(actual_typename)\n            # allowed_types is in term of jmespath types, not python types.\n            if jmespath_type not in allowed_types:\n                raise exceptions.JMESPathTypeError(\n                    function_name, result, jmespath_type, allowed_types)\n            return result\n        return keyfunc",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "358",
-    "2026-10-28 22:46:20.562052"
+    "2026-10-28 23:00:12.883487"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2537,7 +2537,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _convert_to_jmespath_type(self, pyobject):\n        return TYPES_MAP.get(pyobject, 'unknown')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
     "370",
-    "2026-10-28 22:46:20.595565"
+    "2026-10-28 23:00:12.894947"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2558,7 +2558,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import string\nimport warnings\nfrom json import loads\n\nfrom jmespath.exceptions import LexerError, EmptyExpressionError",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "1",
-    "2026-10-28 22:46:20.624616"
+    "2026-10-28 23:00:12.915891"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2579,7 +2579,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class Lexer(object):\n    START_IDENTIFIER = set(string.ascii_letters + '_')\n    VALID_IDENTIFIER = set(string.ascii_letters + string.digits + '_')\n    VALID_NUMBER = set(string.digits)\n    WHITESPACE = set(\" \\t\\n\\r\")\n    SIMPLE_TOKENS = {\n        '.': 'dot',\n        '*': 'star',\n        ']': 'rbracket',\n        ',': 'comma',\n        ':': 'colon',\n        '@': 'current',\n        '(': 'lparen',\n        ')': 'rparen',\n        '{': 'lbrace',\n        '}': 'rbrace',\n    }\n\n    def tokenize(self, expression):\n        self._initialize_for_expression(expression)\n        while self._current is not None:\n            if self._current in self.SIMPLE_TOKENS:\n                yield {'type': self.SIMPLE_TOKENS[self._current],\n                       'value': self._current,\n                       'start': self._position, 'end': self._position + 1}\n                self._next()\n            elif self._current in self.START_IDENTIFIER:\n                start = self._position\n                buff = self._current\n                while self._next() in self.VALID_IDENTIFIER:\n                    buff += self._current\n                yield {'type': 'unquoted_identifier', 'value': buff,\n                       'start': start, 'end': start + len(buff)}\n            elif self._current in self.WHITESPACE:\n                self._next()\n            elif self._current == '[':\n                start = self._position\n                next_char = self._next()\n                if next_char == ']':\n                    self._next()\n                    yield {'type': 'flatten', 'value': '[]',\n                           'start': start, 'end': start + 2}\n                elif next_char == '?':\n                    self._next()\n                    yield {'type': 'filter', 'value': '[?',\n                           'start': start, 'end': start + 2}\n                else:\n                    yield {'type': 'lbracket', 'value': '[',\n                           'start': start, 'end': start + 1}\n            elif self._current == \"'\":\n                yield self._consume_raw_string_literal()\n            elif self._current == '|':\n                yield self._match_or_else('|', 'or', 'pipe')\n            elif self._current == '&':\n                yield self._match_or_else('&', 'and', 'expref')\n            elif self._current == '`':\n                yield self._consume_literal()\n            elif self._current in self.VALID_NUMBER:\n                start = self._position\n                buff = self._consume_number()\n                yield {'type': 'number', 'value': int(buff),\n                       'start': start, 'end': start + len(buff)}\n            elif self._current == '-':\n                # Negative number.\n                start = self._position\n                buff = self._consume_number()\n                if len(buff) > 1:\n                    yield {'type': 'number', 'value': int(buff),\n                           'start': start, 'end': start + len(buff)}\n                else:\n                    raise LexerError(lexer_position=start,\n                                     lexer_value=buff,\n                                     message=\"Unknown token '%s'\" % buff)\n            elif self._current == '\"':\n                yield self._consume_quoted_identifier()\n            elif self._current == '<':\n                yield self._match_or_else('=', 'lte', 'lt')\n            elif self._current == '>':\n                yield self._match_or_else('=', 'gte', 'gt')\n            elif self._current == '!':\n                yield self._match_or_else('=', 'ne', 'not')\n            elif self._current == '=':\n                if self._next() == '=':\n                    yield {'type': 'eq', 'value': '==',\n                        'start': self._position - 1, 'end': self._position}\n                    self._next()\n                else:\n                    if self._current is None:\n                        # If we're at the EOF, we never advanced\n                        # the position so we don't need to rewind\n                        # it back one location.\n                        position = self._position\n                    else:\n                        position = self._position - 1\n                    raise LexerError(\n                        lexer_position=position,\n                        lexer_value='=',\n                        message=\"Unknown token '='\")\n            else:\n                raise LexerError(lexer_position=self._position,\n                                 lexer_value=self._current,\n                                 message=\"Unknown token %s\" % self._current)\n        yield {'type': 'eof', 'value': '',\n               'start': self._length, 'end': self._length}\n\n    def _consume_number(self):\n        start = self._position\n        buff = self._current\n        while self._next() in self.VALID_NUMBER:\n            buff += self._current\n        return buff\n\n    def _initialize_for_expression(self, expression):\n        if not expression:\n            raise EmptyExpressionError()\n        self._position = 0\n        self._expression = expression\n        self._chars = list(self._expression)\n        self._current = self._chars[self._position]\n        self._length = len(self._expression)\n\n    def _next(self):\n        if self._position == self._length - 1:\n            self._current = None\n        else:\n            self._position += 1\n            self._current = self._chars[self._position]\n        return self._current\n\n    def _consume_until(self, delimiter):\n        # Consume until the delimiter is reached,\n        # allowing for the delimiter to be escaped with \"\\\".\n        start = self._position\n        buff = ''\n        self._next()\n        while self._current != delimiter:\n            if self._current == '\\\\':\n                buff += '\\\\'\n                self._next()\n            if self._current is None:\n                # We're at the EOF.\n                raise LexerError(lexer_position=start,\n                                 lexer_value=self._expression[start:],\n                                 message=\"Unclosed %s delimiter\" % delimiter)\n            buff += self._current\n            self._next()\n        # Skip the closing delimiter.\n        self._next()\n        return buff\n\n    def _consume_literal(self):\n        start = self._position\n        lexeme = self._consume_until('`').replace('\\\\`', '`')\n        try:\n            # Assume it is valid JSON and attempt to parse.\n            parsed_json = loads(lexeme)\n        except ValueError:\n            try:\n                # Invalid JSON values should be converted to quoted\n                # JSON strings during the JEP-12 deprecation period.\n                parsed_json = loads('\"%s\"' % lexeme.lstrip())\n                warnings.warn(\"deprecated string literal syntax\",\n                              PendingDeprecationWarning)\n            except ValueError:\n                raise LexerError(lexer_position=start,\n                                 lexer_value=self._expression[start:],\n                                 message=\"Bad token %s\" % lexeme)\n        token_len = self._position - start\n        return {'type': 'literal', 'value': parsed_json,\n                'start': start, 'end': token_len}\n\n    def _consume_quoted_identifier(self):\n        start = self._position\n        lexeme = '\"' + self._consume_until('\"') + '\"'\n        try:\n            token_len = self._position - start\n            return {'type': 'quoted_identifier', 'value': loads(lexeme),\n                    'start': start, 'end': token_len}\n        except ValueError as e:\n            error_message = str(e).split(':')[0]\n            raise LexerError(lexer_position=start,\n                             lexer_value=lexeme,\n                             message=error_message)\n\n    def _consume_raw_string_literal(self):\n        start = self._position\n        lexeme = self._consume_until(\"'\").replace(\"\\\\'\", \"'\")\n        token_len = self._position - start\n        return {'type': 'literal', 'value': lexeme,\n                'start': start, 'end': token_len}\n\n    def _match_or_else(self, expected, match_type, else_type):\n        start = self._position\n        current = self._current\n        next_char = self._next()\n        if next_char == expected:\n            self._next()\n            return {'type': match_type, 'value': current + next_char,\n                    'start': start, 'end': start + 1}\n        return {'type': else_type, 'value': current,\n                'start': start, 'end': start}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "8",
-    "2026-10-28 22:46:20.637423"
+    "2026-10-28 23:00:12.926403"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2600,7 +2600,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def tokenize(self, expression):\n        self._initialize_for_expression(expression)\n        while self._current is not None:\n            if self._current in self.SIMPLE_TOKENS:\n                yield {'type': self.SIMPLE_TOKENS[self._current],\n                       'value': self._current,\n                       'start': self._position, 'end': self._position + 1}\n                self._next()\n            elif self._current in self.START_IDENTIFIER:\n                start = self._position\n                buff = self._current\n                while self._next() in self.VALID_IDENTIFIER:\n                    buff += self._current\n                yield {'type': 'unquoted_identifier', 'value': buff,\n                       'start': start, 'end': start + len(buff)}\n            elif self._current in self.WHITESPACE:\n                self._next()\n            elif self._current == '[':\n                start = self._position\n                next_char = self._next()\n                if next_char == ']':\n                    self._next()\n                    yield {'type': 'flatten', 'value': '[]',\n                           'start': start, 'end': start + 2}\n                elif next_char == '?':\n                    self._next()\n                    yield {'type': 'filter', 'value': '[?',\n                           'start': start, 'end': start + 2}\n                else:\n                    yield {'type': 'lbracket', 'value': '[',\n                           'start': start, 'end': start + 1}\n            elif self._current == \"'\":\n                yield self._consume_raw_string_literal()\n            elif self._current == '|':\n                yield self._match_or_else('|', 'or', 'pipe')\n            elif self._current == '&':\n                yield self._match_or_else('&', 'and', 'expref')\n            elif self._current == '`':\n                yield self._consume_literal()\n            elif self._current in self.VALID_NUMBER:\n                start = self._position\n                buff = self._consume_number()\n                yield {'type': 'number', 'value': int(buff),\n                       'start': start, 'end': start + len(buff)}\n            elif self._current == '-':\n                # Negative number.\n                start = self._position\n                buff = self._consume_number()\n                if len(buff) > 1:\n                    yield {'type': 'number', 'value': int(buff),\n                           'start': start, 'end': start + len(buff)}\n                else:\n                    raise LexerError(lexer_position=start,\n                                     lexer_value=buff,\n                                     message=\"Unknown token '%s'\" % buff)\n            elif self._current == '\"':\n                yield self._consume_quoted_identifier()\n            elif self._current == '<':\n                yield self._match_or_else('=', 'lte', 'lt')\n            elif self._current == '>':\n                yield self._match_or_else('=', 'gte', 'gt')\n            elif self._current == '!':\n                yield self._match_or_else('=', 'ne', 'not')\n            elif self._current == '=':\n                if self._next() == '=':\n                    yield {'type': 'eq', 'value': '==',\n                        'start': self._position - 1, 'end': self._position}\n                    self._next()\n                else:\n                    if self._current is None:\n                        # If we're at the EOF, we never advanced\n                        # the position so we don't need to rewind\n                        # it back one location.\n                        position = self._position\n                    else:\n                        position = self._position - 1\n                    raise LexerError(\n                        lexer_position=position,\n                        lexer_value='=',\n                        message=\"Unknown token '='\")\n            else:\n                raise LexerError(lexer_position=self._position,\n                                 lexer_value=self._current,\n                                 message=\"Unknown token %s\" % self._current)\n        yield {'type': 'eof', 'value': '',\n               'start': self._length, 'end': self._length}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "26",
-    "2026-10-28 22:46:20.682663"
+    "2026-10-28 23:00:12.948719"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2621,7 +2621,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _consume_number(self):\n        start = self._position\n        buff = self._current\n        while self._next() in self.VALID_NUMBER:\n            buff += self._current\n        return buff",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "113",
-    "2026-10-28 22:46:20.706687"
+    "2026-10-28 23:00:12.985248"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2642,7 +2642,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _initialize_for_expression(self, expression):\n        if not expression:\n            raise EmptyExpressionError()\n        self._position = 0\n        self._expression = expression\n        self._chars = list(self._expression)\n        self._current = self._chars[self._position]\n        self._length = len(self._expression)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "120",
-    "2026-10-28 22:46:20.738482"
+    "2026-10-28 23:00:13.009038"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2663,7 +2663,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _next(self):\n        if self._position == self._length - 1:\n            self._current = None\n        else:\n            self._position += 1\n            self._current = self._chars[self._position]\n        return self._current",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "129",
-    "2026-10-28 22:46:20.750507"
+    "2026-10-28 23:00:13.037739"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2684,7 +2684,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _consume_until(self, delimiter):\n        # Consume until the delimiter is reached,\n        # allowing for the delimiter to be escaped with \"\\\".\n        start = self._position\n        buff = ''\n        self._next()\n        while self._current != delimiter:\n            if self._current == '\\\\':\n                buff += '\\\\'\n                self._next()\n            if self._current is None:\n                # We're at the EOF.\n                raise LexerError(lexer_position=start,\n                                 lexer_value=self._expression[start:],\n                                 message=\"Unclosed %s delimiter\" % delimiter)\n            buff += self._current\n            self._next()\n        # Skip the closing delimiter.\n        self._next()\n        return buff",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "137",
-    "2026-10-28 22:46:20.761810"
+    "2026-10-28 23:00:13.069739"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2705,7 +2705,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _consume_literal(self):\n        start = self._position\n        lexeme = self._consume_until('`').replace('\\\\`', '`')\n        try:\n            # Assume it is valid JSON and attempt to parse.\n            parsed_json = loads(lexeme)\n        except ValueError:\n            try:\n                # Invalid JSON values should be converted to quoted\n                # JSON strings during the JEP-12 deprecation period.\n                parsed_json = loads('\"%s\"' % lexeme.lstrip())\n                warnings.warn(\"deprecated string literal syntax\",\n                              PendingDeprecationWarning)\n            except ValueError:\n                raise LexerError(lexer_position=start,\n                                 lexer_value=self._expression[start:],\n                                 message=\"Bad token %s\" % lexeme)\n        token_len = self._position - start\n        return {'type': 'literal', 'value': parsed_json,\n                'start': start, 'end': token_len}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "158",
-    "2026-10-28 22:46:20.797150"
+    "2026-10-28 23:00:13.104176"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2726,7 +2726,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _consume_quoted_identifier(self):\n        start = self._position\n        lexeme = '\"' + self._consume_until('\"') + '\"'\n        try:\n            token_len = self._position - start\n            return {'type': 'quoted_identifier', 'value': loads(lexeme),\n                    'start': start, 'end': token_len}\n        except ValueError as e:\n            error_message = str(e).split(':')[0]\n            raise LexerError(lexer_position=start,\n                             lexer_value=lexeme,\n                             message=error_message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "179",
-    "2026-10-28 22:46:20.829105"
+    "2026-10-28 23:00:13.135123"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2747,7 +2747,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _consume_raw_string_literal(self):\n        start = self._position\n        lexeme = self._consume_until(\"'\").replace(\"\\\\'\", \"'\")\n        token_len = self._position - start\n        return {'type': 'literal', 'value': lexeme,\n                'start': start, 'end': token_len}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "192",
-    "2026-10-28 22:46:20.858334"
+    "2026-10-28 23:00:13.165130"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2768,7 +2768,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _match_or_else(self, expected, match_type, else_type):\n        start = self._position\n        current = self._current\n        next_char = self._next()\n        if next_char == expected:\n            self._next()\n            return {'type': match_type, 'value': current + next_char,\n                    'start': start, 'end': start + 1}\n        return {'type': else_type, 'value': current,\n                'start': start, 'end': start}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/lexer.py",
     "199",
-    "2026-10-28 22:46:20.869010"
+    "2026-10-28 23:00:13.175129"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2789,7 +2789,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "from jmespath import lexer\nfrom jmespath.compat import with_repr_method\nfrom jmespath import ast\nfrom jmespath import exceptions\nfrom jmespath import visitor",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "28",
-    "2026-10-28 22:46:20.879244"
+    "2026-10-28 23:00:13.196789"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2810,7 +2810,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class Parser(object):\n    BINDING_POWER = {\n        'eof': 0,\n        'unquoted_identifier': 0,\n        'quoted_identifier': 0,\n        'literal': 0,\n        'rbracket': 0,\n        'rparen': 0,\n        'comma': 0,\n        'rbrace': 0,\n        'number': 0,\n        'current': 0,\n        'expref': 0,\n        'colon': 0,\n        'pipe': 1,\n        'or': 2,\n        'and': 3,\n        'eq': 5,\n        'gt': 5,\n        'lt': 5,\n        'gte': 5,\n        'lte': 5,\n        'ne': 5,\n        'flatten': 9,\n        # Everything above stops a projection.\n        'star': 20,\n        'filter': 21,\n        'dot': 40,\n        'not': 45,\n        'lbrace': 50,\n        'lbracket': 55,\n        'lparen': 60,\n    }\n    # The maximum binding power for a token that can stop\n    # a projection.\n    _PROJECTION_STOP = 10\n    # The _MAX_SIZE most recent expressions are cached in\n    # _CACHE dict.\n    _CACHE = {}\n    _MAX_SIZE = 512\n\n    def __init__(self, lookahead=2):\n        self.tokenizer = None\n        self._tokens = [None] * lookahead\n        self._buffer_size = lookahead\n        self._index = 0\n\n    def parse(self, expression):\n        try:\n            return self._CACHE[expression]\n        except KeyError:\n            pass\n        parsed_result = self._do_parse(expression)\n        if len(self._CACHE) >= self._MAX_SIZE:\n            try:\n                del self._CACHE[next(iter(self._CACHE))]\n            except (KeyError, StopIteration, RuntimeError):\n                # KeyError - Another thread else already deleted the key.\n                # RuntimeError - Another modified the cache.\n                # StopIteration - (Unlikely) Cache is empty.\n                #\n                # If we encounter an error we should NOT be adding to the\n                # cache.  To ensure we do not exceed self._MAX_SIZE, we\n                # can only add to the cache if we successfully removed\n                # an element from the cache, otherwise this can grow\n                # unbounded.\n                return parsed_result\n        self._CACHE[expression] = parsed_result\n        return parsed_result\n\n    def _do_parse(self, expression):\n        try:\n            return self._parse(expression)\n        except exceptions.LexerError as e:\n            e.expression = expression\n            raise\n        except exceptions.IncompleteExpressionError as e:\n            e.set_expression(expression)\n            raise\n        except exceptions.ParseError as e:\n            e.expression = expression\n            raise\n\n    def _parse(self, expression):\n        self.tokenizer = lexer.Lexer().tokenize(expression)\n        self._tokens = list(self.tokenizer)\n        self._index = 0\n        parsed = self._expression(binding_power=0)\n        if not self._current_token() == 'eof':\n            t = self._lookahead_token(0)\n            raise exceptions.ParseError(t['start'], t['value'], t['type'],\n                                        \"Unexpected token: %s\" % t['value'])\n        return ParsedResult(expression, parsed)\n\n    def _expression(self, binding_power=0):\n        left_token = self._lookahead_token(0)\n        self._advance()\n        nud_function = getattr(\n            self, '_token_nud_%s' % left_token['type'],\n            self._error_nud_token)\n        left = nud_function(left_token)\n        current_token = self._current_token()\n        while binding_power < self.BINDING_POWER[current_token]:\n            led = getattr(self, '_token_led_%s' % current_token, None)\n            if led is None:\n                error_token = self._lookahead_token(0)\n                self._error_led_token(error_token)\n            else:\n                self._advance()\n                left = led(left)\n                current_token = self._current_token()\n        return left\n\n    def _token_nud_literal(self, token):\n        return ast.literal(token['value'])\n\n    def _token_nud_unquoted_identifier(self, token):\n        return ast.field(token['value'])\n\n    def _token_nud_quoted_identifier(self, token):\n        field = ast.field(token['value'])\n        # You can't have a quoted identifier as a function\n        # name.\n        if self._current_token() == 'lparen':\n            t = self._lookahead_token(0)\n            raise exceptions.ParseError(\n                0, t['value'], t['type'],\n                'Quoted identifier not allowed for function names.')\n        return field\n\n    def _token_nud_star(self, token):\n        left = ast.identity()\n        if self._current_token() == 'rbracket':\n            right = ast.identity()\n        else:\n            right = self._parse_projection_rhs(self.BINDING_POWER['star'])\n        return ast.value_projection(left, right)\n\n    def _token_nud_filter(self, token):\n        return self._token_led_filter(ast.identity())\n\n    def _token_nud_lbrace(self, token):\n        return self._parse_multi_select_hash()\n\n    def _token_nud_lparen(self, token):\n        expression = self._expression()\n        self._match('rparen')\n        return expression\n\n    def _token_nud_flatten(self, token):\n        left = ast.flatten(ast.identity())\n        right = self._parse_projection_rhs(\n            self.BINDING_POWER['flatten'])\n        return ast.projection(left, right)\n\n    def _token_nud_not(self, token):\n        expr = self._expression(self.BINDING_POWER['not'])\n        return ast.not_expression(expr)\n\n    def _token_nud_lbracket(self, token):\n        if self._current_token() in ['number', 'colon']:\n            right = self._parse_index_expression()\n            # We could optimize this and remove the identity() node.\n            # We don't really need an index_expression node, we can\n            # just use emit an index node here if we're not dealing\n            # with a slice.\n            return self._project_if_slice(ast.identity(), right)\n        elif self._current_token() == 'star' and \\\n                self._lookahead(1) == 'rbracket':\n            self._advance()\n            self._advance()\n            right = self._parse_projection_rhs(self.BINDING_POWER['star'])\n            return ast.projection(ast.identity(), right)\n        else:\n            return self._parse_multi_select_list()\n\n    def _parse_index_expression(self):\n        # We're here:\n        # [<current>\n        #  ^\n        #  | current token\n        if (self._lookahead(0) == 'colon' or\n                self._lookahead(1) == 'colon'):\n            return self._parse_slice_expression()\n        else:\n            # Parse the syntax [number]\n            node = ast.index(self._lookahead_token(0)['value'])\n            self._advance()\n            self._match('rbracket')\n            return node\n\n    def _parse_slice_expression(self):\n        # [start:end:step]\n        # Where start, end, and step are optional.\n        # The last colon is optional as well.\n        parts = [None, None, None]\n        index = 0\n        current_token = self._current_token()\n        while not current_token == 'rbracket' and index < 3:\n            if current_token == 'colon':\n                index += 1\n                if index == 3:\n                    self._raise_parse_error_for_token(\n                        self._lookahead_token(0), 'syntax error')\n                self._advance()\n            elif current_token == 'number':\n                parts[index] = self._lookahead_token(0)['value']\n                self._advance()\n            else:\n                self._raise_parse_error_for_token(\n                    self._lookahead_token(0), 'syntax error')\n            current_token = self._current_token()\n        self._match('rbracket')\n        return ast.slice(*parts)\n\n    def _token_nud_current(self, token):\n        return ast.current_node()\n\n    def _token_nud_expref(self, token):\n        expression = self._expression(self.BINDING_POWER['expref'])\n        return ast.expref(expression)\n\n    def _token_led_dot(self, left):\n        if not self._current_token() == 'star':\n            right = self._parse_dot_rhs(self.BINDING_POWER['dot'])\n            if left['type'] == 'subexpression':\n                left['children'].append(right)\n                return left\n            else:\n                return ast.subexpression([left, right])\n        else:\n            # We're creating a projection.\n            self._advance()\n            right = self._parse_projection_rhs(\n                self.BINDING_POWER['dot'])\n            return ast.value_projection(left, right)\n\n    def _token_led_pipe(self, left):\n        right = self._expression(self.BINDING_POWER['pipe'])\n        return ast.pipe(left, right)\n\n    def _token_led_or(self, left):\n        right = self._expression(self.BINDING_POWER['or'])\n        return ast.or_expression(left, right)\n\n    def _token_led_and(self, left):\n        right = self._expression(self.BINDING_POWER['and'])\n        return ast.and_expression(left, right)\n\n    def _token_led_lparen(self, left):\n        if left['type'] != 'field':\n            #  0 - first func arg or closing paren.\n            # -1 - '(' token\n            # -2 - invalid function \"name\".\n            prev_t = self._lookahead_token(-2)\n            raise exceptions.ParseError(\n                prev_t['start'], prev_t['value'], prev_t['type'],\n                \"Invalid function name '%s'\" % prev_t['value'])\n        name = left['value']\n        args = []\n        while not self._current_token() == 'rparen':\n            expression = self._expression()\n            if self._current_token() == 'comma':\n                self._match('comma')\n            args.append(expression)\n        self._match('rparen')\n        function_node = ast.function_expression(name, args)\n        return function_node\n\n    def _token_led_filter(self, left):\n        # Filters are projections.\n        condition = self._expression(0)\n        self._match('rbracket')\n        if self._current_token() == 'flatten':\n            right = ast.identity()\n        else:\n            right = self._parse_projection_rhs(self.BINDING_POWER['filter'])\n        return ast.filter_projection(left, right, condition)\n\n    def _token_led_eq(self, left):\n        return self._parse_comparator(left, 'eq')\n\n    def _token_led_ne(self, left):\n        return self._parse_comparator(left, 'ne')\n\n    def _token_led_gt(self, left):\n        return self._parse_comparator(left, 'gt')\n\n    def _token_led_gte(self, left):\n        return self._parse_comparator(left, 'gte')\n\n    def _token_led_lt(self, left):\n        return self._parse_comparator(left, 'lt')\n\n    def _token_led_lte(self, left):\n        return self._parse_comparator(left, 'lte')\n\n    def _token_led_flatten(self, left):\n        left = ast.flatten(left)\n        right = self._parse_projection_rhs(\n            self.BINDING_POWER['flatten'])\n        return ast.projection(left, right)\n\n    def _token_led_lbracket(self, left):\n        token = self._lookahead_token(0)\n        if token['type'] in ['number', 'colon']:\n            right = self._parse_index_expression()\n            if left['type'] == 'index_expression':\n                # Optimization: if the left node is an index expr,\n                # we can avoid creating another node and instead just add\n                # the right node as a child of the left.\n                left['children'].append(right)\n                return left\n            else:\n                return self._project_if_slice(left, right)\n        else:\n            # We have a projection\n            self._match('star')\n            self._match('rbracket')\n            right = self._parse_projection_rhs(self.BINDING_POWER['star'])\n            return ast.projection(left, right)\n\n    def _project_if_slice(self, left, right):\n        index_expr = ast.index_expression([left, right])\n        if right['type'] == 'slice':\n            return ast.projection(\n                index_expr,\n                self._parse_projection_rhs(self.BINDING_POWER['star']))\n        else:\n            return index_expr\n\n    def _parse_comparator(self, left, comparator):\n        right = self._expression(self.BINDING_POWER[comparator])\n        return ast.comparator(comparator, left, right)\n\n    def _parse_multi_select_list(self):\n        expressions = []\n        while True:\n            expression = self._expression()\n            expressions.append(expression)\n            if self._current_token() == 'rbracket':\n                break\n            else:\n                self._match('comma')\n        self._match('rbracket')\n        return ast.multi_select_list(expressions)\n\n    def _parse_multi_select_hash(self):\n        pairs = []\n        while True:\n            key_token = self._lookahead_token(0)\n            # Before getting the token value, verify it's\n            # an identifier.\n            self._match_multiple_tokens(\n                token_types=['quoted_identifier', 'unquoted_identifier'])\n            key_name = key_token['value']\n            self._match('colon')\n            value = self._expression(0)\n            node = ast.key_val_pair(key_name=key_name, node=value)\n            pairs.append(node)\n            if self._current_token() == 'comma':\n                self._match('comma')\n            elif self._current_token() == 'rbrace':\n                self._match('rbrace')\n                break\n        return ast.multi_select_dict(nodes=pairs)\n\n    def _parse_projection_rhs(self, binding_power):\n        # Parse the right hand side of the projection.\n        if self.BINDING_POWER[self._current_token()] < self._PROJECTION_STOP:\n            # BP of 10 are all the tokens that stop a projection.\n            right = ast.identity()\n        elif self._current_token() == 'lbracket':\n            right = self._expression(binding_power)\n        elif self._current_token() == 'filter':\n            right = self._expression(binding_power)\n        elif self._current_token() == 'dot':\n            self._match('dot')\n            right = self._parse_dot_rhs(binding_power)\n        else:\n            self._raise_parse_error_for_token(self._lookahead_token(0),\n                                              'syntax error')\n        return right\n\n    def _parse_dot_rhs(self, binding_power):\n        # From the grammar:\n        # expression '.' ( identifier /\n        #                  multi-select-list /\n        #                  multi-select-hash /\n        #                  function-expression /\n        #                  *\n        # In terms of tokens that means that after a '.',\n        # you can have:\n        lookahead = self._current_token()\n        # Common case \"foo.bar\", so first check for an identifier.\n        if lookahead in ['quoted_identifier', 'unquoted_identifier', 'star']:\n            return self._expression(binding_power)\n        elif lookahead == 'lbracket':\n            self._match('lbracket')\n            return self._parse_multi_select_list()\n        elif lookahead == 'lbrace':\n            self._match('lbrace')\n            return self._parse_multi_select_hash()\n        else:\n            t = self._lookahead_token(0)\n            allowed = ['quoted_identifier', 'unquoted_identifier',\n                       'lbracket', 'lbrace']\n            msg = (\n                \"Expecting: %s, got: %s\" % (allowed, t['type'])\n            )\n            self._raise_parse_error_for_token(t, msg)\n\n    def _error_nud_token(self, token):\n        if token['type'] == 'eof':\n            raise exceptions.IncompleteExpressionError(\n                token['start'], token['value'], token['type'])\n        self._raise_parse_error_for_token(token, 'invalid token')\n\n    def _error_led_token(self, token):\n        self._raise_parse_error_for_token(token, 'invalid token')\n\n    def _match(self, token_type=None):\n        # inline'd self._current_token()\n        if self._current_token() == token_type:\n            # inline'd self._advance()\n            self._advance()\n        else:\n            self._raise_parse_error_maybe_eof(\n                token_type, self._lookahead_token(0))\n\n    def _match_multiple_tokens(self, token_types):\n        if self._current_token() not in token_types:\n            self._raise_parse_error_maybe_eof(\n                token_types, self._lookahead_token(0))\n        self._advance()\n\n    def _advance(self):\n        self._index += 1\n\n    def _current_token(self):\n        return self._tokens[self._index]['type']\n\n    def _lookahead(self, number):\n        return self._tokens[self._index + number]['type']\n\n    def _lookahead_token(self, number):\n        return self._tokens[self._index + number]\n\n    def _raise_parse_error_for_token(self, token, reason):\n        lex_position = token['start']\n        actual_value = token['value']\n        actual_type = token['type']\n        raise exceptions.ParseError(lex_position, actual_value,\n                                    actual_type, reason)\n\n    def _raise_parse_error_maybe_eof(self, expected_type, token):\n        lex_position = token['start']\n        actual_value = token['value']\n        actual_type = token['type']\n        if actual_type == 'eof':\n            raise exceptions.IncompleteExpressionError(\n                lex_position, actual_value, actual_type)\n        message = 'Expecting: %s, got: %s' % (expected_type,\n                                              actual_type)\n        raise exceptions.ParseError(\n            lex_position, actual_value, actual_type, message)\n\n    @classmethod\n    def purge(cls):\n        \"\"\"Clear the expression compilation cache.\"\"\"\n        cls._CACHE.clear()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "35",
-    "2026-10-28 22:46:20.889405"
+    "2026-10-28 23:00:13.228510"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2831,7 +2831,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, lookahead=2):\n        self.tokenizer = None\n        self._tokens = [None] * lookahead\n        self._buffer_size = lookahead\n        self._index = 0",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "76",
-    "2026-10-28 22:46:20.946917"
+    "2026-10-28 23:00:13.267069"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2852,7 +2852,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def parse(self, expression):\n        try:\n            return self._CACHE[expression]\n        except KeyError:\n            pass\n        parsed_result = self._do_parse(expression)\n        if len(self._CACHE) >= self._MAX_SIZE:\n            try:\n                del self._CACHE[next(iter(self._CACHE))]\n            except (KeyError, StopIteration, RuntimeError):\n                # KeyError - Another thread else already deleted the key.\n                # RuntimeError - Another modified the cache.\n                # StopIteration - (Unlikely) Cache is empty.\n                #\n                # If we encounter an error we should NOT be adding to the\n                # cache.  To ensure we do not exceed self._MAX_SIZE, we\n                # can only add to the cache if we successfully removed\n                # an element from the cache, otherwise this can grow\n                # unbounded.\n                return parsed_result\n        self._CACHE[expression] = parsed_result\n        return parsed_result",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "82",
-    "2026-10-28 22:46:20.967194"
+    "2026-10-28 23:00:13.291197"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2873,7 +2873,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _do_parse(self, expression):\n        try:\n            return self._parse(expression)\n        except exceptions.LexerError as e:\n            e.expression = expression\n            raise\n        except exceptions.IncompleteExpressionError as e:\n            e.set_expression(expression)\n            raise\n        except exceptions.ParseError as e:\n            e.expression = expression\n            raise",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "105",
-    "2026-10-28 22:46:21.000126"
+    "2026-10-28 23:00:13.323939"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2894,7 +2894,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _parse(self, expression):\n        self.tokenizer = lexer.Lexer().tokenize(expression)\n        self._tokens = list(self.tokenizer)\n        self._index = 0\n        parsed = self._expression(binding_power=0)\n        if not self._current_token() == 'eof':\n            t = self._lookahead_token(0)\n            raise exceptions.ParseError(t['start'], t['value'], t['type'],\n                                        \"Unexpected token: %s\" % t['value'])\n        return ParsedResult(expression, parsed)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "118",
-    "2026-10-28 22:46:21.029247"
+    "2026-10-28 23:00:13.334804"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2915,7 +2915,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _expression(self, binding_power=0):\n        left_token = self._lookahead_token(0)\n        self._advance()\n        nud_function = getattr(\n            self, '_token_nud_%s' % left_token['type'],\n            self._error_nud_token)\n        left = nud_function(left_token)\n        current_token = self._current_token()\n        while binding_power < self.BINDING_POWER[current_token]:\n            led = getattr(self, '_token_led_%s' % current_token, None)\n            if led is None:\n                error_token = self._lookahead_token(0)\n                self._error_led_token(error_token)\n            else:\n                self._advance()\n                left = led(left)\n                current_token = self._current_token()\n        return left",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "129",
-    "2026-10-28 22:46:21.039904"
+    "2026-10-28 23:00:13.369273"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2936,7 +2936,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_literal(self, token):\n        return ast.literal(token['value'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "148",
-    "2026-10-28 22:46:21.062619"
+    "2026-10-28 23:00:13.404945"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2957,7 +2957,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_unquoted_identifier(self, token):\n        return ast.field(token['value'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "151",
-    "2026-10-28 22:46:21.092308"
+    "2026-10-28 23:00:13.430178"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2978,7 +2978,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_quoted_identifier(self, token):\n        field = ast.field(token['value'])\n        # You can't have a quoted identifier as a function\n        # name.\n        if self._current_token() == 'lparen':\n            t = self._lookahead_token(0)\n            raise exceptions.ParseError(\n                0, t['value'], t['type'],\n                'Quoted identifier not allowed for function names.')\n        return field",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "154",
-    "2026-10-28 22:46:21.103870"
+    "2026-10-28 23:00:13.460784"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -2999,7 +2999,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_star(self, token):\n        left = ast.identity()\n        if self._current_token() == 'rbracket':\n            right = ast.identity()\n        else:\n            right = self._parse_projection_rhs(self.BINDING_POWER['star'])\n        return ast.value_projection(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "165",
-    "2026-10-28 22:46:21.138756"
+    "2026-10-28 23:00:13.470791"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3020,7 +3020,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_filter(self, token):\n        return self._token_led_filter(ast.identity())",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "173",
-    "2026-10-28 22:46:21.170644"
+    "2026-10-28 23:00:13.491764"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3041,7 +3041,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_lbrace(self, token):\n        return self._parse_multi_select_hash()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "176",
-    "2026-10-28 22:46:21.181660"
+    "2026-10-28 23:00:13.522672"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3062,7 +3062,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_lparen(self, token):\n        expression = self._expression()\n        self._match('rparen')\n        return expression",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "179",
-    "2026-10-28 22:46:21.216582"
+    "2026-10-28 23:00:13.554925"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3083,7 +3083,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_flatten(self, token):\n        left = ast.flatten(ast.identity())\n        right = self._parse_projection_rhs(\n            self.BINDING_POWER['flatten'])\n        return ast.projection(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "184",
-    "2026-10-28 22:46:21.248183"
+    "2026-10-28 23:00:13.586778"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3104,7 +3104,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_not(self, token):\n        expr = self._expression(self.BINDING_POWER['not'])\n        return ast.not_expression(expr)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "190",
-    "2026-10-28 22:46:21.279490"
+    "2026-10-28 23:00:13.614530"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3125,7 +3125,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_lbracket(self, token):\n        if self._current_token() in ['number', 'colon']:\n            right = self._parse_index_expression()\n            # We could optimize this and remove the identity() node.\n            # We don't really need an index_expression node, we can\n            # just use emit an index node here if we're not dealing\n            # with a slice.\n            return self._project_if_slice(ast.identity(), right)\n        elif self._current_token() == 'star' and \\\n                self._lookahead(1) == 'rbracket':\n            self._advance()\n            self._advance()\n            right = self._parse_projection_rhs(self.BINDING_POWER['star'])\n            return ast.projection(ast.identity(), right)\n        else:\n            return self._parse_multi_select_list()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "194",
-    "2026-10-28 22:46:21.309372"
+    "2026-10-28 23:00:13.647718"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3146,7 +3146,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _parse_index_expression(self):\n        # We're here:\n        # [<current>\n        #  ^\n        #  | current token\n        if (self._lookahead(0) == 'colon' or\n                self._lookahead(1) == 'colon'):\n            return self._parse_slice_expression()\n        else:\n            # Parse the syntax [number]\n            node = ast.index(self._lookahead_token(0)['value'])\n            self._advance()\n            self._match('rbracket')\n            return node",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "211",
-    "2026-10-28 22:46:21.319094"
+    "2026-10-28 23:00:13.659546"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3167,7 +3167,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _parse_slice_expression(self):\n        # [start:end:step]\n        # Where start, end, and step are optional.\n        # The last colon is optional as well.\n        parts = [None, None, None]\n        index = 0\n        current_token = self._current_token()\n        while not current_token == 'rbracket' and index < 3:\n            if current_token == 'colon':\n                index += 1\n                if index == 3:\n                    self._raise_parse_error_for_token(\n                        self._lookahead_token(0), 'syntax error')\n                self._advance()\n            elif current_token == 'number':\n                parts[index] = self._lookahead_token(0)['value']\n                self._advance()\n            else:\n                self._raise_parse_error_for_token(\n                    self._lookahead_token(0), 'syntax error')\n            current_token = self._current_token()\n        self._match('rbracket')\n        return ast.slice(*parts)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "226",
-    "2026-10-28 22:46:21.341473"
+    "2026-10-28 23:00:13.669922"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3188,7 +3188,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_current(self, token):\n        return ast.current_node()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "250",
-    "2026-10-28 22:46:21.353170"
+    "2026-10-28 23:00:13.695106"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3209,7 +3209,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_nud_expref(self, token):\n        expression = self._expression(self.BINDING_POWER['expref'])\n        return ast.expref(expression)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "253",
-    "2026-10-28 22:46:21.372853"
+    "2026-10-28 23:00:13.705382"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3230,7 +3230,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_dot(self, left):\n        if not self._current_token() == 'star':\n            right = self._parse_dot_rhs(self.BINDING_POWER['dot'])\n            if left['type'] == 'subexpression':\n                left['children'].append(right)\n                return left\n            else:\n                return ast.subexpression([left, right])\n        else:\n            # We're creating a projection.\n            self._advance()\n            right = self._parse_projection_rhs(\n                self.BINDING_POWER['dot'])\n            return ast.value_projection(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "257",
-    "2026-10-28 22:46:21.403910"
+    "2026-10-28 23:00:13.715825"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3251,7 +3251,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_pipe(self, left):\n        right = self._expression(self.BINDING_POWER['pipe'])\n        return ast.pipe(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "272",
-    "2026-10-28 22:46:21.437040"
+    "2026-10-28 23:00:13.725886"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3272,7 +3272,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_or(self, left):\n        right = self._expression(self.BINDING_POWER['or'])\n        return ast.or_expression(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "276",
-    "2026-10-28 22:46:21.467005"
+    "2026-10-28 23:00:13.757245"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3293,7 +3293,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_and(self, left):\n        right = self._expression(self.BINDING_POWER['and'])\n        return ast.and_expression(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "280",
-    "2026-10-28 22:46:21.498153"
+    "2026-10-28 23:00:13.788689"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3314,7 +3314,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_lparen(self, left):\n        if left['type'] != 'field':\n            #  0 - first func arg or closing paren.\n            # -1 - '(' token\n            # -2 - invalid function \"name\".\n            prev_t = self._lookahead_token(-2)\n            raise exceptions.ParseError(\n                prev_t['start'], prev_t['value'], prev_t['type'],\n                \"Invalid function name '%s'\" % prev_t['value'])\n        name = left['value']\n        args = []\n        while not self._current_token() == 'rparen':\n            expression = self._expression()\n            if self._current_token() == 'comma':\n                self._match('comma')\n            args.append(expression)\n        self._match('rparen')\n        function_node = ast.function_expression(name, args)\n        return function_node",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "284",
-    "2026-10-28 22:46:21.530925"
+    "2026-10-28 23:00:13.819546"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3335,7 +3335,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_filter(self, left):\n        # Filters are projections.\n        condition = self._expression(0)\n        self._match('rbracket')\n        if self._current_token() == 'flatten':\n            right = ast.identity()\n        else:\n            right = self._parse_projection_rhs(self.BINDING_POWER['filter'])\n        return ast.filter_projection(left, right, condition)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "304",
-    "2026-10-28 22:46:21.562515"
+    "2026-10-28 23:00:13.852045"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3356,7 +3356,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_eq(self, left):\n        return self._parse_comparator(left, 'eq')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "314",
-    "2026-10-28 22:46:21.592106"
+    "2026-10-28 23:00:13.862435"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3377,7 +3377,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_ne(self, left):\n        return self._parse_comparator(left, 'ne')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "317",
-    "2026-10-28 22:46:21.622255"
+    "2026-10-28 23:00:13.871065"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3398,7 +3398,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_gt(self, left):\n        return self._parse_comparator(left, 'gt')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "320",
-    "2026-10-28 22:46:21.658673"
+    "2026-10-28 23:00:13.881184"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3419,7 +3419,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_gte(self, left):\n        return self._parse_comparator(left, 'gte')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "323",
-    "2026-10-28 22:46:21.671028"
+    "2026-10-28 23:00:13.911528"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3440,7 +3440,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_lt(self, left):\n        return self._parse_comparator(left, 'lt')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "326",
-    "2026-10-28 22:46:21.700824"
+    "2026-10-28 23:00:13.922888"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3461,7 +3461,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_lte(self, left):\n        return self._parse_comparator(left, 'lte')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "329",
-    "2026-10-28 22:46:21.732782"
+    "2026-10-28 23:00:13.957497"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3482,7 +3482,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_flatten(self, left):\n        left = ast.flatten(left)\n        right = self._parse_projection_rhs(\n            self.BINDING_POWER['flatten'])\n        return ast.projection(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "332",
-    "2026-10-28 22:46:21.745789"
+    "2026-10-28 23:00:13.988759"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3503,7 +3503,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _token_led_lbracket(self, left):\n        token = self._lookahead_token(0)\n        if token['type'] in ['number', 'colon']:\n            right = self._parse_index_expression()\n            if left['type'] == 'index_expression':\n                # Optimization: if the left node is an index expr,\n                # we can avoid creating another node and instead just add\n                # the right node as a child of the left.\n                left['children'].append(right)\n                return left\n            else:\n                return self._project_if_slice(left, right)\n        else:\n            # We have a projection\n            self._match('star')\n            self._match('rbracket')\n            right = self._parse_projection_rhs(self.BINDING_POWER['star'])\n            return ast.projection(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "338",
-    "2026-10-28 22:46:21.778684"
+    "2026-10-28 23:00:13.998530"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3524,7 +3524,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _project_if_slice(self, left, right):\n        index_expr = ast.index_expression([left, right])\n        if right['type'] == 'slice':\n            return ast.projection(\n                index_expr,\n                self._parse_projection_rhs(self.BINDING_POWER['star']))\n        else:\n            return index_expr",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "357",
-    "2026-10-28 22:46:21.790768"
+    "2026-10-28 23:00:14.009109"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3545,7 +3545,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _parse_comparator(self, left, comparator):\n        right = self._expression(self.BINDING_POWER[comparator])\n        return ast.comparator(comparator, left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "366",
-    "2026-10-28 22:46:21.801563"
+    "2026-10-28 23:00:14.018677"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3566,7 +3566,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _parse_multi_select_list(self):\n        expressions = []\n        while True:\n            expression = self._expression()\n            expressions.append(expression)\n            if self._current_token() == 'rbracket':\n                break\n            else:\n                self._match('comma')\n        self._match('rbracket')\n        return ast.multi_select_list(expressions)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "370",
-    "2026-10-28 22:46:21.825331"
+    "2026-10-28 23:00:14.028330"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3587,7 +3587,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _parse_multi_select_hash(self):\n        pairs = []\n        while True:\n            key_token = self._lookahead_token(0)\n            # Before getting the token value, verify it's\n            # an identifier.\n            self._match_multiple_tokens(\n                token_types=['quoted_identifier', 'unquoted_identifier'])\n            key_name = key_token['value']\n            self._match('colon')\n            value = self._expression(0)\n            node = ast.key_val_pair(key_name=key_name, node=value)\n            pairs.append(node)\n            if self._current_token() == 'comma':\n                self._match('comma')\n            elif self._current_token() == 'rbrace':\n                self._match('rbrace')\n                break\n        return ast.multi_select_dict(nodes=pairs)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "382",
-    "2026-10-28 22:46:21.853532"
+    "2026-10-28 23:00:14.049339"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3608,7 +3608,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _parse_projection_rhs(self, binding_power):\n        # Parse the right hand side of the projection.\n        if self.BINDING_POWER[self._current_token()] < self._PROJECTION_STOP:\n            # BP of 10 are all the tokens that stop a projection.\n            right = ast.identity()\n        elif self._current_token() == 'lbracket':\n            right = self._expression(binding_power)\n        elif self._current_token() == 'filter':\n            right = self._expression(binding_power)\n        elif self._current_token() == 'dot':\n            self._match('dot')\n            right = self._parse_dot_rhs(binding_power)\n        else:\n            self._raise_parse_error_for_token(self._lookahead_token(0),\n                                              'syntax error')\n        return right",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "402",
-    "2026-10-28 22:46:21.885456"
+    "2026-10-28 23:00:14.081910"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3629,7 +3629,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _parse_dot_rhs(self, binding_power):\n        # From the grammar:\n        # expression '.' ( identifier /\n        #                  multi-select-list /\n        #                  multi-select-hash /\n        #                  function-expression /\n        #                  *\n        # In terms of tokens that means that after a '.',\n        # you can have:\n        lookahead = self._current_token()\n        # Common case \"foo.bar\", so first check for an identifier.\n        if lookahead in ['quoted_identifier', 'unquoted_identifier', 'star']:\n            return self._expression(binding_power)\n        elif lookahead == 'lbracket':\n            self._match('lbracket')\n            return self._parse_multi_select_list()\n        elif lookahead == 'lbrace':\n            self._match('lbrace')\n            return self._parse_multi_select_hash()\n        else:\n            t = self._lookahead_token(0)\n            allowed = ['quoted_identifier', 'unquoted_identifier',\n                       'lbracket', 'lbrace']\n            msg = (\n                \"Expecting: %s, got: %s\" % (allowed, t['type'])\n            )\n            self._raise_parse_error_for_token(t, msg)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "419",
-    "2026-10-28 22:46:21.895885"
+    "2026-10-28 23:00:14.111495"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3650,7 +3650,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _error_nud_token(self, token):\n        if token['type'] == 'eof':\n            raise exceptions.IncompleteExpressionError(\n                token['start'], token['value'], token['type'])\n        self._raise_parse_error_for_token(token, 'invalid token')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "447",
-    "2026-10-28 22:46:21.912470"
+    "2026-10-28 23:00:14.148393"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3671,7 +3671,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _error_led_token(self, token):\n        self._raise_parse_error_for_token(token, 'invalid token')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "453",
-    "2026-10-28 22:46:21.946124"
+    "2026-10-28 23:00:14.172787"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3692,7 +3692,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _match(self, token_type=None):\n        # inline'd self._current_token()\n        if self._current_token() == token_type:\n            # inline'd self._advance()\n            self._advance()\n        else:\n            self._raise_parse_error_maybe_eof(\n                token_type, self._lookahead_token(0))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "456",
-    "2026-10-28 22:46:21.977577"
+    "2026-10-28 23:00:14.205209"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3713,7 +3713,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _match_multiple_tokens(self, token_types):\n        if self._current_token() not in token_types:\n            self._raise_parse_error_maybe_eof(\n                token_types, self._lookahead_token(0))\n        self._advance()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "465",
-    "2026-10-28 22:46:22.010093"
+    "2026-10-28 23:00:14.215199"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3734,7 +3734,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _advance(self):\n        self._index += 1",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "471",
-    "2026-10-28 22:46:22.023690"
+    "2026-10-28 23:00:14.236625"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3755,7 +3755,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _current_token(self):\n        return self._tokens[self._index]['type']",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "474",
-    "2026-10-28 22:46:22.059075"
+    "2026-10-28 23:00:14.267797"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3776,7 +3776,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _lookahead(self, number):\n        return self._tokens[self._index + number]['type']",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "477",
-    "2026-10-28 22:46:22.086803"
+    "2026-10-28 23:00:14.298225"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3797,7 +3797,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _lookahead_token(self, number):\n        return self._tokens[self._index + number]",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "480",
-    "2026-10-28 22:46:22.100803"
+    "2026-10-28 23:00:14.327368"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3818,7 +3818,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _raise_parse_error_for_token(self, token, reason):\n        lex_position = token['start']\n        actual_value = token['value']\n        actual_type = token['type']\n        raise exceptions.ParseError(lex_position, actual_value,\n                                    actual_type, reason)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "483",
-    "2026-10-28 22:46:22.133347"
+    "2026-10-28 23:00:14.336835"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3839,7 +3839,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _raise_parse_error_maybe_eof(self, expected_type, token):\n        lex_position = token['start']\n        actual_value = token['value']\n        actual_type = token['type']\n        if actual_type == 'eof':\n            raise exceptions.IncompleteExpressionError(\n                lex_position, actual_value, actual_type)\n        message = 'Expecting: %s, got: %s' % (expected_type,\n                                              actual_type)\n        raise exceptions.ParseError(\n            lex_position, actual_value, actual_type, message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "490",
-    "2026-10-28 22:46:22.162881"
+    "2026-10-28 23:00:14.344752"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3860,7 +3860,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def purge(cls):\n        \"\"\"Clear the expression compilation cache.\"\"\"\n        cls._CACHE.clear()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "503",
-    "2026-10-28 22:46:22.173711"
+    "2026-10-28 23:00:14.375442"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3881,7 +3881,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class ParsedResult(object):\n    def __init__(self, expression, parsed):\n        self.expression = expression\n        self.parsed = parsed\n\n    def search(self, value, options=None):\n        interpreter = visitor.TreeInterpreter(options)\n        result = interpreter.visit(self.parsed, value)\n        return result\n\n    def _render_dot_file(self):\n        \"\"\"Render the parsed AST as a dot file.\n\n        Note that this is marked as an internal method because\n        the AST is an implementation detail and is subject\n        to change.  This method can be used to help troubleshoot\n        or for development purposes, but is not considered part\n        of the public supported API.  Use at your own risk.\n\n        \"\"\"\n        renderer = visitor.GraphvizVisitor()\n        contents = renderer.visit(self.parsed)\n        return contents\n\n    def __repr__(self):\n        return repr(self.parsed)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "509",
-    "2026-10-28 22:46:22.184050"
+    "2026-10-28 23:00:14.405961"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3902,7 +3902,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, expression, parsed):\n        self.expression = expression\n        self.parsed = parsed",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "510",
-    "2026-10-28 22:46:22.200112"
+    "2026-10-28 23:00:14.441687"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3923,7 +3923,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def search(self, value, options=None):\n        interpreter = visitor.TreeInterpreter(options)\n        result = interpreter.visit(self.parsed, value)\n        return result",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "514",
-    "2026-10-28 22:46:22.227723"
+    "2026-10-28 23:00:14.451872"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3944,7 +3944,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _render_dot_file(self):\n        \"\"\"Render the parsed AST as a dot file.\n\n        Note that this is marked as an internal method because\n        the AST is an implementation detail and is subject\n        to change.  This method can be used to help troubleshoot\n        or for development purposes, but is not considered part\n        of the public supported API.  Use at your own risk.\n\n        \"\"\"\n        renderer = visitor.GraphvizVisitor()\n        contents = renderer.visit(self.parsed)\n        return contents",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "519",
-    "2026-10-28 22:46:22.258367"
+    "2026-10-28 23:00:14.484870"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3965,7 +3965,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __repr__(self):\n        return repr(self.parsed)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/parser.py",
     "533",
-    "2026-10-28 22:46:22.290000"
+    "2026-10-28 23:00:14.516262"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -3986,7 +3986,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import operator\n\nfrom jmespath import functions\nfrom jmespath.compat import string_type\nfrom numbers import Number",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "1",
-    "2026-10-28 22:46:22.319697"
+    "2026-10-28 23:00:14.545957"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4007,7 +4007,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def _equals(x, y):\n    if _is_special_number_case(x, y):\n        return False\n    else:\n        return x == y",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "8",
-    "2026-10-28 22:46:22.353468"
+    "2026-10-28 23:00:14.554613"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4028,7 +4028,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def _is_special_number_case(x, y):\n    # We need to special case comparing 0 or 1 to\n    # True/False.  While normally comparing any\n    # integer other than 0/1 to True/False will always\n    # return False.  However 0/1 have this:\n    # >>> 0 == True\n    # False\n    # >>> 0 == False\n    # True\n    # >>> 1 == True\n    # True\n    # >>> 1 == False\n    # False\n    #\n    # Also need to consider that:\n    # >>> 0 in [True, False]\n    # True\n    if _is_actual_number(x) and x in (0, 1):\n        return isinstance(y, bool)\n    elif _is_actual_number(y) and y in (0, 1):\n        return isinstance(x, bool)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "15",
-    "2026-10-28 22:46:22.363217"
+    "2026-10-28 23:00:14.579287"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4049,7 +4049,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def _is_comparable(x):\n    # The spec doesn't officially support string types yet,\n    # but enough people are relying on this behavior that\n    # it's been added back.  This should eventually become\n    # part of the official spec.\n    return _is_actual_number(x) or isinstance(x, string_type)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "38",
-    "2026-10-28 22:46:22.382919"
+    "2026-10-28 23:00:14.609851"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4070,7 +4070,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def _is_actual_number(x):\n    # We need to handle python's quirkiness with booleans,\n    # specifically:\n    #\n    # >>> isinstance(False, int)\n    # True\n    # >>> isinstance(True, int)\n    # True\n    if isinstance(x, bool):\n        return False\n    return isinstance(x, Number)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "46",
-    "2026-10-28 22:46:22.415416"
+    "2026-10-28 23:00:14.640583"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4091,7 +4091,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class Options(object):\n    \"\"\"Options to control how a JMESPath function is evaluated.\"\"\"\n    def __init__(self, dict_cls=None, custom_functions=None):\n        #: The class to use when creating a dict.  The interpreter\n        #  may create dictionaries during the evaluation of a JMESPath\n        #  expression.  For example, a multi-select hash will\n        #  create a dictionary.  By default we use a dict() type.\n        #  You can set this value to change what dict type is used.\n        #  The most common reason you would change this is if you\n        #  want to set a collections.OrderedDict so that you can\n        #  have predictable key ordering.\n        self.dict_cls = dict_cls\n        self.custom_functions = custom_functions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "59",
-    "2026-10-28 22:46:22.426345"
+    "2026-10-28 23:00:14.669804"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4112,7 +4112,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, dict_cls=None, custom_functions=None):\n        #: The class to use when creating a dict.  The interpreter\n        #  may create dictionaries during the evaluation of a JMESPath\n        #  expression.  For example, a multi-select hash will\n        #  create a dictionary.  By default we use a dict() type.\n        #  You can set this value to change what dict type is used.\n        #  The most common reason you would change this is if you\n        #  want to set a collections.OrderedDict so that you can\n        #  have predictable key ordering.\n        self.dict_cls = dict_cls\n        self.custom_functions = custom_functions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "61",
-    "2026-10-28 22:46:22.451456"
+    "2026-10-28 23:00:14.707184"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4133,7 +4133,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class _Expression(object):\n    def __init__(self, expression, interpreter):\n        self.expression = expression\n        self.interpreter = interpreter\n\n    def visit(self, node, *args, **kwargs):\n        return self.interpreter.visit(node, *args, **kwargs)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "74",
-    "2026-10-28 22:46:22.478080"
+    "2026-10-28 23:00:14.738437"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4154,7 +4154,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, expression, interpreter):\n        self.expression = expression\n        self.interpreter = interpreter",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "75",
-    "2026-10-28 22:46:22.507946"
+    "2026-10-28 23:00:14.747749"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4175,7 +4175,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit(self, node, *args, **kwargs):\n        return self.interpreter.visit(node, *args, **kwargs)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "79",
-    "2026-10-28 22:46:22.518699"
+    "2026-10-28 23:00:14.778738"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4196,7 +4196,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class Visitor(object):\n    def __init__(self):\n        self._method_cache = {}\n\n    def visit(self, node, *args, **kwargs):\n        node_type = node['type']\n        method = self._method_cache.get(node_type)\n        if method is None:\n            method = getattr(\n                self, 'visit_%s' % node['type'], self.default_visit)\n            self._method_cache[node_type] = method\n        return method(node, *args, **kwargs)\n\n    def default_visit(self, node, *args, **kwargs):\n        raise NotImplementedError(\"default_visit\")",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "83",
-    "2026-10-28 22:46:22.538450"
+    "2026-10-28 23:00:14.810782"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4217,7 +4217,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self):\n        self._method_cache = {}",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "84",
-    "2026-10-28 22:46:22.569873"
+    "2026-10-28 23:00:14.842841"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4238,7 +4238,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit(self, node, *args, **kwargs):\n        node_type = node['type']\n        method = self._method_cache.get(node_type)\n        if method is None:\n            method = getattr(\n                self, 'visit_%s' % node['type'], self.default_visit)\n            self._method_cache[node_type] = method\n        return method(node, *args, **kwargs)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "87",
-    "2026-10-28 22:46:22.602714"
+    "2026-10-28 23:00:14.872702"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4259,7 +4259,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def default_visit(self, node, *args, **kwargs):\n        raise NotImplementedError(\"default_visit\")",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "96",
-    "2026-10-28 22:46:22.613173"
+    "2026-10-28 23:00:14.906371"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4280,7 +4280,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TreeInterpreter(Visitor):\n    COMPARATOR_FUNC = {\n        'eq': _equals,\n        'ne': lambda x, y: not _equals(x, y),\n        'lt': operator.lt,\n        'gt': operator.gt,\n        'lte': operator.le,\n        'gte': operator.ge\n    }\n    _EQUALITY_OPS = ['eq', 'ne']\n    MAP_TYPE = dict\n\n    def __init__(self, options=None):\n        super(TreeInterpreter, self).__init__()\n        self._dict_cls = self.MAP_TYPE\n        if options is None:\n            options = Options()\n        self._options = options\n        if options.dict_cls is not None:\n            self._dict_cls = self._options.dict_cls\n        if options.custom_functions is not None:\n            self._functions = self._options.custom_functions\n        else:\n            self._functions = functions.Functions()\n\n    def default_visit(self, node, *args, **kwargs):\n        raise NotImplementedError(node['type'])\n\n    def visit_subexpression(self, node, value):\n        result = value\n        for node in node['children']:\n            result = self.visit(node, result)\n        return result\n\n    def visit_field(self, node, value):\n        try:\n            return value.get(node['value'])\n        except AttributeError:\n            return None\n\n    def visit_comparator(self, node, value):\n        # Common case: comparator is == or !=\n        comparator_func = self.COMPARATOR_FUNC[node['value']]\n        if node['value'] in self._EQUALITY_OPS:\n            return comparator_func(\n                self.visit(node['children'][0], value),\n                self.visit(node['children'][1], value)\n            )\n        else:\n            # Ordering operators are only valid for numbers.\n            # Evaluating any other type with a comparison operator\n            # will yield a None value.\n            left = self.visit(node['children'][0], value)\n            right = self.visit(node['children'][1], value)\n            num_types = (int, float)\n            if not (_is_comparable(left) and\n                    _is_comparable(right)):\n                return None\n            return comparator_func(left, right)\n\n    def visit_current(self, node, value):\n        return value\n\n    def visit_expref(self, node, value):\n        return _Expression(node['children'][0], self)\n\n    def visit_function_expression(self, node, value):\n        resolved_args = []\n        for child in node['children']:\n            current = self.visit(child, value)\n            resolved_args.append(current)\n        return self._functions.call_function(node['value'], resolved_args)\n\n    def visit_filter_projection(self, node, value):\n        base = self.visit(node['children'][0], value)\n        if not isinstance(base, list):\n            return None\n        comparator_node = node['children'][2]\n        collected = []\n        for element in base:\n            if self._is_true(self.visit(comparator_node, element)):\n                current = self.visit(node['children'][1], element)\n                if current is not None:\n                    collected.append(current)\n        return collected\n\n    def visit_flatten(self, node, value):\n        base = self.visit(node['children'][0], value)\n        if not isinstance(base, list):\n            # Can't flatten the object if it's not a list.\n            return None\n        merged_list = []\n        for element in base:\n            if isinstance(element, list):\n                merged_list.extend(element)\n            else:\n                merged_list.append(element)\n        return merged_list\n\n    def visit_identity(self, node, value):\n        return value\n\n    def visit_index(self, node, value):\n        # Even though we can index strings, we don't\n        # want to support that.\n        if not isinstance(value, list):\n            return None\n        try:\n            return value[node['value']]\n        except IndexError:\n            return None\n\n    def visit_index_expression(self, node, value):\n        result = value\n        for node in node['children']:\n            result = self.visit(node, result)\n        return result\n\n    def visit_slice(self, node, value):\n        if not isinstance(value, list):\n            return None\n        s = slice(*node['children'])\n        return value[s]\n\n    def visit_key_val_pair(self, node, value):\n        return self.visit(node['children'][0], value)\n\n    def visit_literal(self, node, value):\n        return node['value']\n\n    def visit_multi_select_dict(self, node, value):\n        if value is None:\n            return None\n        collected = self._dict_cls()\n        for child in node['children']:\n            collected[child['value']] = self.visit(child, value)\n        return collected\n\n    def visit_multi_select_list(self, node, value):\n        if value is None:\n            return None\n        collected = []\n        for child in node['children']:\n            collected.append(self.visit(child, value))\n        return collected\n\n    def visit_or_expression(self, node, value):\n        matched = self.visit(node['children'][0], value)\n        if self._is_false(matched):\n            matched = self.visit(node['children'][1], value)\n        return matched\n\n    def visit_and_expression(self, node, value):\n        matched = self.visit(node['children'][0], value)\n        if self._is_false(matched):\n            return matched\n        return self.visit(node['children'][1], value)\n\n    def visit_not_expression(self, node, value):\n        original_result = self.visit(node['children'][0], value)\n        if _is_actual_number(original_result) and original_result == 0:\n            # Special case for 0, !0 should be false, not true.\n            # 0 is not a special cased integer in jmespath.\n            return False\n        return not original_result\n\n    def visit_pipe(self, node, value):\n        result = value\n        for node in node['children']:\n            result = self.visit(node, result)\n        return result\n\n    def visit_projection(self, node, value):\n        base = self.visit(node['children'][0], value)\n        if not isinstance(base, list):\n            return None\n        collected = []\n        for element in base:\n            current = self.visit(node['children'][1], element)\n            if current is not None:\n                collected.append(current)\n        return collected\n\n    def visit_value_projection(self, node, value):\n        base = self.visit(node['children'][0], value)\n        try:\n            base = base.values()\n        except AttributeError:\n            return None\n        collected = []\n        for element in base:\n            current = self.visit(node['children'][1], element)\n            if current is not None:\n                collected.append(current)\n        return collected\n\n    def _is_false(self, value):\n        # This looks weird, but we're explicitly using equality checks\n        # because the truth/false values are different between\n        # python and jmespath.\n        return (value == '' or value == [] or value == {} or value is None or\n                value is False)\n\n    def _is_true(self, value):\n        return not self._is_false(value)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "100",
-    "2026-10-28 22:46:22.633048"
+    "2026-10-28 23:00:14.935999"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4301,7 +4301,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self, options=None):\n        super(TreeInterpreter, self).__init__()\n        self._dict_cls = self.MAP_TYPE\n        if options is None:\n            options = Options()\n        self._options = options\n        if options.dict_cls is not None:\n            self._dict_cls = self._options.dict_cls\n        if options.custom_functions is not None:\n            self._functions = self._options.custom_functions\n        else:\n            self._functions = functions.Functions()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "112",
-    "2026-10-28 22:46:22.670021"
+    "2026-10-28 23:00:14.977581"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4322,7 +4322,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def default_visit(self, node, *args, **kwargs):\n        raise NotImplementedError(node['type'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "125",
-    "2026-10-28 22:46:22.692524"
+    "2026-10-28 23:00:15.000314"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4343,7 +4343,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_subexpression(self, node, value):\n        result = value\n        for node in node['children']:\n            result = self.visit(node, result)\n        return result",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "128",
-    "2026-10-28 22:46:22.725019"
+    "2026-10-28 23:00:15.031565"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4364,7 +4364,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_field(self, node, value):\n        try:\n            return value.get(node['value'])\n        except AttributeError:\n            return None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "134",
-    "2026-10-28 22:46:22.755593"
+    "2026-10-28 23:00:15.062420"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4385,7 +4385,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_comparator(self, node, value):\n        # Common case: comparator is == or !=\n        comparator_func = self.COMPARATOR_FUNC[node['value']]\n        if node['value'] in self._EQUALITY_OPS:\n            return comparator_func(\n                self.visit(node['children'][0], value),\n                self.visit(node['children'][1], value)\n            )\n        else:\n            # Ordering operators are only valid for numbers.\n            # Evaluating any other type with a comparison operator\n            # will yield a None value.\n            left = self.visit(node['children'][0], value)\n            right = self.visit(node['children'][1], value)\n            num_types = (int, float)\n            if not (_is_comparable(left) and\n                    _is_comparable(right)):\n                return None\n            return comparator_func(left, right)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "140",
-    "2026-10-28 22:46:22.767668"
+    "2026-10-28 23:00:15.091301"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4406,7 +4406,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_current(self, node, value):\n        return value",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "160",
-    "2026-10-28 22:46:22.778445"
+    "2026-10-28 23:00:15.103745"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4427,7 +4427,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_expref(self, node, value):\n        return _Expression(node['children'][0], self)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "163",
-    "2026-10-28 22:46:22.801721"
+    "2026-10-28 23:00:15.138774"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4448,7 +4448,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_function_expression(self, node, value):\n        resolved_args = []\n        for child in node['children']:\n            current = self.visit(child, value)\n            resolved_args.append(current)\n        return self._functions.call_function(node['value'], resolved_args)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "166",
-    "2026-10-28 22:46:22.813662"
+    "2026-10-28 23:00:15.168481"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4469,7 +4469,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_filter_projection(self, node, value):\n        base = self.visit(node['children'][0], value)\n        if not isinstance(base, list):\n            return None\n        comparator_node = node['children'][2]\n        collected = []\n        for element in base:\n            if self._is_true(self.visit(comparator_node, element)):\n                current = self.visit(node['children'][1], element)\n                if current is not None:\n                    collected.append(current)\n        return collected",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "173",
-    "2026-10-28 22:46:22.823412"
+    "2026-10-28 23:00:15.200056"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4490,7 +4490,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_flatten(self, node, value):\n        base = self.visit(node['children'][0], value)\n        if not isinstance(base, list):\n            # Can't flatten the object if it's not a list.\n            return None\n        merged_list = []\n        for element in base:\n            if isinstance(element, list):\n                merged_list.extend(element)\n            else:\n                merged_list.append(element)\n        return merged_list",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "186",
-    "2026-10-28 22:46:22.849568"
+    "2026-10-28 23:00:15.210160"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4511,7 +4511,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_identity(self, node, value):\n        return value",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "199",
-    "2026-10-28 22:46:22.879578"
+    "2026-10-28 23:00:15.232022"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4532,7 +4532,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_index(self, node, value):\n        # Even though we can index strings, we don't\n        # want to support that.\n        if not isinstance(value, list):\n            return None\n        try:\n            return value[node['value']]\n        except IndexError:\n            return None",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "202",
-    "2026-10-28 22:46:22.889386"
+    "2026-10-28 23:00:15.262191"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4553,7 +4553,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_index_expression(self, node, value):\n        result = value\n        for node in node['children']:\n            result = self.visit(node, result)\n        return result",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "212",
-    "2026-10-28 22:46:22.909954"
+    "2026-10-28 23:00:15.293720"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4574,7 +4574,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_slice(self, node, value):\n        if not isinstance(value, list):\n            return None\n        s = slice(*node['children'])\n        return value[s]",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "218",
-    "2026-10-28 22:46:22.941415"
+    "2026-10-28 23:00:15.305331"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4595,7 +4595,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_key_val_pair(self, node, value):\n        return self.visit(node['children'][0], value)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "224",
-    "2026-10-28 22:46:22.953516"
+    "2026-10-28 23:00:15.341224"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4616,7 +4616,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_literal(self, node, value):\n        return node['value']",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "227",
-    "2026-10-28 22:46:22.987046"
+    "2026-10-28 23:00:15.352990"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4637,7 +4637,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_multi_select_dict(self, node, value):\n        if value is None:\n            return None\n        collected = self._dict_cls()\n        for child in node['children']:\n            collected[child['value']] = self.visit(child, value)\n        return collected",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "230",
-    "2026-10-28 22:46:23.017673"
+    "2026-10-28 23:00:15.386458"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4658,7 +4658,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_multi_select_list(self, node, value):\n        if value is None:\n            return None\n        collected = []\n        for child in node['children']:\n            collected.append(self.visit(child, value))\n        return collected",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "238",
-    "2026-10-28 22:46:23.049190"
+    "2026-10-28 23:00:15.416526"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4679,7 +4679,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_or_expression(self, node, value):\n        matched = self.visit(node['children'][0], value)\n        if self._is_false(matched):\n            matched = self.visit(node['children'][1], value)\n        return matched",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "246",
-    "2026-10-28 22:46:23.060865"
+    "2026-10-28 23:00:15.448826"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4700,7 +4700,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_and_expression(self, node, value):\n        matched = self.visit(node['children'][0], value)\n        if self._is_false(matched):\n            return matched\n        return self.visit(node['children'][1], value)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "252",
-    "2026-10-28 22:46:23.095338"
+    "2026-10-28 23:00:15.479176"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4721,7 +4721,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_not_expression(self, node, value):\n        original_result = self.visit(node['children'][0], value)\n        if _is_actual_number(original_result) and original_result == 0:\n            # Special case for 0, !0 should be false, not true.\n            # 0 is not a special cased integer in jmespath.\n            return False\n        return not original_result",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "258",
-    "2026-10-28 22:46:23.126738"
+    "2026-10-28 23:00:15.510576"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4742,7 +4742,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_pipe(self, node, value):\n        result = value\n        for node in node['children']:\n            result = self.visit(node, result)\n        return result",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "266",
-    "2026-10-28 22:46:23.138634"
+    "2026-10-28 23:00:15.522215"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4763,7 +4763,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_projection(self, node, value):\n        base = self.visit(node['children'][0], value)\n        if not isinstance(base, list):\n            return None\n        collected = []\n        for element in base:\n            current = self.visit(node['children'][1], element)\n            if current is not None:\n                collected.append(current)\n        return collected",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "272",
-    "2026-10-28 22:46:23.148511"
+    "2026-10-28 23:00:15.556438"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4784,7 +4784,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit_value_projection(self, node, value):\n        base = self.visit(node['children'][0], value)\n        try:\n            base = base.values()\n        except AttributeError:\n            return None\n        collected = []\n        for element in base:\n            current = self.visit(node['children'][1], element)\n            if current is not None:\n                collected.append(current)\n        return collected",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "283",
-    "2026-10-28 22:46:23.158729"
+    "2026-10-28 23:00:15.587470"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4805,7 +4805,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _is_false(self, value):\n        # This looks weird, but we're explicitly using equality checks\n        # because the truth/false values are different between\n        # python and jmespath.\n        return (value == '' or value == [] or value == {} or value is None or\n                value is False)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "296",
-    "2026-10-28 22:46:23.190962"
+    "2026-10-28 23:00:15.619167"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4826,7 +4826,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _is_true(self, value):\n        return not self._is_false(value)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "303",
-    "2026-10-28 22:46:23.203440"
+    "2026-10-28 23:00:15.632458"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4847,7 +4847,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class GraphvizVisitor(Visitor):\n    def __init__(self):\n        super(GraphvizVisitor, self).__init__()\n        self._lines = []\n        self._count = 1\n\n    def visit(self, node, *args, **kwargs):\n        self._lines.append('digraph AST {')\n        current = '%s%s' % (node['type'], self._count)\n        self._count += 1\n        self._visit(node, current)\n        self._lines.append('}')\n        return '\\n'.join(self._lines)\n\n    def _visit(self, node, current):\n        self._lines.append('%s [label=\"%s(%s)\"]' % (\n            current, node['type'], node.get('value', '')))\n        for child in node.get('children', []):\n            child_name = '%s%s' % (child['type'], self._count)\n            self._count += 1\n            self._lines.append('  %s -> %s' % (current, child_name))\n            self._visit(child, child_name)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "307",
-    "2026-10-28 22:46:23.235982"
+    "2026-10-28 23:00:15.645238"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4868,7 +4868,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def __init__(self):\n        super(GraphvizVisitor, self).__init__()\n        self._lines = []\n        self._count = 1",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "308",
-    "2026-10-28 22:46:23.247875"
+    "2026-10-28 23:00:15.656962"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4889,7 +4889,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def visit(self, node, *args, **kwargs):\n        self._lines.append('digraph AST {')\n        current = '%s%s' % (node['type'], self._count)\n        self._count += 1\n        self._visit(node, current)\n        self._lines.append('}')\n        return '\\n'.join(self._lines)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "313",
-    "2026-10-28 22:46:23.281461"
+    "2026-10-28 23:00:15.678906"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4910,7 +4910,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _visit(self, node, current):\n        self._lines.append('%s [label=\"%s(%s)\"]' % (\n            current, node['type'], node.get('value', '')))\n        for child in node.get('children', []):\n            child_name = '%s%s' % (child['type'], self._count)\n            self._count += 1\n            self._lines.append('  %s -> %s' % (current, child_name))\n            self._visit(child, child_name)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/visitor.py",
     "321",
-    "2026-10-28 22:46:23.312870"
+    "2026-10-28 23:00:15.709851"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4931,7 +4931,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import io\n\nfrom setuptools import setup, find_packages",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/setup.py",
     "3",
-    "2026-10-28 22:46:23.344222"
+    "2026-10-28 23:00:15.741905"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4952,7 +4952,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import sys\nfrom jmespath import ast\n\nimport unittest\nimport json\nfrom collections import OrderedDict",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/__init__.py",
     "1",
-    "2026-10-28 22:46:23.374514"
+    "2026-10-28 23:00:15.772608"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4973,7 +4973,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def as_s_expression(node):\n    parts = []\n    _as_s_expression(node, parts)\n    return ''.join(parts)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/__init__.py",
     "12",
-    "2026-10-28 22:46:23.385505"
+    "2026-10-28 23:00:15.804261"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -4994,7 +4994,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def _as_s_expression(node, parts):\n    parts.append(\"(%s\" % (node.__class__.__name__.lower()))\n    if isinstance(node, ast.Field):\n        parts.append(\" %s\" % node.name)\n    elif isinstance(node, ast.FunctionExpression):\n        parts.append(\" %s\" % node.name)\n    elif isinstance(node, ast.KeyValPair):\n        parts.append(\" %s\" % node.key_name)\n    for child in node.children:\n        parts.append(\" \")\n        _as_s_expression(child, parts)\n    parts.append(\")\")",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/__init__.py",
     "18",
-    "2026-10-28 22:46:23.405384"
+    "2026-10-28 23:00:15.814676"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5015,7 +5015,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import os\nfrom pprint import pformat\nfrom tests import OrderedDict\nfrom tests import json\n\nimport pytest\n\nfrom jmespath.visitor import Options",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_compliance.py",
     "1",
-    "2026-10-28 22:46:23.417056"
+    "2026-10-28 23:00:15.825831"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5036,7 +5036,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def _compliance_tests(requested_test_type):\n    for full_path in _walk_files():\n        if full_path.endswith('.json'):\n            for given, test_type, test_data in load_cases(full_path):\n                t = test_data\n                # Benchmark tests aren't run as part of the normal\n                # test suite, so we only care about 'result' and\n                # 'error' test_types.\n                if test_type == 'result' and test_type == requested_test_type:\n                    yield (given, t['expression'],\n                           t['result'], os.path.basename(full_path))\n                elif test_type == 'error' and test_type == requested_test_type:\n                    yield (given, t['expression'],\n                           t['error'], os.path.basename(full_path))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_compliance.py",
     "18",
-    "2026-10-28 22:46:23.431683"
+    "2026-10-28 23:00:15.836506"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5057,7 +5057,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def _walk_files():\n    # Check for a shortcut when running the tests interactively.\n    # If a JMESPATH_TEST is defined, that file is used as the\n    # only test to run.  Useful when doing feature development.\n    single_file = os.environ.get('JMESPATH_TEST')\n    if single_file is not None:\n        yield os.path.abspath(single_file)\n    else:\n        for root, dirnames, filenames in os.walk(TEST_DIR):\n            for filename in filenames:\n                yield os.path.join(root, filename)\n        for root, dirnames, filenames in os.walk(LEGACY_DIR):\n            for filename in filenames:\n                yield os.path.join(root, filename)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_compliance.py",
     "34",
-    "2026-10-28 22:46:23.454667"
+    "2026-10-28 23:00:15.866068"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5078,7 +5078,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def load_cases(full_path):\n    with open(full_path, 'r', encoding='utf-8') as f:\n        all_test_data = json.load(f, object_pairs_hook=OrderedDict)\n        for test_data in all_test_data:\n            given = test_data['given']\n            for case in test_data['cases']:\n                if 'result' in case:\n                    test_type = 'result'\n                elif 'error' in case:\n                    test_type = 'error'\n                elif 'bench' in case:\n                    test_type = 'bench'\n                else:\n                    raise RuntimeError(f\"Unknown test type: {json.dumps(case)}\")\n                yield (given, test_type, case)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_compliance.py",
     "50",
-    "2026-10-28 22:46:23.483607"
+    "2026-10-28 23:00:15.878767"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5099,7 +5099,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_expression(given, expression, expected, filename):\n    import jmespath.parser\n    try:\n        parsed = jmespath.compile(expression)\n    except ValueError as e:\n        raise AssertionError(\n            'jmespath expression failed to compile: \"%s\", error: %s\"' %\n            (expression, e))\n    actual = parsed.search(given, options=OPTIONS)\n    expected_repr = json.dumps(expected, indent=4)\n    actual_repr = json.dumps(actual, indent=4)\n    error_msg = (\"\\n\\n  (%s) The expression '%s' was suppose to give:\\n%s\\n\"\n                 \"Instead it matched:\\n%s\\nparsed as:\\n%s\\ngiven:\\n%s\" % (\n                     filename, expression, expected_repr,\n                     actual_repr, pformat(parsed.parsed),\n                     json.dumps(given, indent=4)))\n    error_msg = error_msg.replace(r'\\n', '\\n')\n    assert actual == expected, error_msg",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_compliance.py",
     "71",
-    "2026-10-28 22:46:23.494787"
+    "2026-10-28 23:00:15.910046"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5120,7 +5120,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_error_expression(given, expression, error, filename):\n    import jmespath.parser\n    if error not in ('syntax', 'invalid-type',\n                     'unknown-function', 'invalid-arity', 'invalid-value'):\n        raise RuntimeError(\"Unknown error type '%s'\" % error)\n    try:\n        parsed = jmespath.compile(expression)\n        parsed.search(given)\n    except ValueError:\n        # Test passes, it raised a parse error as expected.\n        pass\n    except Exception as e:\n        # Failure because an unexpected exception was raised.\n        error_msg = (\"\\n\\n  (%s) The expression '%s' was suppose to be a \"\n                     \"syntax error, but it raised an unexpected error:\\n\\n%s\" % (\n                         filename, expression, e))\n        error_msg = error_msg.replace(r'\\n', '\\n')\n        raise AssertionError(error_msg)\n    else:\n        error_msg = (\"\\n\\n  (%s) The expression '%s' was suppose to be a \"\n                     \"syntax error, but it successfully parsed as:\\n\\n%s\" % (\n                         filename, expression, pformat(parsed.parsed)))\n        error_msg = error_msg.replace(r'\\n', '\\n')\n        raise AssertionError(error_msg)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_compliance.py",
     "95",
-    "2026-10-28 22:46:23.516553"
+    "2026-10-28 23:00:15.943373"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5141,7 +5141,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import unittest\n\nimport jmespath\nfrom jmespath import functions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_custom_functions.py",
     "1",
-    "2026-10-28 22:46:23.533155"
+    "2026-10-28 23:00:15.959297"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5162,7 +5162,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class CustomFunctions(functions.Functions):\n    @functions.signature({'types': ['string', 'array', 'object', 'null']})\n    def _func_length0(self, s):\n        return 0 if s is None else len(s)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_custom_functions.py",
     "7",
-    "2026-10-28 22:46:23.561963"
+    "2026-10-28 23:00:15.974394"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5183,7 +5183,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def _func_length0(self, s):\n        return 0 if s is None else len(s)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_custom_functions.py",
     "9",
-    "2026-10-28 22:46:23.591924"
+    "2026-10-28 23:00:15.986164"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5204,7 +5204,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestCustomFunctions(unittest.TestCase):\n    def setUp(self):\n        self.options = jmespath.Options(custom_functions=CustomFunctions())\n\n    def test_null_to_nonetype(self):\n        data = {\n            'a': {\n                'b': [1, 2, 3]\n            }\n        }\n\n        self.assertEqual(jmespath.search('length0(a.b)', data, self.options), 3)\n        self.assertEqual(jmespath.search('length0(a.c)', data, self.options), 0)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_custom_functions.py",
     "13",
-    "2026-10-28 22:46:23.624532"
+    "2026-10-28 23:00:15.996323"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5225,7 +5225,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def setUp(self):\n        self.options = jmespath.Options(custom_functions=CustomFunctions())",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_custom_functions.py",
     "14",
-    "2026-10-28 22:46:23.656323"
+    "2026-10-28 23:00:16.020704"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5246,7 +5246,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_null_to_nonetype(self):\n        data = {\n            'a': {\n                'b': [1, 2, 3]\n            }\n        }\n\n        self.assertEqual(jmespath.search('length0(a.b)', data, self.options), 3)\n        self.assertEqual(jmespath.search('length0(a.c)', data, self.options), 0)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_custom_functions.py",
     "17",
-    "2026-10-28 22:46:23.687078"
+    "2026-10-28 23:00:16.053160"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5267,7 +5267,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "from tests import unittest\nfrom datetime import datetime, timedelta\nimport json\n\nimport jmespath\nfrom jmespath import exceptions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "2",
-    "2026-10-28 22:46:23.697902"
+    "2026-10-28 23:00:16.065397"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5288,7 +5288,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestFunctions(unittest.TestCase):\n\n    def test_can_max_datetimes(self):\n        # This is python specific behavior, but JMESPath does not specify what\n        # you should do with language specific types.  We're going to add the\n        # ability that ``to_string`` will always default to str()'ing values it\n        # doesn't understand.\n        data = [datetime.now(), datetime.now() + timedelta(seconds=1)]\n        result = jmespath.search('max([*].to_string(@))', data)\n        self.assertEqual(json.loads(result), str(data[-1]))\n\n    def test_type_error_messages(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as e:\n            jmespath.search('length(@)', 2)\n        exception = e.exception\n        # 1. Function name should be in error message\n        self.assertIn('length()', str(exception))\n        # 2. Mention it's an invalid type\n        self.assertIn('invalid type for value: 2', str(exception))\n        # 3. Mention the valid types:\n        self.assertIn(\"expected one of: ['string', 'array', 'object']\",\n                      str(exception))\n        # 4. Mention the actual type.\n        self.assertIn('received: \"number\"', str(exception))\n\n    def test_singular_in_error_message(self):\n        with self.assertRaises(exceptions.ArityError) as e:\n            jmespath.search('length(@, @)', [0, 1])\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected 1 argument for function length(), received 2')\n\n    def test_error_message_is_pluralized(self):\n        with self.assertRaises(exceptions.ArityError) as e:\n            jmespath.search('sort_by(@)', [0, 1])\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected 2 arguments for function sort_by(), received 1')\n\n    def test_variadic_is_pluralized(self):\n        with self.assertRaises(exceptions.VariadictArityError) as e:\n            jmespath.search('not_null()', 'foo')\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected at least 1 argument for function not_null(), received 0')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "10",
-    "2026-10-28 22:46:23.718109"
+    "2026-10-28 23:00:16.075365"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5309,7 +5309,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_max_datetimes(self):\n        # This is python specific behavior, but JMESPath does not specify what\n        # you should do with language specific types.  We're going to add the\n        # ability that ``to_string`` will always default to str()'ing values it\n        # doesn't understand.\n        data = [datetime.now(), datetime.now() + timedelta(seconds=1)]\n        result = jmespath.search('max([*].to_string(@))', data)\n        self.assertEqual(json.loads(result), str(data[-1]))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "12",
-    "2026-10-28 22:46:23.756419"
+    "2026-10-28 23:00:16.107071"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5330,7 +5330,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_type_error_messages(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as e:\n            jmespath.search('length(@)', 2)\n        exception = e.exception\n        # 1. Function name should be in error message\n        self.assertIn('length()', str(exception))\n        # 2. Mention it's an invalid type\n        self.assertIn('invalid type for value: 2', str(exception))\n        # 3. Mention the valid types:\n        self.assertIn(\"expected one of: ['string', 'array', 'object']\",\n                      str(exception))\n        # 4. Mention the actual type.\n        self.assertIn('received: \"number\"', str(exception))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "21",
-    "2026-10-28 22:46:23.769553"
+    "2026-10-28 23:00:16.118723"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5351,7 +5351,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_singular_in_error_message(self):\n        with self.assertRaises(exceptions.ArityError) as e:\n            jmespath.search('length(@, @)', [0, 1])\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected 1 argument for function length(), received 2')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "35",
-    "2026-10-28 22:46:23.781489"
+    "2026-10-28 23:00:16.129189"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5372,7 +5372,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_error_message_is_pluralized(self):\n        with self.assertRaises(exceptions.ArityError) as e:\n            jmespath.search('sort_by(@)', [0, 1])\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected 2 arguments for function sort_by(), received 1')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "43",
-    "2026-10-28 22:46:23.809950"
+    "2026-10-28 23:00:16.160716"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5393,7 +5393,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_variadic_is_pluralized(self):\n        with self.assertRaises(exceptions.VariadictArityError) as e:\n            jmespath.search('not_null()', 'foo')\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected at least 1 argument for function not_null(), received 0')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "51",
-    "2026-10-28 22:46:23.841193"
+    "2026-10-28 23:00:16.192429"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5414,7 +5414,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "from tests import unittest\n\nfrom jmespath import lexer\nfrom jmespath.exceptions import LexerError, EmptyExpressionError",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "1",
-    "2026-10-28 22:46:23.872734"
+    "2026-10-28 23:00:16.219227"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5435,7 +5435,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestRegexLexer(unittest.TestCase):\n\n    def setUp(self):\n        self.lexer = lexer.Lexer()\n\n    def assert_tokens(self, actual, expected):\n        # The expected tokens only need to specify the\n        # type and value.  The line/column numbers are not\n        # checked, and we use assertEqual for the tests\n        # that check those line numbers.\n        stripped = []\n        for item in actual:\n            stripped.append({'type': item['type'], 'value': item['value']})\n        # Every tokenization should end in eof, so we automatically\n        # check that value, strip it off the end, and then\n        # verify the remaining tokens against the expected.\n        # That way the tests don't need to add eof to every\n        # assert_tokens call.\n        self.assertEqual(stripped[-1]['type'], 'eof')\n        stripped.pop()\n        self.assertEqual(stripped, expected)\n\n    def test_empty_string(self):\n        with self.assertRaises(EmptyExpressionError):\n            list(self.lexer.tokenize(''))\n\n    def test_field(self):\n        tokens = list(self.lexer.tokenize('foo'))\n        self.assert_tokens(tokens, [{'type': 'unquoted_identifier',\n                                     'value': 'foo'}])\n\n    def test_number(self):\n        tokens = list(self.lexer.tokenize('24'))\n        self.assert_tokens(tokens, [{'type': 'number',\n                                     'value': 24}])\n\n    def test_negative_number(self):\n        tokens = list(self.lexer.tokenize('-24'))\n        self.assert_tokens(tokens, [{'type': 'number',\n                                     'value': -24}])\n\n    def test_quoted_identifier(self):\n        tokens = list(self.lexer.tokenize('\"foobar\"'))\n        self.assert_tokens(tokens, [{'type': 'quoted_identifier',\n                                     'value': \"foobar\"}])\n\n    def test_json_escaped_value(self):\n        tokens = list(self.lexer.tokenize('\"\\u2713\"'))\n        self.assert_tokens(tokens, [{'type': 'quoted_identifier',\n                                     'value': u\"\\u2713\"}])\n\n    def test_number_expressions(self):\n        tokens = list(self.lexer.tokenize('foo.bar.baz'))\n        self.assert_tokens(tokens, [\n            {'type': 'unquoted_identifier', 'value': 'foo'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'bar'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'baz'},\n        ])\n\n    def test_space_separated(self):\n        tokens = list(self.lexer.tokenize('foo.bar[*].baz | a || b'))\n        self.assert_tokens(tokens, [\n            {'type': 'unquoted_identifier', 'value': 'foo'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'bar'},\n            {'type': 'lbracket', 'value': '['},\n            {'type': 'star', 'value': '*'},\n            {'type': 'rbracket', 'value': ']'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'baz'},\n            {'type': 'pipe', 'value': '|'},\n            {'type': 'unquoted_identifier', 'value': 'a'},\n            {'type': 'or', 'value': '||'},\n            {'type': 'unquoted_identifier', 'value': 'b'},\n        ])\n\n    def test_literal(self):\n        tokens = list(self.lexer.tokenize('`[0, 1]`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': [0, 1]},\n        ])\n\n    def test_literal_string(self):\n        tokens = list(self.lexer.tokenize('`foobar`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': \"foobar\"},\n        ])\n\n    def test_literal_number(self):\n        tokens = list(self.lexer.tokenize('`2`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': 2},\n        ])\n\n    def test_literal_with_invalid_json(self):\n        with self.assertRaises(LexerError):\n            list(self.lexer.tokenize('`foo\"bar`'))\n\n    def test_literal_with_empty_string(self):\n        tokens = list(self.lexer.tokenize('``'))\n        self.assert_tokens(tokens, [{'type': 'literal', 'value': ''}])\n\n    def test_position_information(self):\n        tokens = list(self.lexer.tokenize('foo'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'unquoted_identifier', 'value': 'foo',\n              'start': 0, 'end': 3},\n              {'type': 'eof', 'value': '', 'start': 3, 'end': 3}]\n        )\n\n    def test_position_multiple_tokens(self):\n        tokens = list(self.lexer.tokenize('foo.bar'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'unquoted_identifier', 'value': 'foo',\n              'start': 0, 'end': 3},\n             {'type': 'dot', 'value': '.',\n              'start': 3, 'end': 4},\n             {'type': 'unquoted_identifier', 'value': 'bar',\n              'start': 4, 'end': 7},\n             {'type': 'eof', 'value': '',\n              'start': 7, 'end': 7},\n             ]\n        )\n\n    def test_adds_quotes_when_invalid_json(self):\n        tokens = list(self.lexer.tokenize('`{{}`'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'literal', 'value': '{{}',\n              'start': 0, 'end': 4},\n             {'type': 'eof', 'value': '',\n              'start': 5, 'end': 5}\n             ]\n        )\n\n    def test_unknown_character(self):\n        with self.assertRaises(LexerError) as e:\n            tokens = list(self.lexer.tokenize('foo[0^]'))\n\n    def test_bad_first_character(self):\n        with self.assertRaises(LexerError):\n            tokens = list(self.lexer.tokenize('^foo[0]'))\n\n    def test_unknown_character_with_identifier(self):\n        with self.assertRaisesRegex(LexerError, \"Unknown token\"):\n            list(self.lexer.tokenize('foo-bar'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "7",
-    "2026-10-28 22:46:23.903122"
+    "2026-10-28 23:00:16.251876"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5456,7 +5456,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def setUp(self):\n        self.lexer = lexer.Lexer()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "9",
-    "2026-10-28 22:46:23.920784"
+    "2026-10-28 23:00:16.287646"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5477,7 +5477,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def assert_tokens(self, actual, expected):\n        # The expected tokens only need to specify the\n        # type and value.  The line/column numbers are not\n        # checked, and we use assertEqual for the tests\n        # that check those line numbers.\n        stripped = []\n        for item in actual:\n            stripped.append({'type': item['type'], 'value': item['value']})\n        # Every tokenization should end in eof, so we automatically\n        # check that value, strip it off the end, and then\n        # verify the remaining tokens against the expected.\n        # That way the tests don't need to add eof to every\n        # assert_tokens call.\n        self.assertEqual(stripped[-1]['type'], 'eof')\n        stripped.pop()\n        self.assertEqual(stripped, expected)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "12",
-    "2026-10-28 22:46:23.951407"
+    "2026-10-28 23:00:16.297981"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5498,7 +5498,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_empty_string(self):\n        with self.assertRaises(EmptyExpressionError):\n            list(self.lexer.tokenize(''))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "29",
-    "2026-10-28 22:46:23.964422"
+    "2026-10-28 23:00:16.307942"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5519,7 +5519,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_field(self):\n        tokens = list(self.lexer.tokenize('foo'))\n        self.assert_tokens(tokens, [{'type': 'unquoted_identifier',\n                                     'value': 'foo'}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "33",
-    "2026-10-28 22:46:23.997421"
+    "2026-10-28 23:00:16.327877"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5540,7 +5540,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_number(self):\n        tokens = list(self.lexer.tokenize('24'))\n        self.assert_tokens(tokens, [{'type': 'number',\n                                     'value': 24}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "38",
-    "2026-10-28 22:46:24.008638"
+    "2026-10-28 23:00:16.360639"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5561,7 +5561,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_negative_number(self):\n        tokens = list(self.lexer.tokenize('-24'))\n        self.assert_tokens(tokens, [{'type': 'number',\n                                     'value': -24}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "43",
-    "2026-10-28 22:46:24.028572"
+    "2026-10-28 23:00:16.370828"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5582,7 +5582,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_quoted_identifier(self):\n        tokens = list(self.lexer.tokenize('\"foobar\"'))\n        self.assert_tokens(tokens, [{'type': 'quoted_identifier',\n                                     'value': \"foobar\"}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "48",
-    "2026-10-28 22:46:24.060870"
+    "2026-10-28 23:00:16.388299"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5603,7 +5603,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_json_escaped_value(self):\n        tokens = list(self.lexer.tokenize('\"\\u2713\"'))\n        self.assert_tokens(tokens, [{'type': 'quoted_identifier',\n                                     'value': u\"\\u2713\"}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "53",
-    "2026-10-28 22:46:24.071616"
+    "2026-10-28 23:00:16.424838"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5624,7 +5624,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_number_expressions(self):\n        tokens = list(self.lexer.tokenize('foo.bar.baz'))\n        self.assert_tokens(tokens, [\n            {'type': 'unquoted_identifier', 'value': 'foo'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'bar'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'baz'},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "58",
-    "2026-10-28 22:46:24.091610"
+    "2026-10-28 23:00:16.451308"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5645,7 +5645,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_space_separated(self):\n        tokens = list(self.lexer.tokenize('foo.bar[*].baz | a || b'))\n        self.assert_tokens(tokens, [\n            {'type': 'unquoted_identifier', 'value': 'foo'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'bar'},\n            {'type': 'lbracket', 'value': '['},\n            {'type': 'star', 'value': '*'},\n            {'type': 'rbracket', 'value': ']'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'baz'},\n            {'type': 'pipe', 'value': '|'},\n            {'type': 'unquoted_identifier', 'value': 'a'},\n            {'type': 'or', 'value': '||'},\n            {'type': 'unquoted_identifier', 'value': 'b'},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "68",
-    "2026-10-28 22:46:24.121214"
+    "2026-10-28 23:00:16.482620"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5666,7 +5666,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal(self):\n        tokens = list(self.lexer.tokenize('`[0, 1]`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': [0, 1]},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "85",
-    "2026-10-28 22:46:24.153586"
+    "2026-10-28 23:00:16.514304"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5687,7 +5687,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal_string(self):\n        tokens = list(self.lexer.tokenize('`foobar`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': \"foobar\"},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "91",
-    "2026-10-28 22:46:24.185416"
+    "2026-10-28 23:00:16.545685"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5708,7 +5708,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal_number(self):\n        tokens = list(self.lexer.tokenize('`2`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': 2},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "97",
-    "2026-10-28 22:46:24.215925"
+    "2026-10-28 23:00:16.576445"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5729,7 +5729,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal_with_invalid_json(self):\n        with self.assertRaises(LexerError):\n            list(self.lexer.tokenize('`foo\"bar`'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "103",
-    "2026-10-28 22:46:24.246623"
+    "2026-10-28 23:00:16.607155"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5750,7 +5750,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal_with_empty_string(self):\n        tokens = list(self.lexer.tokenize('``'))\n        self.assert_tokens(tokens, [{'type': 'literal', 'value': ''}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "107",
-    "2026-10-28 22:46:24.277819"
+    "2026-10-28 23:00:16.618295"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5771,7 +5771,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_position_information(self):\n        tokens = list(self.lexer.tokenize('foo'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'unquoted_identifier', 'value': 'foo',\n              'start': 0, 'end': 3},\n              {'type': 'eof', 'value': '', 'start': 3, 'end': 3}]\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "111",
-    "2026-10-28 22:46:24.308228"
+    "2026-10-28 23:00:16.628442"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5792,7 +5792,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_position_multiple_tokens(self):\n        tokens = list(self.lexer.tokenize('foo.bar'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'unquoted_identifier', 'value': 'foo',\n              'start': 0, 'end': 3},\n             {'type': 'dot', 'value': '.',\n              'start': 3, 'end': 4},\n             {'type': 'unquoted_identifier', 'value': 'bar',\n              'start': 4, 'end': 7},\n             {'type': 'eof', 'value': '',\n              'start': 7, 'end': 7},\n             ]\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "120",
-    "2026-10-28 22:46:24.319435"
+    "2026-10-28 23:00:16.654556"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5813,7 +5813,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_adds_quotes_when_invalid_json(self):\n        tokens = list(self.lexer.tokenize('`{{}`'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'literal', 'value': '{{}',\n              'start': 0, 'end': 4},\n             {'type': 'eof', 'value': '',\n              'start': 5, 'end': 5}\n             ]\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "135",
-    "2026-10-28 22:46:24.340913"
+    "2026-10-28 23:00:16.670361"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5834,7 +5834,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_unknown_character(self):\n        with self.assertRaises(LexerError) as e:\n            tokens = list(self.lexer.tokenize('foo[0^]'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "146",
-    "2026-10-28 22:46:24.370519"
+    "2026-10-28 23:00:16.683674"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5855,7 +5855,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_first_character(self):\n        with self.assertRaises(LexerError):\n            tokens = list(self.lexer.tokenize('^foo[0]'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "150",
-    "2026-10-28 22:46:24.400794"
+    "2026-10-28 23:00:16.696129"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5876,7 +5876,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_unknown_character_with_identifier(self):\n        with self.assertRaisesRegex(LexerError, \"Unknown token\"):\n            list(self.lexer.tokenize('foo-bar'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "154",
-    "2026-10-28 22:46:24.432398"
+    "2026-10-28 23:00:16.706954"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5897,7 +5897,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import unittest\n\nimport jmespath\nfrom jmespath import exceptions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "1",
-    "2026-10-28 22:46:24.443471"
+    "2026-10-28 23:00:16.727630"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5918,7 +5918,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestMatches(unittest.TestCase):\n\n    def test_r1_requires_exactly_two_string_arguments(self):\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 1')\n\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@, @, @)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 3')\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(`subject`, @)', 42)\n\n    def test_r2_returns_true_for_a_match_and_false_for_no_match(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `z`)', {}),\n            False)\n\n    def test_r3_uses_python_re_search_semantics(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^a`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^b`)', {}),\n            False)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `.*`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `[0-9]`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `123$`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search(r\"matches(`a+b`, `\\\\+`)\", {}),\n            True)\n\n    def test_r4_invalid_regex_raises_jmespath_type_error(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search(r\"matches(`abc`, `[`)\", {})\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('value: [', message)\n\n    def test_r5_can_be_used_as_a_filter_predicate(self):\n        data = {\n            'people': [\n                {'name': 'alice'},\n                {'name': 'bob'},\n            ],\n        }\n\n        self.assertEqual(\n            jmespath.search('people[?matches(name, `^a`)].name', data),\n            ['alice'])\n\n    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('invalid type for value: 42', message)\n        self.assertIn(\"expected one of: ['string']\", message)\n        self.assertIn('received: \"number\"', message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "7",
-    "2026-10-28 22:46:24.463626"
+    "2026-10-28 23:00:16.761188"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5939,7 +5939,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r1_requires_exactly_two_string_arguments(self):\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 1')\n\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@, @, @)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 3')\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(`subject`, @)', 42)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "9",
-    "2026-10-28 22:46:24.500465"
+    "2026-10-28 23:00:16.777032"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5960,7 +5960,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r2_returns_true_for_a_match_and_false_for_no_match(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `z`)', {}),\n            False)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "28",
-    "2026-10-28 22:46:24.524467"
+    "2026-10-28 23:00:16.788769"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -5981,7 +5981,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r3_uses_python_re_search_semantics(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^a`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^b`)', {}),\n            False)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `.*`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `[0-9]`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `123$`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search(r\"matches(`a+b`, `\\\\+`)\", {}),\n            True)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "36",
-    "2026-10-28 22:46:24.536515"
+    "2026-10-28 23:00:16.808463"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6002,7 +6002,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r4_invalid_regex_raises_jmespath_type_error(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search(r\"matches(`abc`, `[`)\", {})\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('value: [', message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "59",
-    "2026-10-28 22:46:24.570518"
+    "2026-10-28 23:00:16.819683"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6023,7 +6023,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r5_can_be_used_as_a_filter_predicate(self):\n        data = {\n            'people': [\n                {'name': 'alice'},\n                {'name': 'bob'},\n            ],\n        }\n\n        self.assertEqual(\n            jmespath.search('people[?matches(name, `^a`)].name', data),\n            ['alice'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "67",
-    "2026-10-28 22:46:24.580713"
+    "2026-10-28 23:00:16.838800"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6044,7 +6044,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('invalid type for value: 42', message)\n        self.assertIn(\"expected one of: ['string']\", message)\n        self.assertIn('received: \"number\"', message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "79",
-    "2026-10-28 22:46:24.591681"
+    "2026-10-28 23:00:16.867785"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6065,7 +6065,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import re\nimport random\nimport string\nimport threading\nfrom tests import unittest, OrderedDict\n\nfrom jmespath import parser\nfrom jmespath import visitor\nfrom jmespath import ast\nfrom jmespath import exceptions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "2",
-    "2026-10-28 22:46:24.602397"
+    "2026-10-28 23:00:16.898526"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6086,7 +6086,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestParser(unittest.TestCase):\n    def setUp(self):\n        self.parser = parser.Parser()\n\n    def assert_parsed_ast(self, expression, expected_ast):\n        parsed = self.parser.parse(expression)\n        self.assertEqual(parsed.parsed, expected_ast)\n\n    def test_parse_empty_string_raises_exception(self):\n        with self.assertRaises(exceptions.EmptyExpressionError):\n            self.parser.parse('')\n\n    def test_field(self):\n        self.assert_parsed_ast('foo', ast.field('foo'))\n\n    def test_dot_syntax(self):\n        self.assert_parsed_ast('foo.bar',\n                               ast.subexpression([ast.field('foo'),\n                                                  ast.field('bar')]))\n\n    def test_multiple_dots(self):\n        parsed = self.parser.parse('foo.bar.baz')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': {'baz': 'correct'}}}), 'correct')\n\n    def test_index(self):\n        parsed = self.parser.parse('foo[1]')\n        self.assertEqual(\n            parsed.search({'foo': ['zero', 'one', 'two']}),\n            'one')\n\n    def test_quoted_subexpression(self):\n        self.assert_parsed_ast('\"foo\".\"bar\"',\n                               ast.subexpression([\n                                   ast.field('foo'),\n                                   ast.field('bar')]))\n\n    def test_wildcard(self):\n        parsed = self.parser.parse('foo[*]')\n        self.assertEqual(\n            parsed.search({'foo': ['zero', 'one', 'two']}),\n            ['zero', 'one', 'two'])\n\n    def test_wildcard_with_children(self):\n        parsed = self.parser.parse('foo[*].bar')\n        self.assertEqual(\n            parsed.search({'foo': [{'bar': 'one'}, {'bar': 'two'}]}),\n            ['one', 'two'])\n\n    def test_or_expression(self):\n        parsed = self.parser.parse('foo || bar')\n        self.assertEqual(parsed.search({'foo': 'foo'}), 'foo')\n        self.assertEqual(parsed.search({'bar': 'bar'}), 'bar')\n        self.assertEqual(parsed.search({'foo': 'foo', 'bar': 'bar'}), 'foo')\n        self.assertEqual(parsed.search({'bad': 'bad'}), None)\n\n    def test_complex_or_expression(self):\n        parsed = self.parser.parse('foo.foo || foo.bar')\n        self.assertEqual(parsed.search({'foo': {'foo': 'foo'}}), 'foo')\n        self.assertEqual(parsed.search({'foo': {'bar': 'bar'}}), 'bar')\n        self.assertEqual(parsed.search({'foo': {'baz': 'baz'}}), None)\n\n    def test_or_repr(self):\n        self.assert_parsed_ast('foo || bar', ast.or_expression(ast.field('foo'),\n                                                               ast.field('bar')))\n\n    def test_unicode_literals_escaped(self):\n        self.assert_parsed_ast(r'`\"\\u2713\"`', ast.literal(u'\\u2713'))\n\n    def test_multiselect(self):\n        parsed = self.parser.parse('foo.{bar: bar,baz: baz}')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': 'bar', 'baz': 'baz', 'qux': 'qux'}}),\n            {'bar': 'bar', 'baz': 'baz'})\n\n    def test_multiselect_subexpressions(self):\n        parsed = self.parser.parse('foo.{\"bar.baz\": bar.baz, qux: qux}')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': {'baz': 'CORRECT'}, 'qux': 'qux'}}),\n            {'bar.baz': 'CORRECT', 'qux': 'qux'})\n\n    def test_multiselect_with_all_quoted_keys(self):\n        parsed = self.parser.parse('foo.{\"bar\": bar.baz, \"qux\": qux}')\n        result = parsed.search({'foo': {'bar': {'baz': 'CORRECT'}, 'qux': 'qux'}})\n        self.assertEqual(result, {\"bar\": \"CORRECT\", \"qux\": \"qux\"})\n\n    def test_function_call_with_and_statement(self):\n        self.assert_parsed_ast(\n            'f(@ && @)',\n            {'children': [{'children': [{'children': [], 'type': 'current'},\n                                        {'children': [], 'type': 'current'}],\n                           'type': 'and_expression'}],\n             'type': 'function_expression',\n             'value': 'f'})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "14",
-    "2026-10-28 22:46:24.632961"
+    "2026-10-28 23:00:16.931936"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6107,7 +6107,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def setUp(self):\n        self.parser = parser.Parser()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "15",
-    "2026-10-28 22:46:24.648693"
+    "2026-10-28 23:00:16.969276"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6128,7 +6128,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def assert_parsed_ast(self, expression, expected_ast):\n        parsed = self.parser.parse(expression)\n        self.assertEqual(parsed.parsed, expected_ast)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "18",
-    "2026-10-28 22:46:24.658688"
+    "2026-10-28 23:00:16.996711"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6149,7 +6149,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_parse_empty_string_raises_exception(self):\n        with self.assertRaises(exceptions.EmptyExpressionError):\n            self.parser.parse('')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "22",
-    "2026-10-28 22:46:24.670394"
+    "2026-10-28 23:00:17.025617"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6170,7 +6170,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_field(self):\n        self.assert_parsed_ast('foo', ast.field('foo'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "26",
-    "2026-10-28 22:46:24.680513"
+    "2026-10-28 23:00:17.037912"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6191,7 +6191,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_dot_syntax(self):\n        self.assert_parsed_ast('foo.bar',\n                               ast.subexpression([ast.field('foo'),\n                                                  ast.field('bar')]))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "29",
-    "2026-10-28 22:46:24.710385"
+    "2026-10-28 23:00:17.071672"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6212,7 +6212,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiple_dots(self):\n        parsed = self.parser.parse('foo.bar.baz')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': {'baz': 'correct'}}}), 'correct')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "34",
-    "2026-10-28 22:46:24.741321"
+    "2026-10-28 23:00:17.103104"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6233,7 +6233,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_index(self):\n        parsed = self.parser.parse('foo[1]')\n        self.assertEqual(\n            parsed.search({'foo': ['zero', 'one', 'two']}),\n            'one')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "39",
-    "2026-10-28 22:46:24.772666"
+    "2026-10-28 23:00:17.113301"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6254,7 +6254,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_quoted_subexpression(self):\n        self.assert_parsed_ast('\"foo\".\"bar\"',\n                               ast.subexpression([\n                                   ast.field('foo'),\n                                   ast.field('bar')]))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "45",
-    "2026-10-28 22:46:24.813479"
+    "2026-10-28 23:00:17.120703"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6275,7 +6275,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard(self):\n        parsed = self.parser.parse('foo[*]')\n        self.assertEqual(\n            parsed.search({'foo': ['zero', 'one', 'two']}),\n            ['zero', 'one', 'two'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "51",
-    "2026-10-28 22:46:24.836040"
+    "2026-10-28 23:00:17.131039"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6296,7 +6296,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard_with_children(self):\n        parsed = self.parser.parse('foo[*].bar')\n        self.assertEqual(\n            parsed.search({'foo': [{'bar': 'one'}, {'bar': 'two'}]}),\n            ['one', 'two'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "57",
-    "2026-10-28 22:46:24.845330"
+    "2026-10-28 23:00:17.138656"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6317,7 +6317,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_or_expression(self):\n        parsed = self.parser.parse('foo || bar')\n        self.assertEqual(parsed.search({'foo': 'foo'}), 'foo')\n        self.assertEqual(parsed.search({'bar': 'bar'}), 'bar')\n        self.assertEqual(parsed.search({'foo': 'foo', 'bar': 'bar'}), 'foo')\n        self.assertEqual(parsed.search({'bad': 'bad'}), None)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "63",
-    "2026-10-28 22:46:24.858552"
+    "2026-10-28 23:00:17.146479"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6338,7 +6338,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_complex_or_expression(self):\n        parsed = self.parser.parse('foo.foo || foo.bar')\n        self.assertEqual(parsed.search({'foo': {'foo': 'foo'}}), 'foo')\n        self.assertEqual(parsed.search({'foo': {'bar': 'bar'}}), 'bar')\n        self.assertEqual(parsed.search({'foo': {'baz': 'baz'}}), None)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "70",
-    "2026-10-28 22:46:24.882806"
+    "2026-10-28 23:00:17.156509"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6359,7 +6359,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_or_repr(self):\n        self.assert_parsed_ast('foo || bar', ast.or_expression(ast.field('foo'),\n                                                               ast.field('bar')))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "76",
-    "2026-10-28 22:46:24.912988"
+    "2026-10-28 23:00:17.166964"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6380,7 +6380,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_unicode_literals_escaped(self):\n        self.assert_parsed_ast(r'`\"\\u2713\"`', ast.literal(u'\\u2713'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "80",
-    "2026-10-28 22:46:24.945639"
+    "2026-10-28 23:00:17.174834"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6401,7 +6401,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiselect(self):\n        parsed = self.parser.parse('foo.{bar: bar,baz: baz}')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': 'bar', 'baz': 'baz', 'qux': 'qux'}}),\n            {'bar': 'bar', 'baz': 'baz'})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "83",
-    "2026-10-28 22:46:24.974483"
+    "2026-10-28 23:00:17.184188"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6422,7 +6422,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiselect_subexpressions(self):\n        parsed = self.parser.parse('foo.{\"bar.baz\": bar.baz, qux: qux}')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': {'baz': 'CORRECT'}, 'qux': 'qux'}}),\n            {'bar.baz': 'CORRECT', 'qux': 'qux'})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "89",
-    "2026-10-28 22:46:25.007423"
+    "2026-10-28 23:00:17.211678"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6443,7 +6443,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiselect_with_all_quoted_keys(self):\n        parsed = self.parser.parse('foo.{\"bar\": bar.baz, \"qux\": qux}')\n        result = parsed.search({'foo': {'bar': {'baz': 'CORRECT'}, 'qux': 'qux'}})\n        self.assertEqual(result, {\"bar\": \"CORRECT\", \"qux\": \"qux\"})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "95",
-    "2026-10-28 22:46:25.018442"
+    "2026-10-28 23:00:17.241570"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6464,7 +6464,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_function_call_with_and_statement(self):\n        self.assert_parsed_ast(\n            'f(@ && @)',\n            {'children': [{'children': [{'children': [], 'type': 'current'},\n                                        {'children': [], 'type': 'current'}],\n                           'type': 'and_expression'}],\n             'type': 'function_expression',\n             'value': 'f'})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "100",
-    "2026-10-28 22:46:25.037520"
+    "2026-10-28 23:00:17.273594"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6485,7 +6485,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestErrorMessages(unittest.TestCase):\n\n    def setUp(self):\n        self.parser = parser.Parser()\n\n    def assert_error_message(self, expression, error_message,\n                             exception=exceptions.ParseError):\n        try:\n            self.parser.parse(expression)\n        except exception as e:\n            self.assertEqual(error_message, str(e))\n            return\n        except Exception as e:\n            self.fail(\n                \"Unexpected error raised (%s: %s) for bad expression: %s\" %\n                (e.__class__.__name__, e, expression))\n        else:\n            self.fail(\n                \"ParseError not raised for bad expression: %s\" % expression)\n\n    def test_bad_parse(self):\n        with self.assertRaises(exceptions.ParseError):\n            self.parser.parse('foo]baz')\n\n    def test_bad_parse_error_message(self):\n        error_message = (\n            'Unexpected token: ]: Parse error at column 3, '\n            'token \"]\" (RBRACKET), for expression:\\n'\n            '\"foo]baz\"\\n'\n            '    ^')\n        self.assert_error_message('foo]baz', error_message)\n\n    def test_bad_parse_error_message_with_multiselect(self):\n        error_message = (\n            'Invalid jmespath expression: Incomplete expression:\\n'\n            '\"foo.{bar: baz,bar: bar\"\\n'\n            '                       ^')\n        self.assert_error_message('foo.{bar: baz,bar: bar', error_message)\n\n    def test_incomplete_expression_with_missing_paren(self):\n        error_message = (\n            'Invalid jmespath expression: Incomplete expression:\\n'\n            '\"length(@,\"\\n'\n            '          ^')\n        self.assert_error_message('length(@,', error_message)\n\n    def test_bad_lexer_values(self):\n        error_message = (\n            'Bad jmespath expression: '\n            'Unclosed \" delimiter:\\n'\n            'foo.\"bar\\n'\n            '    ^')\n        self.assert_error_message('foo.\"bar', error_message,\n                                  exception=exceptions.LexerError)\n\n    def test_bad_unicode_string(self):\n        # This error message is straight from the JSON parser\n        # and pypy has a slightly different error message,\n        # so we're not using assert_error_message.\n        error_message = re.compile(\n            r'Bad jmespath expression: '\n            r'Invalid \\\\uXXXX escape.*\\\\uAZ12', re.DOTALL)\n        with self.assertRaisesRegex(exceptions.LexerError, error_message):\n            self.parser.parse(r'\"\\uAZ12\"')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "110",
-    "2026-10-28 22:46:25.048895"
+    "2026-10-28 23:00:17.283739"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6506,7 +6506,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def setUp(self):\n        self.parser = parser.Parser()",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "112",
-    "2026-10-28 22:46:25.077668"
+    "2026-10-28 23:00:17.310609"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6527,7 +6527,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def assert_error_message(self, expression, error_message,\n                             exception=exceptions.ParseError):\n        try:\n            self.parser.parse(expression)\n        except exception as e:\n            self.assertEqual(error_message, str(e))\n            return\n        except Exception as e:\n            self.fail(\n                \"Unexpected error raised (%s: %s) for bad expression: %s\" %\n                (e.__class__.__name__, e, expression))\n        else:\n            self.fail(\n                \"ParseError not raised for bad expression: %s\" % expression)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "115",
-    "2026-10-28 22:46:25.089183"
+    "2026-10-28 23:00:17.320566"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6548,7 +6548,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_parse(self):\n        with self.assertRaises(exceptions.ParseError):\n            self.parser.parse('foo]baz')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "130",
-    "2026-10-28 22:46:25.117784"
+    "2026-10-28 23:00:17.332194"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6569,7 +6569,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_parse_error_message(self):\n        error_message = (\n            'Unexpected token: ]: Parse error at column 3, '\n            'token \"]\" (RBRACKET), for expression:\\n'\n            '\"foo]baz\"\\n'\n            '    ^')\n        self.assert_error_message('foo]baz', error_message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "134",
-    "2026-10-28 22:46:25.128906"
+    "2026-10-28 23:00:17.342114"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6590,7 +6590,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_parse_error_message_with_multiselect(self):\n        error_message = (\n            'Invalid jmespath expression: Incomplete expression:\\n'\n            '\"foo.{bar: baz,bar: bar\"\\n'\n            '                       ^')\n        self.assert_error_message('foo.{bar: baz,bar: bar', error_message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "142",
-    "2026-10-28 22:46:25.165386"
+    "2026-10-28 23:00:17.352614"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6611,7 +6611,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_incomplete_expression_with_missing_paren(self):\n        error_message = (\n            'Invalid jmespath expression: Incomplete expression:\\n'\n            '\"length(@,\"\\n'\n            '          ^')\n        self.assert_error_message('length(@,', error_message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "149",
-    "2026-10-28 22:46:25.195401"
+    "2026-10-28 23:00:17.362962"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6632,7 +6632,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_lexer_values(self):\n        error_message = (\n            'Bad jmespath expression: '\n            'Unclosed \" delimiter:\\n'\n            'foo.\"bar\\n'\n            '    ^')\n        self.assert_error_message('foo.\"bar', error_message,\n                                  exception=exceptions.LexerError)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "156",
-    "2026-10-28 22:46:25.225506"
+    "2026-10-28 23:00:17.373987"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6653,7 +6653,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_unicode_string(self):\n        # This error message is straight from the JSON parser\n        # and pypy has a slightly different error message,\n        # so we're not using assert_error_message.\n        error_message = re.compile(\n            r'Bad jmespath expression: '\n            r'Invalid \\\\uXXXX escape.*\\\\uAZ12', re.DOTALL)\n        with self.assertRaisesRegex(exceptions.LexerError, error_message):\n            self.parser.parse(r'\"\\uAZ12\"')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "165",
-    "2026-10-28 22:46:25.258000"
+    "2026-10-28 23:00:17.397533"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6674,7 +6674,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestParserWildcards(unittest.TestCase):\n    def setUp(self):\n        self.parser = parser.Parser()\n        self.data = {\n            'foo': [\n                {'bar': [{'baz': 'one'}, {'baz': 'two'}]},\n                {'bar': [{'baz': 'three'}, {'baz': 'four'}, {'baz': 'five'}]},\n            ]\n        }\n\n    def test_multiple_index_wildcards(self):\n        parsed = self.parser.parse('foo[*].bar[*].baz')\n        self.assertEqual(parsed.search(self.data),\n                         [['one', 'two'], ['three', 'four', 'five']])\n\n    def test_wildcard_mix_with_indices(self):\n        parsed = self.parser.parse('foo[*].bar[0].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['one', 'three'])\n\n    def test_wildcard_mix_last(self):\n        parsed = self.parser.parse('foo[0].bar[*].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['one', 'two'])\n\n    def test_indices_out_of_bounds(self):\n        parsed = self.parser.parse('foo[*].bar[2].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['five'])\n\n    def test_root_indices(self):\n        parsed = self.parser.parse('[0]')\n        self.assertEqual(parsed.search(['one', 'two']), 'one')\n\n    def test_root_wildcard(self):\n        parsed = self.parser.parse('*.foo')\n        data = {'top1': {'foo': 'bar'}, 'top2': {'foo': 'baz'},\n                'top3': {'notfoo': 'notfoo'}}\n        # Sorted is being used because the order of the keys are not\n        # required to be in any specific order.\n        self.assertEqual(sorted(parsed.search(data)), sorted(['bar', 'baz']))\n        self.assertEqual(sorted(self.parser.parse('*.notfoo').search(data)),\n                         sorted(['notfoo']))\n\n    def test_only_wildcard(self):\n        parsed = self.parser.parse('*')\n        data = {'foo': 'a', 'bar': 'b', 'baz': 'c'}\n        self.assertEqual(sorted(parsed.search(data)), sorted(['a', 'b', 'c']))\n\n    def test_escape_sequences(self):\n        self.assertEqual(self.parser.parse(r'\"foo\\tbar\"').search(\n            {'foo\\tbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\nbar\"').search(\n            {'foo\\nbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\bbar\"').search(\n            {'foo\\bbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\fbar\"').search(\n            {'foo\\fbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\rbar\"').search(\n            {'foo\\rbar': 'baz'}), 'baz')\n\n    def test_consecutive_escape_sequences(self):\n        parsed = self.parser.parse(r'\"foo\\\\nbar\"')\n        self.assertEqual(parsed.search({'foo\\\\nbar': 'baz'}), 'baz')\n\n        parsed = self.parser.parse(r'\"foo\\n\\t\\rbar\"')\n        self.assertEqual(parsed.search({'foo\\n\\t\\rbar': 'baz'}), 'baz')\n\n    def test_escape_sequence_at_end_of_string_not_allowed(self):\n        with self.assertRaises(ValueError):\n            self.parser.parse('foobar\\\\')\n\n    def test_wildcard_with_multiselect(self):\n        parsed = self.parser.parse('foo.*.{a: a, b: b}')\n        data = {\n            'foo': {\n                'one': {\n                    'a': {'c': 'CORRECT', 'd': 'other'},\n                    'b': {'c': 'ALSOCORRECT', 'd': 'other'},\n                },\n                'two': {\n                    'a': {'c': 'CORRECT', 'd': 'other'},\n                    'c': {'c': 'WRONG', 'd': 'other'},\n                },\n            }\n        }\n        match = parsed.search(data)\n        self.assertEqual(len(match), 2)\n        self.assertIn('a', match[0])\n        self.assertIn('b', match[0])\n        self.assertIn('a', match[1])\n        self.assertIn('b', match[1])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "176",
-    "2026-10-28 22:46:25.288996"
+    "2026-10-28 23:00:17.429900"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6695,7 +6695,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def setUp(self):\n        self.parser = parser.Parser()\n        self.data = {\n            'foo': [\n                {'bar': [{'baz': 'one'}, {'baz': 'two'}]},\n                {'bar': [{'baz': 'three'}, {'baz': 'four'}, {'baz': 'five'}]},\n            ]\n        }",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "177",
-    "2026-10-28 22:46:25.326023"
+    "2026-10-28 23:00:17.449434"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6716,7 +6716,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiple_index_wildcards(self):\n        parsed = self.parser.parse('foo[*].bar[*].baz')\n        self.assertEqual(parsed.search(self.data),\n                         [['one', 'two'], ['three', 'four', 'five']])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "186",
-    "2026-10-28 22:46:25.350420"
+    "2026-10-28 23:00:17.474971"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6737,7 +6737,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard_mix_with_indices(self):\n        parsed = self.parser.parse('foo[*].bar[0].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['one', 'three'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "191",
-    "2026-10-28 22:46:25.361009"
+    "2026-10-28 23:00:17.486131"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6758,7 +6758,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard_mix_last(self):\n        parsed = self.parser.parse('foo[0].bar[*].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['one', 'two'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "196",
-    "2026-10-28 22:46:25.381018"
+    "2026-10-28 23:00:17.495219"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6779,7 +6779,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_indices_out_of_bounds(self):\n        parsed = self.parser.parse('foo[*].bar[2].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['five'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "201",
-    "2026-10-28 22:46:25.413492"
+    "2026-10-28 23:00:17.523978"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6800,7 +6800,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_root_indices(self):\n        parsed = self.parser.parse('[0]')\n        self.assertEqual(parsed.search(['one', 'two']), 'one')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "206",
-    "2026-10-28 22:46:25.422592"
+    "2026-10-28 23:00:17.553976"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6821,7 +6821,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_root_wildcard(self):\n        parsed = self.parser.parse('*.foo')\n        data = {'top1': {'foo': 'bar'}, 'top2': {'foo': 'baz'},\n                'top3': {'notfoo': 'notfoo'}}\n        # Sorted is being used because the order of the keys are not\n        # required to be in any specific order.\n        self.assertEqual(sorted(parsed.search(data)), sorted(['bar', 'baz']))\n        self.assertEqual(sorted(self.parser.parse('*.notfoo').search(data)),\n                         sorted(['notfoo']))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "210",
-    "2026-10-28 22:46:25.433008"
+    "2026-10-28 23:00:17.563574"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6842,7 +6842,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_only_wildcard(self):\n        parsed = self.parser.parse('*')\n        data = {'foo': 'a', 'bar': 'b', 'baz': 'c'}\n        self.assertEqual(sorted(parsed.search(data)), sorted(['a', 'b', 'c']))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "220",
-    "2026-10-28 22:46:25.460912"
+    "2026-10-28 23:00:17.583779"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6863,7 +6863,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_escape_sequences(self):\n        self.assertEqual(self.parser.parse(r'\"foo\\tbar\"').search(\n            {'foo\\tbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\nbar\"').search(\n            {'foo\\nbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\bbar\"').search(\n            {'foo\\bbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\fbar\"').search(\n            {'foo\\fbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\rbar\"').search(\n            {'foo\\rbar': 'baz'}), 'baz')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "225",
-    "2026-10-28 22:46:25.471533"
+    "2026-10-28 23:00:17.616363"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6884,7 +6884,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_consecutive_escape_sequences(self):\n        parsed = self.parser.parse(r'\"foo\\\\nbar\"')\n        self.assertEqual(parsed.search({'foo\\\\nbar': 'baz'}), 'baz')\n\n        parsed = self.parser.parse(r'\"foo\\n\\t\\rbar\"')\n        self.assertEqual(parsed.search({'foo\\n\\t\\rbar': 'baz'}), 'baz')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "237",
-    "2026-10-28 22:46:25.484924"
+    "2026-10-28 23:00:17.646680"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6905,7 +6905,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_escape_sequence_at_end_of_string_not_allowed(self):\n        with self.assertRaises(ValueError):\n            self.parser.parse('foobar\\\\')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "244",
-    "2026-10-28 22:46:25.496016"
+    "2026-10-28 23:00:17.676711"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6926,7 +6926,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard_with_multiselect(self):\n        parsed = self.parser.parse('foo.*.{a: a, b: b}')\n        data = {\n            'foo': {\n                'one': {\n                    'a': {'c': 'CORRECT', 'd': 'other'},\n                    'b': {'c': 'ALSOCORRECT', 'd': 'other'},\n                },\n                'two': {\n                    'a': {'c': 'CORRECT', 'd': 'other'},\n                    'c': {'c': 'WRONG', 'd': 'other'},\n                },\n            }\n        }\n        match = parsed.search(data)\n        self.assertEqual(len(match), 2)\n        self.assertIn('a', match[0])\n        self.assertIn('b', match[0])\n        self.assertIn('a', match[1])\n        self.assertIn('b', match[1])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "248",
-    "2026-10-28 22:46:25.522221"
+    "2026-10-28 23:00:17.708697"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6947,7 +6947,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestMergedLists(unittest.TestCase):\n    def setUp(self):\n        self.parser = parser.Parser()\n        self.data = {\n            \"foo\": [\n                [[\"one\", \"two\"], [\"three\", \"four\"]],\n                [[\"five\", \"six\"], [\"seven\", \"eight\"]],\n                [[\"nine\"], [\"ten\"]]\n            ]\n        }\n\n    def test_merge_with_indices(self):\n        parsed = self.parser.parse('foo[][0]')\n        match = parsed.search(self.data)\n        self.assertEqual(match, [\"one\", \"three\", \"five\", \"seven\",\n                                 \"nine\", \"ten\"])\n\n    def test_trailing_merged_operator(self):\n        parsed = self.parser.parse('foo[]')\n        match = parsed.search(self.data)\n        self.assertEqual(\n            match,\n            [[\"one\", \"two\"], [\"three\", \"four\"],\n             [\"five\", \"six\"], [\"seven\", \"eight\"],\n             [\"nine\"], [\"ten\"]])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "270",
-    "2026-10-28 22:46:25.534910"
+    "2026-10-28 23:00:17.740032"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6968,7 +6968,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def setUp(self):\n        self.parser = parser.Parser()\n        self.data = {\n            \"foo\": [\n                [[\"one\", \"two\"], [\"three\", \"four\"]],\n                [[\"five\", \"six\"], [\"seven\", \"eight\"]],\n                [[\"nine\"], [\"ten\"]]\n            ]\n        }",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "271",
-    "2026-10-28 22:46:25.546956"
+    "2026-10-28 23:00:17.771213"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -6989,7 +6989,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_merge_with_indices(self):\n        parsed = self.parser.parse('foo[][0]')\n        match = parsed.search(self.data)\n        self.assertEqual(match, [\"one\", \"three\", \"five\", \"seven\",\n                                 \"nine\", \"ten\"])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "281",
-    "2026-10-28 22:46:25.557864"
+    "2026-10-28 23:00:17.780102"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7010,7 +7010,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_trailing_merged_operator(self):\n        parsed = self.parser.parse('foo[]')\n        match = parsed.search(self.data)\n        self.assertEqual(\n            match,\n            [[\"one\", \"two\"], [\"three\", \"four\"],\n             [\"five\", \"six\"], [\"seven\", \"eight\"],\n             [\"nine\"], [\"ten\"]])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "287",
-    "2026-10-28 22:46:25.582734"
+    "2026-10-28 23:00:17.803983"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7031,7 +7031,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestParserCaching(unittest.TestCase):\n    def test_compile_lots_of_expressions(self):\n        # We have to be careful here because this is an implementation detail\n        # that should be abstracted from the user, but we need to make sure we\n        # exercise the code and that it doesn't blow up.\n        p = parser.Parser()\n        compiled = []\n        compiled2 = []\n        for i in range(parser.Parser._MAX_SIZE + 1):\n            compiled.append(p.parse('foo%s' % i))\n        # Rerun the test and half of these entries should be from the\n        # cache but they should still be equal to compiled.\n        for i in range(parser.Parser._MAX_SIZE + 1):\n            compiled2.append(p.parse('foo%s' % i))\n        self.assertEqual(len(compiled), len(compiled2))\n        self.assertEqual(\n            [expr.parsed for expr in compiled],\n            [expr.parsed for expr in compiled2])\n\n    def test_cache_purge(self):\n        p = parser.Parser()\n        first = p.parse('foo')\n        cached = p.parse('foo')\n        p.purge()\n        second = p.parse('foo')\n        self.assertEqual(first.parsed,\n                         second.parsed)\n        self.assertEqual(first.parsed,\n                         cached.parsed)\n\n    def test_thread_safety_of_cache(self):\n        errors = []\n        expressions = [\n            ''.join(random.choice(string.ascii_letters) for _ in range(3))\n            for _ in range(2000)\n        ]\n        def worker():\n            p = parser.Parser()\n            for expression in expressions:\n                try:\n                    p.parse(expression)\n                except Exception as e:\n                    errors.append(e)\n\n        threads = []\n        for i in range(10):\n            threads.append(threading.Thread(target=worker))\n        for thread in threads:\n            thread.start()\n        for thread in threads:\n            thread.join()\n\n        self.assertEqual(errors, [])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "297",
-    "2026-10-28 22:46:25.593431"
+    "2026-10-28 23:00:17.835101"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7052,7 +7052,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_compile_lots_of_expressions(self):\n        # We have to be careful here because this is an implementation detail\n        # that should be abstracted from the user, but we need to make sure we\n        # exercise the code and that it doesn't blow up.\n        p = parser.Parser()\n        compiled = []\n        compiled2 = []\n        for i in range(parser.Parser._MAX_SIZE + 1):\n            compiled.append(p.parse('foo%s' % i))\n        # Rerun the test and half of these entries should be from the\n        # cache but they should still be equal to compiled.\n        for i in range(parser.Parser._MAX_SIZE + 1):\n            compiled2.append(p.parse('foo%s' % i))\n        self.assertEqual(len(compiled), len(compiled2))\n        self.assertEqual(\n            [expr.parsed for expr in compiled],\n            [expr.parsed for expr in compiled2])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "298",
-    "2026-10-28 22:46:25.621013"
+    "2026-10-28 23:00:17.873590"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7073,7 +7073,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_cache_purge(self):\n        p = parser.Parser()\n        first = p.parse('foo')\n        cached = p.parse('foo')\n        p.purge()\n        second = p.parse('foo')\n        self.assertEqual(first.parsed,\n                         second.parsed)\n        self.assertEqual(first.parsed,\n                         cached.parsed)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "316",
-    "2026-10-28 22:46:25.651233"
+    "2026-10-28 23:00:17.908934"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7094,7 +7094,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_thread_safety_of_cache(self):\n        errors = []\n        expressions = [\n            ''.join(random.choice(string.ascii_letters) for _ in range(3))\n            for _ in range(2000)\n        ]\n        def worker():\n            p = parser.Parser()\n            for expression in expressions:\n                try:\n                    p.parse(expression)\n                except Exception as e:\n                    errors.append(e)\n\n        threads = []\n        for i in range(10):\n            threads.append(threading.Thread(target=worker))\n        for thread in threads:\n            thread.start()\n        for thread in threads:\n            thread.join()\n\n        self.assertEqual(errors, [])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "327",
-    "2026-10-28 22:46:25.676865"
+    "2026-10-28 23:00:17.944055"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7115,7 +7115,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestParserAddsExpressionAttribute(unittest.TestCase):\n    def test_expression_available_from_parser(self):\n        p = parser.Parser()\n        parsed = p.parse('foo.bar')\n        self.assertEqual(parsed.expression, 'foo.bar')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "352",
-    "2026-10-28 22:46:25.707245"
+    "2026-10-28 23:00:17.976987"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7136,7 +7136,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_expression_available_from_parser(self):\n        p = parser.Parser()\n        parsed = p.parse('foo.bar')\n        self.assertEqual(parsed.expression, 'foo.bar')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "353",
-    "2026-10-28 22:46:25.737532"
+    "2026-10-28 23:00:18.003395"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7157,7 +7157,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestParsedResultAddsOptions(unittest.TestCase):\n    def test_can_have_ordered_dict(self):\n        p = parser.Parser()\n        parsed = p.parse('{a: a, b: b, c: c}')\n        options = visitor.Options(dict_cls=OrderedDict)\n        result = parsed.search(\n            {\"c\": \"c\", \"b\": \"b\", \"a\": \"a\"}, options=options)\n        # The order should be 'a', 'b' because we're using an\n        # OrderedDict\n        self.assertEqual(list(result), ['a', 'b', 'c'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "359",
-    "2026-10-28 22:46:25.769462"
+    "2026-10-28 23:00:18.012313"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7178,7 +7178,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_have_ordered_dict(self):\n        p = parser.Parser()\n        parsed = p.parse('{a: a, b: b, c: c}')\n        options = visitor.Options(dict_cls=OrderedDict)\n        result = parsed.search(\n            {\"c\": \"c\", \"b\": \"b\", \"a\": \"a\"}, options=options)\n        # The order should be 'a', 'b' because we're using an\n        # OrderedDict\n        self.assertEqual(list(result), ['a', 'b', 'c'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "360",
-    "2026-10-28 22:46:25.800420"
+    "2026-10-28 23:00:18.036870"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7199,7 +7199,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestRenderGraphvizFile(unittest.TestCase):\n    def test_dot_file_rendered(self):\n        p = parser.Parser()\n        result = p.parse('foo')\n        dot_contents = result._render_dot_file()\n        self.assertEqual(dot_contents,\n                         'digraph AST {\\nfield1 [label=\"field(foo)\"]\\n}')\n\n    def test_dot_file_subexpr(self):\n        p = parser.Parser()\n        result = p.parse('foo.bar')\n        dot_contents = result._render_dot_file()\n        self.assertEqual(\n            dot_contents,\n            'digraph AST {\\n'\n            'subexpression1 [label=\"subexpression()\"]\\n'\n            '  subexpression1 -> field2\\n'\n            'field2 [label=\"field(foo)\"]\\n'\n            '  subexpression1 -> field3\\n'\n            'field3 [label=\"field(bar)\"]\\n}')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "371",
-    "2026-10-28 22:46:25.834816"
+    "2026-10-28 23:00:18.067063"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7220,7 +7220,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_dot_file_rendered(self):\n        p = parser.Parser()\n        result = p.parse('foo')\n        dot_contents = result._render_dot_file()\n        self.assertEqual(dot_contents,\n                         'digraph AST {\\nfield1 [label=\"field(foo)\"]\\n}')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "372",
-    "2026-10-28 22:46:25.846549"
+    "2026-10-28 23:00:18.098192"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7241,7 +7241,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_dot_file_subexpr(self):\n        p = parser.Parser()\n        result = p.parse('foo.bar')\n        dot_contents = result._render_dot_file()\n        self.assertEqual(\n            dot_contents,\n            'digraph AST {\\n'\n            'subexpression1 [label=\"subexpression()\"]\\n'\n            '  subexpression1 -> field2\\n'\n            'field2 [label=\"field(foo)\"]\\n'\n            '  subexpression1 -> field3\\n'\n            'field3 [label=\"field(bar)\"]\\n}')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "379",
-    "2026-10-28 22:46:25.877600"
+    "2026-10-28 23:00:18.126871"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7262,7 +7262,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "import sys\nimport decimal\nfrom tests import unittest, OrderedDict\n\nimport jmespath\nimport jmespath.functions",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "1",
-    "2026-10-28 22:46:25.906095"
+    "2026-10-28 23:00:18.138347"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7283,7 +7283,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestSearchOptions(unittest.TestCase):\n    def test_can_provide_dict_cls(self):\n        result = jmespath.search(\n            '{a: a, b: b, c: c}.*',\n            {'c': 'c', 'b': 'b', 'a': 'a', 'd': 'd'},\n            options=jmespath.Options(dict_cls=OrderedDict))\n        self.assertEqual(result, ['a', 'b', 'c'])\n\n    def test_can_provide_custom_functions(self):\n        class CustomFunctions(jmespath.functions.Functions):\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_custom_add(self, x, y):\n                return x + y\n\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_my_subtract(self, x, y):\n                return x - y\n\n\n        options = jmespath.Options(custom_functions=CustomFunctions())\n        self.assertEqual(\n            jmespath.search('custom_add(`1`, `2`)', {}, options=options),\n            3\n        )\n        self.assertEqual(\n            jmespath.search('my_subtract(`10`, `3`)', {}, options=options),\n            7\n        )\n        # Should still be able to use the original functions without\n        # any interference from the CustomFunctions class.\n        self.assertEqual(\n            jmespath.search('length(`[1, 2]`)', {}), 2\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "9",
-    "2026-10-28 22:46:25.939543"
+    "2026-10-28 23:00:18.161084"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7304,7 +7304,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_provide_dict_cls(self):\n        result = jmespath.search(\n            '{a: a, b: b, c: c}.*',\n            {'c': 'c', 'b': 'b', 'a': 'a', 'd': 'd'},\n            options=jmespath.Options(dict_cls=OrderedDict))\n        self.assertEqual(result, ['a', 'b', 'c'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "10",
-    "2026-10-28 22:46:25.970978"
+    "2026-10-28 23:00:18.191578"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7325,7 +7325,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_provide_custom_functions(self):\n        class CustomFunctions(jmespath.functions.Functions):\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_custom_add(self, x, y):\n                return x + y\n\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_my_subtract(self, x, y):\n                return x - y\n\n\n        options = jmespath.Options(custom_functions=CustomFunctions())\n        self.assertEqual(\n            jmespath.search('custom_add(`1`, `2`)', {}, options=options),\n            3\n        )\n        self.assertEqual(\n            jmespath.search('my_subtract(`10`, `3`)', {}, options=options),\n            7\n        )\n        # Should still be able to use the original functions without\n        # any interference from the CustomFunctions class.\n        self.assertEqual(\n            jmespath.search('length(`[1, 2]`)', {}), 2\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "17",
-    "2026-10-28 22:46:25.982989"
+    "2026-10-28 23:00:18.221296"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7346,7 +7346,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "class TestPythonSpecificCases(unittest.TestCase):\n    def test_can_compare_strings(self):\n        # This is python specific behavior that's not in the official spec\n        # yet, but this was regression from 0.9.0 so it's been added back.\n        self.assertTrue(jmespath.search('a < b', {'a': '2016', 'b': '2017'}))\n\n    @unittest.skipIf(not hasattr(sys, 'maxint'), 'Test requires long() type')\n    def test_can_handle_long_ints(self):\n        result = sys.maxint + 1\n        self.assertEqual(jmespath.search('[?a >= `1`].a', [{'a': result}]),\n                         [result])\n\n    def test_can_handle_decimals_as_numeric_type(self):\n        result = decimal.Decimal('3')\n        self.assertEqual(jmespath.search('[?a >= `1`].a', [{'a': result}]),\n                         [result])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "49",
-    "2026-10-28 22:46:25.993823"
+    "2026-10-28 23:00:18.252754"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7367,7 +7367,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_compare_strings(self):\n        # This is python specific behavior that's not in the official spec\n        # yet, but this was regression from 0.9.0 so it's been added back.\n        self.assertTrue(jmespath.search('a < b', {'a': '2016', 'b': '2017'}))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "50",
-    "2026-10-28 22:46:26.017061"
+    "2026-10-28 23:00:18.285098"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7388,7 +7388,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_handle_long_ints(self):\n        result = sys.maxint + 1\n        self.assertEqual(jmespath.search('[?a >= `1`].a', [{'a': result}]),\n                         [result])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "56",
-    "2026-10-28 22:46:26.027390"
+    "2026-10-28 23:00:18.314999"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7409,7 +7409,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_handle_decimals_as_numeric_type(self):\n        result = decimal.Decimal('3')\n        self.assertEqual(jmespath.search('[?a >= `1`].a', [{'a': result}]),\n                         [result])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "61",
-    "2026-10-28 22:46:26.048481"
+    "2026-10-28 23:00:18.346010"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7430,7 +7430,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_lexer_api(expr):\n    try:\n        tokens = list(lexer.Lexer().tokenize(expr))\n    except exceptions.EmptyExpressionError:\n        return\n    except exceptions.LexerError as e:\n        assert e.lex_position >= 0, e.lex_position\n        assert e.lex_position < len(expr), e.lex_position\n        if expr:\n            assert expr[e.lex_position] == e.token_value[0], (\n                \"Lex position does not match first token char.\\n\"\n                \"Expression: %s\\n%s != %s\" % (expr, expr[e.lex_position],\n                                              e.token_value[0])\n            )\n        return\n    except Exception as e:\n        raise AssertionError(\"Non JMESPathError raised: %s\" % e)\n    assert isinstance(tokens, list)\n    # Token starting positions must be unique, can't have two\n    # tokens with the same start position.\n    start_locations = [t['start'] for t in tokens]\n    assert len(set(start_locations)) == len(start_locations), (\n        \"Tokens must have unique starting locations.\")\n    # Starting positions must be increasing (i.e sorted).\n    assert sorted(start_locations) == start_locations, (\n        \"Tokens must have increasing start locations.\")\n    # Last token is always EOF.\n    assert tokens[-1]['type'] == 'eof'",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "39",
-    "2026-10-28 22:46:26.079305"
+    "2026-10-28 23:00:18.356589"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7451,7 +7451,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_parser_api_from_str(expr):\n    # Same a lexer above with the assumption that we're parsing\n    # a valid sequence of tokens.\n    try:\n        list(lexer.Lexer().tokenize(expr))\n    except exceptions.JMESPathError as e:\n        # We want to try to parse things that tokenize\n        # properly.\n        assume(False)\n    try:\n        ast = parser.Parser().parse(expr)\n    except exceptions.JMESPathError as e:\n        return\n    except Exception as e:\n        raise AssertionError(\"Non JMESPathError raised: %s\" % e)\n    assert isinstance(ast.parsed, dict)\n    assert 'type' in ast.parsed\n    assert 'children' in ast.parsed\n    assert isinstance(ast.parsed['children'], list)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "71",
-    "2026-10-28 22:46:26.117710"
+    "2026-10-28 23:00:18.383665"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7472,7 +7472,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_search_api(expr, data):\n    try:\n        ast = parser.Parser().parse(expr)\n    except exceptions.JMESPathError as e:\n        # We want to try to parse things that tokenize\n        # properly.\n        assume(False)\n    try:\n        ast.search(data)\n    except exceptions.JMESPathError as e:\n        return\n    except Exception as e:\n        raise AssertionError(\"Non JMESPathError raised: %s\" % e)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "94",
-    "2026-10-28 22:46:26.141361"
+    "2026-10-28 23:00:18.396004"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7493,7 +7493,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_abs(arg):\n    assert Functions().call_function('abs', [arg]) >= 0",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "112",
-    "2026-10-28 22:46:26.173101"
+    "2026-10-28 23:00:18.422966"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7514,7 +7514,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_avg(arg):\n    result = Functions().call_function('avg', [arg])\n    if result is not None:\n        assert isinstance(result, numbers.Number)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "117",
-    "2026-10-28 22:46:26.188509"
+    "2026-10-28 23:00:18.454188"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7535,7 +7535,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_not_null(arg):\n    result = Functions().call_function('not_null', arg)\n    if result is not None:\n        assert result in arg",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "125",
-    "2026-10-28 22:46:26.198355"
+    "2026-10-28 23:00:18.464847"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7556,7 +7556,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_to_number(arg):\n    result = Functions().call_function('to_number', [arg])\n    if result is not None:\n        assert isinstance(result, numbers.Number)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/extra/test_hypothesis.py",
     "132",
-    "2026-10-28 22:46:26.207858"
+    "2026-10-28 23:00:18.484706"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7577,7 +7577,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_expression(given, expression, expected, filename):\n    import jmespath.parser\n    try:\n        parsed = jmespath.compile(expression)\n    except ValueError as e:\n        raise AssertionError(\n            'jmespath expression failed to compile: \"%s\", error: %s\"' %\n            (expression, e))\n    actual = parsed.search(given, options=OPTIONS)\n    expected_repr = json.dumps(expected, indent=4)\n    actual_repr = json.dumps(actual, indent=4)\n    error_msg = (\"\\n\\n  (%s) The expression '%s' was suppose to give:\\n%s\\n\"\n                 \"Instead it matched:\\n%s\\nparsed as:\\n%s\\ngiven:\\n%s\" % (\n                     filename, expression, expected_repr,\n                     actual_repr, pformat(parsed.parsed),\n                     json.dumps(given, indent=4)))\n    error_msg = error_msg.replace(r'\\n', '\\n')\n    assert actual == expected, error_msg",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_compliance.py",
     "71",
-    "2026-10-28 22:46:26.234697"
+    "2026-10-28 23:00:18.516689"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7598,7 +7598,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "def test_error_expression(given, expression, error, filename):\n    import jmespath.parser\n    if error not in ('syntax', 'invalid-type',\n                     'unknown-function', 'invalid-arity', 'invalid-value'):\n        raise RuntimeError(\"Unknown error type '%s'\" % error)\n    try:\n        parsed = jmespath.compile(expression)\n        parsed.search(given)\n    except ValueError:\n        # Test passes, it raised a parse error as expected.\n        pass\n    except Exception as e:\n        # Failure because an unexpected exception was raised.\n        error_msg = (\"\\n\\n  (%s) The expression '%s' was suppose to be a \"\n                     \"syntax error, but it raised an unexpected error:\\n\\n%s\" % (\n                         filename, expression, e))\n        error_msg = error_msg.replace(r'\\n', '\\n')\n        raise AssertionError(error_msg)\n    else:\n        error_msg = (\"\\n\\n  (%s) The expression '%s' was suppose to be a \"\n                     \"syntax error, but it successfully parsed as:\\n\\n%s\" % (\n                         filename, expression, pformat(parsed.parsed)))\n        error_msg = error_msg.replace(r'\\n', '\\n')\n        raise AssertionError(error_msg)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_compliance.py",
     "95",
-    "2026-10-28 22:46:26.265399"
+    "2026-10-28 23:00:18.526573"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7619,7 +7619,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_null_to_nonetype(self):\n        data = {\n            'a': {\n                'b': [1, 2, 3]\n            }\n        }\n\n        self.assertEqual(jmespath.search('length0(a.b)', data, self.options), 3)\n        self.assertEqual(jmespath.search('length0(a.c)', data, self.options), 0)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_custom_functions.py",
     "17",
-    "2026-10-28 22:46:26.301322"
+    "2026-10-28 23:00:18.543792"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7640,7 +7640,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_max_datetimes(self):\n        # This is python specific behavior, but JMESPath does not specify what\n        # you should do with language specific types.  We're going to add the\n        # ability that ``to_string`` will always default to str()'ing values it\n        # doesn't understand.\n        data = [datetime.now(), datetime.now() + timedelta(seconds=1)]\n        result = jmespath.search('max([*].to_string(@))', data)\n        self.assertEqual(json.loads(result), str(data[-1]))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "12",
-    "2026-10-28 22:46:26.328710"
+    "2026-10-28 23:00:18.561729"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7661,7 +7661,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_type_error_messages(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as e:\n            jmespath.search('length(@)', 2)\n        exception = e.exception\n        # 1. Function name should be in error message\n        self.assertIn('length()', str(exception))\n        # 2. Mention it's an invalid type\n        self.assertIn('invalid type for value: 2', str(exception))\n        # 3. Mention the valid types:\n        self.assertIn(\"expected one of: ['string', 'array', 'object']\",\n                      str(exception))\n        # 4. Mention the actual type.\n        self.assertIn('received: \"number\"', str(exception))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "21",
-    "2026-10-28 22:46:26.360320"
+    "2026-10-28 23:00:18.597199"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7682,7 +7682,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_singular_in_error_message(self):\n        with self.assertRaises(exceptions.ArityError) as e:\n            jmespath.search('length(@, @)', [0, 1])\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected 1 argument for function length(), received 2')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "35",
-    "2026-10-28 22:46:26.388777"
+    "2026-10-28 23:00:18.626802"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7703,7 +7703,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_error_message_is_pluralized(self):\n        with self.assertRaises(exceptions.ArityError) as e:\n            jmespath.search('sort_by(@)', [0, 1])\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected 2 arguments for function sort_by(), received 1')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "43",
-    "2026-10-28 22:46:26.400234"
+    "2026-10-28 23:00:18.659150"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7724,7 +7724,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_variadic_is_pluralized(self):\n        with self.assertRaises(exceptions.VariadictArityError) as e:\n            jmespath.search('not_null()', 'foo')\n        exception = e.exception\n        self.assertEqual(\n            str(exception),\n            'Expected at least 1 argument for function not_null(), received 0')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
     "51",
-    "2026-10-28 22:46:26.411627"
+    "2026-10-28 23:00:18.669151"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7745,7 +7745,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_empty_string(self):\n        with self.assertRaises(EmptyExpressionError):\n            list(self.lexer.tokenize(''))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "29",
-    "2026-10-28 22:46:26.437876"
+    "2026-10-28 23:00:18.705008"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7766,7 +7766,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_field(self):\n        tokens = list(self.lexer.tokenize('foo'))\n        self.assert_tokens(tokens, [{'type': 'unquoted_identifier',\n                                     'value': 'foo'}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "33",
-    "2026-10-28 22:46:26.446832"
+    "2026-10-28 23:00:18.734520"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7787,7 +7787,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_number(self):\n        tokens = list(self.lexer.tokenize('24'))\n        self.assert_tokens(tokens, [{'type': 'number',\n                                     'value': 24}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "38",
-    "2026-10-28 22:46:26.469334"
+    "2026-10-28 23:00:18.768175"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7808,7 +7808,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_negative_number(self):\n        tokens = list(self.lexer.tokenize('-24'))\n        self.assert_tokens(tokens, [{'type': 'number',\n                                     'value': -24}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "43",
-    "2026-10-28 22:46:26.500683"
+    "2026-10-28 23:00:18.778750"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7829,7 +7829,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_quoted_identifier(self):\n        tokens = list(self.lexer.tokenize('\"foobar\"'))\n        self.assert_tokens(tokens, [{'type': 'quoted_identifier',\n                                     'value': \"foobar\"}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "48",
-    "2026-10-28 22:46:26.532444"
+    "2026-10-28 23:00:18.790201"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7850,7 +7850,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_json_escaped_value(self):\n        tokens = list(self.lexer.tokenize('\"\\u2713\"'))\n        self.assert_tokens(tokens, [{'type': 'quoted_identifier',\n                                     'value': u\"\\u2713\"}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "53",
-    "2026-10-28 22:46:26.563000"
+    "2026-10-28 23:00:18.813642"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7871,7 +7871,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_number_expressions(self):\n        tokens = list(self.lexer.tokenize('foo.bar.baz'))\n        self.assert_tokens(tokens, [\n            {'type': 'unquoted_identifier', 'value': 'foo'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'bar'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'baz'},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "58",
-    "2026-10-28 22:46:26.593160"
+    "2026-10-28 23:00:18.844041"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7892,7 +7892,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_space_separated(self):\n        tokens = list(self.lexer.tokenize('foo.bar[*].baz | a || b'))\n        self.assert_tokens(tokens, [\n            {'type': 'unquoted_identifier', 'value': 'foo'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'bar'},\n            {'type': 'lbracket', 'value': '['},\n            {'type': 'star', 'value': '*'},\n            {'type': 'rbracket', 'value': ']'},\n            {'type': 'dot', 'value': '.'},\n            {'type': 'unquoted_identifier', 'value': 'baz'},\n            {'type': 'pipe', 'value': '|'},\n            {'type': 'unquoted_identifier', 'value': 'a'},\n            {'type': 'or', 'value': '||'},\n            {'type': 'unquoted_identifier', 'value': 'b'},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "68",
-    "2026-10-28 22:46:26.625646"
+    "2026-10-28 23:00:18.875676"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7913,7 +7913,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal(self):\n        tokens = list(self.lexer.tokenize('`[0, 1]`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': [0, 1]},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "85",
-    "2026-10-28 22:46:26.658579"
+    "2026-10-28 23:00:18.906505"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7934,7 +7934,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal_string(self):\n        tokens = list(self.lexer.tokenize('`foobar`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': \"foobar\"},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "91",
-    "2026-10-28 22:46:26.689526"
+    "2026-10-28 23:00:18.939012"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7955,7 +7955,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal_number(self):\n        tokens = list(self.lexer.tokenize('`2`'))\n        self.assert_tokens(tokens, [\n            {'type': 'literal', 'value': 2},\n        ])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "97",
-    "2026-10-28 22:46:26.700235"
+    "2026-10-28 23:00:18.969623"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7976,7 +7976,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal_with_invalid_json(self):\n        with self.assertRaises(LexerError):\n            list(self.lexer.tokenize('`foo\"bar`'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "103",
-    "2026-10-28 22:46:26.719524"
+    "2026-10-28 23:00:19.000418"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -7997,7 +7997,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_literal_with_empty_string(self):\n        tokens = list(self.lexer.tokenize('``'))\n        self.assert_tokens(tokens, [{'type': 'literal', 'value': ''}])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "107",
-    "2026-10-28 22:46:26.733041"
+    "2026-10-28 23:00:19.032670"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8018,7 +8018,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_position_information(self):\n        tokens = list(self.lexer.tokenize('foo'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'unquoted_identifier', 'value': 'foo',\n              'start': 0, 'end': 3},\n              {'type': 'eof', 'value': '', 'start': 3, 'end': 3}]\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "111",
-    "2026-10-28 22:46:26.768391"
+    "2026-10-28 23:00:19.043864"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8039,7 +8039,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_position_multiple_tokens(self):\n        tokens = list(self.lexer.tokenize('foo.bar'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'unquoted_identifier', 'value': 'foo',\n              'start': 0, 'end': 3},\n             {'type': 'dot', 'value': '.',\n              'start': 3, 'end': 4},\n             {'type': 'unquoted_identifier', 'value': 'bar',\n              'start': 4, 'end': 7},\n             {'type': 'eof', 'value': '',\n              'start': 7, 'end': 7},\n             ]\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "120",
-    "2026-10-28 22:46:26.782339"
+    "2026-10-28 23:00:19.055143"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8060,7 +8060,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_adds_quotes_when_invalid_json(self):\n        tokens = list(self.lexer.tokenize('`{{}`'))\n        self.assertEqual(\n            tokens,\n            [{'type': 'literal', 'value': '{{}',\n              'start': 0, 'end': 4},\n             {'type': 'eof', 'value': '',\n              'start': 5, 'end': 5}\n             ]\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "135",
-    "2026-10-28 22:46:26.813384"
+    "2026-10-28 23:00:19.064379"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8081,7 +8081,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_unknown_character(self):\n        with self.assertRaises(LexerError) as e:\n            tokens = list(self.lexer.tokenize('foo[0^]'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "146",
-    "2026-10-28 22:46:26.846438"
+    "2026-10-28 23:00:19.075575"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8102,7 +8102,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_first_character(self):\n        with self.assertRaises(LexerError):\n            tokens = list(self.lexer.tokenize('^foo[0]'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "150",
-    "2026-10-28 22:46:26.855700"
+    "2026-10-28 23:00:19.109902"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8123,7 +8123,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_unknown_character_with_identifier(self):\n        with self.assertRaisesRegex(LexerError, \"Unknown token\"):\n            list(self.lexer.tokenize('foo-bar'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_lexer.py",
     "154",
-    "2026-10-28 22:46:26.875277"
+    "2026-10-28 23:00:19.119738"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8144,7 +8144,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r1_requires_exactly_two_string_arguments(self):\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 1')\n\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@, @, @)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 3')\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(`subject`, @)', 42)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "9",
-    "2026-10-28 22:46:26.907629"
+    "2026-10-28 23:00:19.140274"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8165,7 +8165,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r2_returns_true_for_a_match_and_false_for_no_match(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `z`)', {}),\n            False)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "28",
-    "2026-10-28 22:46:26.937356"
+    "2026-10-28 23:00:19.176581"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8186,7 +8186,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r3_uses_python_re_search_semantics(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^a`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^b`)', {}),\n            False)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `.*`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `[0-9]`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `123$`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search(r\"matches(`a+b`, `\\\\+`)\", {}),\n            True)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "36",
-    "2026-10-28 22:46:26.948360"
+    "2026-10-28 23:00:19.193724"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8207,7 +8207,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r4_invalid_regex_raises_jmespath_type_error(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search(r\"matches(`abc`, `[`)\", {})\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('value: [', message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "59",
-    "2026-10-28 22:46:26.958505"
+    "2026-10-28 23:00:19.206878"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8228,7 +8228,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r5_can_be_used_as_a_filter_predicate(self):\n        data = {\n            'people': [\n                {'name': 'alice'},\n                {'name': 'bob'},\n            ],\n        }\n\n        self.assertEqual(\n            jmespath.search('people[?matches(name, `^a`)].name', data),\n            ['alice'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "67",
-    "2026-10-28 22:46:26.970205"
+    "2026-10-28 23:00:19.222442"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8249,7 +8249,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('invalid type for value: 42', message)\n        self.assertIn(\"expected one of: ['string']\", message)\n        self.assertIn('received: \"number\"', message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
     "79",
-    "2026-10-28 22:46:26.997377"
+    "2026-10-28 23:00:19.233730"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8270,7 +8270,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_parse_empty_string_raises_exception(self):\n        with self.assertRaises(exceptions.EmptyExpressionError):\n            self.parser.parse('')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "22",
-    "2026-10-28 22:46:27.031778"
+    "2026-10-28 23:00:19.243613"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8291,7 +8291,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_field(self):\n        self.assert_parsed_ast('foo', ast.field('foo'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "26",
-    "2026-10-28 22:46:27.041877"
+    "2026-10-28 23:00:19.254834"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8312,7 +8312,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_dot_syntax(self):\n        self.assert_parsed_ast('foo.bar',\n                               ast.subexpression([ast.field('foo'),\n                                                  ast.field('bar')]))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "29",
-    "2026-10-28 22:46:27.076041"
+    "2026-10-28 23:00:19.264513"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8333,7 +8333,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiple_dots(self):\n        parsed = self.parser.parse('foo.bar.baz')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': {'baz': 'correct'}}}), 'correct')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "34",
-    "2026-10-28 22:46:27.107241"
+    "2026-10-28 23:00:19.275493"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8354,7 +8354,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_index(self):\n        parsed = self.parser.parse('foo[1]')\n        self.assertEqual(\n            parsed.search({'foo': ['zero', 'one', 'two']}),\n            'one')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "39",
-    "2026-10-28 22:46:27.118348"
+    "2026-10-28 23:00:19.285317"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8375,7 +8375,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_quoted_subexpression(self):\n        self.assert_parsed_ast('\"foo\".\"bar\"',\n                               ast.subexpression([\n                                   ast.field('foo'),\n                                   ast.field('bar')]))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "45",
-    "2026-10-28 22:46:27.139863"
+    "2026-10-28 23:00:19.295954"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8396,7 +8396,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard(self):\n        parsed = self.parser.parse('foo[*]')\n        self.assertEqual(\n            parsed.search({'foo': ['zero', 'one', 'two']}),\n            ['zero', 'one', 'two'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "51",
-    "2026-10-28 22:46:27.169444"
+    "2026-10-28 23:00:19.314250"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8417,7 +8417,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard_with_children(self):\n        parsed = self.parser.parse('foo[*].bar')\n        self.assertEqual(\n            parsed.search({'foo': [{'bar': 'one'}, {'bar': 'two'}]}),\n            ['one', 'two'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "57",
-    "2026-10-28 22:46:27.199167"
+    "2026-10-28 23:00:19.321951"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8438,7 +8438,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_or_expression(self):\n        parsed = self.parser.parse('foo || bar')\n        self.assertEqual(parsed.search({'foo': 'foo'}), 'foo')\n        self.assertEqual(parsed.search({'bar': 'bar'}), 'bar')\n        self.assertEqual(parsed.search({'foo': 'foo', 'bar': 'bar'}), 'foo')\n        self.assertEqual(parsed.search({'bad': 'bad'}), None)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "63",
-    "2026-10-28 22:46:27.231311"
+    "2026-10-28 23:00:19.345082"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8459,7 +8459,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_complex_or_expression(self):\n        parsed = self.parser.parse('foo.foo || foo.bar')\n        self.assertEqual(parsed.search({'foo': {'foo': 'foo'}}), 'foo')\n        self.assertEqual(parsed.search({'foo': {'bar': 'bar'}}), 'bar')\n        self.assertEqual(parsed.search({'foo': {'baz': 'baz'}}), None)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "70",
-    "2026-10-28 22:46:27.262237"
+    "2026-10-28 23:00:19.356159"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8480,7 +8480,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_or_repr(self):\n        self.assert_parsed_ast('foo || bar', ast.or_expression(ast.field('foo'),\n                                                               ast.field('bar')))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "76",
-    "2026-10-28 22:46:27.293297"
+    "2026-10-28 23:00:19.378328"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8501,7 +8501,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_unicode_literals_escaped(self):\n        self.assert_parsed_ast(r'`\"\\u2713\"`', ast.literal(u'\\u2713'))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "80",
-    "2026-10-28 22:46:27.305318"
+    "2026-10-28 23:00:19.409790"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8522,7 +8522,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiselect(self):\n        parsed = self.parser.parse('foo.{bar: bar,baz: baz}')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': 'bar', 'baz': 'baz', 'qux': 'qux'}}),\n            {'bar': 'bar', 'baz': 'baz'})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "83",
-    "2026-10-28 22:46:27.340772"
+    "2026-10-28 23:00:19.421743"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8543,7 +8543,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiselect_subexpressions(self):\n        parsed = self.parser.parse('foo.{\"bar.baz\": bar.baz, qux: qux}')\n        self.assertEqual(\n            parsed.search({'foo': {'bar': {'baz': 'CORRECT'}, 'qux': 'qux'}}),\n            {'bar.baz': 'CORRECT', 'qux': 'qux'})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "89",
-    "2026-10-28 22:46:27.369421"
+    "2026-10-28 23:00:19.455061"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8564,7 +8564,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiselect_with_all_quoted_keys(self):\n        parsed = self.parser.parse('foo.{\"bar\": bar.baz, \"qux\": qux}')\n        result = parsed.search({'foo': {'bar': {'baz': 'CORRECT'}, 'qux': 'qux'}})\n        self.assertEqual(result, {\"bar\": \"CORRECT\", \"qux\": \"qux\"})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "95",
-    "2026-10-28 22:46:27.382702"
+    "2026-10-28 23:00:19.485684"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8585,7 +8585,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_function_call_with_and_statement(self):\n        self.assert_parsed_ast(\n            'f(@ && @)',\n            {'children': [{'children': [{'children': [], 'type': 'current'},\n                                        {'children': [], 'type': 'current'}],\n                           'type': 'and_expression'}],\n             'type': 'function_expression',\n             'value': 'f'})",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "100",
-    "2026-10-28 22:46:27.393464"
+    "2026-10-28 23:00:19.518672"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8606,7 +8606,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_parse(self):\n        with self.assertRaises(exceptions.ParseError):\n            self.parser.parse('foo]baz')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "130",
-    "2026-10-28 22:46:27.414909"
+    "2026-10-28 23:00:19.527494"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8627,7 +8627,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_parse_error_message(self):\n        error_message = (\n            'Unexpected token: ]: Parse error at column 3, '\n            'token \"]\" (RBRACKET), for expression:\\n'\n            '\"foo]baz\"\\n'\n            '    ^')\n        self.assert_error_message('foo]baz', error_message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "134",
-    "2026-10-28 22:46:27.446791"
+    "2026-10-28 23:00:19.537740"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8648,7 +8648,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_parse_error_message_with_multiselect(self):\n        error_message = (\n            'Invalid jmespath expression: Incomplete expression:\\n'\n            '\"foo.{bar: baz,bar: bar\"\\n'\n            '                       ^')\n        self.assert_error_message('foo.{bar: baz,bar: bar', error_message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "142",
-    "2026-10-28 22:46:27.483627"
+    "2026-10-28 23:00:19.566200"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8669,7 +8669,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_incomplete_expression_with_missing_paren(self):\n        error_message = (\n            'Invalid jmespath expression: Incomplete expression:\\n'\n            '\"length(@,\"\\n'\n            '          ^')\n        self.assert_error_message('length(@,', error_message)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "149",
-    "2026-10-28 22:46:27.508653"
+    "2026-10-28 23:00:19.576166"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8690,7 +8690,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_lexer_values(self):\n        error_message = (\n            'Bad jmespath expression: '\n            'Unclosed \" delimiter:\\n'\n            'foo.\"bar\\n'\n            '    ^')\n        self.assert_error_message('foo.\"bar', error_message,\n                                  exception=exceptions.LexerError)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "156",
-    "2026-10-28 22:46:27.539686"
+    "2026-10-28 23:00:19.597529"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8711,7 +8711,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_bad_unicode_string(self):\n        # This error message is straight from the JSON parser\n        # and pypy has a slightly different error message,\n        # so we're not using assert_error_message.\n        error_message = re.compile(\n            r'Bad jmespath expression: '\n            r'Invalid \\\\uXXXX escape.*\\\\uAZ12', re.DOTALL)\n        with self.assertRaisesRegex(exceptions.LexerError, error_message):\n            self.parser.parse(r'\"\\uAZ12\"')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "165",
-    "2026-10-28 22:46:27.549134"
+    "2026-10-28 23:00:19.608723"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8732,7 +8732,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_multiple_index_wildcards(self):\n        parsed = self.parser.parse('foo[*].bar[*].baz')\n        self.assertEqual(parsed.search(self.data),\n                         [['one', 'two'], ['three', 'four', 'five']])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "186",
-    "2026-10-28 22:46:27.560575"
+    "2026-10-28 23:00:19.620163"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8753,7 +8753,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard_mix_with_indices(self):\n        parsed = self.parser.parse('foo[*].bar[0].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['one', 'three'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "191",
-    "2026-10-28 22:46:27.571360"
+    "2026-10-28 23:00:19.629518"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8774,7 +8774,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard_mix_last(self):\n        parsed = self.parser.parse('foo[0].bar[*].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['one', 'two'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "196",
-    "2026-10-28 22:46:27.601280"
+    "2026-10-28 23:00:19.640996"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8795,7 +8795,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_indices_out_of_bounds(self):\n        parsed = self.parser.parse('foo[*].bar[2].baz')\n        self.assertEqual(parsed.search(self.data),\n                         ['five'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "201",
-    "2026-10-28 22:46:27.612325"
+    "2026-10-28 23:00:19.650003"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8816,7 +8816,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_root_indices(self):\n        parsed = self.parser.parse('[0]')\n        self.assertEqual(parsed.search(['one', 'two']), 'one')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "206",
-    "2026-10-28 22:46:27.623151"
+    "2026-10-28 23:00:19.675886"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8837,7 +8837,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_root_wildcard(self):\n        parsed = self.parser.parse('*.foo')\n        data = {'top1': {'foo': 'bar'}, 'top2': {'foo': 'baz'},\n                'top3': {'notfoo': 'notfoo'}}\n        # Sorted is being used because the order of the keys are not\n        # required to be in any specific order.\n        self.assertEqual(sorted(parsed.search(data)), sorted(['bar', 'baz']))\n        self.assertEqual(sorted(self.parser.parse('*.notfoo').search(data)),\n                         sorted(['notfoo']))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "210",
-    "2026-10-28 22:46:27.635652"
+    "2026-10-28 23:00:19.705223"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8858,7 +8858,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_only_wildcard(self):\n        parsed = self.parser.parse('*')\n        data = {'foo': 'a', 'bar': 'b', 'baz': 'c'}\n        self.assertEqual(sorted(parsed.search(data)), sorted(['a', 'b', 'c']))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "220",
-    "2026-10-28 22:46:27.646652"
+    "2026-10-28 23:00:19.736432"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8879,7 +8879,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_escape_sequences(self):\n        self.assertEqual(self.parser.parse(r'\"foo\\tbar\"').search(\n            {'foo\\tbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\nbar\"').search(\n            {'foo\\nbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\bbar\"').search(\n            {'foo\\bbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\fbar\"').search(\n            {'foo\\fbar': 'baz'}), 'baz')\n        self.assertEqual(self.parser.parse(r'\"foo\\rbar\"').search(\n            {'foo\\rbar': 'baz'}), 'baz')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "225",
-    "2026-10-28 22:46:27.677211"
+    "2026-10-28 23:00:19.748593"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8900,7 +8900,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_consecutive_escape_sequences(self):\n        parsed = self.parser.parse(r'\"foo\\\\nbar\"')\n        self.assertEqual(parsed.search({'foo\\\\nbar': 'baz'}), 'baz')\n\n        parsed = self.parser.parse(r'\"foo\\n\\t\\rbar\"')\n        self.assertEqual(parsed.search({'foo\\n\\t\\rbar': 'baz'}), 'baz')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "237",
-    "2026-10-28 22:46:27.686939"
+    "2026-10-28 23:00:19.780058"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8921,7 +8921,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_escape_sequence_at_end_of_string_not_allowed(self):\n        with self.assertRaises(ValueError):\n            self.parser.parse('foobar\\\\')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "244",
-    "2026-10-28 22:46:27.707402"
+    "2026-10-28 23:00:19.814460"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8942,7 +8942,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_wildcard_with_multiselect(self):\n        parsed = self.parser.parse('foo.*.{a: a, b: b}')\n        data = {\n            'foo': {\n                'one': {\n                    'a': {'c': 'CORRECT', 'd': 'other'},\n                    'b': {'c': 'ALSOCORRECT', 'd': 'other'},\n                },\n                'two': {\n                    'a': {'c': 'CORRECT', 'd': 'other'},\n                    'c': {'c': 'WRONG', 'd': 'other'},\n                },\n            }\n        }\n        match = parsed.search(data)\n        self.assertEqual(len(match), 2)\n        self.assertIn('a', match[0])\n        self.assertIn('b', match[0])\n        self.assertIn('a', match[1])\n        self.assertIn('b', match[1])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "248",
-    "2026-10-28 22:46:27.718216"
+    "2026-10-28 23:00:19.845835"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8963,7 +8963,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_merge_with_indices(self):\n        parsed = self.parser.parse('foo[][0]')\n        match = parsed.search(self.data)\n        self.assertEqual(match, [\"one\", \"three\", \"five\", \"seven\",\n                                 \"nine\", \"ten\"])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "281",
-    "2026-10-28 22:46:27.740336"
+    "2026-10-28 23:00:19.856851"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -8984,7 +8984,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_trailing_merged_operator(self):\n        parsed = self.parser.parse('foo[]')\n        match = parsed.search(self.data)\n        self.assertEqual(\n            match,\n            [[\"one\", \"two\"], [\"three\", \"four\"],\n             [\"five\", \"six\"], [\"seven\", \"eight\"],\n             [\"nine\"], [\"ten\"]])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "287",
-    "2026-10-28 22:46:27.771358"
+    "2026-10-28 23:00:19.874922"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9005,7 +9005,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_compile_lots_of_expressions(self):\n        # We have to be careful here because this is an implementation detail\n        # that should be abstracted from the user, but we need to make sure we\n        # exercise the code and that it doesn't blow up.\n        p = parser.Parser()\n        compiled = []\n        compiled2 = []\n        for i in range(parser.Parser._MAX_SIZE + 1):\n            compiled.append(p.parse('foo%s' % i))\n        # Rerun the test and half of these entries should be from the\n        # cache but they should still be equal to compiled.\n        for i in range(parser.Parser._MAX_SIZE + 1):\n            compiled2.append(p.parse('foo%s' % i))\n        self.assertEqual(len(compiled), len(compiled2))\n        self.assertEqual(\n            [expr.parsed for expr in compiled],\n            [expr.parsed for expr in compiled2])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "298",
-    "2026-10-28 22:46:27.802672"
+    "2026-10-28 23:00:19.906553"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9026,7 +9026,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_cache_purge(self):\n        p = parser.Parser()\n        first = p.parse('foo')\n        cached = p.parse('foo')\n        p.purge()\n        second = p.parse('foo')\n        self.assertEqual(first.parsed,\n                         second.parsed)\n        self.assertEqual(first.parsed,\n                         cached.parsed)",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "316",
-    "2026-10-28 22:46:27.837689"
+    "2026-10-28 23:00:19.921723"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9047,7 +9047,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_thread_safety_of_cache(self):\n        errors = []\n        expressions = [\n            ''.join(random.choice(string.ascii_letters) for _ in range(3))\n            for _ in range(2000)\n        ]\n        def worker():\n            p = parser.Parser()\n            for expression in expressions:\n                try:\n                    p.parse(expression)\n                except Exception as e:\n                    errors.append(e)\n\n        threads = []\n        for i in range(10):\n            threads.append(threading.Thread(target=worker))\n        for thread in threads:\n            thread.start()\n        for thread in threads:\n            thread.join()\n\n        self.assertEqual(errors, [])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "327",
-    "2026-10-28 22:46:27.865546"
+    "2026-10-28 23:00:19.953081"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9068,7 +9068,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_expression_available_from_parser(self):\n        p = parser.Parser()\n        parsed = p.parse('foo.bar')\n        self.assertEqual(parsed.expression, 'foo.bar')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "353",
-    "2026-10-28 22:46:27.876427"
+    "2026-10-28 23:00:19.986540"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9089,7 +9089,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_have_ordered_dict(self):\n        p = parser.Parser()\n        parsed = p.parse('{a: a, b: b, c: c}')\n        options = visitor.Options(dict_cls=OrderedDict)\n        result = parsed.search(\n            {\"c\": \"c\", \"b\": \"b\", \"a\": \"a\"}, options=options)\n        # The order should be 'a', 'b' because we're using an\n        # OrderedDict\n        self.assertEqual(list(result), ['a', 'b', 'c'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "360",
-    "2026-10-28 22:46:27.893306"
+    "2026-10-28 23:00:20.017192"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9110,7 +9110,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_dot_file_rendered(self):\n        p = parser.Parser()\n        result = p.parse('foo')\n        dot_contents = result._render_dot_file()\n        self.assertEqual(dot_contents,\n                         'digraph AST {\\nfield1 [label=\"field(foo)\"]\\n}')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "372",
-    "2026-10-28 22:46:27.927987"
+    "2026-10-28 23:00:20.051224"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9131,7 +9131,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_dot_file_subexpr(self):\n        p = parser.Parser()\n        result = p.parse('foo.bar')\n        dot_contents = result._render_dot_file()\n        self.assertEqual(\n            dot_contents,\n            'digraph AST {\\n'\n            'subexpression1 [label=\"subexpression()\"]\\n'\n            '  subexpression1 -> field2\\n'\n            'field2 [label=\"field(foo)\"]\\n'\n            '  subexpression1 -> field3\\n'\n            'field3 [label=\"field(bar)\"]\\n}')",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_parser.py",
     "379",
-    "2026-10-28 22:46:27.958190"
+    "2026-10-28 23:00:20.063146"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9152,7 +9152,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_provide_dict_cls(self):\n        result = jmespath.search(\n            '{a: a, b: b, c: c}.*',\n            {'c': 'c', 'b': 'b', 'a': 'a', 'd': 'd'},\n            options=jmespath.Options(dict_cls=OrderedDict))\n        self.assertEqual(result, ['a', 'b', 'c'])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "10",
-    "2026-10-28 22:46:27.990142"
+    "2026-10-28 23:00:20.091958"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9173,7 +9173,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_provide_custom_functions(self):\n        class CustomFunctions(jmespath.functions.Functions):\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_custom_add(self, x, y):\n                return x + y\n\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_my_subtract(self, x, y):\n                return x - y\n\n\n        options = jmespath.Options(custom_functions=CustomFunctions())\n        self.assertEqual(\n            jmespath.search('custom_add(`1`, `2`)', {}, options=options),\n            3\n        )\n        self.assertEqual(\n            jmespath.search('my_subtract(`10`, `3`)', {}, options=options),\n            7\n        )\n        # Should still be able to use the original functions without\n        # any interference from the CustomFunctions class.\n        self.assertEqual(\n            jmespath.search('length(`[1, 2]`)', {}), 2\n        )",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "17",
-    "2026-10-28 22:46:28.021206"
+    "2026-10-28 23:00:20.125052"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9194,7 +9194,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_compare_strings(self):\n        # This is python specific behavior that's not in the official spec\n        # yet, but this was regression from 0.9.0 so it's been added back.\n        self.assertTrue(jmespath.search('a < b', {'a': '2016', 'b': '2017'}))",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "50",
-    "2026-10-28 22:46:28.032713"
+    "2026-10-28 23:00:20.155426"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9215,7 +9215,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_handle_long_ints(self):\n        result = sys.maxint + 1\n        self.assertEqual(jmespath.search('[?a >= `1`].a', [{'a': result}]),\n                         [result])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "56",
-    "2026-10-28 22:46:28.045230"
+    "2026-10-28 23:00:20.185943"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9236,7 +9236,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "    def test_can_handle_decimals_as_numeric_type(self):\n        result = decimal.Decimal('3')\n        self.assertEqual(jmespath.search('[?a >= `1`].a', [{'a': result}]),\n                         [result])",
     "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
     "61",
-    "2026-10-28 22:46:28.069210"
+    "2026-10-28 23:00:20.197282"
   ],
   "rows": 1,
   "mode": "upsert",
@@ -9323,8 +9323,8 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
   "method": "POST",
   "path": "/v1/memory/remember",
   "status": 200,
-  "request": "{\"kind\": \"sdd.task.state\", \"reason\": \"sddctx patched-and-tested\", \"scope_id\": \"scp_3709x7sfxmz8zwwqqc24f2y2kf\", \"text\": \"{\\\"finished\\\": [\\\"MiniMax wrote the acceptance test tests/test_matches.py\\\", \\\"MiniMax patch applied to the working tree\\\", \\\"python -m pytest tests/test_matches.py -q passed\\\", \\\"python -m pytest tests/ -q passed\\\"], \\\"patch_applied\\\": true, \\\"step\\\": \\\"patched-and-tested\\\", \\\"task_id\\\": \\\"T-2026-001\\\", \\\"tests_passed\\\": true, \\\"todo\\\": [], \\\"updated_at\\\": \\\"2026-10-28T22:46:28\\\", \\\"verification\\\": [\\\"python -m pytest tests/test_matches.py -q -> exit 0 (passed)\\\", \\\"python -m pytest tests/ -q -> exit 0 (passed)\\\", \\\"python -m pytest tests/test_matches.py -q -> exit 1 (fai... <811 chars>",
-  "response": "{\"changed\": true, \"records\": [{\"artifact\": {\"artifact_id\": \"art_56ce78bd379c49da8d7226a3f84ccb62\", \"family\": \"atomic-memory\", \"revision\": 1}, \"kind\": \"sdd.task.state\", \"merged_into_id\": null, \"state\": \"active\", \"state_version\": 0, \"text\": \"{\\\"finished\\\": [\\\"MiniMax wrote the acceptance test tests/test_matches.py\\\", \\\"MiniMax patch applied to the working tree\\\", \\\"python -m pytest tests/test_matches.py -q passed\\\", \\\"python -m pytest tests/ -q passed\\\"], \\\"patch_applied\\\": true, \\\"step\\\": \\\"patched-and-tested\\\", \\\"task_id\\\": \\\"T-2026-001\\\", \\\"tests_passed\\\": true, \\\"todo\\\": [], \\\"updated_at\\\": \\\"2026-10-28T22:46:28\\\", \\\"verification\\\": [\\\"python -m pytest tests/test_matches.py -q -> exit 0 (p... <932 chars>"
+  "request": "{\"kind\": \"sdd.task.state\", \"reason\": \"sddctx patched-and-tested\", \"scope_id\": \"scp_3709x7sfxmz8zwwqqc24f2y2kf\", \"text\": \"{\\\"finished\\\": [\\\"MiniMax wrote the acceptance test tests/test_matches.py\\\", \\\"MiniMax patch applied to the working tree\\\", \\\"python -m pytest tests/test_matches.py -q passed\\\", \\\"python -m pytest tests/ -q passed\\\"], \\\"patch_applied\\\": true, \\\"step\\\": \\\"patched-and-tested\\\", \\\"task_id\\\": \\\"T-2026-001\\\", \\\"tests_passed\\\": true, \\\"todo\\\": [], \\\"updated_at\\\": \\\"2026-10-28T23:00:20\\\", \\\"verification\\\": [\\\"python -m pytest tests/test_matches.py -q -> exit 0 (passed)\\\", \\\"python -m pytest tests/ -q -> exit 0 (passed)\\\", \\\"python -m pytest tests/test_matches.py -q -> exit 1 (fai... <811 chars>",
+  "response": "{\"changed\": true, \"records\": [{\"artifact\": {\"artifact_id\": \"art_f43ec642d3644a9eb61df50ebe727719\", \"family\": \"atomic-memory\", \"revision\": 1}, \"kind\": \"sdd.task.state\", \"merged_into_id\": null, \"state\": \"active\", \"state_version\": 0, \"text\": \"{\\\"finished\\\": [\\\"MiniMax wrote the acceptance test tests/test_matches.py\\\", \\\"MiniMax patch applied to the working tree\\\", \\\"python -m pytest tests/test_matches.py -q passed\\\", \\\"python -m pytest tests/ -q passed\\\"], \\\"patch_applied\\\": true, \\\"step\\\": \\\"patched-and-tested\\\", \\\"task_id\\\": \\\"T-2026-001\\\", \\\"tests_passed\\\": true, \\\"todo\\\": [], \\\"updated_at\\\": \\\"2026-10-28T23:00:20\\\", \\\"verification\\\": [\\\"python -m pytest tests/test_matches.py -q -> exit 0 (p... <932 chars>"
 }
 ```
 
@@ -9335,7 +9335,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
   "scope_id": "scp_3709x7sfxmz8zwwqqc24f2y2kf",
   "state": {
     "task_id": "T-2026-001",
-    "updated_at": "2026-10-28T22:46:28",
+    "updated_at": "2026-10-28T23:00:20",
     "step": "patched-and-tested",
     "finished": [
       "MiniMax wrote the acceptance test tests/test_matches.py",
@@ -9359,11 +9359,11 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
       {
         "artifact": {
           "family": "atomic-memory",
-          "artifact_id": "art_56ce78bd379c49da8d7226a3f84ccb62",
+          "artifact_id": "art_f43ec642d3644a9eb61df50ebe727719",
           "revision": 1
         },
         "kind": "sdd.task.state",
-        "text": "{\"finished\": [\"MiniMax wrote the acceptance test tests/test_matches.py\", \"MiniMax patch applied to the working tree\", \"python -m pytest tests/test_matches.py -q passed\", \"python -m pytest tests/ -q passed\"], \"patch_applied\": true, \"step\": \"patched-and-tested\", \"task_id\": \"T-2026-001\", \"tests_passed\": true, \"todo\": [], \"updated_at\": \"2026-10-28T22:46:28\", \"verification\": [\"python -m pytest tests/test_matches.py -q -> exit 0 (passed)\", \"python -m pytest tests/ -q -> exit 0 (passed)\", \"python -m pytest tests/test_matches.py -q -> exit 1 (failed, feature not implemented)\", \"python -m pytest tests/ -q -> exit 1 (failed, feature not implemented)\"]}",
+        "text": "{\"finished\": [\"MiniMax wrote the acceptance test tests/test_matches.py\", \"MiniMax patch applied to the working tree\", \"python -m pytest tests/test_matches.py -q passed\", \"python -m pytest tests/ -q passed\"], \"patch_applied\": true, \"step\": \"patched-and-tested\", \"task_id\": \"T-2026-001\", \"tests_passed\": true, \"todo\": [], \"updated_at\": \"2026-10-28T23:00:20\", \"verification\": [\"python -m pytest tests/test_matches.py -q -> exit 0 (passed)\", \"python -m pytest tests/ -q -> exit 0 (passed)\", \"python -m pytest tests/test_matches.py -q -> exit 1 (failed, feature not implemented)\", \"python -m pytest tests/ -q -> exit 1 (failed, feature not implemented)\"]}",
         "state": "active",
         "state_version": 0,
         "merged_into_id": null
@@ -9425,14 +9425,14 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
   "method": "POST",
   "path": "/v1/work/outcomes/record",
   "status": 202,
-  "request": "{\"outcome\": {\"checks\": [{\"basis\": \"declared\", \"details\": \"exit 0\", \"evidence\": [], \"name\": \"python -m pytest tests/test_matches.py -q\", \"status\": \"passed\"}, {\"basis\": \"declared\", \"details\": \"exit 0\", \"evidence\": [], \"name\": \"python -m pytest tests/ -q\", \"status\": \"passed\"}], \"objective\": \"在 `sample_project/jmespath`（上游 jmespath.py v1.1.0，MIT）里实现内建谓词函数\\n`matches(subject, pattern)`，让 JSON 查询可以用正则做筛选条件，\\n例如 `people[?matches(name, '^a')].name`。\\n\\n实现必须严格符合规格 `SPEC-JP-FN-001` 的 R1–R6 与不变行为 B1–B3。\", \"observations\": [{\"basis\": \"declared\", \"evidence\": [], \"text\": \"patch applied: 20261028-223255.patch\"}], \"produced_artifacts\": [], \"remaining_work\": [], \"schema\": \"powercontext.task-outcome.v1\", \"statu... <957 chars>",
+  "request": "{\"outcome\": {\"checks\": [{\"basis\": \"declared\", \"details\": \"exit 0\", \"evidence\": [], \"name\": \"python -m pytest tests/test_matches.py -q\", \"status\": \"passed\"}, {\"basis\": \"declared\", \"details\": \"exit 0\", \"evidence\": [], \"name\": \"python -m pytest tests/ -q\", \"status\": \"passed\"}], \"objective\": \"在 `sample_project/jmespath`（上游 jmespath.py v1.1.0，MIT）里实现内建谓词函数\\n`matches(subject, pattern)`，让 JSON 查询可以用正则做筛选条件，\\n例如 `people[?matches(name, '^a')].name`。\\n\\n实现必须严格符合规格 `SPEC-JP-FN-001` 的 R1–R6 与不变行为 B1–B3。\", \"observations\": [{\"basis\": \"declared\", \"evidence\": [], \"text\": \"patch applied: 20261028-223255.patch\"}], \"produced_artifacts\": [], \"remaining_work\": [], \"schema\": \"powercontext.task-outcome.v1\", \"statu... <970 chars>",
   "response": {
     "kind": "task-outcome",
     "source": {
       "name": "content",
-      "source_id": "sddctx:T-2026-001:outcome:reproduce"
+      "source_id": "sddctx:T-2026-001:outcome:reproduce:71a9e52a46bf"
     },
-    "position": 5,
+    "position": 12,
     "content_digest": "sha256:6f0a345572f41b53cf749b8bc65c7be1f50ef0b76fe3cccc3e015e5f849a59ad"
   }
 }
@@ -9443,6 +9443,7 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
 ```json
 {
   "scope_id": "scp_3709x7sfxmz8zwwqqc24f2y2kf",
+  "source_id": "sddctx:T-2026-001:outcome:reproduce:71a9e52a46bf",
   "outcome": {
     "schema": "powercontext.task-outcome.v1",
     "trust": "untrusted_observation",
@@ -9479,9 +9480,9 @@ Raw log: `D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evi
     "kind": "task-outcome",
     "source": {
       "name": "content",
-      "source_id": "sddctx:T-2026-001:outcome:reproduce"
+      "source_id": "sddctx:T-2026-001:outcome:reproduce:71a9e52a46bf"
     },
-    "position": 5,
+    "position": 12,
     "content_digest": "sha256:6f0a345572f41b53cf749b8bc65c7be1f50ef0b76fe3cccc3e015e5f849a59ad"
   }
 }

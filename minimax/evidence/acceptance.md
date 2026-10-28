@@ -5,10 +5,10 @@ Result: **7/7 passed**
 | Item | Check | Result | Detail |
 | --- | --- | --- | --- |
 | 能够运行 | `runnable` | **PASS** | seekdb, PowerContext, MiniMax and the module all answer |
-| MiniMax 实际参与 | `minimax-involved` | **PASS** | 9 MiniMax call(s) recorded, 5 patch file(s), the implementation is in the delivered file and differs from the pre-change snapshot |
+| MiniMax 实际参与 | `minimax-involved` | **PASS** | 9 MiniMax call(s) recorded, 4 patch file(s), the implementation is in the delivered file and differs from the pre-change snapshot |
 | 上下文正确 | `context-correct` | **PASS** | 12 specification entries, 49 code symbols, 8 test cases, every source verified on disk |
 | 上下文正确（规格更新后重新导入） | `context-follows-spec-edit` | **PASS** | editing the specification and re-importing changes the retrieved content |
-| 数据库实际参与 | `database-involved` | **PASS** | seekdb holds 12 spec / 335 code / 87 test rows; 5671 recorded queries, 27 of them full-text searches (mode=fulltext) |
+| 数据库实际参与 | `database-involved` | **PASS** | seekdb holds 12 spec / 335 code / 87 test rows; 9159 recorded queries, 27 of them full-text searches (mode=fulltext) |
 | 状态能够复用 | `state-reuse` | **PASS** | the task state was written to PowerContext, read back by a separate process and used to build the context |
 | 代码修改有效 | `code-change-effective` | **PASS** | the target test failed before the change with UnknownFunctionError and passes after it; the full regression suite is green |
 
@@ -26,13 +26,12 @@ Result: **7/7 passed**
 {
   "minimax_calls": 9,
   "patch_requests": 4,
-  "patches_applied": 2,
+  "patches_applied": 6,
   "patch_files": [
     "20261028-222327.patch",
     "20261028-222712.patch",
     "20261028-222849.patch",
-    "20261028-223255.patch",
-    "20261028-224615.patch"
+    "20261028-223255.patch"
   ],
   "usage": [
     {
@@ -175,6 +174,7 @@ Result: **7/7 passed**
     "files_under_change": []
   },
   "specifications": [
+    "SPEC-JP-FN-001#A2",
     "SPEC-JP-FN-001#R1",
     "SPEC-JP-FN-001#R2",
     "SPEC-JP-FN-001#R3",
@@ -183,7 +183,6 @@ Result: **7/7 passed**
     "SPEC-JP-FN-001#R6",
     "SPEC-JP-FN-001#B2",
     "SPEC-JP-FN-001#A1",
-    "SPEC-JP-FN-001#A2",
     "SPEC-JP-FN-001#A3",
     "SPEC-JP-FN-001#B1",
     "SPEC-JP-FN-001#B3"
@@ -232,7 +231,7 @@ Result: **7/7 passed**
     "code": 335,
     "tests": 87
   },
-  "recorded_queries": 5671,
+  "recorded_queries": 9159,
   "fulltext_queries": 27,
   "sample_query": {
     "at": "2026-10-28T21:57:31",
@@ -300,7 +299,7 @@ Result: **7/7 passed**
 {
   "target_test_exit": 0,
   "regression_exit": 0,
-  "regression_tail": "997 passed, 1 skipped, 35 warnings in 0.90s",
+  "regression_tail": "997 passed, 1 skipped, 35 warnings in 0.85s",
   "before_log": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/evidence/test-before.txt"
 }
 ```
