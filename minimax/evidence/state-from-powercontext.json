@@ -1,0 +1,41 @@
+{
+  "scope_id": "scp_3709x7sfxmz8zwwqqc24f2y2kf",
+  "scope_title": "sdd-demo task T-2026-001",
+  "task_id": "T-2026-001",
+  "state": {
+    "finished": [
+      "MiniMax wrote the acceptance test tests/test_matches.py and the implementation",
+      "MiniMax patch applied to the working tree",
+      "python -m pytest tests/test_matches.py -q passed",
+      "python -m pytest tests/ -q passed"
+    ],
+    "patch_applied": true,
+    "patch": "20261028-223255.patch",
+    "step": "patched-and-tested",
+    "task_id": "T-2026-001",
+    "tests_passed": true,
+    "todo": [],
+    "updated_at": "2026-10-28T22:39:46",
+    "verification": [
+      "python -m pytest tests/test_matches.py -q -> exit 0 (passed)",
+      "python -m pytest tests/ -q -> exit 0 (passed)",
+      "python -m pytest tests/test_matches.py -q -> exit 1 (failed, feature not implemented)",
+      "python -m pytest tests/ -q -> exit 1 (failed, feature not implemented)"
+    ],
+    "implementation_scope": {
+      "objective": "Implement matches(subject, pattern) in jmespath/functions.py per SPEC-JP-FN-001, enabling JSON queries to filter with regular expressions such as people[?matches(name, '^a')].name.",
+      "in_scope": [
+        "jmespath/functions.py",
+        "tests/test_matches.py"
+      ],
+      "exclusions": [
+        "lexer.py",
+        "parser.py",
+        "visitor.py",
+        "ast.py"
+      ],
+      "requirements": "Strictly comply with SPEC-JP-FN-001 R1–R6 and invariant behaviors B1–B3.",
+      "baseline": "jmespath.py 1.1.0 implements all 23 JMESPath 1.0 builtins but has no regex predicate."
+    }
+  }
+}

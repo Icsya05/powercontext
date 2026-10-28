@@ -1,0 +1,176 @@
+# The generated target test has an escaping bug in its R3 case
+# command: python -m pytest tests/test_matches.py::TestMatches::test_r3_uses_python_re_search_semantics -q
+# exit code: 1
+# The JMESPath backtick literal is parsed as JSON by jmespath's lexer, so the
+# regex for a literal plus sign has to be written as a JSON-legal escape.
+# This output was fed back to MiniMax, which rewrote the test file.
+F                                                                        [100%]
+================================== FAILURES ===================================
+_____________ TestMatches.test_r3_uses_python_re_search_semantics _____________
+
+self = <jmespath.lexer.Lexer object at 0x0000020F0DD53E30>
+
+    def _consume_literal(self):
+        start = self._position
+        lexeme = self._consume_until('`').replace('\\`', '`')
+        try:
+            # Assume it is valid JSON and attempt to parse.
+>           parsed_json = loads(lexeme)
+                          ^^^^^^^^^^^^^
+
+jmespath\lexer.py:163: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\ZhuYijing\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ZhuYijing\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py:338: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <json.decoder.JSONDecoder object at 0x0000020F0B6C1D00>, s = '\\+'
+idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+C:\Users\ZhuYijing\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py:356: JSONDecodeError
+
+During handling of the above exception, another exception occurred:
+
+self = <jmespath.lexer.Lexer object at 0x0000020F0DD53E30>
+
+    def _consume_literal(self):
+        start = self._position
+        lexeme = self._consume_until('`').replace('\\`', '`')
+        try:
+            # Assume it is valid JSON and attempt to parse.
+            parsed_json = loads(lexeme)
+        except ValueError:
+            try:
+                # Invalid JSON values should be converted to quoted
+                # JSON strings during the JEP-12 deprecation period.
+>               parsed_json = loads('"%s"' % lexeme.lstrip())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+jmespath\lexer.py:168: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\ZhuYijing\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ZhuYijing\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py:338: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <json.decoder.JSONDecoder object at 0x0000020F0B6C1D00>, s = '"\\+"'
+idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+>           obj, end = self.scan_once(s, idx)
+                       ^^^^^^^^^^^^^^^^^^^^^^
+E           json.decoder.JSONDecodeError: Invalid \escape: line 1 column 2 (char 1)
+
+C:\Users\ZhuYijing\AppData\Local\Programs\Python\Python312\Lib\json\decoder.py:354: JSONDecodeError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_matches.TestMatches testMethod=test_r3_uses_python_re_search_semantics>
+
+    def test_r3_uses_python_re_search_semantics(self):
+        self.assertIs(
+            jmespath.search('matches(`abc`, `b`)', {}),
+            True)
+        self.assertIs(
+            jmespath.search('matches(`abc`, `^a`)', {}),
+            True)
+        self.assertIs(
+            jmespath.search('matches(`abc`, `^b`)', {}),
+            False)
+        self.assertIs(
+            jmespath.search('matches(`abc123`, `.*`)', {}),
+            True)
+        self.assertIs(
+            jmespath.search('matches(`abc123`, `[0-9]`)', {}),
+            True)
+        self.assertIs(
+            jmespath.search('matches(`abc123`, `123$`)', {}),
+            True)
+        self.assertIs(
+>           jmespath.search(r"matches(`a+b`, `\+`)", {}),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            True)
+
+tests\test_matches.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jmespath\__init__.py:12: in search
+    return parser.Parser().parse(expression).search(data, options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:87: in parse
+    parsed_result = self._do_parse(expression)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:107: in _do_parse
+    return self._parse(expression)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:120: in _parse
+    self._tokens = list(self.tokenizer)
+                   ^^^^^^^^^^^^^^^^^^^^
+jmespath\lexer.py:64: in tokenize
+    yield self._consume_literal()
+          ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <jmespath.lexer.Lexer object at 0x0000020F0DD53E30>
+
+    def _consume_literal(self):
+        start = self._position
+        lexeme = self._consume_until('`').replace('\\`', '`')
+        try:
+            # Assume it is valid JSON and attempt to parse.
+            parsed_json = loads(lexeme)
+        except ValueError:
+            try:
+                # Invalid JSON values should be converted to quoted
+                # JSON strings during the JEP-12 deprecation period.
+                parsed_json = loads('"%s"' % lexeme.lstrip())
+                warnings.warn("deprecated string literal syntax",
+                              PendingDeprecationWarning)
+            except ValueError:
+>               raise LexerError(lexer_position=start,
+                                 lexer_value=self._expression[start:],
+                                 message="Bad token %s" % lexeme)
+E               jmespath.exceptions.LexerError: Bad jmespath expression: Bad token \+:
+E               matches(`a+b`, `\+`)
+E                              ^
+
+jmespath\lexer.py:172: LexerError
+============================== warnings summary ===============================
+tests/test_matches.py: 13 warnings
+  D:\ZhuYijing\Documents\minimax工作文件夹\powercontext\minimax\sample_project\jmespath\jmespath\lexer.py:169: PendingDeprecationWarning: deprecated string literal syntax
+    warnings.warn("deprecated string literal syntax",
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_matches.py::TestMatches::test_r3_uses_python_re_search_semantics
+1 failed, 13 warnings in 0.14s

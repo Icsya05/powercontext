@@ -1,0 +1,322 @@
+# Target test run BEFORE the implementation
+# command: python -m pytest tests/test_matches.py -q
+# cwd: minimax/sample_project/jmespath
+# exit code: 1
+# generated: 2026-10-28T22:46:15
+
+FFFFFF                                                                   [100%]
+================================== FAILURES ===================================
+__________ TestMatches.test_r1_requires_exactly_two_string_arguments __________
+
+    def call_function(self, function_name, resolved_args):
+        try:
+>           spec = self.FUNCTION_TABLE[function_name]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'matches'
+
+jmespath\functions.py:74: KeyError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_matches.TestMatches testMethod=test_r1_requires_exactly_two_string_arguments>
+
+    def test_r1_requires_exactly_two_string_arguments(self):
+        with self.assertRaises(exceptions.ArityError) as caught:
+>           jmespath.search('matches(@)', 'abc')
+
+tests\test_matches.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jmespath\__init__.py:12: in search
+    return parser.Parser().parse(expression).search(data, options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:516: in search
+    result = interpreter.visit(self.parsed, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:94: in visit
+    return method(node, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:171: in visit_function_expression
+    return self._functions.call_function(node['value'], resolved_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def call_function(self, function_name, resolved_args):
+        try:
+            spec = self.FUNCTION_TABLE[function_name]
+        except KeyError:
+>           raise exceptions.UnknownFunctionError(
+                "Unknown function: %s()" % function_name)
+E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()
+
+jmespath\functions.py:76: UnknownFunctionError
+_____ TestMatches.test_r2_returns_true_for_a_match_and_false_for_no_match _____
+
+self = <jmespath.functions.Functions object at 0x000002A5A613C4D0>
+function_name = 'matches', resolved_args = ['abc', 'b']
+
+    def call_function(self, function_name, resolved_args):
+        try:
+>           spec = self.FUNCTION_TABLE[function_name]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'matches'
+
+jmespath\functions.py:74: KeyError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_matches.TestMatches testMethod=test_r2_returns_true_for_a_match_and_false_for_no_match>
+
+    def test_r2_returns_true_for_a_match_and_false_for_no_match(self):
+        self.assertIs(
+>           jmespath.search('matches(`abc`, `b`)', {}),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            True)
+
+tests\test_matches.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jmespath\__init__.py:12: in search
+    return parser.Parser().parse(expression).search(data, options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:516: in search
+    result = interpreter.visit(self.parsed, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:94: in visit
+    return method(node, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:171: in visit_function_expression
+    return self._functions.call_function(node['value'], resolved_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <jmespath.functions.Functions object at 0x000002A5A613C4D0>
+function_name = 'matches', resolved_args = ['abc', 'b']
+
+    def call_function(self, function_name, resolved_args):
+        try:
+            spec = self.FUNCTION_TABLE[function_name]
+        except KeyError:
+>           raise exceptions.UnknownFunctionError(
+                "Unknown function: %s()" % function_name)
+E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()
+
+jmespath\functions.py:76: UnknownFunctionError
+_____________ TestMatches.test_r3_uses_python_re_search_semantics _____________
+
+self = <jmespath.functions.Functions object at 0x000002A5A590E390>
+function_name = 'matches', resolved_args = ['abc', 'b']
+
+    def call_function(self, function_name, resolved_args):
+        try:
+>           spec = self.FUNCTION_TABLE[function_name]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'matches'
+
+jmespath\functions.py:74: KeyError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_matches.TestMatches testMethod=test_r3_uses_python_re_search_semantics>
+
+    def test_r3_uses_python_re_search_semantics(self):
+        self.assertIs(
+>           jmespath.search('matches(`abc`, `b`)', {}),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            True)
+
+tests\test_matches.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jmespath\__init__.py:12: in search
+    return parser.Parser().parse(expression).search(data, options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:516: in search
+    result = interpreter.visit(self.parsed, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:94: in visit
+    return method(node, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:171: in visit_function_expression
+    return self._functions.call_function(node['value'], resolved_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <jmespath.functions.Functions object at 0x000002A5A590E390>
+function_name = 'matches', resolved_args = ['abc', 'b']
+
+    def call_function(self, function_name, resolved_args):
+        try:
+            spec = self.FUNCTION_TABLE[function_name]
+        except KeyError:
+>           raise exceptions.UnknownFunctionError(
+                "Unknown function: %s()" % function_name)
+E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()
+
+jmespath\functions.py:76: UnknownFunctionError
+________ TestMatches.test_r4_invalid_regex_raises_jmespath_type_error _________
+
+    def call_function(self, function_name, resolved_args):
+        try:
+>           spec = self.FUNCTION_TABLE[function_name]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'matches'
+
+jmespath\functions.py:74: KeyError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_matches.TestMatches testMethod=test_r4_invalid_regex_raises_jmespath_type_error>
+
+    def test_r4_invalid_regex_raises_jmespath_type_error(self):
+        with self.assertRaises(exceptions.JMESPathTypeError) as caught:
+>           jmespath.search(r"matches(`abc`, `[`)", {})
+
+tests\test_matches.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jmespath\__init__.py:12: in search
+    return parser.Parser().parse(expression).search(data, options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:516: in search
+    result = interpreter.visit(self.parsed, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:94: in visit
+    return method(node, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:171: in visit_function_expression
+    return self._functions.call_function(node['value'], resolved_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def call_function(self, function_name, resolved_args):
+        try:
+            spec = self.FUNCTION_TABLE[function_name]
+        except KeyError:
+>           raise exceptions.UnknownFunctionError(
+                "Unknown function: %s()" % function_name)
+E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()
+
+jmespath\functions.py:76: UnknownFunctionError
+____________ TestMatches.test_r5_can_be_used_as_a_filter_predicate ____________
+
+self = <jmespath.functions.Functions object at 0x000002A5A613ECF0>
+function_name = 'matches', resolved_args = ['alice', '^a']
+
+    def call_function(self, function_name, resolved_args):
+        try:
+>           spec = self.FUNCTION_TABLE[function_name]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'matches'
+
+jmespath\functions.py:74: KeyError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_matches.TestMatches testMethod=test_r5_can_be_used_as_a_filter_predicate>
+
+    def test_r5_can_be_used_as_a_filter_predicate(self):
+        data = {
+            'people': [
+                {'name': 'alice'},
+                {'name': 'bob'},
+            ],
+        }
+    
+        self.assertEqual(
+>           jmespath.search('people[?matches(name, `^a`)].name', data),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            ['alice'])
+
+tests\test_matches.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jmespath\__init__.py:12: in search
+    return parser.Parser().parse(expression).search(data, options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:516: in search
+    result = interpreter.visit(self.parsed, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:94: in visit
+    return method(node, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:180: in visit_filter_projection
+    if self._is_true(self.visit(comparator_node, element)):
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:94: in visit
+    return method(node, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:171: in visit_function_expression
+    return self._functions.call_function(node['value'], resolved_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <jmespath.functions.Functions object at 0x000002A5A613ECF0>
+function_name = 'matches', resolved_args = ['alice', '^a']
+
+    def call_function(self, function_name, resolved_args):
+        try:
+            spec = self.FUNCTION_TABLE[function_name]
+        except KeyError:
+>           raise exceptions.UnknownFunctionError(
+                "Unknown function: %s()" % function_name)
+E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()
+
+jmespath\functions.py:76: UnknownFunctionError
+_ TestMatches.test_r6_type_error_message_includes_value_type_and_expected_types _
+
+    def call_function(self, function_name, resolved_args):
+        try:
+>           spec = self.FUNCTION_TABLE[function_name]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'matches'
+
+jmespath\functions.py:74: KeyError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_matches.TestMatches testMethod=test_r6_type_error_message_includes_value_type_and_expected_types>
+
+    def test_r6_type_error_message_includes_value_type_and_expected_types(self):
+        with self.assertRaises(exceptions.JMESPathTypeError) as caught:
+>           jmespath.search('matches(@, `pattern`)', 42)
+
+tests\test_matches.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+jmespath\__init__.py:12: in search
+    return parser.Parser().parse(expression).search(data, options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\parser.py:516: in search
+    result = interpreter.visit(self.parsed, value)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:94: in visit
+    return method(node, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jmespath\visitor.py:171: in visit_function_expression
+    return self._functions.call_function(node['value'], resolved_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def call_function(self, function_name, resolved_args):
+        try:
+            spec = self.FUNCTION_TABLE[function_name]
+        except KeyError:
+>           raise exceptions.UnknownFunctionError(
+                "Unknown function: %s()" % function_name)
+E           jmespath.exceptions.UnknownFunctionError: Unknown function: matches()
+
+jmespath\functions.py:76: UnknownFunctionError
+============================== warnings summary ===============================
+tests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match
+tests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match
+tests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error
+tests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error
+tests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate
+tests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types
+  D:\ZhuYijing\Documents\minimax工作文件夹\powercontext\minimax\sample_project\jmespath\jmespath\lexer.py:169: PendingDeprecationWarning: deprecated string literal syntax
+    warnings.warn("deprecated string literal syntax",
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_matches.py::TestMatches::test_r1_requires_exactly_two_string_arguments
+FAILED tests/test_matches.py::TestMatches::test_r2_returns_true_for_a_match_and_false_for_no_match
+FAILED tests/test_matches.py::TestMatches::test_r3_uses_python_re_search_semantics
+FAILED tests/test_matches.py::TestMatches::test_r4_invalid_regex_raises_jmespath_type_error
+FAILED tests/test_matches.py::TestMatches::test_r5_can_be_used_as_a_filter_predicate
+FAILED tests/test_matches.py::TestMatches::test_r6_type_error_message_includes_value_type_and_expected_types
+6 failed, 6 warnings in 0.27s

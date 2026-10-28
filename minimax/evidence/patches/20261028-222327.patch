@@ -1,0 +1,19 @@
+diff --git a/minimax/sample_project/jmespath/jmespath/functions.py b/minimax/sample_project/jmespath/jmespath/functions.py
+--- a/minimax/sample_project/jmespath/jmespath/functions.py
++++ b/minimax/sample_project/jmespath/jmespath/functions.py
+@@ -225,6 +225,14 @@ class Functions(metaclass=FunctionRegistry):
+     @signature({'types': ['string']}, {'types': ['string']})
+     def _func_starts_with(self, search, suffix):
+         return search.startswith(suffix)
+ 
++    @signature({'types': ['string']}, {'types': ['string']})
++    def _func_matches(self, subject, pattern):
++        try:
++            return re.search(subject, pattern) is not None
++        except re.error:
++            raise exceptions.JMESPathTypeError(
++                'matches', pattern, 'invalid regex', ['string'])
++
+     @signature({'types': ['array', 'string']})
+     def _func_reverse(self, arg):
+         if isinstance(arg, STRING_TYPE):

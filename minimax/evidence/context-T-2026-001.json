@@ -1,0 +1,900 @@
+{
+  "task": {
+    "task_id": "T-2026-001",
+    "title": "为 jmespath 增加 matches() 正则谓词函数",
+    "goal": "在 `sample_project/jmespath`（上游 jmespath.py v1.1.0，MIT）里实现内建谓词函数\n`matches(subject, pattern)`，让 JSON 查询可以用正则做筛选条件，\n例如 `people[?matches(name, '^a')].name`。\n\n实现必须严格符合规格 `SPEC-JP-FN-001` 的 R1–R6 与不变行为 B1–B3。",
+    "keep": [
+      "jmespath 现有 23 个内建函数的签名、返回值与异常行为完全不变",
+      "lexer.py、parser.py、visitor.py、ast.py 的行为不变",
+      "tests/compliance/ 下全部 JMESPath 合规用例仍然通过",
+      "现有的 `pytest tests/` 基线（991 passed, 1 skipped）不得退化为失败"
+    ],
+    "acceptance": [
+      "python -m pytest tests/test_matches.py -q",
+      "python -m pytest tests/ -q"
+    ],
+    "spec_ids": [
+      "SPEC-JP-FN-001"
+    ],
+    "applies_to": [
+      "jmespath/functions.py"
+    ],
+    "target_tests": [
+      "tests/test_matches.py"
+    ],
+    "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/tasks/T-2026-001.md"
+  },
+  "specifications": [
+    {
+      "id": "SPEC-JP-FN-001#R1",
+      "kind": "requirement",
+      "title": "matches 必须是恰好两个字符串参数",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:40",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 40,
+      "body": "matches 必须是恰好两个字符串参数\n`matches` 注册为内建函数，签名为两个 `string` 类型的参数\n（`@signature({'types': ['string']}, {'types': ['string']})`）。\n参数个数不是 2、或任一参数类型不是字符串时，抛\n`jmespath.exceptions.JMESPathTypeError` / `ArityError`，\n错误信息格式与库内其它函数完全一致。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "R1"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#R2",
+      "kind": "requirement",
+      "title": "命中返回 true，未命中返回 false",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:48",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 48,
+      "body": "命中返回 true，未命中返回 false\n`matches(subject, pattern)` 当且仅当 `subject` 中存在 `pattern` 的正则匹配时\n返回 `true`，否则返回 `false`。返回值必须是真正的布尔值，不是真值字符串。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "R2"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#R3",
+      "kind": "requirement",
+      "title": "正则语义为 Python re.search",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:53",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 53,
+      "body": "正则语义为 Python re.search\n匹配语义采用 Python `re.search`：在 `subject` 的**任意位置**寻找匹配，\n不要求整串匹配。`pattern` 按 Python `re` 的语法解释，\n因此 `^` `$` `.*` `[0-9]` `\\+` 等写法都按 `re` 的规则生效。\n\n例：`matches('abc', 'b')` → `true`；`matches('abc', '^a')` → `true`；\n`matches('abc', '^b')` → `false`。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "R3"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#R4",
+      "kind": "requirement",
+      "title": "非法正则必须报 JMESPathTypeError",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:62",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 62,
+      "body": "非法正则必须报 JMESPathTypeError\n`pattern` 不是合法正则时（例如 `'['`），抛\n`jmespath.exceptions.JMESPathTypeError`，错误信息里必须包含函数名\n`matches()` 和出错的那个 pattern 值，不得抛别的异常类型，\n不得把非法正则当成\"不匹配\"静默返回 `false`。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "R4"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#R5",
+      "kind": "requirement",
+      "title": "可以在 filter 投影中当谓词用",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:69",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 69,
+      "body": "可以在 filter 投影中当谓词用\n`matches()` 必须在 `filter` 投影中可用，例如：\n\n```\npeople[?matches(name, '^a')].name\n```\n\n对 `{\"people\": [{\"name\": \"alice\"}, {\"name\": \"bob\"}]}` 必须返回 `[\"alice\"]`。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "R5"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#R6",
+      "kind": "requirement",
+      "title": "参数类型错误的信息要指明期望类型",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:79",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 79,
+      "body": "参数类型错误的信息要指明期望类型\n当 `subject` 不是字符串时，错误信息里必须出现函数名 `matches()`、\n实际收到的值与类型、以及期望的类型列表 `['string']`，\n与库内既有函数（如 `length()`）的错误信息风格保持一致。\n\n## 不变行为（回归要求）",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "R6"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#B2",
+      "kind": "invariant",
+      "title": "解析器、词法器、访问器不变",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:93",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 93,
+      "body": "解析器、词法器、访问器不变\n不得修改 `lexer.py`、`parser.py`、`visitor.py`、`ast.py` 的行为。\n新增能力只通过新增一个带 `@signature` 装饰器的 `_func_*` 方法实现，\n由既有的 `FunctionRegistry` 自动注册。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "B2"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#A1",
+      "kind": "acceptance",
+      "title": "新增验收测试文件",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:106",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 106,
+      "body": "新增验收测试文件\n新增 `tests/test_matches.py`，逐条覆盖 R1–R6（参数类型、命中与未命中、\n正则语义、非法正则、filter 投影使用、错误信息内容）。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "A1"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#A2",
+      "kind": "acceptance",
+      "title": "修改前目标测试必须失败",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:111",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 111,
+      "body": "修改前目标测试必须失败\n在实现之前运行 `pytest tests/test_matches.py`，必须因为 R1 未实现而失败\n（错误信息包含 `Unknown function: matches()`），\n**不允许**用缺少依赖、无法启动之类的环境错误冒充功能未实现。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "A2"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#A3",
+      "kind": "acceptance",
+      "title": "修改后目标测试与回归测试必须全绿",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:117",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 117,
+      "body": "修改后目标测试与回归测试必须全绿\n实现之后，`pytest tests/test_matches.py` 全绿，\n并且 `pytest tests/`（包含全部既有测试与合规用例）全绿。\n测试集在修改前后保持一致，不得通过删除断言、跳过测试或修改预期结果让其通过。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "A3"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#B1",
+      "kind": "invariant",
+      "title": "既有内建函数行为不变",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:87",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 87,
+      "body": "既有内建函数行为不变\n修改不得改变任何既有内建函数的签名、返回值或异常行为。\n`sample_project/before/jmespath/` 里保存了修改前的模块快照，\n`git diff` 必须显示既有函数体没有任何语义改动。",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "B1"
+      }
+    },
+    {
+      "id": "SPEC-JP-FN-001#B3",
+      "kind": "invariant",
+      "title": "合规测试集仍然全部通过",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md:99",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/specs/jmespath-matches.md",
+      "source_line": 99,
+      "body": "合规测试集仍然全部通过\n`tests/compliance/` 下的 JMESPath 合规用例必须全部通过，\n`pytest tests/` 必须全绿（修改前的基线是 991 passed, 1 skipped）。\n\n## 验收标准",
+      "detail": {
+        "spec_id": "SPEC-JP-FN-001",
+        "section_id": "B3"
+      }
+    }
+  ],
+  "code": [
+    {
+      "id": "<imports>",
+      "kind": "imports",
+      "title": "module level imports",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:1",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 1,
+      "body": "import math\nimport json\nimport re\n\nfrom jmespath import exceptions\nfrom jmespath.compat import string_type as STRING_TYPE\nfrom jmespath.compat import get_methods",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "signature",
+      "kind": "function",
+      "title": "def signature(*arguments)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:39",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 39,
+      "body": "def signature(*arguments):\n    def _record_signature(func):\n        func.signature = arguments\n        return func\n    return _record_signature",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "FunctionRegistry",
+      "kind": "class",
+      "title": "class FunctionRegistry",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:46",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 46,
+      "body": "class FunctionRegistry(type):\n    def __init__(cls, name, bases, attrs):\n        cls._populate_function_table()\n        super(FunctionRegistry, cls).__init__(name, bases, attrs)\n\n    def _populate_function_table(cls):\n        function_table = {}\n        # Any method with a @signature decorator that also\n        # starts with \"_func_\" is registered as a function.\n        # _func_max_by -> max_by function.\n        for name, method in get_methods(cls):\n            if not name.startswith('_func_'):\n                continue\n            signature = getattr(method, 'signature', None)\n            if signature is not None:\n                function_table[name[6:]] = {\n                    'function': method,\n                    'signature': signature,\n                }\n        cls.FUNCTION_TABLE = function_table",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "FunctionRegistry.__init__",
+      "kind": "method",
+      "title": "def __init__(cls, name, bases, attrs)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:47",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 47,
+      "body": "    def __init__(cls, name, bases, attrs):\n        cls._populate_function_table()\n        super(FunctionRegistry, cls).__init__(name, bases, attrs)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "FunctionRegistry._populate_function_table",
+      "kind": "method",
+      "title": "def _populate_function_table(cls)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:51",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 51,
+      "body": "    def _populate_function_table(cls):\n        function_table = {}\n        # Any method with a @signature decorator that also\n        # starts with \"_func_\" is registered as a function.\n        # _func_max_by -> max_by function.\n        for name, method in get_methods(cls):\n            if not name.startswith('_func_'):\n                continue\n            signature = getattr(method, 'signature', None)\n            if signature is not None:\n                function_table[name[6:]] = {\n                    'function': method,\n                    'signature': signature,\n                }\n        cls.FUNCTION_TABLE = function_table",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions",
+      "kind": "class",
+      "title": "class Functions",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:68",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 68,
+      "body": "class Functions(metaclass=FunctionRegistry):\n\n    FUNCTION_TABLE = {\n    }\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n            raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\n        function = spec['function']\n        signature = spec['signature']\n        self._validate_arguments(resolved_args, signature, function_name)\n        return function(self, *resolved_args)\n\n    def _validate_arguments(self, args, signature, function_name):\n        if signature and signature[-1].get('variadic'):\n            if len(args) < len(signature):\n                raise exceptions.VariadictArityError(\n                    len(signature), len(args), function_name)\n        elif len(args) != len(signature):\n            raise exceptions.ArityError(\n                len(signature), len(args), function_name)\n        return self._type_check(args, signature, function_name)\n\n    def _type_check(self, actual, signature, function_name):\n        for i in range(len(signature)):\n            allowed_types = signature[i]['types']\n            if allowed_types:\n                self._type_check_single(actual[i], allowed_types,\n                                        function_name)\n\n    def _type_check_single(self, current, types, function_name):\n        # Type checking involves checking the top level type,\n        # and in the case of arrays, potentially checking the types\n        # of each element.\n        allowed_types, allowed_subtypes = self._get_allowed_pytypes(types)\n        # We're not using isinstance() on purpose.\n        # The type model for jmespath does not map\n        # 1-1 with python types (booleans are considered\n        # integers in python for example).\n        actual_typename = type(current).__name__\n        if actual_typename not in allowed_types:\n            raise exceptions.JMESPathTypeError(\n                function_name, current,\n                self._convert_to_jmespath_type(actual_typename), types)\n        # If we're dealing with a list type, we can have\n        # additional restrictions on the type of the list\n        # elements (for example a function can require a\n        # list of numbers or a list of strings).\n        # Arrays are the only types that can have subtypes.\n        if allowed_subtypes:\n            self._subtype_check(current, allowed_subtypes,\n                                types, function_name)\n\n    def _get_allowed_pytypes(self, types):\n        allowed_types = []\n        allowed_subtypes = []\n        for t in types:\n            type_ = t.split('-', 1)\n            if len(type_) == 2:\n                type_, subtype = type_\n                allowed_subtypes.append(REVERSE_TYPES_MAP[subtype])\n            else:\n                type_ = type_[0]\n            allowed_types.extend(REVERSE_TYPES_MAP[type_])\n        return allowed_types, allowed_subtypes\n\n    def _subtype_check(self, current, allowed_subtypes, types, function_name):\n        if len(allowed_subtypes) == 1:\n            # The easy case, we know up front what type\n            # we need to validate.\n            allowed_subtypes = allowed_subtypes[0]\n            for element in current:\n                actual_typename = type(element).__name__\n                if actual_typename not in allowed_subtypes:\n                    raise exceptions.JMESPathTypeError(\n                        function_name, element, actual_typename, types)\n        elif len(allowed_subtypes) > 1 and current:\n            # Dynamic type validation.  Based on the first\n            # type we see, we validate that the remaining types\n            # match.\n            first = type(current[0]).__name__\n            for subtypes in allowed_subtypes:\n                if first in subtypes:\n                    allowed = subtypes\n                    break\n            else:\n                raise exceptions.JMESPathTypeError(\n                    function_name, current[0], first, types)\n            for element in current:\n                actual_typename = type(element).__name__\n                if actual_typename not in allowed:\n                    raise exceptions.JMESPathTypeError(\n                        function_name, element, actual_typename, types)\n\n    @signature({'types': ['number']})\n    def _func_abs(self, arg):\n        return abs(arg)\n\n    @signature({'types': ['array-number']})\n    def _func_avg(self, arg):\n        if arg:\n            return sum(arg) / len(arg)\n        else:\n            return None\n\n    @signature({'types': [], 'variadic': True})\n    def _func_not_null(self, *arguments):\n        for argument in arguments:\n            if argument is not None:\n                return argument\n\n    @signature({'types': []})\n    def _func_to_array(self, arg):\n        if isinstance(arg, list):\n            return arg\n        else:\n            return [arg]\n\n    @signature({'types': []})\n    def _func_to_string(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return arg\n        else:\n            return json.dumps(arg, separators=(',', ':'),\n                              default=str)\n\n    @signature({'types': []})\n    def _func_to_number(self, arg):\n        if isinstance(arg, (list, dict, bool)):\n            return None\n        elif arg is None:\n            return None\n        elif isinstance(arg, (int, float)):\n            return arg\n        else:\n            try:\n                return int(arg)\n            except ValueError:\n                try:\n                    return float(arg)\n                except ValueError:\n                    return None\n\n    @signature({'types': ['array', 'string']}, {'types': []})\n    def _func_contains(self, subject, search):\n        return search in subject\n\n    @signature({'types': ['string', 'array', 'object']})\n    def _func_length(self, arg):\n        return len(arg)\n\n    @signature({'types': ['string']}, {'types': ['string']})\n    def _func_ends_with(self, search, suffix):\n        return search.endswith(suffix)\n\n    @signature({'types': ['string']}, {'types': ['string']})\n    def _func_starts_with(self, search, suffix):\n        return search.startswith(suffix)\n\n    @signature({'types': ['string']}, {'types': ['string']})\n    def _func_matches(self, subject, pattern):\n        try:\n            return re.search(pattern, subject) is not None\n        except re.error:\n            raise exceptions.JMESPathTypeError(\n                'matches', pattern, 'string', ['string'])\n\n    @signature({'types': ['array', 'string']})\n    def _func_reverse(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return arg[::-1]\n        else:\n            return list(reversed(arg))\n\n    @signature({\"types\": ['number']})\n    def _func_ceil(self, arg):\n        return math.ceil(arg)\n\n    @signature({\"types\": ['number']})\n    def _func_floor(self, arg):\n        return math.floor(arg)\n\n    @signature({\"types\": ['string']}, {\"types\": ['array-string']})\n    def _func_join(self, separator, array):\n        return separator.join(array)\n\n    @signature({'types': ['expref']}, {'types': ['array']})\n    def _func_map(self, expref, arg):\n        result = []\n        for element in arg:\n            result.append(expref.visit(expref.expression, element))\n        return result\n\n    @signature({\"types\": ['array-number', 'array-string']})\n    def _func_max(self, arg):\n        if arg:\n            return max(arg)\n        else:\n            return None\n\n    @signature({\"types\": [\"object\"], \"variadic\": True})\n    def _func_merge(self, *arguments):\n        merged = {}\n        for arg in arguments:\n            merged.update(arg)\n        return merged\n\n    @signature({\"types\": ['array-number', 'array-string']})\n    def _func_min(self, arg):\n        if arg:\n            return min(arg)\n        else:\n            return None\n\n    @signature({\"types\": ['array-string', 'array-number']})\n    def _func_sort(self, arg):\n        return list(sorted(arg))\n\n    @signature({\"types\": ['array-number']})\n    def _func_sum(self, arg):\n        return sum(arg)\n\n    @signature({\"types\": ['object']})\n    def _func_keys(self, arg):\n        # To be consistent with .values()\n        # should we also return the indices of a list?\n        return list(arg.keys())\n\n    @signature({\"types\": ['object']})\n    def _func_values(self, arg):\n        return list(arg.values())\n\n    @signature({'types': []})\n    def _func_type(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return \"string\"\n        elif isinstance(arg, bool):\n            return \"boolean\"\n        elif isinstance(arg, list):\n            return \"array\"\n        elif isinstance(arg, dict):\n            return \"object\"\n        elif isinstance(arg, (float, int)):\n            return \"number\"\n        elif arg is None:\n            return \"null\"\n\n    @signature({'types': ['array']}, {'types': ['expref']})\n    def _func_sort_by(self, array, expref):\n        if not array:\n            return array\n        # sort_by allows for the expref to be either a number of\n        # a string, so we have some special logic to handle this.\n        # We evaluate the first array element and verify that it's\n        # either a string of a number.  We then create a key function\n        # that validates that type, which requires that remaining array\n        # elements resolve to the same type as the first element.\n        required_type = self._convert_to_jmespath_type(\n            type(expref.visit(expref.expression, array[0])).__name__)\n        if required_type not in ['number', 'string']:\n            raise exceptions.JMESPathTypeError(\n                'sort_by', array[0], required_type, ['string', 'number'])\n        keyfunc = self._create_key_func(expref,\n                                        [required_type],\n                                        'sort_by')\n        return list(sorted(array, key=keyfunc))\n\n    @signature({'types': ['array']}, {'types': ['expref']})\n    def _func_min_by(self, array, expref):\n        keyfunc = self._create_key_func(expref,\n                                        ['number', 'string'],\n                                        'min_by')\n        if array:\n            return min(array, key=keyfunc)\n        else:\n            return None\n\n    @signature({'types': ['array']}, {'types': ['expref']})\n    def _func_max_by(self, array, expref):\n        keyfunc = self._create_key_func(expref,\n                                        ['number', 'string'],\n                                        'max_by')\n        if array:\n            return max(array, key=keyfunc)\n        else:\n            return None\n\n    def _create_key_func(self, expref, allowed_types, function_name):\n        def keyfunc(x):\n            result = expref.visit(expref.expression, x)\n            actual_typename = type(result).__name__\n            jmespath_type = self._convert_to_jmespath_type(actual_typename)\n            # allowed_types is in term of jmespath types, not python types.\n            if jmespath_type not in allowed_types:\n                raise exceptions.JMESPathTypeError(\n                    function_name, result, jmespath_type, allowed_types)\n            return result\n        return keyfunc\n\n    def _convert_to_jmespath_type(self, pyobject):\n        return TYPES_MAP.get(pyobject, 'unknown')",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions.call_function",
+      "kind": "method",
+      "title": "def call_function(self, function_name, resolved_args)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:73",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 73,
+      "body": "    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n            raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\n        function = spec['function']\n        signature = spec['signature']\n        self._validate_arguments(resolved_args, signature, function_name)\n        return function(self, *resolved_args)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._validate_arguments",
+      "kind": "method",
+      "title": "def _validate_arguments(self, args, signature, function_name)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:84",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 84,
+      "body": "    def _validate_arguments(self, args, signature, function_name):\n        if signature and signature[-1].get('variadic'):\n            if len(args) < len(signature):\n                raise exceptions.VariadictArityError(\n                    len(signature), len(args), function_name)\n        elif len(args) != len(signature):\n            raise exceptions.ArityError(\n                len(signature), len(args), function_name)\n        return self._type_check(args, signature, function_name)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._type_check",
+      "kind": "method",
+      "title": "def _type_check(self, actual, signature, function_name)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:94",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 94,
+      "body": "    def _type_check(self, actual, signature, function_name):\n        for i in range(len(signature)):\n            allowed_types = signature[i]['types']\n            if allowed_types:\n                self._type_check_single(actual[i], allowed_types,\n                                        function_name)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._type_check_single",
+      "kind": "method",
+      "title": "def _type_check_single(self, current, types, function_name)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:101",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 101,
+      "body": "    def _type_check_single(self, current, types, function_name):\n        # Type checking involves checking the top level type,\n        # and in the case of arrays, potentially checking the types\n        # of each element.\n        allowed_types, allowed_subtypes = self._get_allowed_pytypes(types)\n        # We're not using isinstance() on purpose.\n        # The type model for jmespath does not map\n        # 1-1 with python types (booleans are considered\n        # integers in python for example).\n        actual_typename = type(current).__name__\n        if actual_typename not in allowed_types:\n            raise exceptions.JMESPathTypeError(\n                function_name, current,\n                self._convert_to_jmespath_type(actual_typename), types)\n        # If we're dealing with a list type, we can have\n        # additional restrictions on the type of the list\n        # elements (for example a function can require a\n        # list of numbers or a list of strings).\n        # Arrays are the only types that can have subtypes.\n        if allowed_subtypes:\n            self._subtype_check(current, allowed_subtypes,\n                                types, function_name)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._get_allowed_pytypes",
+      "kind": "method",
+      "title": "def _get_allowed_pytypes(self, types)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:124",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 124,
+      "body": "    def _get_allowed_pytypes(self, types):\n        allowed_types = []\n        allowed_subtypes = []\n        for t in types:\n            type_ = t.split('-', 1)\n            if len(type_) == 2:\n                type_, subtype = type_\n                allowed_subtypes.append(REVERSE_TYPES_MAP[subtype])\n            else:\n                type_ = type_[0]\n            allowed_types.extend(REVERSE_TYPES_MAP[type_])\n        return allowed_types, allowed_subtypes",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._subtype_check",
+      "kind": "method",
+      "title": "def _subtype_check(self, current, allowed_subtypes, types, function_name)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:137",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 137,
+      "body": "    def _subtype_check(self, current, allowed_subtypes, types, function_name):\n        if len(allowed_subtypes) == 1:\n            # The easy case, we know up front what type\n            # we need to validate.\n            allowed_subtypes = allowed_subtypes[0]\n            for element in current:\n                actual_typename = type(element).__name__\n                if actual_typename not in allowed_subtypes:\n                    raise exceptions.JMESPathTypeError(\n                        function_name, element, actual_typename, types)\n        elif len(allowed_subtypes) > 1 and current:\n            # Dynamic type validation.  Based on the first\n            # type we see, we validate that the remaining types\n            # match.\n            first = type(current[0]).__name__\n            for subtypes in allowed_subtypes:\n                if first in subtypes:\n                    allowed = subtypes\n                    break\n            else:\n                raise exceptions.JMESPathTypeError(\n                    function_name, current[0], first, types)\n            for element in current:\n                actual_typename = type(element).__name__\n                if actual_typename not in allowed:\n                    raise exceptions.JMESPathTypeError(\n                        function_name, element, actual_typename, types)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_abs",
+      "kind": "method",
+      "title": "def _func_abs(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:166",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 166,
+      "body": "    def _func_abs(self, arg):\n        return abs(arg)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_avg",
+      "kind": "method",
+      "title": "def _func_avg(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:170",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 170,
+      "body": "    def _func_avg(self, arg):\n        if arg:\n            return sum(arg) / len(arg)\n        else:\n            return None",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_not_null",
+      "kind": "method",
+      "title": "def _func_not_null(self, *arguments)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:177",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 177,
+      "body": "    def _func_not_null(self, *arguments):\n        for argument in arguments:\n            if argument is not None:\n                return argument",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_to_array",
+      "kind": "method",
+      "title": "def _func_to_array(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:183",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 183,
+      "body": "    def _func_to_array(self, arg):\n        if isinstance(arg, list):\n            return arg\n        else:\n            return [arg]",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_to_string",
+      "kind": "method",
+      "title": "def _func_to_string(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:190",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 190,
+      "body": "    def _func_to_string(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return arg\n        else:\n            return json.dumps(arg, separators=(',', ':'),\n                              default=str)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_to_number",
+      "kind": "method",
+      "title": "def _func_to_number(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:198",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 198,
+      "body": "    def _func_to_number(self, arg):\n        if isinstance(arg, (list, dict, bool)):\n            return None\n        elif arg is None:\n            return None\n        elif isinstance(arg, (int, float)):\n            return arg\n        else:\n            try:\n                return int(arg)\n            except ValueError:\n                try:\n                    return float(arg)\n                except ValueError:\n                    return None",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_contains",
+      "kind": "method",
+      "title": "def _func_contains(self, subject, search)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:215",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 215,
+      "body": "    def _func_contains(self, subject, search):\n        return search in subject",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_length",
+      "kind": "method",
+      "title": "def _func_length(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:219",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 219,
+      "body": "    def _func_length(self, arg):\n        return len(arg)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_ends_with",
+      "kind": "method",
+      "title": "def _func_ends_with(self, search, suffix)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:223",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 223,
+      "body": "    def _func_ends_with(self, search, suffix):\n        return search.endswith(suffix)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_starts_with",
+      "kind": "method",
+      "title": "def _func_starts_with(self, search, suffix)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:227",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 227,
+      "body": "    def _func_starts_with(self, search, suffix):\n        return search.startswith(suffix)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_matches",
+      "kind": "method",
+      "title": "def _func_matches(self, subject, pattern)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:231",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 231,
+      "body": "    def _func_matches(self, subject, pattern):\n        try:\n            return re.search(pattern, subject) is not None\n        except re.error:\n            raise exceptions.JMESPathTypeError(\n                'matches', pattern, 'string', ['string'])",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_reverse",
+      "kind": "method",
+      "title": "def _func_reverse(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:239",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 239,
+      "body": "    def _func_reverse(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return arg[::-1]\n        else:\n            return list(reversed(arg))",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_ceil",
+      "kind": "method",
+      "title": "def _func_ceil(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:246",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 246,
+      "body": "    def _func_ceil(self, arg):\n        return math.ceil(arg)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_floor",
+      "kind": "method",
+      "title": "def _func_floor(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:250",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 250,
+      "body": "    def _func_floor(self, arg):\n        return math.floor(arg)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_join",
+      "kind": "method",
+      "title": "def _func_join(self, separator, array)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:254",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 254,
+      "body": "    def _func_join(self, separator, array):\n        return separator.join(array)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_map",
+      "kind": "method",
+      "title": "def _func_map(self, expref, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:258",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 258,
+      "body": "    def _func_map(self, expref, arg):\n        result = []\n        for element in arg:\n            result.append(expref.visit(expref.expression, element))\n        return result",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_max",
+      "kind": "method",
+      "title": "def _func_max(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:265",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 265,
+      "body": "    def _func_max(self, arg):\n        if arg:\n            return max(arg)\n        else:\n            return None",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_merge",
+      "kind": "method",
+      "title": "def _func_merge(self, *arguments)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:272",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 272,
+      "body": "    def _func_merge(self, *arguments):\n        merged = {}\n        for arg in arguments:\n            merged.update(arg)\n        return merged",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_min",
+      "kind": "method",
+      "title": "def _func_min(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:279",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 279,
+      "body": "    def _func_min(self, arg):\n        if arg:\n            return min(arg)\n        else:\n            return None",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_sort",
+      "kind": "method",
+      "title": "def _func_sort(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:286",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 286,
+      "body": "    def _func_sort(self, arg):\n        return list(sorted(arg))",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_sum",
+      "kind": "method",
+      "title": "def _func_sum(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:290",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 290,
+      "body": "    def _func_sum(self, arg):\n        return sum(arg)",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_keys",
+      "kind": "method",
+      "title": "def _func_keys(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:294",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 294,
+      "body": "    def _func_keys(self, arg):\n        # To be consistent with .values()\n        # should we also return the indices of a list?\n        return list(arg.keys())",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_values",
+      "kind": "method",
+      "title": "def _func_values(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:300",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 300,
+      "body": "    def _func_values(self, arg):\n        return list(arg.values())",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_type",
+      "kind": "method",
+      "title": "def _func_type(self, arg)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:304",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 304,
+      "body": "    def _func_type(self, arg):\n        if isinstance(arg, STRING_TYPE):\n            return \"string\"\n        elif isinstance(arg, bool):\n            return \"boolean\"\n        elif isinstance(arg, list):\n            return \"array\"\n        elif isinstance(arg, dict):\n            return \"object\"\n        elif isinstance(arg, (float, int)):\n            return \"number\"\n        elif arg is None:\n            return \"null\"",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_sort_by",
+      "kind": "method",
+      "title": "def _func_sort_by(self, array, expref)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:319",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 319,
+      "body": "    def _func_sort_by(self, array, expref):\n        if not array:\n            return array\n        # sort_by allows for the expref to be either a number of\n        # a string, so we have some special logic to handle this.\n        # We evaluate the first array element and verify that it's\n        # either a string of a number.  We then create a key function\n        # that validates that type, which requires that remaining array\n        # elements resolve to the same type as the first element.\n        required_type = self._convert_to_jmespath_type(\n            type(expref.visit(expref.expression, array[0])).__name__)\n        if required_type not in ['number', 'string']:\n            raise exceptions.JMESPathTypeError(\n                'sort_by', array[0], required_type, ['string', 'number'])\n        keyfunc = self._create_key_func(expref,\n                                        [required_type],\n                                        'sort_by')\n        return list(sorted(array, key=keyfunc))",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_min_by",
+      "kind": "method",
+      "title": "def _func_min_by(self, array, expref)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:339",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 339,
+      "body": "    def _func_min_by(self, array, expref):\n        keyfunc = self._create_key_func(expref,\n                                        ['number', 'string'],\n                                        'min_by')\n        if array:\n            return min(array, key=keyfunc)\n        else:\n            return None",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._func_max_by",
+      "kind": "method",
+      "title": "def _func_max_by(self, array, expref)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:349",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 349,
+      "body": "    def _func_max_by(self, array, expref):\n        keyfunc = self._create_key_func(expref,\n                                        ['number', 'string'],\n                                        'max_by')\n        if array:\n            return max(array, key=keyfunc)\n        else:\n            return None",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._create_key_func",
+      "kind": "method",
+      "title": "def _create_key_func(self, expref, allowed_types, function_name)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:358",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 358,
+      "body": "    def _create_key_func(self, expref, allowed_types, function_name):\n        def keyfunc(x):\n            result = expref.visit(expref.expression, x)\n            actual_typename = type(result).__name__\n            jmespath_type = self._convert_to_jmespath_type(actual_typename)\n            # allowed_types is in term of jmespath types, not python types.\n            if jmespath_type not in allowed_types:\n                raise exceptions.JMESPathTypeError(\n                    function_name, result, jmespath_type, allowed_types)\n            return result\n        return keyfunc",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "Functions._convert_to_jmespath_type",
+      "kind": "method",
+      "title": "def _convert_to_jmespath_type(self, pyobject)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py:370",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/jmespath/functions.py",
+      "source_line": 370,
+      "body": "    def _convert_to_jmespath_type(self, pyobject):\n        return TYPES_MAP.get(pyobject, 'unknown')",
+      "detail": {
+        "file_path": "jmespath/functions.py"
+      }
+    },
+    {
+      "id": "TestSearchOptions",
+      "kind": "class",
+      "title": "class TestSearchOptions",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py:9",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
+      "source_line": 9,
+      "body": "class TestSearchOptions(unittest.TestCase):\n    def test_can_provide_dict_cls(self):\n        result = jmespath.search(\n            '{a: a, b: b, c: c}.*',\n            {'c': 'c', 'b': 'b', 'a': 'a', 'd': 'd'},\n            options=jmespath.Options(dict_cls=OrderedDict))\n        self.assertEqual(result, ['a', 'b', 'c'])\n\n    def test_can_provide_custom_functions(self):\n        class CustomFunctions(jmespath.functions.Functions):\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_custom_add(self, x, y):\n                return x + y\n\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_my_subtract(self, x, y):\n                return x - y\n\n\n        options = jmespath.Options(custom_functions=CustomFunctions())\n        self.assertEqual(\n            jmespath.search('custom_add(`1`, `2`)', {}, options=options),\n            3\n        )\n        self.assertEqual(\n            jmespath.search('my_subtract(`10`, `3`)', {}, options=options),\n            7\n        )\n        # Should still be able to use the original functions without\n        # any interference from the CustomFunctions class.\n        self.assertEqual(\n            jmespath.search('length(`[1, 2]`)', {}), 2\n        )",
+      "detail": {
+        "file_path": "tests/test_search.py"
+      }
+    },
+    {
+      "id": "TestSearchOptions.test_can_provide_custom_functions",
+      "kind": "method",
+      "title": "def test_can_provide_custom_functions(self)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py:17",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
+      "source_line": 17,
+      "body": "    def test_can_provide_custom_functions(self):\n        class CustomFunctions(jmespath.functions.Functions):\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_custom_add(self, x, y):\n                return x + y\n\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_my_subtract(self, x, y):\n                return x - y\n\n\n        options = jmespath.Options(custom_functions=CustomFunctions())\n        self.assertEqual(\n            jmespath.search('custom_add(`1`, `2`)', {}, options=options),\n            3\n        )\n        self.assertEqual(\n            jmespath.search('my_subtract(`10`, `3`)', {}, options=options),\n            7\n        )\n        # Should still be able to use the original functions without\n        # any interference from the CustomFunctions class.\n        self.assertEqual(\n            jmespath.search('length(`[1, 2]`)', {}), 2\n        )",
+      "detail": {
+        "file_path": "tests/test_search.py"
+      }
+    },
+    {
+      "id": "TestMatches.test_r5_can_be_used_as_a_filter_predicate",
+      "kind": "method",
+      "title": "def test_r5_can_be_used_as_a_filter_predicate(self)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:67",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 67,
+      "body": "    def test_r5_can_be_used_as_a_filter_predicate(self):\n        data = {\n            'people': [\n                {'name': 'alice'},\n                {'name': 'bob'},\n            ],\n        }\n\n        self.assertEqual(\n            jmespath.search('people[?matches(name, `^a`)].name', data),\n            ['alice'])",
+      "detail": {
+        "file_path": "tests/test_matches.py"
+      }
+    },
+    {
+      "id": "TestMatches.test_r1_requires_exactly_two_string_arguments",
+      "kind": "method",
+      "title": "def test_r1_requires_exactly_two_string_arguments(self)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:9",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 9,
+      "body": "    def test_r1_requires_exactly_two_string_arguments(self):\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 1')\n\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@, @, @)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 3')\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(`subject`, @)', 42)",
+      "detail": {
+        "file_path": "tests/test_matches.py"
+      }
+    },
+    {
+      "id": "TestMatches",
+      "kind": "class",
+      "title": "class TestMatches",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:7",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 7,
+      "body": "class TestMatches(unittest.TestCase):\n\n    def test_r1_requires_exactly_two_string_arguments(self):\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 1')\n\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@, @, @)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 3')\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(`subject`, @)', 42)\n\n    def test_r2_returns_true_for_a_match_and_false_for_no_match(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `z`)', {}),\n            False)\n\n    def test_r3_uses_python_re_search_semantics(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^a`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^b`)', {}),\n            False)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `.*`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `[0-9]`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `123$`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search(r\"matches(`a+b`, `\\\\+`)\", {}),\n            True)\n\n    def test_r4_invalid_regex_raises_jmespath_type_error(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search(r\"matches(`abc`, `[`)\", {})\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('value: [', message)\n\n    def test_r5_can_be_used_as_a_filter_predicate(self):\n        data = {\n            'people': [\n                {'name': 'alice'},\n                {'name': 'bob'},\n            ],\n        }\n\n        self.assertEqual(\n            jmespath.search('people[?matches(name, `^a`)].name', data),\n            ['alice'])\n\n    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('invalid type for value: 42', message)\n        self.assertIn(\"expected one of: ['string']\", message)\n        self.assertIn('received: \"number\"', message)",
+      "detail": {
+        "file_path": "tests/test_matches.py"
+      }
+    },
+    {
+      "id": "TestMatches.test_r4_invalid_regex_raises_jmespath_type_error",
+      "kind": "method",
+      "title": "def test_r4_invalid_regex_raises_jmespath_type_error(self)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:59",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 59,
+      "body": "    def test_r4_invalid_regex_raises_jmespath_type_error(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search(r\"matches(`abc`, `[`)\", {})\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('value: [', message)",
+      "detail": {
+        "file_path": "tests/test_matches.py"
+      }
+    },
+    {
+      "id": "TestMatches.test_r2_returns_true_for_a_match_and_false_for_no_match",
+      "kind": "method",
+      "title": "def test_r2_returns_true_for_a_match_and_false_for_no_match(self)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:28",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 28,
+      "body": "    def test_r2_returns_true_for_a_match_and_false_for_no_match(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `z`)', {}),\n            False)",
+      "detail": {
+        "file_path": "tests/test_matches.py"
+      }
+    },
+    {
+      "id": "TestMatches.test_r3_uses_python_re_search_semantics",
+      "kind": "method",
+      "title": "def test_r3_uses_python_re_search_semantics(self)",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:36",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 36,
+      "body": "    def test_r3_uses_python_re_search_semantics(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^a`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^b`)', {}),\n            False)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `.*`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `[0-9]`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `123$`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search(r\"matches(`a+b`, `\\\\+`)\", {}),\n            True)",
+      "detail": {
+        "file_path": "tests/test_matches.py"
+      }
+    }
+  ],
+  "tests": [
+    {
+      "id": "tests/test_matches.py::TestMatches.test_r1_requires_exactly_two_string_arguments",
+      "kind": "test",
+      "title": "TestMatches.test_r1_requires_exactly_two_string_arguments",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:9",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 9,
+      "body": "    def test_r1_requires_exactly_two_string_arguments(self):\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 1')\n\n        with self.assertRaises(exceptions.ArityError) as caught:\n            jmespath.search('matches(@, @, @)', 'abc')\n        self.assertEqual(\n            str(caught.exception),\n            'Expected 2 arguments for function matches(), received 3')\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        with self.assertRaises(exceptions.JMESPathTypeError):\n            jmespath.search('matches(`subject`, @)', 42)",
+      "detail": {
+        "file_path": "tests/test_matches.py",
+        "target": "tests/test_matches.py::test_r1_requires_exactly_two_string_arguments"
+      }
+    },
+    {
+      "id": "tests/test_matches.py::TestMatches.test_r2_returns_true_for_a_match_and_false_for_no_match",
+      "kind": "test",
+      "title": "TestMatches.test_r2_returns_true_for_a_match_and_false_for_no_match",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:28",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 28,
+      "body": "    def test_r2_returns_true_for_a_match_and_false_for_no_match(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `z`)', {}),\n            False)",
+      "detail": {
+        "file_path": "tests/test_matches.py",
+        "target": "tests/test_matches.py::test_r2_returns_true_for_a_match_and_false_for_no_match"
+      }
+    },
+    {
+      "id": "tests/test_matches.py::TestMatches.test_r3_uses_python_re_search_semantics",
+      "kind": "test",
+      "title": "TestMatches.test_r3_uses_python_re_search_semantics",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:36",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 36,
+      "body": "    def test_r3_uses_python_re_search_semantics(self):\n        self.assertIs(\n            jmespath.search('matches(`abc`, `b`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^a`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc`, `^b`)', {}),\n            False)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `.*`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `[0-9]`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search('matches(`abc123`, `123$`)', {}),\n            True)\n        self.assertIs(\n            jmespath.search(r\"matches(`a+b`, `\\\\+`)\", {}),\n            True)",
+      "detail": {
+        "file_path": "tests/test_matches.py",
+        "target": "tests/test_matches.py::test_r3_uses_python_re_search_semantics"
+      }
+    },
+    {
+      "id": "tests/test_matches.py::TestMatches.test_r4_invalid_regex_raises_jmespath_type_error",
+      "kind": "test",
+      "title": "TestMatches.test_r4_invalid_regex_raises_jmespath_type_error",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:59",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 59,
+      "body": "    def test_r4_invalid_regex_raises_jmespath_type_error(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search(r\"matches(`abc`, `[`)\", {})\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('value: [', message)",
+      "detail": {
+        "file_path": "tests/test_matches.py",
+        "target": "tests/test_matches.py::test_r4_invalid_regex_raises_jmespath_type_error"
+      }
+    },
+    {
+      "id": "tests/test_matches.py::TestMatches.test_r5_can_be_used_as_a_filter_predicate",
+      "kind": "test",
+      "title": "TestMatches.test_r5_can_be_used_as_a_filter_predicate",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:67",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 67,
+      "body": "    def test_r5_can_be_used_as_a_filter_predicate(self):\n        data = {\n            'people': [\n                {'name': 'alice'},\n                {'name': 'bob'},\n            ],\n        }\n\n        self.assertEqual(\n            jmespath.search('people[?matches(name, `^a`)].name', data),\n            ['alice'])",
+      "detail": {
+        "file_path": "tests/test_matches.py",
+        "target": "tests/test_matches.py::test_r5_can_be_used_as_a_filter_predicate"
+      }
+    },
+    {
+      "id": "tests/test_matches.py::TestMatches.test_r6_type_error_message_includes_value_type_and_expected_types",
+      "kind": "test",
+      "title": "TestMatches.test_r6_type_error_message_includes_value_type_and_expected_types",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py:79",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_matches.py",
+      "source_line": 79,
+      "body": "    def test_r6_type_error_message_includes_value_type_and_expected_types(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as caught:\n            jmespath.search('matches(@, `pattern`)', 42)\n\n        message = str(caught.exception)\n        self.assertIn('matches()', message)\n        self.assertIn('invalid type for value: 42', message)\n        self.assertIn(\"expected one of: ['string']\", message)\n        self.assertIn('received: \"number\"', message)",
+      "detail": {
+        "file_path": "tests/test_matches.py",
+        "target": "tests/test_matches.py::test_r6_type_error_message_includes_value_type_and_expected_types"
+      }
+    },
+    {
+      "id": "tests/test_search.py::TestSearchOptions.test_can_provide_custom_functions",
+      "kind": "test",
+      "title": "TestSearchOptions.test_can_provide_custom_functions",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py:17",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_search.py",
+      "source_line": 17,
+      "body": "    def test_can_provide_custom_functions(self):\n        class CustomFunctions(jmespath.functions.Functions):\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_custom_add(self, x, y):\n                return x + y\n\n            @jmespath.functions.signature(\n                {'types': ['number']},\n                {'types': ['number']})\n            def _func_my_subtract(self, x, y):\n                return x - y\n\n\n        options = jmespath.Options(custom_functions=CustomFunctions())\n        self.assertEqual(\n            jmespath.search('custom_add(`1`, `2`)', {}, options=options),\n            3\n        )\n        self.assertEqual(\n            jmespath.search('my_subtract(`10`, `3`)', {}, options=options),\n            7\n        )\n        # Should still be able to use the original functions without\n        # any interference from the CustomFunctions class.\n        self.assertEqual(\n            jmespath.search('length(`[1, 2]`)', {}), 2\n        )",
+      "detail": {
+        "file_path": "tests/test_search.py",
+        "target": "tests/test_search.py::test_can_provide_custom_functions"
+      }
+    },
+    {
+      "id": "tests/test_functions.py::TestFunctions.test_type_error_messages",
+      "kind": "test",
+      "title": "TestFunctions.test_type_error_messages",
+      "source": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py:21",
+      "source_path": "D:/ZhuYijing/Documents/minimax工作文件夹/powercontext/minimax/sample_project/jmespath/tests/test_functions.py",
+      "source_line": 21,
+      "body": "    def test_type_error_messages(self):\n        with self.assertRaises(exceptions.JMESPathTypeError) as e:\n            jmespath.search('length(@)', 2)\n        exception = e.exception\n        # 1. Function name should be in error message\n        self.assertIn('length()', str(exception))\n        # 2. Mention it's an invalid type\n        self.assertIn('invalid type for value: 2', str(exception))\n        # 3. Mention the valid types:\n        self.assertIn(\"expected one of: ['string', 'array', 'object']\",\n                      str(exception))\n        # 4. Mention the actual type.\n        self.assertIn('received: \"number\"', str(exception))",
+      "detail": {
+        "file_path": "tests/test_functions.py",
+        "target": "tests/test_functions.py::test_type_error_messages"
+      }
+    }
+  ],
+  "progress": {
+    "finished": [],
+    "todo": [],
+    "verification": []
+  },
+  "retrieval": {
+    "keyword": "matches signature types string predicate filter JMESPathTypeError regex",
+    "spec_mode": "fulltext",
+    "code_mode": "fulltext",
+    "test_mode": "fulltext",
+    "spec_hits": 12,
+    "code_hits": 49,
+    "test_hits": 8,
+    "code_from_task_files": 41,
+    "tests_from_task_files": 0,
+    "files_under_change": [
+      "jmespath/functions.py"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+# seekdb for the SDD context module.
+#
+#   docker compose -f deploy/docker-compose.yml --env-file .seekdb.env up -d
+#
+# The PowerContext server runs natively (pip install powercontext), only the
+# database runs in a container.  See ../docs/RUN.md for the full walkthrough.
+
+name: sdd-context
+
+services:
+  seekdb:
+    image: oceanbase/seekdb:1.4.0-100000172026082615
+    container_name: sdd-seekdb
+    command: ["-e", "ROOT_PASSWORD=${SEEKDB_ROOT_PASSWORD}"]
+    environment:
+      ROOT_PASSWORD: ${SEEKDB_ROOT_PASSWORD}
+      # The application database is created by the image at start-up.
+      SEEKDB_DATABASE: ${SEEKDB_DATABASE:-sdd_context}
+      CPU_COUNT: "4"
+      MEMORY_LIMIT: ${SEEKDB_MEMORY_LIMIT:-4G}
+      DATAFILE_SIZE: ${SEEKDB_DATAFILE_SIZE:-2G}
+      DATAFILE_NEXT: ${SEEKDB_DATAFILE_NEXT:-2G}
+      DATAFILE_MAXSIZE: ${SEEKDB_DATAFILE_MAXSIZE:-16G}
+    ports:
+      # 2881 = MySQL protocol (what the context module speaks)
+      # 2886 = seekdb HTTP service
+      - "${SEEKDB_PORT:-2881}:2881"
+      - "${SEEKDB_HTTP_PORT:-2886}:2886"
+    volumes:
+      # Images based on seekdb 1.4+ use /var/lib/seekdb.
+      # On Windows a named volume is required (host bind mounts are unreliable).
+      - seekdb-data:/var/lib/seekdb
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -P 2881 -uroot -p\"$$ROOT_PASSWORD\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+    restart: unless-stopped
+
+volumes:
+  seekdb-data:

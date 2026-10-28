@@ -1,0 +1,19 @@
+diff --git a/minimax/sample_project/jmespath/jmespath/functions.py b/minimax/sample_project/jmespath/jmespath/functions.py
+--- a/minimax/sample_project/jmespath/jmespath/functions.py
++++ b/minimax/sample_project/jmespath/jmespath/functions.py
+@@ -1,5 +1,6 @@
+ import math
+ import json
++import re
+ 
+ from jmespath import exceptions
+ from jmespath.utils import get_methods
+@@ -229,7 +230,7 @@ class Functions(metaclass=FunctionRegistry):
+     @signature({'types': ['string']}, {'types': ['string']})
+     def _func_matches(self, subject, pattern):
+         try:
+-            return re.search(subject, pattern) is not None
++            return re.search(pattern, subject) is not None
+         except re.error:
+             raise exceptions.JMESPathTypeError(
+                 'matches', pattern, 'string', ['string'])

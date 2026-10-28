@@ -1,0 +1,13 @@
+# Local run artefacts - never commit these.
+.env
+.env.*
+!.env.example
+*.log
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# NOTE: minimax/evidence/raw/ IS committed on purpose.
+# Those JSONL files are the raw evidence of the MiniMax calls, the seekdb
+# queries and the PowerContext state writes.  They contain no credentials
+# (the MiniMax key is never written to a record, only its length).
