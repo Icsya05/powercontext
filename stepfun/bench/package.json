@@ -1,0 +1,17 @@
+{
+  "name": "stepfun-kb-bench",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "基准自动化：用 Playwright 驱动系统浏览器，跑真实的端侧推理并导出原始数据",
+  "scripts": {
+    "bench": "node run.mjs",
+    "score": "node score.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

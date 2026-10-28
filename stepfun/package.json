@@ -1,0 +1,20 @@
+{
+  "name": "stepfun-kb",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "端侧 AI 推理 + seekdb 混合检索的迷你知识库（浏览器本地向量化，seekdb 内完成混合检索）",
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "build": "node scripts/build-web.mjs",
+    "start": "node server/start.mjs",
+    "dev": "node scripts/dev.mjs",
+    "check:compliance": "node scripts/check_compliance.mjs",
+    "check:api": "node scripts/check_api.mjs",
+    "bench": "node bench/run.mjs",
+    "bench:score": "node bench/score.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

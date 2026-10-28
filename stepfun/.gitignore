@@ -1,0 +1,22 @@
+# 依赖与构建产物
+node_modules/
+.pnpm-store/
+
+# 前端构建产物（含复制进去的模型与 wasm，体积很大）
+web/dist/
+# build-web.mjs 从 bench/corpus 复制过来的语料副本（构建产物）
+web/public/bench/
+
+# 本地预置的模型文件（用 scripts/fetch-model.mjs 下载，不要进版本库）
+web/public/models/
+web/public/ort/
+
+# 本地配置与日志
+.env
+*.log
+server.log
+server.err.log
+
+# 运行时临时文件
+export/
+*.tmp

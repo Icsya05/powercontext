@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>端侧知识库 · 浏览器本地向量化 + seekdb 混合检索</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>端侧知识库</h1>
+      <p class="subtitle">
+        embedding 在<strong>你的浏览器里</strong>算，检索由 <strong>seekdb</strong> 在数据库内完成
+      </p>
+      <div id="backend-banner" class="banner">
+        <span class="dot" id="backend-dot"></span>
+        <span id="backend-text">正在检测推理后端…</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- 1. 模型 -->
+      <section class="card">
+        <h2>1 · 端侧模型</h2>
+        <div class="row">
+          <label for="dtype">推理精度（dtype）</label>
+          <select id="dtype"></select>
+          <label class="checkbox">
+            <input type="checkbox" id="force-wasm" />
+            强制降级到 WASM（用于验证降级路径）
+          </label>
+          <button id="btn-load" class="primary">加载模型</button>
+        </div>
+        <p class="hint" id="model-hint">
+          模型文件来自 Hugging Face 公开仓库 <code id="model-name">…</code>（apache-2.0）。
+          首次加载会从本地 <code>/models/</code> 读取（由 <code>scripts/fetch-model.mjs</code> 预置），
+          之后走浏览器缓存 —— 全程不需要访问外网。
+        </p>
+        <div id="model-status" class="status"></div>
+      </section>
+
+      <!-- 2. 导入 -->
+      <section class="card">
+        <h2>2 · 导入语料</h2>
+        <p class="hint">
+          粘贴文本，一段一行。浏览器本地切块并向量化，然后写入 seekdb
+          （向量列 <code>VECTOR(384)</code> + <code>ik</code> 全文索引 + VSAG HNSW 向量索引）。
+        </p>
+        <textarea id="corpus" rows="8" spellcheck="false"></textarea>
+        <div class="row">
+          <button id="btn-import" class="primary">本地向量化并入库</button>
+          <button id="btn-demo">填入示例语料</button>
+          <span id="import-status" class="status"></span>
+        </div>
+        <div class="progress"><div id="import-bar"></div></div>
+      </section>
+
+      <!-- 3. 检索 -->
+      <section class="card">
+        <h2>3 · 混合检索</h2>
+        <p class="hint">
+          查询向量同样在浏览器本地生成。服务端只做一次
+          <code>hybridSearch()</code> 调用，全文腿与向量腿的融合在 seekdb 内完成。
+        </p>
+        <div class="row">
+          <input id="query" type="text" placeholder="例如：热牛奶多少钱" />
+          <button id="btn-search" class="primary">搜索</button>
+          <span id="search-status" class="status"></span>
+        </div>
+        <div id="results" class="results"></div>
+      </section>
+
+      <!-- 4. 工具 -->
+      <section class="card">
+        <h2>4 · 数据与证据</h2>
+        <div class="row">
+          <button id="btn-schema">查看 seekdb 表结构</button>
+          <button id="btn-rows">导出行级数据</button>
+          <button id="btn-reset">清空知识库（回到初始状态）</button>
+          <button id="btn-bench">跑基准并导出 JSON</button>
+        </div>
+        <p class="hint">
+          「查看表结构」和「导出行级数据」直连 seekdb，用来证明向量、原文与元数据确实存在数据库里。
+        </p>
+        <pre id="evidence" class="evidence" hidden></pre>
+      </section>
+
+      <section class="card">
+        <h2>5 · 合规自检</h2>
+        <ul class="checklist">
+          <li>服务端进程里没有任何模型、没有任何 embedding 依赖（<code>server/package.json</code> 只有 <code>seekdb</code>）</li>
+          <li>文档向量与查询向量都由浏览器内的 Transformers.js 计算</li>
+          <li>检索排序由 seekdb 的 <code>DBMS_HYBRID_SEARCH</code> 在数据库内完成，前端只发一次请求</li>
+          <li>不调用任何云端推理 API</li>
+        </ul>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

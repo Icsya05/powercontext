@@ -1,0 +1,631 @@
+{
+  "description": "迷你知识库评测语料：8 个子领域 × 8 篇文档 + 24 条查询，相关性标注逐条手写（2=直接相关，1=部分相关）",
+  "generator": "bench/corpus/generate.mjs",
+  "topics": [
+    {
+      "id": "tent",
+      "name": "帐篷与营地",
+      "docCount": 8
+    },
+    {
+      "id": "sleep",
+      "name": "睡袋与睡眠",
+      "docCount": 8
+    },
+    {
+      "id": "cook",
+      "name": "野外烹饪",
+      "docCount": 8
+    },
+    {
+      "id": "water",
+      "name": "饮水与净水",
+      "docCount": 8
+    },
+    {
+      "id": "cloth",
+      "name": "衣物与装备",
+      "docCount": 8
+    },
+    {
+      "id": "safety",
+      "name": "安全与急救",
+      "docCount": 8
+    },
+    {
+      "id": "food",
+      "name": "食物与热量",
+      "docCount": 8
+    },
+    {
+      "id": "nav",
+      "name": "导航与路线",
+      "docCount": 8
+    }
+  ],
+  "docs": [
+    {
+      "id": "tent-01",
+      "topic": "tent",
+      "topicName": "帐篷与营地",
+      "text": "三季帐的内外帐之间需要留出至少五厘米的空气层来隔绝冷凝水。"
+    },
+    {
+      "id": "tent-02",
+      "topic": "tent",
+      "topicName": "帐篷与营地",
+      "text": "搭建帐篷前先看天气，风速超过每秒十米就不要在林间空地扎营了。"
+    },
+    {
+      "id": "tent-03",
+      "topic": "tent",
+      "topicName": "帐篷与营地",
+      "text": "地钉要打在石缝或者树根附近，松软的沙地根本抓不住。"
+    },
+    {
+      "id": "tent-04",
+      "topic": "tent",
+      "topicName": "帐篷与营地",
+      "text": "透气性好的帐篷在雨天反而让人睡得更舒服，因为它不会积一身水汽。"
+    },
+    {
+      "id": "tent-05",
+      "topic": "tent",
+      "topicName": "帐篷与营地",
+      "text": "营地的排水坡度要朝着帐篷的开口方向，这样下雨时水不会灌进来。"
+    },
+    {
+      "id": "tent-06",
+      "topic": "tent",
+      "topicName": "帐篷与营地",
+      "text": "速开帐篷虽然省时间，但在风大的地方反而不如手动插杆的帐篷稳。"
+    },
+    {
+      "id": "tent-07",
+      "topic": "tent",
+      "topicName": "帐篷与营地",
+      "text": "帐篷底部铺一层防潮垫可以有效隔绝地面寒气，睡袋的保暖性能能提升不少。"
+    },
+    {
+      "id": "tent-08",
+      "topic": "tent",
+      "topicName": "帐篷与营地",
+      "text": "营地选址要远离枯枝和朽木，大风天倒下的树是最常见的营地事故原因。"
+    },
+    {
+      "id": "sleep-01",
+      "topic": "sleep",
+      "topicName": "睡袋与睡眠",
+      "text": "睡袋的温标越低越保暖，五度到零度是春秋季最常用的范围。"
+    },
+    {
+      "id": "sleep-02",
+      "topic": "sleep",
+      "topicName": "睡袋与睡眠",
+      "text": "羽绒睡袋受潮之后几乎完全失去保暖能力，所以必须配防潮内胆。"
+    },
+    {
+      "id": "sleep-03",
+      "topic": "sleep",
+      "topicName": "睡袋与睡眠",
+      "text": "化纤棉睡袋的保暖性能受潮影响小，重量也大，更适合潮湿的环境。"
+    },
+    {
+      "id": "sleep-04",
+      "topic": "sleep",
+      "topicName": "睡袋与睡眠",
+      "text": "睡觉时穿一件干燥的化纤内层衣服，能让睡袋多撑出几度的温差。"
+    },
+    {
+      "id": "sleep-05",
+      "topic": "sleep",
+      "topicName": "睡袋与睡眠",
+      "text": "睡袋的舒适温度和极限温度不是一个概念，舒适温度才是实际使用的指标。"
+    },
+    {
+      "id": "sleep-06",
+      "topic": "sleep",
+      "topicName": "睡袋与睡眠",
+      "text": "长期不使用睡袋要完全晾干后再收起来，不然容易长霉。"
+    },
+    {
+      "id": "sleep-07",
+      "topic": "sleep",
+      "topicName": "睡袋与睡眠",
+      "text": "垫上蛋壳垫之后躺在睡袋里，体温流失的速度会明显变慢。"
+    },
+    {
+      "id": "sleep-08",
+      "topic": "sleep",
+      "topicName": "睡袋与睡眠",
+      "text": "两个人挤一个双人睡袋并不比各睡一个单人的更暖，反而会因为湿度增加而变冷。"
+    },
+    {
+      "id": "cook-01",
+      "topic": "cook",
+      "topicName": "野外烹饪",
+      "text": "卡式炉在海拔三千米以上气压降低，燃烧效率会明显下降。"
+    },
+    {
+      "id": "cook-02",
+      "topic": "cook",
+      "topicName": "野外烹饪",
+      "text": "高压锅能让水的沸点升高，是高山地区缩短煮饭时间最有效的办法。"
+    },
+    {
+      "id": "cook-03",
+      "topic": "cook",
+      "topicName": "野外烹饪",
+      "text": "用树枝当燃料之前要确认是死枝，青枝烧起来会冒大量白烟。"
+    },
+    {
+      "id": "cook-04",
+      "topic": "cook",
+      "topicName": "野外烹饪",
+      "text": "野外做饭要用浅口锅，因为窄底锅在风里非常容易被打翻。"
+    },
+    {
+      "id": "cook-05",
+      "topic": "cook",
+      "topicName": "野外烹饪",
+      "text": "明火煮水时最好先把水倒进锅里再点火，直接烧水容易烧干。"
+    },
+    {
+      "id": "cook-06",
+      "topic": "cook",
+      "topicName": "野外烹饪",
+      "text": "气罐在低温下压力下降，拧开旋钮可能会点不着火，需要先用手捂一会儿。"
+    },
+    {
+      "id": "cook-07",
+      "topic": "cook",
+      "topicName": "野外烹饪",
+      "text": "露营用的炉具排气管不能完全堵死，否则在帐篷里使用有一氧化碳中毒风险。"
+    },
+    {
+      "id": "cook-08",
+      "topic": "cook",
+      "topicName": "野外烹饪",
+      "text": "煮好的食物如果需要放几个小时，先把火灭掉靠余温焖熟，比一直小火煮省燃料。"
+    },
+    {
+      "id": "water-01",
+      "topic": "water",
+      "topicName": "饮水与净水",
+      "text": "滤水器的滤芯一般只能用三个月，超期使用反而会让水质变差。"
+    },
+    {
+      "id": "water-02",
+      "topic": "water",
+      "topicName": "饮水与净水",
+      "text": "野外取水优先选择流动的水源，静水潭里的细菌含量通常更高。"
+    },
+    {
+      "id": "water-03",
+      "topic": "water",
+      "topicName": "饮水与净水",
+      "text": "用二氧化氯片消毒时需要等待三十分钟，时间不够起不到作用。"
+    },
+    {
+      "id": "water-04",
+      "topic": "water",
+      "topicName": "饮水与净水",
+      "text": "高原地区的融雪水在融化后放置一小时再烧，杂质会沉淀得比较干净。"
+    },
+    {
+      "id": "water-05",
+      "topic": "water",
+      "topicName": "饮水与净水",
+      "text": "净水袋的出水口容易被泥沙堵住，用完要立刻冲洗干净。"
+    },
+    {
+      "id": "water-06",
+      "topic": "water",
+      "topicName": "饮水与净水",
+      "text": "直接喝生水之前最好先用滤水器过滤，再用消毒片处理，两步都做才稳妥。"
+    },
+    {
+      "id": "water-07",
+      "topic": "water",
+      "topicName": "饮水与净水",
+      "text": "每天每人至少需要两升水，做饭和洗漱还要额外加量。"
+    },
+    {
+      "id": "water-08",
+      "topic": "water",
+      "topicName": "饮水与净水",
+      "text": "在沙漠里找到的水不能闻到有异味就放心喝，沙漠地下水的亚硝酸盐含量可能很高。"
+    },
+    {
+      "id": "cloth-01",
+      "topic": "cloth",
+      "topicName": "衣物与装备",
+      "text": "户外衣物应该遵循分层原则，排汗层、保暖层、防护层缺一不可。"
+    },
+    {
+      "id": "cloth-02",
+      "topic": "cloth",
+      "topicName": "衣物与装备",
+      "text": "纯棉衣服在户外场景里几乎是最差的选择，湿了以后很难干而且会快速失温。"
+    },
+    {
+      "id": "cloth-03",
+      "topic": "cloth",
+      "topicName": "衣物与装备",
+      "text": "冲锋衣的防水膜在洗涤剂清洗之后会被破坏，必须用清水冲洗。"
+    },
+    {
+      "id": "cloth-04",
+      "topic": "cloth",
+      "topicName": "衣物与装备",
+      "text": "登山杖的伸缩锁扣用久了会自己松开，每次出发前都要逐个检查。"
+    },
+    {
+      "id": "cloth-05",
+      "topic": "cloth",
+      "topicName": "衣物与装备",
+      "text": "背包的腰带承担了大部分重量，如果腰带的海绵垫塌了，肩膀会先受不了。"
+    },
+    {
+      "id": "cloth-06",
+      "topic": "cloth",
+      "topicName": "衣物与装备",
+      "text": "快干衣的速干能力来自纤维细密而不是面料特殊，拧干后挂在通风处效果最好。"
+    },
+    {
+      "id": "cloth-07",
+      "topic": "cloth",
+      "topicName": "衣物与装备",
+      "text": "把重物放在背包靠近背板的位置，重心会更容易保持平衡。"
+    },
+    {
+      "id": "cloth-08",
+      "topic": "cloth",
+      "topicName": "衣物与装备",
+      "text": "户外鞋要选比脚趾长出大约一个指节的尺寸，长途行走时脚会微微肿起来。"
+    },
+    {
+      "id": "safety-01",
+      "topic": "safety",
+      "topicName": "安全与急救",
+      "text": "野外遇到雷暴要远离孤立的高树、金属围栏和开阔水面。"
+    },
+    {
+      "id": "safety-02",
+      "topic": "safety",
+      "topicName": "安全与急救",
+      "text": "失温的第一阶段是发抖，第二阶段是停止发抖但仍然清醒，第三阶段才是意识模糊。"
+    },
+    {
+      "id": "safety-03",
+      "topic": "safety",
+      "topicName": "安全与急救",
+      "text": "中暑和失温的处置方式完全相反，一个要降温，一个要保温。"
+    },
+    {
+      "id": "safety-04",
+      "topic": "safety",
+      "topicName": "安全与急救",
+      "text": "被蜱虫叮咬后要用尖头镊子靠近皮肤夹住口器垂直拔出，不要涂抹任何油。"
+    },
+    {
+      "id": "safety-05",
+      "topic": "safety",
+      "topicName": "安全与急救",
+      "text": "蛇咬伤后不要用止血带，也不要切开伤口，应该固定伤肢并尽快下撤。"
+    },
+    {
+      "id": "safety-06",
+      "topic": "safety",
+      "topicName": "安全与急救",
+      "text": "扭伤后前二十四小时用冰敷加压迫，不要热敷也不要揉搓。"
+    },
+    {
+      "id": "safety-07",
+      "topic": "safety",
+      "topicName": "安全与急救",
+      "text": "雪盲是因为紫外线灼伤角膜，眼镜的 UV400 防护比太阳镜更重要。"
+    },
+    {
+      "id": "safety-08",
+      "topic": "safety",
+      "topicName": "安全与急救",
+      "text": "任何野外急救的第一原则都是先呼叫救援，其次才是处理伤情。"
+    },
+    {
+      "id": "food-01",
+      "topic": "food",
+      "topicName": "食物与热量",
+      "text": "户外活动每小时大约会消耗四百到六百千卡，爬升坡度会显著增加这个数字。"
+    },
+    {
+      "id": "food-02",
+      "topic": "food",
+      "topicName": "食物与热量",
+      "text": "压缩能量棒的单位重量热量高，但纤维和脂肪比例失衡，不能当正餐吃。"
+    },
+    {
+      "id": "food-03",
+      "topic": "food",
+      "topicName": "食物与热量",
+      "text": "脱水米饭只需要加热水，几分钟就能吃，是行程紧张时最实用的主食。"
+    },
+    {
+      "id": "food-04",
+      "topic": "food",
+      "topicName": "食物与热量",
+      "text": "海拔每升高一千米，人体最大摄氧量大约下降百分之六到十。"
+    },
+    {
+      "id": "food-05",
+      "topic": "food",
+      "topicName": "食物与热量",
+      "text": "长时间徒步时补充碳水化合物比补充蛋白质更重要。"
+    },
+    {
+      "id": "food-06",
+      "topic": "food",
+      "topicName": "食物与热量",
+      "text": "盐丸要配合饮水一起吃，空腹吃盐反而会让脱水更严重。"
+    },
+    {
+      "id": "food-07",
+      "topic": "food",
+      "topicName": "食物与热量",
+      "text": "冻干食品复水后体积会膨胀三到四倍，出发前要预留额外的空间。"
+    },
+    {
+      "id": "food-08",
+      "topic": "food",
+      "topicName": "食物与热量",
+      "text": "在寒冷环境中，手部和脚部的血管会收缩，这本身就是身体在牺牲核心体温。"
+    },
+    {
+      "id": "nav-01",
+      "topic": "nav",
+      "topicName": "导航与路线",
+      "text": "纸质地图在没有电子信号的地方是最后的保险，应该和电子设备一起带。"
+    },
+    {
+      "id": "nav-02",
+      "topic": "nav",
+      "topicName": "导航与路线",
+      "text": "GPS 在林下和峡谷里会丢失信号，误差可能达到几十米甚至更多。"
+    },
+    {
+      "id": "nav-03",
+      "topic": "nav",
+      "topicName": "导航与路线",
+      "text": "每天出发前记录自己的预计到达时间和出发点，出问题时能提高搜救效率。"
+    },
+    {
+      "id": "nav-04",
+      "topic": "nav",
+      "topicName": "导航与路线",
+      "text": "等高线的间距通常是一百米，走之前要先看懂地图的比例尺。"
+    },
+    {
+      "id": "nav-05",
+      "topic": "nav",
+      "topicName": "导航与路线",
+      "text": "沿着溪流走是迷路时的常见策略，但要记住溪流可能突然转向或断流。"
+    },
+    {
+      "id": "nav-06",
+      "topic": "nav",
+      "topicName": "导航与路线",
+      "text": "用太阳和手表可以估算方向，时针指向太阳时，两者夹角的角平分线指向南方。"
+    },
+    {
+      "id": "nav-07",
+      "topic": "nav",
+      "topicName": "导航与路线",
+      "text": "北半球可以通过观察北斗七星找到北方，勺口两颗星连线延长五倍就是指北方向。"
+    },
+    {
+      "id": "nav-08",
+      "topic": "nav",
+      "topicName": "导航与路线",
+      "text": "电池在低温下容量会大幅下降，所以要准备备用电源而不只是多带一块电池。"
+    }
+  ],
+  "queries": [
+    {
+      "id": "q01",
+      "text": "睡袋受潮以后还能保暖吗",
+      "relevant": {
+        "sleep-02": 2,
+        "sleep-03": 2,
+        "sleep-04": 1
+      }
+    },
+    {
+      "id": "q02",
+      "text": "野外煮水用什么锅比较安全",
+      "relevant": {
+        "cook-04": 2,
+        "cook-05": 2,
+        "cook-02": 1,
+        "cook-07": 1
+      }
+    },
+    {
+      "id": "q03",
+      "text": "滤水器的滤芯多久要换一次",
+      "relevant": {
+        "water-01": 2,
+        "water-06": 1
+      }
+    },
+    {
+      "id": "q04",
+      "text": "帐篷地钉应该打在什么样的土里",
+      "relevant": {
+        "tent-03": 2,
+        "tent-01": 1
+      }
+    },
+    {
+      "id": "q05",
+      "text": "冲锋衣可以用洗衣液洗吗",
+      "relevant": {
+        "cloth-03": 2
+      }
+    },
+    {
+      "id": "q06",
+      "text": "雷雨天在野外应该躲到哪里",
+      "relevant": {
+        "safety-01": 2
+      }
+    },
+    {
+      "id": "q07",
+      "text": "长时间徒步要补充什么营养",
+      "relevant": {
+        "food-05": 2,
+        "food-02": 1,
+        "food-06": 1
+      }
+    },
+    {
+      "id": "q08",
+      "text": "没有信号的时候怎么判断方向",
+      "relevant": {
+        "nav-01": 2,
+        "nav-02": 2,
+        "nav-06": 1,
+        "nav-07": 1
+      }
+    },
+    {
+      "id": "q09",
+      "text": "气温很低的时候穿纯棉的可以吗",
+      "relevant": {
+        "cloth-02": 2,
+        "cloth-06": 1,
+        "food-08": 1
+      }
+    },
+    {
+      "id": "q10",
+      "text": "登山杖的锁扣会不会自己松开",
+      "relevant": {
+        "cloth-04": 2
+      }
+    },
+    {
+      "id": "q11",
+      "text": "海拔升高后体力会下降多少",
+      "relevant": {
+        "food-04": 2,
+        "food-01": 1,
+        "cook-01": 1
+      }
+    },
+    {
+      "id": "q12",
+      "text": "脱水米饭怎么吃",
+      "relevant": {
+        "food-03": 2
+      }
+    },
+    {
+      "id": "q13",
+      "text": "营地被雨淹了怎么排水",
+      "relevant": {
+        "tent-05": 2,
+        "tent-04": 1,
+        "tent-01": 1
+      }
+    },
+    {
+      "id": "q14",
+      "text": "失温的判断标准是什么",
+      "relevant": {
+        "safety-02": 2,
+        "safety-03": 1,
+        "safety-08": 1
+      }
+    },
+    {
+      "id": "q15",
+      "text": "水袋的出水口堵了怎么办",
+      "relevant": {
+        "water-05": 2
+      }
+    },
+    {
+      "id": "q16",
+      "text": "卡式炉在高原上点不着怎么办",
+      "relevant": {
+        "cook-01": 2,
+        "cook-06": 1
+      }
+    },
+    {
+      "id": "q17",
+      "text": "怎么用星星辨别方向",
+      "relevant": {
+        "nav-07": 2
+      }
+    },
+    {
+      "id": "q18",
+      "text": "睡袋温标应该怎么选",
+      "relevant": {
+        "sleep-01": 2,
+        "sleep-05": 2
+      }
+    },
+    {
+      "id": "q19",
+      "text": "背包重心要放在哪里",
+      "relevant": {
+        "cloth-07": 2,
+        "cloth-05": 1
+      }
+    },
+    {
+      "id": "q20",
+      "text": "被蛇咬了可以扎止血带吗",
+      "relevant": {
+        "safety-05": 2
+      }
+    },
+    {
+      "id": "q21",
+      "text": "在野外应该喝多少水",
+      "relevant": {
+        "water-07": 2,
+        "water-06": 1,
+        "food-06": 1
+      }
+    },
+    {
+      "id": "q22",
+      "text": "为什么户外不能穿纯棉",
+      "relevant": {
+        "cloth-02": 2,
+        "cloth-06": 1,
+        "cloth-01": 1
+      }
+    },
+    {
+      "id": "q23",
+      "text": "冻干食品复水后有多大",
+      "relevant": {
+        "food-07": 2
+      }
+    },
+    {
+      "id": "q24",
+      "text": "营地应该选在什么样的地方",
+      "relevant": {
+        "tent-08": 2,
+        "tent-02": 2,
+        "tent-05": 1
+      }
+    }
+  ]
+}

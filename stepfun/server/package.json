@@ -1,0 +1,17 @@
+{
+  "name": "stepfun-kb-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "纯传输层：接收浏览器本地生成的向量，转发给 seekdb，原样回传检索结果。服务端不做任何推理、不做任何排序。",
+  "main": "start.mjs",
+  "scripts": {
+    "start": "node start.mjs"
+  },
+  "dependencies": {
+    "seekdb": "1.4.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

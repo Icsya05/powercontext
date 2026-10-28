@@ -1,0 +1,2741 @@
+{
+  "generatedAt": "2026-10-28T16:30:11.586Z",
+  "model": "Xenova/bge-small-zh-v1.5",
+  "corpusSize": 64,
+  "queryCount": 24,
+  "forceWasm": false,
+  "browser": {
+    "channel": "msedge",
+    "exe": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "headed": false
+  },
+  "externalRequests": [],
+  "runs": [
+    {
+      "dtype": "fp32",
+      "backend": "webgpu",
+      "loadMs": 1282.5,
+      "docEmbedMs": 316.29999999701977,
+      "writeMs": 163.9395999999997,
+      "refreshMs": 501.9358999999986,
+      "results": [
+        {
+          "id": "q01",
+          "text": "睡袋受潮以后还能保暖吗",
+          "keyword": "睡袋受潮以后还能保暖吗",
+          "ids": [
+            "sleep-02",
+            "sleep-03",
+            "tent-07",
+            "sleep-01",
+            "sleep-05",
+            "sleep-06",
+            "sleep-04",
+            "sleep-07",
+            "cloth-02",
+            "cloth-01"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0317,
+            0.0315,
+            0.0299,
+            0.0299,
+            0.0296,
+            0.0296,
+            0.0295,
+            0.029
+          ],
+          "searchMs": 54.953599999998914,
+          "queryEmbedMs": 47.5,
+          "searchMsAll": [
+            54.953599999998914
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q02",
+          "text": "野外煮水用什么锅比较安全",
+          "keyword": "野外煮水用什么锅比较安全",
+          "ids": [
+            "cook-04",
+            "cook-05",
+            "water-02",
+            "water-04",
+            "safety-08",
+            "safety-01",
+            "cook-07",
+            "cook-03",
+            "cook-08",
+            "cook-02"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0313,
+            0.031,
+            0.0299,
+            0.0297,
+            0.0268,
+            0.0263,
+            0.0159,
+            0.0154
+          ],
+          "searchMs": 50.961999999999534,
+          "queryEmbedMs": 6.100000008940697,
+          "searchMsAll": [
+            50.961999999999534
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q03",
+          "text": "滤水器的滤芯多久要换一次",
+          "keyword": "滤水器的滤芯多久要换一次",
+          "ids": [
+            "water-01",
+            "water-06",
+            "water-05",
+            "water-02",
+            "sleep-06",
+            "food-07",
+            "tent-01",
+            "cloth-03",
+            "food-06",
+            "nav-08"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0313,
+            0.0285,
+            0.0282,
+            0.0282,
+            0.0277,
+            0.027,
+            0.0267,
+            0.0267
+          ],
+          "searchMs": 50.842099999999846,
+          "queryEmbedMs": 6.0999999940395355,
+          "searchMsAll": [
+            50.842099999999846
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q04",
+          "text": "帐篷地钉应该打在什么样的土里",
+          "keyword": "帐篷地钉应该打在什么样的土里",
+          "ids": [
+            "tent-03",
+            "tent-06",
+            "tent-07",
+            "tent-02",
+            "tent-05",
+            "cook-07",
+            "tent-04",
+            "cloth-01",
+            "tent-01",
+            "nav-01"
+          ],
+          "distances": [
+            0.0328,
+            0.0318,
+            0.0308,
+            0.0306,
+            0.0305,
+            0.0299,
+            0.0294,
+            0.0292,
+            0.0282,
+            0.0277
+          ],
+          "searchMs": 48.63379999999961,
+          "queryEmbedMs": 67.8999999910593,
+          "searchMsAll": [
+            48.63379999999961
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q05",
+          "text": "冲锋衣可以用洗衣液洗吗",
+          "keyword": "冲锋衣可以用洗衣液洗吗",
+          "ids": [
+            "cloth-03",
+            "cloth-06",
+            "cloth-01",
+            "cloth-02",
+            "water-05",
+            "water-01",
+            "water-06",
+            "sleep-06",
+            "sleep-04",
+            "cook-05"
+          ],
+          "distances": [
+            0.0328,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145,
+            0.0143
+          ],
+          "searchMs": 48.93450000000121,
+          "queryEmbedMs": 6.100000008940697,
+          "searchMsAll": [
+            48.93450000000121
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q06",
+          "text": "雷雨天在野外应该躲到哪里",
+          "keyword": "雷雨天在野外应该躲到哪里",
+          "ids": [
+            "tent-04",
+            "cloth-01",
+            "nav-01",
+            "safety-05",
+            "safety-01",
+            "tent-02",
+            "safety-08",
+            "tent-05",
+            "nav-04",
+            "cloth-02"
+          ],
+          "distances": [
+            0.0318,
+            0.0302,
+            0.0289,
+            0.0274,
+            0.0164,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0152,
+            0.0149
+          ],
+          "searchMs": 49.258099999999104,
+          "queryEmbedMs": 7.4000000059604645,
+          "searchMsAll": [
+            49.258099999999104
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q07",
+          "text": "长时间徒步要补充什么营养",
+          "keyword": "长时间徒步要补充什么营养",
+          "ids": [
+            "food-05",
+            "cloth-08",
+            "safety-03",
+            "tent-05",
+            "nav-04",
+            "sleep-06",
+            "food-06",
+            "food-07",
+            "tent-08",
+            "water-07"
+          ],
+          "distances": [
+            0.0328,
+            0.03,
+            0.0289,
+            0.028,
+            0.0278,
+            0.0277,
+            0.0275,
+            0.0271,
+            0.0252,
+            0.0161
+          ],
+          "searchMs": 49.53909999999996,
+          "queryEmbedMs": 6.0999999940395355,
+          "searchMsAll": [
+            49.53909999999996
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q08",
+          "text": "没有信号的时候怎么判断方向",
+          "keyword": "没有信号的时候怎么判断方向",
+          "ids": [
+            "nav-01",
+            "nav-06",
+            "nav-07",
+            "nav-02",
+            "nav-04",
+            "sleep-05",
+            "tent-05",
+            "sleep-04",
+            "safety-02",
+            "sleep-01"
+          ],
+          "distances": [
+            0.0323,
+            0.032,
+            0.0315,
+            0.0313,
+            0.0308,
+            0.0286,
+            0.0283,
+            0.0265,
+            0.0265,
+            0.0265
+          ],
+          "searchMs": 47.47490000000107,
+          "queryEmbedMs": 5.9000000059604645,
+          "searchMsAll": [
+            47.47490000000107
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q09",
+          "text": "气温很低的时候穿纯棉的可以吗",
+          "keyword": "气温很低的时候穿纯棉的可以吗",
+          "ids": [
+            "sleep-04",
+            "cloth-02",
+            "sleep-03",
+            "sleep-01",
+            "sleep-05",
+            "tent-01",
+            "tent-07",
+            "sleep-07",
+            "tent-06",
+            "water-04"
+          ],
+          "distances": [
+            0.0325,
+            0.0325,
+            0.0308,
+            0.0297,
+            0.0294,
+            0.0288,
+            0.0266,
+            0.0258,
+            0.0254,
+            0.0253
+          ],
+          "searchMs": 54.87089999999989,
+          "queryEmbedMs": 6,
+          "searchMsAll": [
+            54.87089999999989
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q10",
+          "text": "登山杖的锁扣会不会自己松开",
+          "keyword": "登山杖的锁扣会不会自己松开",
+          "ids": [
+            "cloth-04",
+            "tent-05",
+            "cloth-05",
+            "tent-06",
+            "tent-03",
+            "sleep-05",
+            "tent-01",
+            "cloth-07",
+            "tent-07",
+            "sleep-01"
+          ],
+          "distances": [
+            0.0328,
+            0.0308,
+            0.0301,
+            0.03,
+            0.0289,
+            0.0274,
+            0.0266,
+            0.0262,
+            0.0258,
+            0.0257
+          ],
+          "searchMs": 54.41389999999956,
+          "queryEmbedMs": 5.5999999940395355,
+          "searchMsAll": [
+            54.41389999999956
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q11",
+          "text": "海拔升高后体力会下降多少",
+          "keyword": "海拔升高后体力会下降多少",
+          "ids": [
+            "food-04",
+            "cook-01",
+            "food-07",
+            "nav-08",
+            "sleep-07",
+            "food-01",
+            "water-04",
+            "cloth-05",
+            "nav-02",
+            "food-08"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.031,
+            0.0294,
+            0.0293,
+            0.0292,
+            0.029,
+            0.0285,
+            0.0278,
+            0.0268
+          ],
+          "searchMs": 53.573200000000725,
+          "queryEmbedMs": 6.4000000059604645,
+          "searchMsAll": [
+            53.573200000000725
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q12",
+          "text": "脱水米饭怎么吃",
+          "keyword": "脱水米饭怎么吃",
+          "ids": [
+            "food-03",
+            "food-06",
+            "food-02",
+            "cook-05",
+            "cook-02",
+            "water-06",
+            "water-07",
+            "cook-08",
+            "cook-04",
+            "water-02"
+          ],
+          "distances": [
+            0.0328,
+            0.032,
+            0.0294,
+            0.0161,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145
+          ],
+          "searchMs": 50.066100000000006,
+          "queryEmbedMs": 6.100000008940697,
+          "searchMsAll": [
+            50.066100000000006
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q13",
+          "text": "营地被雨淹了怎么排水",
+          "keyword": "营地被雨淹了怎么排水",
+          "ids": [
+            "tent-05",
+            "tent-08",
+            "water-05",
+            "cook-04",
+            "tent-02",
+            "water-02",
+            "safety-04",
+            "water-06",
+            "cook-07",
+            "tent-04"
+          ],
+          "distances": [
+            0.0328,
+            0.032,
+            0.0315,
+            0.0267,
+            0.0161,
+            0.0154,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147
+          ],
+          "searchMs": 53.7559999999994,
+          "queryEmbedMs": 6.0999999940395355,
+          "searchMsAll": [
+            53.7559999999994
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q14",
+          "text": "失温的判断标准是什么",
+          "keyword": "失温的判断标准是什么",
+          "ids": [
+            "safety-02",
+            "safety-03",
+            "cloth-02",
+            "sleep-05",
+            "sleep-01",
+            "sleep-04",
+            "water-02",
+            "tent-01",
+            "nav-04",
+            "sleep-07"
+          ],
+          "distances": [
+            0.0325,
+            0.032,
+            0.0308,
+            0.0306,
+            0.0298,
+            0.0284,
+            0.0283,
+            0.028,
+            0.0277,
+            0.0276
+          ],
+          "searchMs": 49.46910000000025,
+          "queryEmbedMs": 7.4000000059604645,
+          "searchMsAll": [
+            49.46910000000025
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q15",
+          "text": "水袋的出水口堵了怎么办",
+          "keyword": "水袋的出水口堵了怎么办",
+          "ids": [
+            "water-05",
+            "cook-05",
+            "cook-07",
+            "water-02",
+            "food-07",
+            "water-08",
+            "tent-05",
+            "water-01",
+            "sleep-03",
+            "sleep-04"
+          ],
+          "distances": [
+            0.0328,
+            0.031,
+            0.0302,
+            0.0299,
+            0.029,
+            0.0288,
+            0.0288,
+            0.0274,
+            0.0274,
+            0.0267
+          ],
+          "searchMs": 49.51089999999931,
+          "queryEmbedMs": 7.700000002980232,
+          "searchMsAll": [
+            49.51089999999931
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q16",
+          "text": "卡式炉在高原上点不着怎么办",
+          "keyword": "卡式炉在高原上点不着怎么办",
+          "ids": [
+            "cook-01",
+            "cook-06",
+            "water-04",
+            "nav-01",
+            "nav-08",
+            "cook-04",
+            "water-08",
+            "cook-07",
+            "food-08",
+            "cloth-03"
+          ],
+          "distances": [
+            0.0328,
+            0.0315,
+            0.0306,
+            0.029,
+            0.0276,
+            0.0264,
+            0.0252,
+            0.0161,
+            0.0161,
+            0.0159
+          ],
+          "searchMs": 52.29999999999927,
+          "queryEmbedMs": 7.299999997019768,
+          "searchMsAll": [
+            52.29999999999927
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q17",
+          "text": "怎么用星星辨别方向",
+          "keyword": "怎么用星星辨别方向",
+          "ids": [
+            "nav-06",
+            "cook-03",
+            "cloth-04",
+            "water-03",
+            "safety-06",
+            "nav-07",
+            "nav-04",
+            "cook-07",
+            "safety-07",
+            "nav-05"
+          ],
+          "distances": [
+            0.032,
+            0.03,
+            0.027,
+            0.0164,
+            0.0161,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0156,
+            0.0154
+          ],
+          "searchMs": 49.503600000000006,
+          "queryEmbedMs": 6.700000002980232,
+          "searchMsAll": [
+            49.503600000000006
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q18",
+          "text": "睡袋温标应该怎么选",
+          "keyword": "睡袋温标应该怎么选",
+          "ids": [
+            "sleep-01",
+            "sleep-05",
+            "sleep-02",
+            "sleep-04",
+            "sleep-03",
+            "sleep-07",
+            "sleep-06",
+            "cloth-01",
+            "tent-07",
+            "sleep-08"
+          ],
+          "distances": [
+            0.0325,
+            0.0309,
+            0.0305,
+            0.0304,
+            0.0301,
+            0.0301,
+            0.0299,
+            0.0292,
+            0.029,
+            0.0282
+          ],
+          "searchMs": 47.0038999999997,
+          "queryEmbedMs": 6,
+          "searchMsAll": [
+            47.0038999999997
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q19",
+          "text": "背包重心要放在哪里",
+          "keyword": "背包重心要放在哪里",
+          "ids": [
+            "cloth-07",
+            "cloth-05",
+            "nav-01",
+            "cloth-01",
+            "water-05",
+            "food-02",
+            "nav-07",
+            "safety-04",
+            "food-05",
+            "nav-05"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145,
+            0.0143
+          ],
+          "searchMs": 53.46680000000015,
+          "queryEmbedMs": 6.5999999940395355,
+          "searchMsAll": [
+            53.46680000000015
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q20",
+          "text": "被蛇咬了可以扎止血带吗",
+          "keyword": "被蛇咬了可以扎止血带吗",
+          "ids": [
+            "safety-05",
+            "safety-04",
+            "water-05",
+            "tent-07",
+            "tent-03",
+            "cook-04",
+            "nav-07",
+            "safety-06",
+            "sleep-06",
+            "nav-06"
+          ],
+          "distances": [
+            0.0328,
+            0.0311,
+            0.0308,
+            0.0274,
+            0.0159,
+            0.0159,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0154
+          ],
+          "searchMs": 50.477600000000166,
+          "queryEmbedMs": 7,
+          "searchMsAll": [
+            50.477600000000166
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q21",
+          "text": "在野外应该喝多少水",
+          "keyword": "在野外应该喝多少水",
+          "ids": [
+            "water-08",
+            "water-06",
+            "food-07",
+            "cloth-01",
+            "cook-05",
+            "cook-02",
+            "water-02",
+            "water-07",
+            "safety-05",
+            "food-03"
+          ],
+          "distances": [
+            0.0323,
+            0.0306,
+            0.0294,
+            0.0279,
+            0.0278,
+            0.0265,
+            0.0164,
+            0.0161,
+            0.0156,
+            0.0156
+          ],
+          "searchMs": 52.26670000000013,
+          "queryEmbedMs": 7.100000008940697,
+          "searchMsAll": [
+            52.26670000000013
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q22",
+          "text": "为什么户外不能穿纯棉",
+          "keyword": "为什么户外不能穿纯棉",
+          "ids": [
+            "cloth-02",
+            "cloth-01",
+            "sleep-04",
+            "cloth-08",
+            "cook-07",
+            "water-08",
+            "sleep-03",
+            "sleep-02",
+            "tent-07",
+            "food-02"
+          ],
+          "distances": [
+            0.0323,
+            0.0323,
+            0.0313,
+            0.031,
+            0.0273,
+            0.0262,
+            0.0159,
+            0.0156,
+            0.0152,
+            0.0152
+          ],
+          "searchMs": 54.07010000000082,
+          "queryEmbedMs": 6.700000002980232,
+          "searchMsAll": [
+            54.07010000000082
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q23",
+          "text": "冻干食品复水后有多大",
+          "keyword": "冻干食品复水后有多大",
+          "ids": [
+            "food-07",
+            "cook-05",
+            "cloth-06",
+            "cloth-02",
+            "cook-02",
+            "water-08",
+            "water-04",
+            "sleep-06",
+            "cook-08",
+            "water-05"
+          ],
+          "distances": [
+            0.0328,
+            0.032,
+            0.0291,
+            0.0288,
+            0.0274,
+            0.0269,
+            0.0161,
+            0.0156,
+            0.0154,
+            0.0152
+          ],
+          "searchMs": 53.01679999999942,
+          "queryEmbedMs": 6.5999999940395355,
+          "searchMsAll": [
+            53.01679999999942
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q24",
+          "text": "营地应该选在什么样的地方",
+          "keyword": "营地应该选在什么样的地方",
+          "ids": [
+            "tent-08",
+            "tent-05",
+            "cloth-01",
+            "tent-06",
+            "nav-01",
+            "cloth-08",
+            "nav-04",
+            "water-04",
+            "water-02",
+            "cook-04"
+          ],
+          "distances": [
+            0.0325,
+            0.0317,
+            0.0305,
+            0.0303,
+            0.0301,
+            0.0284,
+            0.0284,
+            0.0284,
+            0.0273,
+            0.0265
+          ],
+          "searchMs": 50.25280000000021,
+          "queryEmbedMs": 7,
+          "searchMsAll": [
+            50.25280000000021
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        }
+      ]
+    },
+    {
+      "dtype": "fp16",
+      "backend": "webgpu",
+      "loadMs": 320.8999999910593,
+      "docEmbedMs": 195.70000000298023,
+      "writeMs": 69.16100000000006,
+      "refreshMs": 501.7996999999996,
+      "results": [
+        {
+          "id": "q01",
+          "text": "睡袋受潮以后还能保暖吗",
+          "keyword": "睡袋受潮以后还能保暖吗",
+          "ids": [
+            "sleep-02",
+            "sleep-03",
+            "tent-07",
+            "sleep-01",
+            "sleep-05",
+            "sleep-06",
+            "sleep-04",
+            "sleep-07",
+            "cloth-02",
+            "cloth-01"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0317,
+            0.0315,
+            0.0299,
+            0.0299,
+            0.0296,
+            0.0296,
+            0.0295,
+            0.029
+          ],
+          "searchMs": 50.73660000000018,
+          "queryEmbedMs": 47.3999999910593,
+          "searchMsAll": [
+            50.73660000000018
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q02",
+          "text": "野外煮水用什么锅比较安全",
+          "keyword": "野外煮水用什么锅比较安全",
+          "ids": [
+            "cook-04",
+            "cook-05",
+            "water-02",
+            "water-04",
+            "safety-08",
+            "safety-01",
+            "cook-07",
+            "cook-03",
+            "cook-08",
+            "cook-02"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0313,
+            0.031,
+            0.0299,
+            0.0297,
+            0.0269,
+            0.0263,
+            0.0159,
+            0.0154
+          ],
+          "searchMs": 46.830799999999726,
+          "queryEmbedMs": 5.5,
+          "searchMsAll": [
+            46.830799999999726
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q03",
+          "text": "滤水器的滤芯多久要换一次",
+          "keyword": "滤水器的滤芯多久要换一次",
+          "ids": [
+            "water-01",
+            "water-06",
+            "water-05",
+            "water-02",
+            "sleep-06",
+            "food-07",
+            "tent-01",
+            "cloth-03",
+            "food-06",
+            "nav-08"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0313,
+            0.0285,
+            0.0282,
+            0.0282,
+            0.0277,
+            0.027,
+            0.0267,
+            0.0267
+          ],
+          "searchMs": 50.66319999999905,
+          "queryEmbedMs": 6.299999997019768,
+          "searchMsAll": [
+            50.66319999999905
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q04",
+          "text": "帐篷地钉应该打在什么样的土里",
+          "keyword": "帐篷地钉应该打在什么样的土里",
+          "ids": [
+            "tent-03",
+            "tent-06",
+            "tent-07",
+            "tent-02",
+            "tent-05",
+            "cook-07",
+            "tent-04",
+            "cloth-01",
+            "tent-01",
+            "nav-01"
+          ],
+          "distances": [
+            0.0328,
+            0.0318,
+            0.0308,
+            0.0306,
+            0.0305,
+            0.0299,
+            0.0294,
+            0.0292,
+            0.0282,
+            0.0277
+          ],
+          "searchMs": 47.297999999998865,
+          "queryEmbedMs": 64.8999999910593,
+          "searchMsAll": [
+            47.297999999998865
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q05",
+          "text": "冲锋衣可以用洗衣液洗吗",
+          "keyword": "冲锋衣可以用洗衣液洗吗",
+          "ids": [
+            "cloth-03",
+            "cloth-06",
+            "cloth-01",
+            "cloth-02",
+            "water-05",
+            "water-01",
+            "water-06",
+            "sleep-06",
+            "sleep-04",
+            "cook-05"
+          ],
+          "distances": [
+            0.0328,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145,
+            0.0143
+          ],
+          "searchMs": 49.487700000001496,
+          "queryEmbedMs": 6.700000002980232,
+          "searchMsAll": [
+            49.487700000001496
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q06",
+          "text": "雷雨天在野外应该躲到哪里",
+          "keyword": "雷雨天在野外应该躲到哪里",
+          "ids": [
+            "tent-04",
+            "cloth-01",
+            "nav-01",
+            "safety-05",
+            "safety-01",
+            "tent-02",
+            "safety-08",
+            "tent-05",
+            "nav-04",
+            "cloth-02"
+          ],
+          "distances": [
+            0.0318,
+            0.0302,
+            0.0289,
+            0.0274,
+            0.0164,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0152,
+            0.0149
+          ],
+          "searchMs": 47.71429999999964,
+          "queryEmbedMs": 5.200000002980232,
+          "searchMsAll": [
+            47.71429999999964
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q07",
+          "text": "长时间徒步要补充什么营养",
+          "keyword": "长时间徒步要补充什么营养",
+          "ids": [
+            "food-05",
+            "cloth-08",
+            "safety-03",
+            "tent-05",
+            "nav-04",
+            "sleep-06",
+            "food-06",
+            "food-07",
+            "tent-08",
+            "water-07"
+          ],
+          "distances": [
+            0.0328,
+            0.03,
+            0.0288,
+            0.028,
+            0.0278,
+            0.0277,
+            0.0275,
+            0.0271,
+            0.0252,
+            0.0161
+          ],
+          "searchMs": 46.768299999999726,
+          "queryEmbedMs": 6,
+          "searchMsAll": [
+            46.768299999999726
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q08",
+          "text": "没有信号的时候怎么判断方向",
+          "keyword": "没有信号的时候怎么判断方向",
+          "ids": [
+            "nav-01",
+            "nav-06",
+            "nav-07",
+            "nav-02",
+            "nav-04",
+            "sleep-05",
+            "tent-05",
+            "sleep-04",
+            "safety-02",
+            "sleep-01"
+          ],
+          "distances": [
+            0.0323,
+            0.032,
+            0.0315,
+            0.0313,
+            0.0308,
+            0.0284,
+            0.0283,
+            0.0265,
+            0.0265,
+            0.0265
+          ],
+          "searchMs": 50.131200000003446,
+          "queryEmbedMs": 6.4000000059604645,
+          "searchMsAll": [
+            50.131200000003446
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q09",
+          "text": "气温很低的时候穿纯棉的可以吗",
+          "keyword": "气温很低的时候穿纯棉的可以吗",
+          "ids": [
+            "sleep-04",
+            "cloth-02",
+            "sleep-03",
+            "sleep-01",
+            "sleep-05",
+            "tent-01",
+            "tent-07",
+            "sleep-07",
+            "tent-06",
+            "water-04"
+          ],
+          "distances": [
+            0.0325,
+            0.0325,
+            0.0308,
+            0.0297,
+            0.0294,
+            0.0288,
+            0.0266,
+            0.0258,
+            0.0254,
+            0.0253
+          ],
+          "searchMs": 47.5625,
+          "queryEmbedMs": 5.200000002980232,
+          "searchMsAll": [
+            47.5625
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q10",
+          "text": "登山杖的锁扣会不会自己松开",
+          "keyword": "登山杖的锁扣会不会自己松开",
+          "ids": [
+            "cloth-04",
+            "tent-05",
+            "cloth-05",
+            "tent-06",
+            "tent-03",
+            "sleep-05",
+            "tent-01",
+            "cloth-07",
+            "tent-07",
+            "sleep-01"
+          ],
+          "distances": [
+            0.0328,
+            0.0308,
+            0.0301,
+            0.03,
+            0.0289,
+            0.0274,
+            0.0264,
+            0.0262,
+            0.0258,
+            0.0257
+          ],
+          "searchMs": 47.08030000000144,
+          "queryEmbedMs": 5.199999988079071,
+          "searchMsAll": [
+            47.08030000000144
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q11",
+          "text": "海拔升高后体力会下降多少",
+          "keyword": "海拔升高后体力会下降多少",
+          "ids": [
+            "food-04",
+            "cook-01",
+            "food-07",
+            "nav-08",
+            "sleep-07",
+            "food-01",
+            "water-04",
+            "cloth-05",
+            "nav-02",
+            "food-08"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.031,
+            0.0294,
+            0.0293,
+            0.0292,
+            0.029,
+            0.0283,
+            0.0278,
+            0.0268
+          ],
+          "searchMs": 49.126000000000204,
+          "queryEmbedMs": 7,
+          "searchMsAll": [
+            49.126000000000204
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q12",
+          "text": "脱水米饭怎么吃",
+          "keyword": "脱水米饭怎么吃",
+          "ids": [
+            "food-03",
+            "food-06",
+            "food-02",
+            "cook-05",
+            "cook-02",
+            "water-06",
+            "water-07",
+            "cook-08",
+            "cook-04",
+            "water-02"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0294,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145
+          ],
+          "searchMs": 49.925499999997555,
+          "queryEmbedMs": 6.700000002980232,
+          "searchMsAll": [
+            49.925499999997555
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q13",
+          "text": "营地被雨淹了怎么排水",
+          "keyword": "营地被雨淹了怎么排水",
+          "ids": [
+            "tent-05",
+            "tent-08",
+            "water-05",
+            "cook-04",
+            "tent-02",
+            "water-02",
+            "safety-04",
+            "water-06",
+            "cook-07",
+            "tent-04"
+          ],
+          "distances": [
+            0.0328,
+            0.032,
+            0.0315,
+            0.0267,
+            0.0161,
+            0.0154,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147
+          ],
+          "searchMs": 49.34519999999975,
+          "queryEmbedMs": 6.799999997019768,
+          "searchMsAll": [
+            49.34519999999975
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q14",
+          "text": "失温的判断标准是什么",
+          "keyword": "失温的判断标准是什么",
+          "ids": [
+            "safety-02",
+            "safety-03",
+            "cloth-02",
+            "sleep-05",
+            "sleep-01",
+            "sleep-04",
+            "water-02",
+            "tent-01",
+            "nav-04",
+            "sleep-07"
+          ],
+          "distances": [
+            0.0325,
+            0.032,
+            0.0308,
+            0.0306,
+            0.0298,
+            0.0284,
+            0.0283,
+            0.0279,
+            0.0277,
+            0.0276
+          ],
+          "searchMs": 47.47899999999936,
+          "queryEmbedMs": 5.399999991059303,
+          "searchMsAll": [
+            47.47899999999936
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q15",
+          "text": "水袋的出水口堵了怎么办",
+          "keyword": "水袋的出水口堵了怎么办",
+          "ids": [
+            "water-05",
+            "cook-05",
+            "cook-07",
+            "water-02",
+            "food-07",
+            "water-08",
+            "tent-05",
+            "water-01",
+            "sleep-03",
+            "sleep-04"
+          ],
+          "distances": [
+            0.0328,
+            0.031,
+            0.0302,
+            0.0299,
+            0.029,
+            0.0288,
+            0.0288,
+            0.0274,
+            0.0274,
+            0.0267
+          ],
+          "searchMs": 49.94310000000041,
+          "queryEmbedMs": 5.799999997019768,
+          "searchMsAll": [
+            49.94310000000041
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q16",
+          "text": "卡式炉在高原上点不着怎么办",
+          "keyword": "卡式炉在高原上点不着怎么办",
+          "ids": [
+            "cook-01",
+            "cook-06",
+            "water-04",
+            "nav-01",
+            "nav-08",
+            "cook-04",
+            "water-08",
+            "cook-07",
+            "food-08",
+            "cloth-03"
+          ],
+          "distances": [
+            0.0328,
+            0.0315,
+            0.0306,
+            0.029,
+            0.0276,
+            0.0264,
+            0.0252,
+            0.0161,
+            0.0161,
+            0.0159
+          ],
+          "searchMs": 48.80949999999939,
+          "queryEmbedMs": 7.299999997019768,
+          "searchMsAll": [
+            48.80949999999939
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q17",
+          "text": "怎么用星星辨别方向",
+          "keyword": "怎么用星星辨别方向",
+          "ids": [
+            "nav-06",
+            "cook-03",
+            "cloth-04",
+            "water-03",
+            "safety-06",
+            "nav-07",
+            "nav-04",
+            "cook-07",
+            "safety-07",
+            "nav-05"
+          ],
+          "distances": [
+            0.032,
+            0.0302,
+            0.027,
+            0.0164,
+            0.0161,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0156,
+            0.0154
+          ],
+          "searchMs": 50.13409999999931,
+          "queryEmbedMs": 6.899999991059303,
+          "searchMsAll": [
+            50.13409999999931
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q18",
+          "text": "睡袋温标应该怎么选",
+          "keyword": "睡袋温标应该怎么选",
+          "ids": [
+            "sleep-01",
+            "sleep-05",
+            "sleep-02",
+            "sleep-04",
+            "sleep-03",
+            "sleep-07",
+            "sleep-06",
+            "cloth-01",
+            "tent-07",
+            "sleep-08"
+          ],
+          "distances": [
+            0.0325,
+            0.0309,
+            0.0305,
+            0.0304,
+            0.0301,
+            0.0301,
+            0.0299,
+            0.0292,
+            0.029,
+            0.0282
+          ],
+          "searchMs": 48.65780000000086,
+          "queryEmbedMs": 7.300000011920929,
+          "searchMsAll": [
+            48.65780000000086
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q19",
+          "text": "背包重心要放在哪里",
+          "keyword": "背包重心要放在哪里",
+          "ids": [
+            "cloth-07",
+            "cloth-05",
+            "nav-01",
+            "cloth-01",
+            "water-05",
+            "food-02",
+            "nav-07",
+            "safety-04",
+            "food-05",
+            "nav-05"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145,
+            0.0143
+          ],
+          "searchMs": 50.231299999999464,
+          "queryEmbedMs": 5.899999991059303,
+          "searchMsAll": [
+            50.231299999999464
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q20",
+          "text": "被蛇咬了可以扎止血带吗",
+          "keyword": "被蛇咬了可以扎止血带吗",
+          "ids": [
+            "safety-05",
+            "safety-04",
+            "water-05",
+            "tent-07",
+            "tent-03",
+            "cook-04",
+            "nav-07",
+            "safety-06",
+            "water-06",
+            "nav-06"
+          ],
+          "distances": [
+            0.0328,
+            0.0311,
+            0.0308,
+            0.0274,
+            0.0159,
+            0.0159,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0154
+          ],
+          "searchMs": 49.446899999999005,
+          "queryEmbedMs": 7.0999999940395355,
+          "searchMsAll": [
+            49.446899999999005
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q21",
+          "text": "在野外应该喝多少水",
+          "keyword": "在野外应该喝多少水",
+          "ids": [
+            "water-08",
+            "water-06",
+            "food-07",
+            "cloth-01",
+            "cook-05",
+            "cook-02",
+            "water-02",
+            "water-07",
+            "safety-05",
+            "food-03"
+          ],
+          "distances": [
+            0.0323,
+            0.0306,
+            0.0294,
+            0.0279,
+            0.0278,
+            0.0265,
+            0.0164,
+            0.0161,
+            0.0156,
+            0.0156
+          ],
+          "searchMs": 49.83499999999913,
+          "queryEmbedMs": 5.299999997019768,
+          "searchMsAll": [
+            49.83499999999913
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q22",
+          "text": "为什么户外不能穿纯棉",
+          "keyword": "为什么户外不能穿纯棉",
+          "ids": [
+            "cloth-02",
+            "cloth-01",
+            "sleep-04",
+            "cloth-08",
+            "cook-07",
+            "water-08",
+            "sleep-03",
+            "sleep-02",
+            "tent-07",
+            "food-02"
+          ],
+          "distances": [
+            0.0323,
+            0.0323,
+            0.0313,
+            0.031,
+            0.0273,
+            0.0262,
+            0.0159,
+            0.0156,
+            0.0152,
+            0.0152
+          ],
+          "searchMs": 49.586200000001554,
+          "queryEmbedMs": 6.800000011920929,
+          "searchMsAll": [
+            49.586200000001554
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q23",
+          "text": "冻干食品复水后有多大",
+          "keyword": "冻干食品复水后有多大",
+          "ids": [
+            "food-07",
+            "cook-05",
+            "cloth-06",
+            "cloth-02",
+            "cook-02",
+            "water-08",
+            "water-04",
+            "sleep-06",
+            "cook-08",
+            "water-05"
+          ],
+          "distances": [
+            0.0328,
+            0.032,
+            0.0293,
+            0.0288,
+            0.0274,
+            0.0269,
+            0.0161,
+            0.0156,
+            0.0154,
+            0.0152
+          ],
+          "searchMs": 48.4890000000014,
+          "queryEmbedMs": 7.299999997019768,
+          "searchMsAll": [
+            48.4890000000014
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q24",
+          "text": "营地应该选在什么样的地方",
+          "keyword": "营地应该选在什么样的地方",
+          "ids": [
+            "tent-08",
+            "tent-05",
+            "cloth-01",
+            "tent-06",
+            "nav-01",
+            "nav-04",
+            "water-04",
+            "cloth-08",
+            "water-02",
+            "cook-04"
+          ],
+          "distances": [
+            0.0325,
+            0.0317,
+            0.0305,
+            0.0303,
+            0.0301,
+            0.0284,
+            0.0284,
+            0.0283,
+            0.0273,
+            0.0265
+          ],
+          "searchMs": 50.62970000000132,
+          "queryEmbedMs": 6.4000000059604645,
+          "searchMsAll": [
+            50.62970000000132
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        }
+      ]
+    },
+    {
+      "dtype": "q8",
+      "backend": "webgpu",
+      "loadMs": 223.70000000298023,
+      "docEmbedMs": 1116.2999999970198,
+      "writeMs": 26.409299999999348,
+      "refreshMs": 602.063299999998,
+      "results": [
+        {
+          "id": "q01",
+          "text": "睡袋受潮以后还能保暖吗",
+          "keyword": "睡袋受潮以后还能保暖吗",
+          "ids": [
+            "sleep-02",
+            "sleep-03",
+            "tent-07",
+            "sleep-01",
+            "sleep-05",
+            "sleep-06",
+            "sleep-04",
+            "sleep-07",
+            "cloth-02",
+            "cloth-01"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0317,
+            0.0315,
+            0.0299,
+            0.0299,
+            0.0296,
+            0.0296,
+            0.0295,
+            0.0289
+          ],
+          "searchMs": 51.545099999999366,
+          "queryEmbedMs": 69.20000000298023,
+          "searchMsAll": [
+            51.545099999999366
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q02",
+          "text": "野外煮水用什么锅比较安全",
+          "keyword": "野外煮水用什么锅比较安全",
+          "ids": [
+            "cook-04",
+            "cook-05",
+            "water-02",
+            "water-04",
+            "safety-08",
+            "safety-01",
+            "cook-07",
+            "cook-03",
+            "water-03",
+            "cook-08"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0313,
+            0.031,
+            0.0299,
+            0.0297,
+            0.0273,
+            0.0264,
+            0.0263,
+            0.0159
+          ],
+          "searchMs": 49.002300000000105,
+          "queryEmbedMs": 69.70000000298023,
+          "searchMsAll": [
+            49.002300000000105
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q03",
+          "text": "滤水器的滤芯多久要换一次",
+          "keyword": "滤水器的滤芯多久要换一次",
+          "ids": [
+            "water-01",
+            "water-06",
+            "water-05",
+            "food-07",
+            "water-02",
+            "sleep-06",
+            "tent-01",
+            "food-06",
+            "cloth-03",
+            "nav-08"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0313,
+            0.0288,
+            0.0285,
+            0.0282,
+            0.0277,
+            0.0272,
+            0.027,
+            0.0262
+          ],
+          "searchMs": 48.793799999999464,
+          "queryEmbedMs": 68.1000000089407,
+          "searchMsAll": [
+            48.793799999999464
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q04",
+          "text": "帐篷地钉应该打在什么样的土里",
+          "keyword": "帐篷地钉应该打在什么样的土里",
+          "ids": [
+            "tent-03",
+            "tent-06",
+            "tent-07",
+            "tent-02",
+            "tent-05",
+            "cook-07",
+            "tent-04",
+            "cloth-01",
+            "tent-01",
+            "nav-01"
+          ],
+          "distances": [
+            0.0328,
+            0.0318,
+            0.0308,
+            0.0306,
+            0.0305,
+            0.0296,
+            0.0294,
+            0.0294,
+            0.0284,
+            0.0275
+          ],
+          "searchMs": 49.87259999999878,
+          "queryEmbedMs": 74.20000000298023,
+          "searchMsAll": [
+            49.87259999999878
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q05",
+          "text": "冲锋衣可以用洗衣液洗吗",
+          "keyword": "冲锋衣可以用洗衣液洗吗",
+          "ids": [
+            "cloth-03",
+            "cloth-06",
+            "cloth-01",
+            "cloth-02",
+            "water-05",
+            "water-01",
+            "water-06",
+            "sleep-06",
+            "sleep-04",
+            "tent-07"
+          ],
+          "distances": [
+            0.0328,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145,
+            0.0143
+          ],
+          "searchMs": 46.909999999999854,
+          "queryEmbedMs": 68.20000000298023,
+          "searchMsAll": [
+            46.909999999999854
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q06",
+          "text": "雷雨天在野外应该躲到哪里",
+          "keyword": "雷雨天在野外应该躲到哪里",
+          "ids": [
+            "tent-04",
+            "cloth-01",
+            "nav-01",
+            "safety-05",
+            "safety-01",
+            "tent-02",
+            "safety-08",
+            "tent-05",
+            "nav-04",
+            "tent-08"
+          ],
+          "distances": [
+            0.0318,
+            0.03,
+            0.0287,
+            0.0279,
+            0.0164,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0152,
+            0.0149
+          ],
+          "searchMs": 49.568200000001525,
+          "queryEmbedMs": 67.5,
+          "searchMsAll": [
+            49.568200000001525
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q07",
+          "text": "长时间徒步要补充什么营养",
+          "keyword": "长时间徒步要补充什么营养",
+          "ids": [
+            "food-05",
+            "cloth-08",
+            "safety-03",
+            "nav-04",
+            "tent-05",
+            "sleep-06",
+            "food-06",
+            "food-07",
+            "tent-08",
+            "nav-08"
+          ],
+          "distances": [
+            0.0328,
+            0.0302,
+            0.0288,
+            0.0281,
+            0.0278,
+            0.0277,
+            0.0271,
+            0.0269,
+            0.0261,
+            0.0252
+          ],
+          "searchMs": 47.35710000000108,
+          "queryEmbedMs": 68.79999999701977,
+          "searchMsAll": [
+            47.35710000000108
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q08",
+          "text": "没有信号的时候怎么判断方向",
+          "keyword": "没有信号的时候怎么判断方向",
+          "ids": [
+            "nav-01",
+            "nav-07",
+            "nav-06",
+            "nav-02",
+            "nav-04",
+            "tent-05",
+            "sleep-05",
+            "sleep-04",
+            "safety-02",
+            "sleep-01"
+          ],
+          "distances": [
+            0.0323,
+            0.0318,
+            0.0318,
+            0.031,
+            0.0308,
+            0.0286,
+            0.0286,
+            0.0273,
+            0.0267,
+            0.0267
+          ],
+          "searchMs": 54.483400000000984,
+          "queryEmbedMs": 70.5,
+          "searchMsAll": [
+            54.483400000000984
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q09",
+          "text": "气温很低的时候穿纯棉的可以吗",
+          "keyword": "气温很低的时候穿纯棉的可以吗",
+          "ids": [
+            "sleep-04",
+            "cloth-02",
+            "sleep-03",
+            "sleep-01",
+            "sleep-05",
+            "tent-01",
+            "tent-07",
+            "tent-06",
+            "sleep-07",
+            "water-04"
+          ],
+          "distances": [
+            0.0325,
+            0.0325,
+            0.0308,
+            0.0297,
+            0.0294,
+            0.0286,
+            0.0266,
+            0.0261,
+            0.0257,
+            0.0251
+          ],
+          "searchMs": 49.42919999999867,
+          "queryEmbedMs": 65.70000000298023,
+          "searchMsAll": [
+            49.42919999999867
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q10",
+          "text": "登山杖的锁扣会不会自己松开",
+          "keyword": "登山杖的锁扣会不会自己松开",
+          "ids": [
+            "cloth-04",
+            "tent-05",
+            "tent-06",
+            "cloth-05",
+            "tent-03",
+            "sleep-05",
+            "tent-01",
+            "cloth-07",
+            "sleep-01",
+            "tent-07"
+          ],
+          "distances": [
+            0.0328,
+            0.0308,
+            0.03,
+            0.0299,
+            0.0289,
+            0.0273,
+            0.0266,
+            0.0259,
+            0.0257,
+            0.0256
+          ],
+          "searchMs": 51.16169999999693,
+          "queryEmbedMs": 66.19999998807907,
+          "searchMsAll": [
+            51.16169999999693
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q11",
+          "text": "海拔升高后体力会下降多少",
+          "keyword": "海拔升高后体力会下降多少",
+          "ids": [
+            "food-04",
+            "cook-01",
+            "food-07",
+            "nav-08",
+            "sleep-07",
+            "food-01",
+            "water-04",
+            "cloth-05",
+            "nav-02",
+            "food-08"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.031,
+            0.03,
+            0.0293,
+            0.0292,
+            0.0283,
+            0.028,
+            0.0278,
+            0.0268
+          ],
+          "searchMs": 48.663400000001275,
+          "queryEmbedMs": 71.29999999701977,
+          "searchMsAll": [
+            48.663400000001275
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q12",
+          "text": "脱水米饭怎么吃",
+          "keyword": "脱水米饭怎么吃",
+          "ids": [
+            "food-03",
+            "food-06",
+            "food-02",
+            "cook-05",
+            "water-06",
+            "cook-02",
+            "cook-08",
+            "water-07",
+            "cook-04",
+            "water-02"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0294,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145
+          ],
+          "searchMs": 47.42500000000291,
+          "queryEmbedMs": 64.3999999910593,
+          "searchMsAll": [
+            47.42500000000291
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q13",
+          "text": "营地被雨淹了怎么排水",
+          "keyword": "营地被雨淹了怎么排水",
+          "ids": [
+            "tent-05",
+            "tent-08",
+            "water-05",
+            "tent-02",
+            "cook-04",
+            "water-02",
+            "safety-04",
+            "water-06",
+            "cook-07",
+            "tent-04"
+          ],
+          "distances": [
+            0.0328,
+            0.032,
+            0.0315,
+            0.0161,
+            0.0156,
+            0.0154,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147
+          ],
+          "searchMs": 50.60320000000138,
+          "queryEmbedMs": 71.6000000089407,
+          "searchMsAll": [
+            50.60320000000138
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q14",
+          "text": "失温的判断标准是什么",
+          "keyword": "失温的判断标准是什么",
+          "ids": [
+            "safety-02",
+            "safety-03",
+            "cloth-02",
+            "sleep-05",
+            "sleep-01",
+            "water-02",
+            "sleep-04",
+            "tent-01",
+            "nav-04",
+            "sleep-03"
+          ],
+          "distances": [
+            0.0325,
+            0.032,
+            0.0308,
+            0.0306,
+            0.0298,
+            0.0284,
+            0.0284,
+            0.028,
+            0.0274,
+            0.0274
+          ],
+          "searchMs": 49.23939999999857,
+          "queryEmbedMs": 70.29999999701977,
+          "searchMsAll": [
+            49.23939999999857
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q15",
+          "text": "水袋的出水口堵了怎么办",
+          "keyword": "水袋的出水口堵了怎么办",
+          "ids": [
+            "water-05",
+            "cook-05",
+            "water-02",
+            "cook-07",
+            "tent-05",
+            "water-08",
+            "food-07",
+            "water-01",
+            "sleep-03",
+            "sleep-04"
+          ],
+          "distances": [
+            0.0328,
+            0.031,
+            0.0301,
+            0.03,
+            0.0295,
+            0.029,
+            0.029,
+            0.0277,
+            0.027,
+            0.0267
+          ],
+          "searchMs": 49.79230000000098,
+          "queryEmbedMs": 70.8999999910593,
+          "searchMsAll": [
+            49.79230000000098
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q16",
+          "text": "卡式炉在高原上点不着怎么办",
+          "keyword": "卡式炉在高原上点不着怎么办",
+          "ids": [
+            "cook-01",
+            "cook-06",
+            "water-04",
+            "nav-01",
+            "nav-08",
+            "water-08",
+            "cook-07",
+            "food-08",
+            "cloth-03",
+            "nav-02"
+          ],
+          "distances": [
+            0.0328,
+            0.0315,
+            0.0306,
+            0.0288,
+            0.0274,
+            0.0258,
+            0.0161,
+            0.0161,
+            0.0159,
+            0.0156
+          ],
+          "searchMs": 54.509500000000116,
+          "queryEmbedMs": 73.90000000596046,
+          "searchMsAll": [
+            54.509500000000116
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q17",
+          "text": "怎么用星星辨别方向",
+          "keyword": "怎么用星星辨别方向",
+          "ids": [
+            "nav-06",
+            "cook-03",
+            "water-03",
+            "safety-06",
+            "nav-07",
+            "nav-04",
+            "cook-07",
+            "cloth-04",
+            "safety-07",
+            "nav-05"
+          ],
+          "distances": [
+            0.032,
+            0.0298,
+            0.0164,
+            0.0161,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0156,
+            0.0156,
+            0.0154
+          ],
+          "searchMs": 53.70669999999882,
+          "queryEmbedMs": 70.09999999403954,
+          "searchMsAll": [
+            53.70669999999882
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q18",
+          "text": "睡袋温标应该怎么选",
+          "keyword": "睡袋温标应该怎么选",
+          "ids": [
+            "sleep-01",
+            "sleep-05",
+            "sleep-02",
+            "sleep-03",
+            "sleep-04",
+            "sleep-07",
+            "sleep-06",
+            "tent-07",
+            "cloth-01",
+            "sleep-08"
+          ],
+          "distances": [
+            0.0325,
+            0.0309,
+            0.0305,
+            0.0304,
+            0.0301,
+            0.0301,
+            0.0299,
+            0.029,
+            0.0289,
+            0.0282
+          ],
+          "searchMs": 49.44919999999911,
+          "queryEmbedMs": 67.79999999701977,
+          "searchMsAll": [
+            49.44919999999911
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q19",
+          "text": "背包重心要放在哪里",
+          "keyword": "背包重心要放在哪里",
+          "ids": [
+            "cloth-07",
+            "cloth-05",
+            "nav-01",
+            "cloth-01",
+            "food-05",
+            "food-02",
+            "nav-07",
+            "safety-04",
+            "nav-05",
+            "water-05"
+          ],
+          "distances": [
+            0.0328,
+            0.0323,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149,
+            0.0147,
+            0.0145,
+            0.0143
+          ],
+          "searchMs": 50.454900000000634,
+          "queryEmbedMs": 70.29999999701977,
+          "searchMsAll": [
+            50.454900000000634
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q20",
+          "text": "被蛇咬了可以扎止血带吗",
+          "keyword": "被蛇咬了可以扎止血带吗",
+          "ids": [
+            "safety-05",
+            "safety-04",
+            "water-05",
+            "tent-07",
+            "tent-03",
+            "cook-04",
+            "nav-07",
+            "safety-06",
+            "sleep-06",
+            "nav-06"
+          ],
+          "distances": [
+            0.0328,
+            0.0311,
+            0.0306,
+            0.0276,
+            0.0159,
+            0.0159,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0154
+          ],
+          "searchMs": 49.718300000000454,
+          "queryEmbedMs": 70.80000001192093,
+          "searchMsAll": [
+            49.718300000000454
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q21",
+          "text": "在野外应该喝多少水",
+          "keyword": "在野外应该喝多少水",
+          "ids": [
+            "water-08",
+            "water-06",
+            "food-07",
+            "cook-05",
+            "cloth-01",
+            "cook-02",
+            "water-02",
+            "water-07",
+            "safety-05",
+            "food-03"
+          ],
+          "distances": [
+            0.0323,
+            0.0313,
+            0.0294,
+            0.028,
+            0.0276,
+            0.0264,
+            0.0164,
+            0.0161,
+            0.0156,
+            0.0156
+          ],
+          "searchMs": 53.825300000000425,
+          "queryEmbedMs": 64.79999999701977,
+          "searchMsAll": [
+            53.825300000000425
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q22",
+          "text": "为什么户外不能穿纯棉",
+          "keyword": "为什么户外不能穿纯棉",
+          "ids": [
+            "cloth-02",
+            "cloth-01",
+            "sleep-04",
+            "cloth-08",
+            "cook-07",
+            "sleep-03",
+            "sleep-02",
+            "tent-07",
+            "food-02",
+            "water-08"
+          ],
+          "distances": [
+            0.0323,
+            0.0323,
+            0.0313,
+            0.0308,
+            0.027,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152,
+            0.0149
+          ],
+          "searchMs": 51.081099999999424,
+          "queryEmbedMs": 73.6000000089407,
+          "searchMsAll": [
+            51.081099999999424
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q23",
+          "text": "冻干食品复水后有多大",
+          "keyword": "冻干食品复水后有多大",
+          "ids": [
+            "food-07",
+            "cook-05",
+            "cloth-06",
+            "cloth-02",
+            "water-08",
+            "water-04",
+            "cook-02",
+            "sleep-06",
+            "cook-08",
+            "water-06"
+          ],
+          "distances": [
+            0.0328,
+            0.032,
+            0.0297,
+            0.0286,
+            0.0265,
+            0.0161,
+            0.0159,
+            0.0156,
+            0.0154,
+            0.0152
+          ],
+          "searchMs": 47.43379999999888,
+          "queryEmbedMs": 67,
+          "searchMsAll": [
+            47.43379999999888
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        },
+        {
+          "id": "q24",
+          "text": "营地应该选在什么样的地方",
+          "keyword": "营地应该选在什么样的地方",
+          "ids": [
+            "tent-08",
+            "tent-05",
+            "cloth-01",
+            "nav-01",
+            "tent-06",
+            "nav-04",
+            "water-04",
+            "cloth-08",
+            "water-02",
+            "cook-04"
+          ],
+          "distances": [
+            0.0325,
+            0.0317,
+            0.0305,
+            0.0303,
+            0.0301,
+            0.0284,
+            0.0282,
+            0.0277,
+            0.0271,
+            0.0263
+          ],
+          "searchMs": 49.11739999999918,
+          "queryEmbedMs": 71.79999999701977,
+          "searchMsAll": [
+            49.11739999999918
+          ],
+          "usedQueryLeg": true,
+          "usedRrf": true
+        }
+      ]
+    }
+  ],
+  "relevant": {
+    "q01": {
+      "sleep-02": 2,
+      "sleep-03": 2,
+      "sleep-04": 1
+    },
+    "q02": {
+      "cook-04": 2,
+      "cook-05": 2,
+      "cook-02": 1,
+      "cook-07": 1
+    },
+    "q03": {
+      "water-01": 2,
+      "water-06": 1
+    },
+    "q04": {
+      "tent-03": 2,
+      "tent-01": 1
+    },
+    "q05": {
+      "cloth-03": 2
+    },
+    "q06": {
+      "safety-01": 2
+    },
+    "q07": {
+      "food-05": 2,
+      "food-02": 1,
+      "food-06": 1
+    },
+    "q08": {
+      "nav-01": 2,
+      "nav-02": 2,
+      "nav-06": 1,
+      "nav-07": 1
+    },
+    "q09": {
+      "cloth-02": 2,
+      "cloth-06": 1,
+      "food-08": 1
+    },
+    "q10": {
+      "cloth-04": 2
+    },
+    "q11": {
+      "food-04": 2,
+      "food-01": 1,
+      "cook-01": 1
+    },
+    "q12": {
+      "food-03": 2
+    },
+    "q13": {
+      "tent-05": 2,
+      "tent-04": 1,
+      "tent-01": 1
+    },
+    "q14": {
+      "safety-02": 2,
+      "safety-03": 1,
+      "safety-08": 1
+    },
+    "q15": {
+      "water-05": 2
+    },
+    "q16": {
+      "cook-01": 2,
+      "cook-06": 1
+    },
+    "q17": {
+      "nav-07": 2
+    },
+    "q18": {
+      "sleep-01": 2,
+      "sleep-05": 2
+    },
+    "q19": {
+      "cloth-07": 2,
+      "cloth-05": 1
+    },
+    "q20": {
+      "safety-05": 2
+    },
+    "q21": {
+      "water-07": 2,
+      "water-06": 1,
+      "food-06": 1
+    },
+    "q22": {
+      "cloth-02": 2,
+      "cloth-06": 1,
+      "cloth-01": 1
+    },
+    "q23": {
+      "food-07": 2
+    },
+    "q24": {
+      "tent-08": 2,
+      "tent-02": 2,
+      "tent-05": 1
+    }
+  },
+  "consoleErrors": []
+}
