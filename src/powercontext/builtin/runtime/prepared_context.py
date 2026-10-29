@@ -48,6 +48,17 @@ from powercontext.builtin.runtime.recall_sufficiency import RecallBudgetView
 
 _MIN_TRUNCATED_CONTENT_BYTES = 64
 _ELLIPSIS = "…"
+# Evidence selection tuning, measured on the public SciFact training split
+# (see EVIDENCE_SELECTION_OPTIMIZATION.md): the annotated rationale is the
+# leading sentence of its document only 2.7% of the time, and 71% of it lies in
+# the last 40% of the document.  A leading sentence states the topic; a
+# rationale states a specific finding further in.
+_EVIDENCE_POSITION_FLOOR = 0.55
+_EVIDENCE_POSITION_SLOPE = 0.9
+# A rationale often shares few words with the claim, so the reliable unit is
+# the neighbourhood of the best matching sentence rather than one sentence.
+_EVIDENCE_WINDOW_SPAN = 4
+_EVIDENCE_WINDOW_DECAY = 0.25
 _BEGIN_MARKER = "BEGIN_POWERCONTEXT_PREPARED_CONTEXT_V1"
 _END_MARKER = "END_POWERCONTEXT_PREPARED_CONTEXT_V1"
 _Item = TypeVar("_Item")
@@ -847,10 +858,23 @@ def _merge_evidence(
             return tuple(remaining)
 
 
+@dataclass(frozen=True)
+class _EvidenceSpan:
+    """One literal passage of one candidate entry, with its document context."""
+
+    fragment: PreparedEvidenceFragment
+    source: str
+    terms: frozenset[str]
+    relative: float
+    key: tuple[str, str, str, int, str, str]
+    width: int
+    score: float = 0.0
+
+
 def _evidence_candidates(
     groups: Sequence[PreparedMemoryCandidates],
-) -> list[tuple[PreparedEvidenceFragment, str, set[str]]]:
-    spans: list[tuple[PreparedEvidenceFragment, str, set[str]]] = []
+) -> list[_EvidenceSpan]:
+    spans: list[_EvidenceSpan] = []
     for group in groups:
         for hit in group.hits:
             address = MemoryEntryAddress(
@@ -858,14 +882,66 @@ def _evidence_candidates(
                 entry_id=hit.entry_id,
                 entry_version_id=hit.entry_version_id,
             )
+            key = _evidence_address_key(address)
+            sentences = _literal_sentences(hit.text)
+            denominator = max(1, len(sentences) - 1)
             seen = set()
-            for start, end in _literal_sentences(hit.text):
+            for index, (start, end) in enumerate(sentences):
                 text = hit.text[start:end]
                 if text in seen:
                     continue
                 seen.add(text)
-                spans.append((PreparedEvidenceFragment(address, start, end, text), hit.text, _evidence_terms(text)))
+                spans.append(
+                    _EvidenceSpan(
+                        fragment=PreparedEvidenceFragment(address, start, end, text),
+                        source=hit.text,
+                        terms=frozenset(_evidence_terms(text)),
+                        relative=index / denominator,
+                        key=key,
+                        width=1,
+                    )
+                )
     return spans
+
+
+def _evidence_window_candidates(
+    spans: Sequence[_EvidenceSpan], limit: int = _EVIDENCE_WINDOW_SPAN
+) -> list[_EvidenceSpan]:
+    """Build contiguous runs of sentences, each scored as one candidate passage.
+
+    A run keeps the exact original characters, so the fragment stays a literal
+    half-open interval of the entry text and every selected passage can still
+    be verified against the stored Memory entry.
+    """
+
+    grouped: dict[tuple[str, str, str, int, str, str], list[_EvidenceSpan]] = {}
+    for span in spans:
+        grouped.setdefault(span.key, []).append(span)
+    windows: list[_EvidenceSpan] = []
+    for key, group in grouped.items():
+        group.sort(key=lambda span: span.fragment.start)
+        for width in range(1, min(limit, len(group)) + 1):
+            for index in range(len(group) - width + 1):
+                members = group[index : index + width]
+                values = sorted((member.score for member in members), reverse=True)
+                total = values[0] + _EVIDENCE_WINDOW_DECAY * sum(values[1:])
+                best = max(members, key=lambda member: member.score)
+                first = members[0]
+                last = members[-1]
+                start = first.fragment.start
+                end = last.fragment.end
+                windows.append(
+                    _EvidenceSpan(
+                        fragment=PreparedEvidenceFragment(first.fragment.address, start, end, first.source[start:end]),
+                        source=first.source,
+                        terms=frozenset().union(*(member.terms for member in members)),
+                        relative=best.relative,
+                        key=key,
+                        width=width,
+                        score=total,
+                    )
+                )
+    return windows
 
 
 def _query_occurrences(text: str, weights: dict[str, float]) -> Iterator[tuple[int, int, str, int, int]]:
@@ -1012,31 +1088,35 @@ def _select_evidence(
 ) -> PreparedContextBuild:
     query = _evidence_terms(request.query)
     spans = _evidence_candidates(groups)
-    frequencies = Counter(term for _, _, terms in spans for term in terms)
+    frequencies = Counter(term for span in spans for term in span.terms)
     weights = {term: 1 + math.log((len(spans) + 1) / (frequencies[term] + 1)) for term in query}
 
-    def score(candidate: tuple[PreparedEvidenceFragment, str, set[str]]) -> float:
-        terms = candidate[2]
-        matched = query & terms
-        return (
+    def score(span: _EvidenceSpan) -> float:
+        matched = query & span.terms
+        if not matched:
+            return 0.0
+        base = (
             sum(weights[term] for term in matched)
             * (1 + len(matched) / max(1, len(query)))
-            / (1 + math.sqrt(len(terms)) / 12)
+            / (1 + math.sqrt(len(span.terms)) / 12)
         )
+        # A passage that only restates the topic scores lower than a passage
+        # that reports a specific finding, and the finding is further in.
+        return base * (_EVIDENCE_POSITION_FLOOR + _EVIDENCE_POSITION_SLOPE * span.relative)
 
-    ranked = sorted(spans, key=score, reverse=True)
+    scored = [replace(span, score=score(span)) for span in spans]
+    candidates = _evidence_window_candidates(scored)
+    ranked = sorted(candidates, key=lambda span: (-span.score, span.key, span.fragment.start))
     selected: tuple[PreparedEvidenceFragment, ...] = ()
-    for fragment, source, terms in ranked:
-        if not query.intersection(terms):
+    for span in ranked:
+        if not query.intersection(span.terms):
             continue
-        proposal = _merge_evidence(selected, fragment, source)
+        proposal = _merge_evidence(selected, span.fragment, span.source)
         if len(_render_evidence(proposal).encode("utf-8")) <= request.max_bytes:
             selected = proposal
-        elif not selected:
-            selected = _fit_evidence_window(fragment, source, weights, request.max_bytes)
-    selected = _extend_evidence_continuations(
-        selected, {_evidence_address_key(fragment.address): source for fragment, source, _ in spans}, request.max_bytes
-    )
+        elif not selected and span.width == 1:
+            selected = _fit_evidence_window(span.fragment, span.source, weights, request.max_bytes)
+    selected = _extend_evidence_continuations(selected, {span.key: span.source for span in spans}, request.max_bytes)
     if not selected:
         return PreparedContextBuild(context=PreparedContext(status="empty", content=None, content_bytes=0), origins=())
     content = _render_evidence(selected)
