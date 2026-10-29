@@ -1,0 +1,6 @@
+# 虚拟环境与本地数据库不进仓库：评审按 README 的「30 秒跑起来」重建（建索引约 5 秒）
+.venv/
+data/seekdb.db/
+__pycache__/
+*.pyc
+.snapshot/

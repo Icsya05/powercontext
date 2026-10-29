@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>赛题速查</title>
+<style>
+  :root {
+    --bg: #14161b;
+    --panel: #1e2128;
+    --border: #2a2e37;
+    --text: #d7dae0;
+    --dim: #8b93a3;
+    --accent: #6ea8fe;
+    --hit: #57ab5a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .subtitle { color: var(--dim); font-size: 13px; margin: 0 0 24px; }
+  .searchbar { display: flex; gap: 8px; margin-bottom: 8px; }
+  input[type=text], textarea {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font: inherit;
+    outline: none;
+  }
+  input[type=text]:focus, textarea:focus { border-color: var(--accent); }
+  #q { flex: 1; }
+  button {
+    background: var(--accent);
+    color: #10141b;
+    border: 0;
+    border-radius: 6px;
+    padding: 10px 22px;
+    font: inherit;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.1); }
+  .meta { color: var(--dim); font-size: 12.5px; margin: 0 0 20px; min-height: 18px; }
+  .memory { border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    background: var(--panel); border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; }
+  .memory h2 { font-size: 14px; margin: 0 0 8px; color: var(--accent); }
+  .memory .item { padding: 6px 0; border-top: 1px solid var(--border); }
+  .memory .item:first-of-type { border-top: 0; }
+  .memory .q { font-weight: 600; }
+  .memory .a { color: var(--dim); }
+  .memory .who { color: var(--dim); font-size: 12px; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .card .head { display: flex; justify-content: space-between; gap: 12px; }
+  .card h3 { font-size: 16px; margin: 0; }
+  .card h3 a { color: var(--text); text-decoration: none; }
+  .card h3 a:hover { color: var(--accent); }
+  .card .heading { color: var(--accent); font-size: 13px; margin-top: 2px; }
+  .card .snippet { color: var(--dim); font-size: 14px; margin-top: 8px; }
+  .tags { flex-shrink: 0; display: flex; gap: 4px; align-items: flex-start; }
+  .tag {
+    font-size: 11px;
+    padding: 1px 7px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--dim);
+    white-space: nowrap;
+  }
+  .tag.on { color: var(--hit); border-color: var(--hit); }
+  .empty { color: var(--dim); padding: 24px 0; }
+  .form { margin-top: 48px; border-top: 1px solid var(--border); padding-top: 24px; }
+  .form h2 { font-size: 16px; margin: 0 0 12px; }
+  .form label { display: block; color: var(--dim); font-size: 13px; margin: 10px 0 4px; }
+  .form input[type=text], .form textarea { width: 100%; }
+  .form textarea { min-height: 72px; resize: vertical; }
+  .form .row { display: flex; gap: 12px; }
+  .form .row > div { flex: 1; }
+  #noteMsg { color: var(--dim); font-size: 13px; margin-top: 8px; }
+  .notes { margin-top: 24px; }
+  .notes h3 { font-size: 14px; color: var(--dim); margin: 0 0 8px; }
+  .notes .item { font-size: 13.5px; padding: 6px 0; border-top: 1px solid var(--border); }
+  .notes .q { color: var(--text); }
+  .notes .a { color: var(--dim); }
+  .notes .who { color: var(--dim); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>赛题速查</h1>
+  <p class="subtitle">OceanBase 数据库大赛官方文档检索</p>
+
+  <div class="searchbar">
+    <input type="text" id="q" placeholder="输入问题，例如：AMD 题提交的仓库地址是什么格式" autofocus>
+    <button id="go">搜索</button>
+  </div>
+  <p class="meta" id="meta"></p>
+
+  <div id="memory"></div>
+  <div id="results"></div>
+
+  <div class="form">
+    <h2>记一条</h2>
+    <label for="nq">问题</label>
+    <input type="text" id="nq" placeholder="例如：初赛提交截止日期是什么时候">
+    <label for="na">答案</label>
+    <textarea id="na" placeholder="例如：2026 年 X 月 X 日 23:59，以官网公告为准"></textarea>
+    <label for="nau">作者</label>
+    <input type="text" id="nau" placeholder="昵称（可留空）">
+    <div style="margin-top:12px"><button id="noteBtn">提交</button></div>
+    <p id="noteMsg"></p>
+    <div class="notes">
+      <h3>最近记录</h3>
+      <div id="noteList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var q = document.getElementById("q");
+  var go = document.getElementById("go");
+  var meta = document.getElementById("meta");
+  var memoryEl = document.getElementById("memory");
+  var resultsEl = document.getElementById("results");
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function tag(name, on) {
+    return '<span class="tag' + (on ? " on" : "") + '">' + name + "</span>";
+  }
+
+  function renderMemory(mem) {
+    if (!mem || !mem.length) { memoryEl.innerHTML = ""; return; }
+    var html = '<div class="memory"><h2>团队记忆（' + mem.length + " 条）</h2>";
+    mem.forEach(function (m) {
+      html += '<div class="item"><div class="q">Q：' + esc(m.question) + "</div>" +
+        '<div class="a">A：' + esc(m.answer) + "</div>" +
+        '<div class="who">' + esc(m.author || "匿名") +
+        (m.tags ? " · " + esc(m.tags) : "") +
+        " · " + esc(m.created_at || "") + "</div></div>";
+    });
+    memoryEl.innerHTML = html + "</div>";
+  }
+
+  function renderResults(res) {
+    var parts = [];
+    if (res.expanded_by && Object.keys(res.expanded_by).length) {
+      parts.push("别名扩展：" + Object.keys(res.expanded_by).join("、"));
+    }
+    parts.push("vector " + res.routes.vector +
+      " · fulltext " + res.routes.fulltext +
+      " · title " + res.routes.title +
+      " · fused " + res.routes.fused +
+      " · " + res.elapsed_ms + " ms");
+    meta.textContent = parts.join("　");
+
+    if (!res.results.length) {
+      resultsEl.innerHTML = '<div class="empty">没有找到相关结果，换个说法试试，或在下方「记一条」。</div>';
+      return;
+    }
+    var html = "";
+    res.results.forEach(function (it) {
+      var tags = tag("vector", it.routes.vector) + tag("fulltext", it.routes.fulltext) + tag("title", it.routes.title);
+      html += '<div class="card"><div class="head"><div>' +
+        "<h3><a href=\"" + esc(it.url) + '" target="_blank" rel="noopener">' + esc(it.doc_title) + "</a></h3>" +
+        (it.heading ? '<div class="heading">' + esc(it.heading) + "</div>" : "") +
+        "</div><div class=\"tags\">" + tags + "</div></div>" +
+        '<div class="snippet">' + esc(it.snippet) + "</div></div>";
+    });
+    resultsEl.innerHTML = html;
+  }
+
+  function doSearch() {
+    var text = q.value.trim();
+    if (!text) { q.focus(); return; }
+    meta.textContent = "检索中…";
+    resultsEl.innerHTML = "";
+    memoryEl.innerHTML = "";
+    fetch("/api/search?q=" + encodeURIComponent(text) + "&k=6")
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (x) {
+        if (!x.ok) {
+          meta.textContent = "";
+          resultsEl.innerHTML = '<div class="empty">' + esc(x.body.error || "查询失败") + "</div>";
+          return;
+        }
+        renderMemory(x.body.memory);
+        renderResults(x.body);
+      })
+      .catch(function () {
+        meta.textContent = "";
+        resultsEl.innerHTML = '<div class="empty">请求失败，请确认服务已启动。</div>';
+      });
+  }
+
+  go.addEventListener("click", doSearch);
+  q.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { doSearch(); }
+  });
+
+  var nq = document.getElementById("nq");
+  var na = document.getElementById("na");
+  var nau = document.getElementById("nau");
+  var noteMsg = document.getElementById("noteMsg");
+  var noteList = document.getElementById("noteList");
+
+  function renderNotes(notes) {
+    if (!notes.length) { noteList.innerHTML = '<div class="empty">还没有记录。</div>'; return; }
+    var html = "";
+    notes.forEach(function (n) {
+      html += '<div class="item"><div class="q">Q：' + esc(n.question) + "</div>" +
+        '<div class="a">A：' + esc(n.answer) + "</div>" +
+        '<div class="who">' + esc(n.author || "匿名") +
+        (n.tags ? " · " + esc(n.tags) : "") +
+        " · " + esc(n.created_at || "") + "</div></div>";
+    });
+    noteList.innerHTML = html;
+  }
+
+  function loadNotes() {
+    fetch("/api/notes")
+      .then(function (r) { return r.json(); })
+      .then(function (j) { renderNotes(j.notes || []); })
+      .catch(function () { noteList.innerHTML = ""; });
+  }
+
+  document.getElementById("noteBtn").addEventListener("click", function () {
+    var question = nq.value.trim();
+    var answer = na.value.trim();
+    if (!question || !answer) {
+      noteMsg.textContent = "问题和答案都要填。";
+      return;
+    }
+    fetch("/api/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        author: nau.value.trim(),
+        question: question,
+        answer: answer,
+        tags: ""
+      })
+    })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (x) {
+        if (!x.ok) { noteMsg.textContent = x.body.error || "提交失败"; return; }
+        noteMsg.textContent = "已记住。";
+        nq.value = "";
+        na.value = "";
+        renderNotes(x.body.notes || []);
+      })
+      .catch(function () { noteMsg.textContent = "提交失败，请确认服务已启动。"; });
+  });
+
+  loadNotes();
+})();
+</script>
+</body>
+</html>

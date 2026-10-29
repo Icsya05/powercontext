@@ -1,0 +1,528 @@
+{
+  "fetched_at": "2026-10-29T09:57:44+00:00",
+  "total_in_toc": 67,
+  "ok": 65,
+  "failed": 2,
+  "docs": [
+    {
+      "slug": "ix20uoszxhifnp4b",
+      "title": "2026年OceanBase数据库大赛",
+      "level": 0,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ix20uoszxhifnp4b",
+      "updated_at": "2026-10-27T09:44:06.000Z",
+      "chars": 807
+    },
+    {
+      "slug": "gp48z4pp0q3zg9b2",
+      "title": "FAQ - 大赛常见问题答疑",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/gp48z4pp0q3zg9b2",
+      "updated_at": "2026-10-29T09:52:36.000Z",
+      "chars": 2934
+    },
+    {
+      "slug": "ocqe6xv6mlgapq24",
+      "title": "赛题",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ocqe6xv6mlgapq24",
+      "updated_at": "2026-10-14T03:50:29.000Z",
+      "chars": 491
+    },
+    {
+      "slug": "lz6ixow11mar233g",
+      "title": "赛题一：部署一个 seekdb",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/lz6ixow11mar233g",
+      "updated_at": "2026-10-26T02:54:35.000Z",
+      "chars": 1476
+    },
+    {
+      "slug": "xom0q8ni2ow8t9py",
+      "title": "赛题二：GitHub bug修复",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/xom0q8ni2ow8t9py",
+      "updated_at": "2026-10-26T02:43:14.000Z",
+      "chars": 988
+    },
+    {
+      "slug": "ugmhrcw9p21ppp66",
+      "title": "OceanBase seekdb内核",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ugmhrcw9p21ppp66",
+      "updated_at": "2026-10-23T06:17:45.000Z",
+      "chars": 279
+    },
+    {
+      "slug": "psu9fks8dexldoum",
+      "title": "赛题一：AI函数增强",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/psu9fks8dexldoum",
+      "updated_at": "2026-10-26T02:43:52.000Z",
+      "chars": 1631
+    },
+    {
+      "slug": "gy2a66vag0028msk",
+      "title": "赛题二：文件即数据库",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/gy2a66vag0028msk",
+      "updated_at": "2026-10-26T02:44:26.000Z",
+      "chars": 2315
+    },
+    {
+      "slug": "qenx4sy5s09h2t07",
+      "title": "赛题三：AI列",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/qenx4sy5s09h2t07",
+      "updated_at": "2026-10-26T02:45:13.000Z",
+      "chars": 4097
+    },
+    {
+      "slug": "za7cfo5cazcrihhq",
+      "title": "赛题四：全文索引调优",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/za7cfo5cazcrihhq",
+      "updated_at": "2026-10-26T06:49:11.000Z",
+      "chars": 2777
+    },
+    {
+      "slug": "gp9hi8ikdnef8ryc",
+      "title": "PowerContext",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/gp9hi8ikdnef8ryc",
+      "updated_at": "2026-08-17T12:27:43.000Z",
+      "chars": 334
+    },
+    {
+      "slug": "ygfg2iskh62zntl5",
+      "title": "赛题一：准备 PowerContext 仓库",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ygfg2iskh62zntl5",
+      "updated_at": "2026-10-26T02:50:34.000Z",
+      "chars": 2439
+    },
+    {
+      "slug": "yt9ctvr4n9lc0p1l",
+      "title": "赛题二：CSV 行级采集与原始记录回查",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/yt9ctvr4n9lc0p1l",
+      "updated_at": "2026-10-26T02:50:24.000Z",
+      "chars": 4959
+    },
+    {
+      "slug": "oi71gg4g80uda2ls",
+      "title": "赛题三：",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/oi71gg4g80uda2ls",
+      "updated_at": "2026-10-26T02:50:14.000Z",
+      "chars": 4645
+    },
+    {
+      "slug": "ohy6lqb9wshgmrar",
+      "title": "赛题四：财报 PDF 全文解析与证据页检索",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ohy6lqb9wshgmrar",
+      "updated_at": "2026-10-26T02:50:08.000Z",
+      "chars": 4778
+    },
+    {
+      "slug": "te7ynwpbeg0cbufs",
+      "title": "赛题五：HTTP 重排服务接入与跨批次排序",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/te7ynwpbeg0cbufs",
+      "updated_at": "2026-10-26T02:50:01.000Z",
+      "chars": 4290
+    },
+    {
+      "slug": "pw6pl9siofvh3h9k",
+      "title": "赛题六：上下文增量传输与完整重建",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/pw6pl9siofvh3h9k",
+      "updated_at": "2026-10-26T02:49:55.000Z",
+      "chars": 4873
+    },
+    {
+      "slug": "kv2g0mm2fdfdda7x",
+      "title": "赛题七：按新增来源条目数触发记忆处理",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/kv2g0mm2fdfdda7x",
+      "updated_at": "2026-10-26T02:49:49.000Z",
+      "chars": 3836
+    },
+    {
+      "slug": "gt75mi3l407t2ccn",
+      "title": "赛题八：Embedding 并发请求合并与向量缓存",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/gt75mi3l407t2ccn",
+      "updated_at": "2026-10-26T08:01:12.000Z",
+      "chars": 3478
+    },
+    {
+      "slug": "vru5ymzl6lmi701c",
+      "title": "赛题九：来源撤回后的记忆停用与恢复",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/vru5ymzl6lmi701c",
+      "updated_at": "2026-10-26T02:49:34.000Z",
+      "chars": 4038
+    },
+    {
+      "slug": "kcgxoqb2h9up4ufu",
+      "title": "赛题十：按查询和预算选择原文证据",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/kcgxoqb2h9up4ufu",
+      "updated_at": "2026-10-26T02:49:27.000Z",
+      "chars": 4258
+    },
+    {
+      "slug": "hqkh5u47mf5nv8r5",
+      "title": "赛题十一：seekdb 混合检索的单 SQL 候选查询",
+      "level": 3,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/hqkh5u47mf5nv8r5",
+      "updated_at": "2026-10-26T02:49:19.000Z",
+      "chars": 4111
+    },
+    {
+      "slug": "seebnbaoxot1b0tb",
+      "title": "AMD",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/seebnbaoxot1b0tb",
+      "updated_at": "2026-10-29T09:45:36.000Z",
+      "chars": 10914
+    },
+    {
+      "slug": "qlqnoryzrs7gtqbw",
+      "title": "MiniMax",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/qlqnoryzrs7gtqbw",
+      "updated_at": "2026-10-26T03:52:16.000Z",
+      "chars": 2999
+    },
+    {
+      "slug": "uygu3273xzlrcmrm",
+      "title": "Qoder",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/uygu3273xzlrcmrm",
+      "updated_at": "2026-10-26T03:52:37.000Z",
+      "chars": 3961
+    },
+    {
+      "slug": "kw9wfx4bu9pyvat9",
+      "title": "阶跃星辰",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/kw9wfx4bu9pyvat9",
+      "updated_at": "2026-10-26T03:53:05.000Z",
+      "chars": 3259
+    },
+    {
+      "slug": "lhfslihtnnb8yqh6",
+      "title": "Dify",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/lhfslihtnnb8yqh6",
+      "updated_at": "2026-10-26T03:53:25.000Z",
+      "chars": 4922
+    },
+    {
+      "slug": "qp60miwsbk1mcgod",
+      "title": "高德地图",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/qp60miwsbk1mcgod",
+      "updated_at": "2026-10-26T03:54:04.000Z",
+      "chars": 2467
+    },
+    {
+      "slug": "bt7u0qwwz84gt48g",
+      "title": "魔搭社区",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/bt7u0qwwz84gt48g",
+      "updated_at": "2026-10-26T02:48:37.000Z",
+      "chars": 706
+    },
+    {
+      "slug": "ut82q2fcalep4y1r",
+      "title": "测试",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ut82q2fcalep4y1r",
+      "updated_at": "2026-10-26T09:39:49.000Z",
+      "chars": 605
+    },
+    {
+      "slug": "xkmkblbzlzk581ya",
+      "title": "算分规则",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/xkmkblbzlzk581ya",
+      "updated_at": "2026-10-23T07:16:06.000Z",
+      "chars": 560
+    },
+    {
+      "slug": "brxxufkegusa86hl",
+      "title": "比赛仓库地址",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/brxxufkegusa86hl",
+      "updated_at": "2026-10-23T07:49:05.000Z",
+      "chars": 450
+    },
+    {
+      "slug": "cedao0wehhx1gcg4",
+      "title": "判题实效性",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/cedao0wehhx1gcg4",
+      "updated_at": "2026-10-26T03:21:10.000Z",
+      "chars": 262
+    },
+    {
+      "slug": "kr39e5xypy6mowvm",
+      "title": "课程",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/kr39e5xypy6mowvm",
+      "updated_at": "2026-09-28T04:23:22.000Z",
+      "chars": 658
+    },
+    {
+      "slug": "ya7d7dzr1etn1ncg",
+      "title": "第零讲：数据库大赛启动介绍",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ya7d7dzr1etn1ncg",
+      "updated_at": "2026-08-18T03:50:24.000Z",
+      "chars": 233
+    },
+    {
+      "slug": "oaw0z31ywat2g8i5",
+      "title": "第一讲：AI 原生数据库与 seekdb 基础",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/oaw0z31ywat2g8i5",
+      "updated_at": "2026-08-20T03:40:20.000Z",
+      "chars": 226
+    },
+    {
+      "slug": "zhgyk0y0hvvlr28x",
+      "title": "企业第一讲：AMD",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/zhgyk0y0hvvlr28x",
+      "updated_at": "2026-08-20T03:47:03.000Z",
+      "chars": 249
+    },
+    {
+      "slug": "bcgddalclx582b2w",
+      "title": "第二讲：向量数据库与 RAG",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/bcgddalclx582b2w",
+      "updated_at": "2026-08-28T02:29:27.000Z",
+      "chars": 92
+    },
+    {
+      "slug": "nkgfb81gd3kn5eq4",
+      "title": "企业第二讲：阶跃星辰",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/nkgfb81gd3kn5eq4",
+      "updated_at": "2026-08-28T02:40:05.000Z",
+      "chars": 225
+    },
+    {
+      "slug": "dg3euo1uy9e04ear",
+      "title": "第三讲：SQL×AI（AI Functions 的设计与执行）",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/dg3euo1uy9e04ear",
+      "updated_at": "2026-08-28T03:45:42.000Z",
+      "chars": 226
+    },
+    {
+      "slug": "ygbglc5fx7otbs6a",
+      "title": "企业第三讲：高德地图",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ygbglc5fx7otbs6a",
+      "updated_at": "2026-08-31T10:11:10.000Z",
+      "chars": 246
+    },
+    {
+      "slug": "ve8gebq82bcapffk",
+      "title": "第四讲：本地文件即数据库（File SQL for AI Agent）",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ve8gebq82bcapffk",
+      "updated_at": "2026-09-03T04:51:24.000Z",
+      "chars": 226
+    },
+    {
+      "slug": "bparqh1vfsl6mlrm",
+      "title": "企业第四讲：dify",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/bparqh1vfsl6mlrm",
+      "updated_at": "2026-09-03T04:51:41.000Z",
+      "chars": 224
+    },
+    {
+      "slug": "ahkxog2ggp212575",
+      "title": "第五讲：AI 列（模型驱动派生数据的自动维护）",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ahkxog2ggp212575",
+      "updated_at": "2026-09-11T03:15:19.000Z",
+      "chars": 226
+    },
+    {
+      "slug": "pt3hhtf7ci61qz91",
+      "title": "企业第五讲：原力灵机",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/pt3hhtf7ci61qz91",
+      "updated_at": "2026-09-11T03:19:43.000Z",
+      "chars": 230
+    },
+    {
+      "slug": "kyic625yep5wal4b",
+      "title": "第六讲：上下文工程概述",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/kyic625yep5wal4b",
+      "updated_at": "2026-09-24T07:28:35.000Z",
+      "chars": 224
+    },
+    {
+      "slug": "cs47urzu5wtpaxao",
+      "title": "企业第六讲： Qoder",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/cs47urzu5wtpaxao",
+      "updated_at": "2026-09-24T07:07:06.000Z",
+      "chars": 246
+    },
+    {
+      "slug": "vm0ns7vly6so33n6",
+      "title": "第七讲：powercontext 的设计实现",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/vm0ns7vly6so33n6",
+      "updated_at": "2026-09-28T03:46:27.000Z",
+      "chars": 224
+    },
+    {
+      "slug": "gpwrxihxgnmatqu6",
+      "title": "企业第七讲：魔搭",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/gpwrxihxgnmatqu6",
+      "updated_at": "2026-09-28T04:01:43.000Z",
+      "chars": 271
+    },
+    {
+      "slug": "mq2b55nkyihg948q",
+      "title": "第八讲：powercontext案例场景和测评构建",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/mq2b55nkyihg948q",
+      "updated_at": "2026-09-28T04:17:11.000Z",
+      "chars": 224
+    },
+    {
+      "slug": "vw3hyno7t25ise4v",
+      "title": "企业第八讲：MiniMax",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/vw3hyno7t25ise4v",
+      "updated_at": "2026-09-28T04:22:56.000Z",
+      "chars": 92
+    },
+    {
+      "slug": "xen6hatoerd7iggg",
+      "title": "分享",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/xen6hatoerd7iggg",
+      "updated_at": "2026-10-23T07:14:37.000Z",
+      "chars": 22
+    },
+    {
+      "slug": "zvy6wc4l3cfbvzgi",
+      "title": "AMD  seekdb 部署上报失败修复方案",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/zvy6wc4l3cfbvzgi",
+      "updated_at": "2026-10-28T09:12:55.000Z",
+      "chars": 2831
+    },
+    {
+      "slug": "qs1povt8zbza6hts",
+      "title": "GitHub在大赛中的使用说明",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/qs1povt8zbza6hts",
+      "updated_at": "2026-10-26T02:34:47.000Z",
+      "chars": 2499
+    },
+    {
+      "slug": "hgln7zgktka4kg1u",
+      "title": "seekdb 技术架构与核心能力",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/hgln7zgktka4kg1u",
+      "updated_at": "2026-10-22T08:47:10.000Z",
+      "chars": 9714
+    },
+    {
+      "slug": "tlww4gb17vthm993",
+      "title": "seekdb 源码框架介绍与贡献上手指南",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/tlww4gb17vthm993",
+      "updated_at": "2026-08-07T07:55:42.000Z",
+      "chars": 21897
+    },
+    {
+      "slug": "lcuknwgl955v8ou7",
+      "title": "AMD Radeon使用和部署seekdb",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/lcuknwgl955v8ou7",
+      "updated_at": "2026-10-27T03:33:25.000Z",
+      "chars": 3968
+    },
+    {
+      "slug": "ui0umho6ntag6x04",
+      "title": "AMD环境处理",
+      "level": 2,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/ui0umho6ntag6x04",
+      "updated_at": "2026-10-28T09:00:53.000Z",
+      "chars": 3983
+    },
+    {
+      "slug": "bpnhxpu7c7zlx94g",
+      "title": "中国数据库暑期学校2026",
+      "level": 0,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/bpnhxpu7c7zlx94g",
+      "updated_at": "2026-07-09T12:15:50.000Z",
+      "chars": 1355
+    },
+    {
+      "slug": "smpp9wl8trfkeev1",
+      "title": "PowerMem 的 LangChain 中间件集成",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/smpp9wl8trfkeev1",
+      "updated_at": "2026-07-09T11:48:33.000Z",
+      "chars": 3127
+    },
+    {
+      "slug": "gp6voyg9r0qqbt95",
+      "title": "Document AI Functions",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/gp6voyg9r0qqbt95",
+      "updated_at": "2026-07-09T12:14:19.000Z",
+      "chars": 2627
+    },
+    {
+      "slug": "iq4su2iqyuzen05i",
+      "title": "IK 分词器支持用户自定义词典",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/iq4su2iqyuzen05i",
+      "updated_at": "2026-07-09T12:16:14.000Z",
+      "chars": 5466
+    },
+    {
+      "slug": "qpbdgg2geoh5zoyx",
+      "title": "OceanBase 全文索引构建性能优化",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/qpbdgg2geoh5zoyx",
+      "updated_at": "2026-07-09T12:32:11.000Z",
+      "chars": 8516
+    },
+    {
+      "slug": "yt95uatolcbtfgow",
+      "title": "测试注意事项",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/yt95uatolcbtfgow",
+      "updated_at": "2026-07-17T04:08:11.000Z",
+      "chars": 2108
+    },
+    {
+      "slug": "zf62cru5n8k2qkg1",
+      "title": "英雄榜",
+      "level": 1,
+      "url": "https://oceanbase.yuque.com/org-wiki-obtech-vh7w9r/hc3pio/zf62cru5n8k2qkg1",
+      "updated_at": "2026-07-20T14:06:32.000Z",
+      "chars": 475
+    }
+  ]
+}

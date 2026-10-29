@@ -1,0 +1,5 @@
+# 赛题速查 - 依赖清单
+# 安装：pip install -r requirements.txt
+pylibseekdb  # seekdb 嵌入式数据库的 Python 绑定
+pymysql      # MySQL 兼容协议访问（连接 seekdb 用）
+numpy        # 向量计算（检索/排序用）
