@@ -219,7 +219,11 @@ def strip_markdown(text: str) -> str:
     t = re.sub(r"^\s{0,3}>\s*", "", t, flags=re.M)           # 引用块
     t = re.sub(r"^\s*[-*+]\s+", "", t, flags=re.M)           # 列表符号
     t = re.sub(r"^\s*([-*_])\1{2,}\s*$", "", t, flags=re.M)  # 分隔线
-    t = t.replace("|", " ")                                  # 表格竖线
+    # 表格竖线：直接换空格会让「题目 仓库地址 分支 文件夹」粘成一串读不懂，
+    # 换成分隔点保留列边界；再合并连续分隔点、去掉行首行尾的。
+    t = t.replace("|", " · ")
+    t = re.sub(r"\s*·(?:\s*·)+\s*", " · ", t)
+    t = re.sub(r"(?m)^\s*·\s*|\s*·\s*$", "", t)
     t = re.sub(r"[ \t]{2,}", " ", t)
     t = re.sub(r"\n{2,}", "\n", t)
     return t.strip()
