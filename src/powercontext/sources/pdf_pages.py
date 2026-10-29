@@ -114,10 +114,38 @@ PDF_PAGE_SOURCE_DEFINITION = AdapterSourceDefinition[PDFPageInput, PDFPageSource
 )
 
 
+def _plural_key(term: str) -> str:
+    """Conflate light English plurals without stripping singular -ss, -is or -us."""
+    if term in {"news", "series", "species"}:
+        return term
+    if len(term) > 4 and term.endswith("ies"):
+        return f"{term[:-3]}y"
+    if len(term) > 4 and term.endswith(("sses", "ches", "shes", "xes", "zes")):
+        return term[:-2]
+    if len(term) > 3 and term.endswith("s") and not term.endswith(("ss", "is", "us")):
+        return term[:-1]
+    return term
+
+
+def _short_query_plural(term: str) -> str | None:
+    """Offer at most one plural spelling when a short query has no other anchors."""
+    if (
+        len(term) < 4
+        or not term.isalpha()
+        or term in {"news", "series", "species"}
+        or term.endswith(("is", "us"))
+        or _plural_key(term) != term
+    ):
+        return None
+    if term.endswith("y") and term[-2] not in "aeiou":
+        return f"{term[:-1]}ies"
+    return f"{term}es" if term.endswith(("s", "x", "z", "ch", "sh")) else f"{term}s"
+
+
 def _rank_pages(hits: tuple[MemoryHit, ...], question: str) -> list[MemoryHit]:
     """BM25 over the actual candidate pages, with deterministic identity ties."""
-    terms = set(re.findall(r"[a-z]+|\d+", analyze_fts_query(question)))
-    counts = [Counter(re.findall(r"[a-z]+|\d+", hit.text.lower())) for hit in hits]
+    terms = {_plural_key(term) for term in re.findall(r"[a-z]+|\d+", analyze_fts_query(question))}
+    counts = [Counter(_plural_key(term) for term in re.findall(r"[a-z]+|\d+", hit.text.lower())) for hit in hits]
     lengths = [sum(count.values()) for count in counts]
     average = sum(lengths) / max(len(lengths), 1) or 1
     frequencies = {term: sum(term in count for count in counts) for term in terms}
@@ -147,6 +175,17 @@ async def search_pdf_pages(
     queries = [question]
     if len(terms) > 2:
         queries.extend(" ".join(terms[index : index + 2]) for index in range(0, len(terms), 2))
+    # The stored FTS index remains exact. Alternate forms need their own lexical
+    # views before the page-local ranker can compare the same inflection keys.
+    inflections = tuple(dict.fromkeys(_plural_key(term) for term in terms if _plural_key(term) != term))
+    if len(terms) <= 2:
+        inflections = tuple(
+            dict.fromkeys((
+                *inflections,
+                *(plural for term in terms if (plural := _short_query_plural(term)) is not None),
+            ))
+        )
+    queries.extend(" ".join(inflections[index : index + 2]) for index in range(0, len(inflections), 2))
     # Fiscal-year notation is common in questions, while table headers usually
     # contain bare years. Retain every original view for pages using the prefix.
     years = tuple(dict.fromkeys(re.findall(r"\bfy(\d{4})\b", question, flags=re.IGNORECASE)))

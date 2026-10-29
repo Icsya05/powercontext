@@ -12,17 +12,60 @@ from powercontext.sources.pdf_pages import PDF_PAGE_SOURCE_DEFINITION, PDFDocume
 
 
 @pytest.mark.parametrize(
-    "question",
+    ("question", "page_text", "distractors", "expected_count"),
     [
-        "What were capital expenditures for Acme in fiscal 2024? "
-        "Please explain the calculation using dollars rather than percentages, "
-        "considering an analyst perspective and providing a concise response with supporting references.",
-        "What is FY2024?",
+        (
+            "What were capital expenditures for Acme in fiscal 2024? "
+            "Please explain the calculation using dollars rather than percentages, "
+            "considering an analyst perspective and providing a concise response with supporting references.",
+            "Consolidated cash flows\n2024 2023\nCapital expenditures 25 20\nDepreciation 10 9",
+            (),
+            1,
+        ),
+        ("What is FY2024?", "Consolidated cash flows\n2024 2023\nCapital expenditures 25 20", (), 1),
+        (
+            "income statements",
+            "Consolidated statement of income\nRevenue 200",
+            tuple(f"Income tax expense {index}" for index in range(20)),
+            20,
+        ),
+        ("statements", "Consolidated statement of income", (), 1),
+        ("flows", "Cash flow statement", (), 1),
+        ("liabilities", "Liability 200", (), 1),
+        ("geographies", "Geography and operations", (), 1),
+        ("statement", "Consolidated statements of income", (), 1),
+        ("flow", "Cash flows statement", (), 1),
+        ("liability", "Liabilities 200", (), 1),
+        ("geography", "Geographies and operations", (), 1),
+        ("loss", "Losses from operations", (), 1),
+        ("loss", "Loss from operations", tuple(f"Los {index}" for index in range(20)), 1),
+        ("analysis", "Analysis of operations", tuple(f"Analysi {index}" for index in range(20)), 1),
+        ("status", "Status of obligations", tuple(f"Statu {index}" for index in range(20)), 1),
+        ("news", "News from operations", tuple(f"New {index}" for index in range(20)), 1),
+        ("flow", "Flow from operations", tuple(f"Cashflow {index}" for index in range(20)), 1),
     ],
-    ids=["long-narrative", "fiscal-year"],
+    ids=[
+        "long-narrative",
+        "fiscal-year",
+        "plural-statement-among-tax-schedules",
+        "plural-statement",
+        "plural-flow",
+        "plural-liability",
+        "plural-geography",
+        "reverse-statement",
+        "reverse-flow",
+        "reverse-liability",
+        "reverse-geography",
+        "reverse-loss",
+        "protect-loss",
+        "protect-analysis",
+        "protect-status",
+        "protect-news",
+        "word-boundary",
+    ],
 )
-def test_question_retrieves_concise_table_page(tmp_path, question):
-    """Natural wording must not exclude a table containing the requested financial year."""
+def test_question_retrieves_concise_table_page(tmp_path, question, page_text, distractors, expected_count):
+    """Natural inflections must retrieve exact pages without matching unrelated word fragments."""
     from powercontext.builtin.artifacts.memory import MemoryEntryInput
     from powercontext.builtin.persistence.sqlite import SQLiteConfig
     from powercontext.builtin.runtime import (
@@ -54,7 +97,7 @@ def test_question_retrieves_concise_table_page(tmp_path, question):
                 document_id="ACME_2024_10K",
                 document_sha256="a" * 64,
                 page_number=2,
-                text="Consolidated cash flows\n2024 2023\nCapital expenditures 25 20\nDepreciation 10 9",
+                text=page_text,
             )
         )
         config = BuiltinConfig(database=SQLiteConfig(url=f"sqlite+aiosqlite:///{tmp_path / 'pdf.db'}"))
@@ -63,16 +106,33 @@ def test_question_retrieves_concise_table_page(tmp_path, question):
             await runtime.ingestion.register(manifest_for_definition(PDF_PAGE_SOURCE_DEFINITION))
             observation = project_source_for_transport(registry, source)
             await runtime.ingestion.submit(SubmitSourceObservation(scope_id=scope.scope_id, observation=observation))
+            for number, text in enumerate(distractors, 3):
+                other = await registry.resolve(
+                    PDFPageInput(
+                        document_id="ACME_2024_10K",
+                        document_sha256="a" * 64,
+                        page_number=number,
+                        text=text,
+                    )
+                )
+                await runtime.ingestion.submit(
+                    SubmitSourceObservation(
+                        scope_id=scope.scope_id,
+                        observation=project_source_for_transport(registry, other),
+                    )
+                )
             memory = runtime.memory.for_scope(scope.scope_id)
-            await memory.flush()
+            for _ in range(len(distractors) + 2):
+                if not (await memory.flush()).processed:
+                    break
             citations = await search_pdf_pages(
                 memory,
                 question,
                 limit=20,
             )
-            assert len(citations) == 1
-            entry = (await memory.get(GetMemoryEntryRequest(citation=citations[0]))).entry
-            assert entry.sources[0].source_id == source.name
+            assert len(citations) == expected_count
+            entries = [(await memory.get(GetMemoryEntryRequest(citation=citation))).entry for citation in citations]
+            assert source.name in {entry.sources[0].source_id for entry in entries}
 
     asyncio.run(scenario())
 
