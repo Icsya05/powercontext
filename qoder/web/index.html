@@ -143,6 +143,17 @@
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
+  // 后端存的是 UTC 的 ISO 串（2026-10-29T14:12:26+00:00）。直接显示会既带 T 和
+  // +00:00、又比北京时间少 8 小时，页面上看着像没处理过。转成本地的 MM-DD HH:MM。
+  function fmtTime(s) {
+    if (!s) { return ""; }
+    var d = new Date(s);
+    if (isNaN(d.getTime())) { return String(s); }
+    var p = function (x) { return x < 10 ? "0" + x : "" + x; };
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) +
+      " " + p(d.getHours()) + ":" + p(d.getMinutes());
+  }
+
   function tag(name, on) {
     return '<span class="tag' + (on ? " on" : "") + '">' + name + "</span>";
   }
@@ -155,7 +166,7 @@
         '<div class="a">A：' + esc(m.answer) + "</div>" +
         '<div class="who">' + esc(m.author || "匿名") +
         (m.tags ? " · " + esc(m.tags) : "") +
-        " · " + esc(m.created_at || "") + "</div></div>";
+        " · " + esc(fmtTime(m.created_at)) + "</div></div>";
     });
     memoryEl.innerHTML = html + "</div>";
   }
@@ -230,7 +241,7 @@
         '<div class="a">A：' + esc(n.answer) + "</div>" +
         '<div class="who">' + esc(n.author || "匿名") +
         (n.tags ? " · " + esc(n.tags) : "") +
-        " · " + esc(n.created_at || "") + "</div></div>";
+        " · " + esc(fmtTime(n.created_at)) + "</div></div>";
     });
     noteList.innerHTML = html;
   }
