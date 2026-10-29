@@ -198,13 +198,48 @@ def cosine(a: list[float], b: list[float]) -> float:
     return sum(x * y for x, y in zip(a, b))
 
 
+_MD_TABLE_SEP = re.compile(r"^\s*\|?[\s:|-]*-[\s:|-]*\|?\s*$")
+
+
+def strip_markdown(text: str) -> str:
+    """把 markdown 标记去掉，只留可读文字。
+
+    摘要直接展示给用户，留着 `**`、`| --- |`、反引号和 emoji 图片语法会显得像
+    没处理过的原始文档。这些标记对"找命中窗口"没有信息量，先清再截更干净。
+    """
+    lines = [ln for ln in text.splitlines()
+             if not (_MD_TABLE_SEP.match(ln) and "." not in ln)]
+    t = "\n".join(lines)
+    t = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", t)             # 图片整段丢掉
+    t = re.sub(r"\[([^\]]{1,120})\]\(([^)\s]+)\)", r"\1", t)  # 链接只留文字
+    t = re.sub(r"`{3}.*?`{3}", " ", t, flags=re.S)           # 代码块
+    t = t.replace("**", "").replace("__", "")                # 粗体/斜体
+    t = re.sub(r"`([^`]*)`", r"\1", t)                       # 行内代码
+    t = re.sub(r"^\s{0,3}#{1,6}\s*", "", t, flags=re.M)      # 标题井号
+    t = re.sub(r"^\s{0,3}>\s*", "", t, flags=re.M)           # 引用块
+    t = re.sub(r"^\s*[-*+]\s+", "", t, flags=re.M)           # 列表符号
+    t = re.sub(r"^\s*([-*_])\1{2,}\s*$", "", t, flags=re.M)  # 分隔线
+    t = t.replace("|", " ")                                  # 表格竖线
+    t = re.sub(r"[ \t]{2,}", " ", t)
+    t = re.sub(r"\n{2,}", "\n", t)
+    return t.strip()
+
+
+def _one_line(text: str) -> str:
+    """摘要压成一行：结果卡片里换行会把高度撑得忽大忽小。"""
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def snippet(text: str, query_tokens: list[str], width: int = 180) -> str:
     """找命中查询词最密的窗口做摘要；无命中时取开头。"""
-    if not text or not query_tokens:
-        return text[:width]
+    text = strip_markdown(text or "")
+    if not text:
+        return ""
+    if not query_tokens:
+        return text[:width].strip()
     n = len(text)
     if n <= width:
-        return text
+        return _one_line(text)
     low = text.lower()
     hits: list[int] = []
     for tok in set(query_tokens):
@@ -216,7 +251,7 @@ def snippet(text: str, query_tokens: list[str], width: int = 180) -> str:
             hits.append(i)
             start = i + 1
     if not hits:
-        return text[:width] + "…"
+        return _one_line(text[:width]) + "…"
     hits.sort()
     best_pos, best_count = hits[0], 0
     for i, pos in enumerate(hits):
@@ -226,7 +261,7 @@ def snippet(text: str, query_tokens: list[str], width: int = 180) -> str:
     start = max(0, min(best_pos, n - width))
     prefix = "…" if start else ""
     suffix = "…" if start + width < n else ""
-    return prefix + text[start:start + width] + suffix
+    return prefix + _one_line(text[start:start + width]) + suffix
 
 
 if __name__ == "__main__":

@@ -186,6 +186,13 @@ def _proper_nouns(query: str, idf: dict) -> list[str]:
                   if not w.isdigit() and idf.get(w, 0.0) >= PROPER_NOUN_MIN_IDF)
 
 
+def _body_of(text: str, heading: str | None) -> str:
+    """去掉块文本开头重复的标题路径，只留正文。"""
+    if heading and text.startswith(heading):
+        return text[len(heading):].lstrip("\n")
+    return text
+
+
 def _rank(fused: list[dict], expanded_tokens: list[str], query: str,
           idf: dict, topk: int) -> list[dict]:
     # 标题加成用原查询词，不用扩展词。
@@ -213,18 +220,27 @@ def _rank(fused: list[dict], expanded_tokens: list[str], query: str,
     fused.sort(key=lambda e: -e["score"])
 
     doc_slots: dict[str, int] = {}
+    seen_sections: set[tuple[str, str]] = set()
     results = []
     for e in fused:
         row = e["row"]
+        # 同一文档的同一小节只留分数最高的一条：截图里会出现两条一模一样的
+        # 「AMD > 四、云端统一评测流程」，评审一眼就看出没去重。
+        section = (row["doc_slug"], (row["heading"] or "").strip())
+        if section in seen_sections:
+            continue
         if doc_slots.get(row["doc_slug"], 0) >= 2:
             continue
         doc_slots[row["doc_slug"]] = doc_slots.get(row["doc_slug"], 0) + 1
+        seen_sections.add(section)
         results.append({
             "doc_slug": row["doc_slug"],
             "doc_title": row["doc_title"],
             "heading": row["heading"] or "",
             "url": row["url"],
-            "snippet": snippet(row["text"], expanded_tokens),
+            # 块文本开头本来就重复了一遍标题路径，卡片上方已经单独显示标题，
+            # 摘要里再出现一次就是「AMD > 六、十 > 6.1 对比对象」连着写两遍。
+            "snippet": snippet(_body_of(row["text"], row["heading"]), expanded_tokens),
             "score": round(e["score"], 6),
             "routes": {n: n in e["hit"] for n in ("vector", "fulltext", "title")},
         })
