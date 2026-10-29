@@ -7,6 +7,7 @@ import io
 import math
 import re
 from collections import Counter
+from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, Field, field_validator
@@ -114,6 +115,52 @@ PDF_PAGE_SOURCE_DEFINITION = AdapterSourceDefinition[PDFPageInput, PDFPageSource
 )
 
 
+def _document_identity(text: str) -> str:
+    """Return the report identifier a stored page belongs to.
+
+    The standard text projection of a ``pdf-page`` source is
+    ``DOCUMENT_ID\nPAGE_TEXT``, so the first line of the stored entry names
+    the report.  Reading it from the entry text costs no extra Memory read.
+    """
+
+    head, separator, _ = text.partition("\n")
+    return head if separator else ""
+
+
+def _document_terms(identity: str) -> Counter[str]:
+    return Counter(_plural_key(term) for term in re.findall(r"[a-z]+|\d+", identity.lower()))
+
+
+def _select_document(question_terms: set[str], identities: dict[str, Counter[str]]) -> str | None:
+    """Pick the report a question is about.
+
+    Every page of a report carries that report's identifier, so the reports
+    present in the candidate set can be compared on how well their identifier
+    matches the question.  Terms that only one report uses weigh most, which
+    keeps a shared year or form type from deciding the match on its own.
+    """
+
+    if not identities:
+        return None
+    frequency = Counter(term for terms in identities.values() for term in terms)
+    scores = {
+        document: sum(
+            math.log(1 + (len(identities) + 1) / (frequency[term] + 1)) * count
+            for term, count in terms.items()
+            if term in question_terms
+        )
+        for document, terms in identities.items()
+    }
+    best = max(scores, key=lambda document: (scores[document], document))
+    if scores[best] <= 0:
+        return None
+    runner_up = max((score for document, score in scores.items() if document != best), default=0.0)
+    # Only act on a clear winner; a shared year alone is not evidence.
+    if runner_up > 0 and scores[best] < runner_up * 2:
+        return None
+    return best
+
+
 def _plural_key(term: str) -> str:
     """Conflate light English plurals without stripping singular -ss, -is or -us."""
     if term in {"news", "series", "species"}:
@@ -162,6 +209,49 @@ def _rank_pages(hits: tuple[MemoryHit, ...], question: str) -> list[MemoryHit]:
     return [hit for _, hit in scores]
 
 
+async def _gather_pdf_pages(
+    memory: ScopedMemoryApplication, question: str, queries: Sequence[str], limit: int
+) -> tuple[tuple[MemoryHit, ...], dict[str, Counter[str]]]:
+    """Collect the candidate pages of one question and rank them.
+
+    The primary view asks for the channel the deployment can serve: the Runtime
+    resolves ``auto`` to the hybrid channel when a semantic one is available and
+    to the lexical channel when it is not.  The alternate lexical views are only
+    issued when the lexical channel is the one that ran, so a deployment with a
+    semantic channel pays for one embedding call instead of one per view.
+
+    When a semantic channel ran, the Runtime already fused it with the lexical
+    one, so that order is kept instead of being re-sorted lexically here.
+    """
+
+    candidates: dict[tuple[str, str, str], MemoryHit] = {}
+    ordered: list[MemoryHit] = []
+    identities: dict[str, Counter[str]] = {}
+
+    def collect(hits: tuple[MemoryHit, ...]) -> None:
+        for hit in hits:
+            identity = (hit.memory_ref.artifact_id, hit.entry_id, hit.entry_version_id)
+            if identity in candidates:
+                continue
+            candidates[identity] = hit
+            ordered.append(hit)
+            document = _document_identity(hit.text or "")
+            if document:
+                identities.setdefault(document, Counter()).update(_document_terms(document))
+
+    depth = max(100, limit * 10)
+    primary = await memory.search(SearchMemoryRequest(query=question, mode="auto", limit=depth))
+    collect(primary.hits)
+    if primary.mode == "fts":
+        # Only the lexical channel ran, so widen the pool with the alternate
+        # views and rank the pool locally.
+        for query in queries[1:]:
+            page = await memory.search(SearchMemoryRequest(query=query, mode="fts", limit=depth))
+            collect(page.hits)
+        return _rank_pages(tuple(candidates.values()), question), identities
+    return tuple(ordered), identities
+
+
 async def search_pdf_pages(
     memory: ScopedMemoryApplication, question: str, limit: int = 10
 ) -> tuple[MemoryCitation, ...]:
@@ -190,15 +280,18 @@ async def search_pdf_pages(
     # contain bare years. Retain every original view for pages using the prefix.
     years = tuple(dict.fromkeys(re.findall(r"\bfy(\d{4})\b", question, flags=re.IGNORECASE)))
     queries.extend(" ".join(years[index : index + 2]) for index in range(0, len(years), 2))
-    candidates: dict[tuple[str, str, str], MemoryHit] = {}
-    for query in queries:
-        page = await memory.search(SearchMemoryRequest(query=query, mode="fts", limit=max(100, limit * 10)))
-        for hit in page.hits:
-            identity = (hit.memory_ref.artifact_id, hit.entry_id, hit.entry_version_id)
-            candidates.setdefault(identity, hit)
+    ranked, identities = await _gather_pdf_pages(memory, question, queries, limit)
+    # The twenty result slots are worth most when they belong to the report the
+    # question is about, and every page of a report carries its identifier.
+    question_terms = {_plural_key(term) for term in terms}
+    selected_document = _select_document(question_terms, identities)
+    if selected_document is not None:
+        ranked = tuple(hit for hit in ranked if _document_identity(hit.text or "") == selected_document) + tuple(
+            hit for hit in ranked if _document_identity(hit.text or "") != selected_document
+        )
     selected: list[MemoryCitation] = []
     seen: set[str] = set()
-    for hit in _rank_pages(tuple(candidates.values()), question):
+    for hit in ranked:
         citation = MemoryCitation(
             memory_ref=hit.memory_ref, entry_id=hit.entry_id, entry_version_id=hit.entry_version_id
         )
