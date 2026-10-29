@@ -101,12 +101,16 @@ class AdmissionFloor:
 
     The defaults MUST equal the historical module constants — ``0.25`` and ``2`` in this
     module and ``0.3`` mirrored by ``memory/fusion.py`` and ``topic_memory/fusion.py`` — so
-    that a ``floor=None`` / ``admission=None`` call reproduces today's behaviour bit for bit.
+    that admission helpers use the same thresholds for ``None`` and ``AdmissionFloor()``.
+    Legacy backends retain that equivalence for complete searches. Native hybrid Memory
+    backends may opt into filling unused slots when admission is omitted; supplying an
+    explicit floor keeps strict admission and disables this additive policy.
 
     This type plays the ``RecallAdmissionPolicy`` role described by RFC 1560: it is the value
-    threaded into each searchable family's search to override its floor. Passing ``None``
-    (the historical default) is therefore equivalent to the RFC's ``RecallAdmissionPolicy()``
-    with both overrides unset, which is exactly what round 0 does.
+    threaded into each searchable family's search to override its floor. Runtime round 0
+    uses ``None``. Native backfill can therefore change its admission counts and later context
+    selection or expansion; direct search rank preservation is not a guarantee about the
+    complete prepared Runtime output or its work.
     """
 
     lexical_coverage: float = _FTS_MIN_QUERY_COVERAGE

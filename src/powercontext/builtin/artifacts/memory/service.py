@@ -57,6 +57,7 @@ from powercontext.builtin.artifacts.memory.errors import (
 from powercontext.builtin.artifacts.memory.fusion import (
     admit_fts_candidates,
     admit_vector_candidates,
+    append_vector_backfill,
     fuse_rankings,
 )
 from powercontext.builtin.artifacts.memory.models import (
@@ -669,7 +670,7 @@ class MemoryService:
         return await self._backend.changes(target.as_ref(), since_revision)
 
     @prompt_operation("memory.rerank")
-    async def search(
+    async def search(  # noqa: C901 - existing mode validation plus guarded native backfill
         self,
         query: str,
         *,
@@ -682,7 +683,12 @@ class MemoryService:
     ) -> MemorySearchResult:
         """Search explicit current Memory heads with capability-safe fallback.
 
-        ``admission=None`` applies the historical fusion-time thresholds bit for bit.
+        ``admission=None`` uses historical admission thresholds for the initial fusion.
+        An opted-in native hybrid backend may then fill unused slots with positive-cosine
+        vector candidates, preserving every initial hit, score and rank. This applies only
+        without a reranker; an explicit ``AdmissionFloor`` retains strict admission.
+        Backfill reuses this search's candidates. Its rank guarantee concerns this direct
+        result, not later Runtime context selection, expansion work or prepared output.
 
         ``query_embedding`` lets a caller reuse a vector it already paid for (RFC 1560's
         expansion rounds reuse the round-0 vector). Reuse is best-effort and honest: it is
@@ -764,6 +770,17 @@ class MemoryService:
             vector=admitted_vector if selected_mode in {"vector", "hybrid"} else (),
             limit=coarse_limit,
         )
+        backfilled_count = 0
+        if (
+            selected_mode == "hybrid"
+            and channels.allow_vector_backfill
+            and admission is None
+            and self._reranker is None
+            and len(hits) < limit
+        ):
+            historical_count = len(hits)
+            hits = append_vector_backfill(hits=hits, vector=channels.vector, limit=limit)
+            backfilled_count = len(hits) - historical_count
         return await self._reranked_search_result(
             mode=selected_mode,
             query=normalized_query,
@@ -773,7 +790,7 @@ class MemoryService:
                 family=Memory.family,
                 scope_id="",
                 retrieved=len(channels.fts) + len(channels.vector),
-                admitted=len(admitted_fts) + len(admitted_vector),
+                admitted=len(admitted_fts) + len(admitted_vector) + backfilled_count,
             ),
             embedding_calls=embedding_calls,
             query_embedding=resolved_embedding,

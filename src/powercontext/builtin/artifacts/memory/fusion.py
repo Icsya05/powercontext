@@ -16,6 +16,7 @@
 
 from __future__ import annotations
 
+import math
 from collections.abc import Sequence
 
 from powercontext.builtin.artifacts.memory.models import (
@@ -112,7 +113,47 @@ def fuse_rankings(
     )
 
 
-def _identity(hit: MemoryChannelHit) -> _HitIdentity:
+def append_vector_backfill(
+    *,
+    hits: tuple[MemoryHit, ...],
+    vector: Sequence[MemoryChannelHit],
+    limit: int,
+) -> tuple[MemoryHit, ...]:
+    """Fill unused slots with positive-cosine neighbors, preserving the full prefix."""
+
+    if limit < 1:
+        raise ValueError("memory search limit must be positive")  # noqa: TRY003
+    if len(hits) >= limit:
+        return hits
+    selected = list(hits)
+    seen = {_identity(hit) for hit in hits}
+    for rank, candidate in enumerate(vector, start=1):
+        distance = candidate.distance
+        if distance is None or not math.isfinite(distance) or distance < 0 or distance * distance >= 2.0:
+            continue
+        identity = _identity(candidate)
+        if identity in seen:
+            continue
+        score = 1.0 / (_RRF_CONSTANT + rank)
+        if selected:
+            score = min(score, selected[-1].score)
+        selected.append(
+            MemoryHit(
+                memory_ref=candidate.memory_ref,
+                entry_id=candidate.entry_id,
+                entry_version_id=candidate.entry_version_id,
+                text=candidate.text,
+                score=score,
+                matched_by=("vector",),
+            )
+        )
+        seen.add(identity)
+        if len(selected) == limit:
+            break
+    return tuple(selected)
+
+
+def _identity(hit: MemoryChannelHit | MemoryHit) -> _HitIdentity:
     return (
         hit.memory_ref.artifact_id,
         hit.memory_ref.revision,

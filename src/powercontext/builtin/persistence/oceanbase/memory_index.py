@@ -478,6 +478,7 @@ class OceanBaseMemoryVectorIndex:
             return MemorySearchChannels(
                 fts=memory_channel_hits((row for row in candidates if row["channel"] == "fts"), request.memories),
                 vector=memory_channel_hits((row for row in candidates if row["channel"] == "vector"), request.memories),
+                allow_vector_backfill=True,
             )
         return MemorySearchChannels(vector=memory_channel_hits(rows, request.memories))
 

@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import Protocol
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from powercontext.artifacts import Artifact, ArtifactRef
 from powercontext.builtin.artifacts.memory.models import (
@@ -153,6 +153,7 @@ class MemorySearchChannels(BaseModel):
 
     fts: tuple[MemoryChannelHit, ...] = ()
     vector: tuple[MemoryChannelHit, ...] = ()
+    allow_vector_backfill: bool = Field(default=False, exclude=True)
 
 
 class CandidatePipeline(Protocol):
