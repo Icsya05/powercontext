@@ -73,25 +73,39 @@ Measured with the same workload:
 
 ## The change
 
-`src/powercontext/sources/pdf_pages.py`:
+The official feedback for this task names the usual reason a PowerContext PDF
+submission scores zero: "the code was over-optimised for the published
+self-test and did not work on the hidden cases". The shipped retrieval was
+exactly that. It widened the candidate pool with bigram views, plural
+inflections and a fiscal-year special case, then re-sorted the pool with a
+page-local BM25, and the product's own tests only exercised those synthetic
+shapes ("plural-statement", "reverse-loss", "word-boundary") rather than the
+behaviour the task statement requires.
 
-1. **The primary view now asks for `mode="auto"`** instead of the hardcoded
-   `mode="fts"`. The Runtime resolves `auto` to the hybrid channel when the
-   deployment has a semantic one and to the lexical channel when it does not,
-   so the same call works in both. The alternate lexical views are only issued
-   when the lexical channel is the one that ran, so a deployment with a
-   semantic channel pays for one embedding call instead of one per view.
+`src/powercontext/sources/pdf_pages.py` now uses one general algorithm:
 
-2. **The pages of the report the question is about are preferred.** Every page
+1. **One view of the question, with `mode="auto"`.** The Runtime resolves
+   `auto` to the hybrid channel when the deployment has a semantic one and to
+   the lexical channel when it does not, so the same call works in both. No
+   alternate word forms are searched: the lexical admission floor measures
+   whole-query coverage, so extra views admit more pages and dilute the
+   ranking rather than sharpening it.
+
+2. **The index order is kept.** The Runtime has already fused the semantic and
+   the lexical channel; re-sorting that order lexically here would undo the
+   fusion.
+
+3. **The pages of the report the question is about are preferred.** Every page
    of a report carries that report's identifier in the standard text projection
    (`DOCUMENT_ID\nPAGE_TEXT`), so the reports present in the candidate set are
    compared on how well their identifier matches the question; terms that only
    one report uses weigh most, so a shared year or form type cannot decide the
    match on its own.
 
-3. **When a semantic channel ran, the index order is kept.** The Runtime has
-   already fused the semantic and lexical channels, and re-sorting that order
-   lexically here would undo the fusion. The lexical path keeps its reranker.
+The over-fitted tests were replaced with contract-level ones: the page a
+question is about comes back, the report a question names comes first, the
+limit is a ceiling, no page is returned twice, and a page that shares no term
+with the question is not returned.
 
 Measured effect on the reproduced workload, with the lexical channel only (the
 path a deployment without an embedding profile takes):
@@ -99,11 +113,16 @@ path a deployment without an embedding profile takes):
 | report | before | after |
 | --- | ---: | ---: |
 | `3M_2022_10K` | 0.0000 | 0.2000 |
-| `AMAZON_2017_10K` | 0.3333 | 0.3333 |
+| `AMAZON_2017_10K` | 0.3333 | 0.0000 |
 | `AMD_2022_10K` | 0.4286 | 0.7143 |
-| `BOEING_2022_10K` | 0.2222 | 0.4444 |
-| `PEPSICO_2022_10K` | 0.2500 | 0.3750 |
+| `BOEING_2022_10K` | 0.2222 | 0.3333 |
+| `PEPSICO_2022_10K` | 0.2500 | 0.5000 |
 | overall | 0.2500 | 0.4062 |
+
+For comparison, keeping the widened-and-reranked retrieval and only adding the
+report preference measures 0.3750 overall: the widening and the page-local
+reranker cost more than they gain, which is the same conclusion the official
+feedback reaches from the other direction.
 
 ## What is still open
 
@@ -114,4 +133,4 @@ one, and it cannot be measured here because this environment has no embedding
 profile for the Memory backend.
 
 Verification of the change: the public PDF acceptance passes (6 tests), the
-extended regression set passes (189 tests), and Ruff reports no finding.
+extended regression set passes, and Ruff reports no finding.

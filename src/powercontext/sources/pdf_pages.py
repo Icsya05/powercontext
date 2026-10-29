@@ -7,7 +7,6 @@ import io
 import math
 import re
 from collections import Counter
-from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, Field, field_validator
@@ -174,82 +173,26 @@ def _plural_key(term: str) -> str:
     return term
 
 
-def _short_query_plural(term: str) -> str | None:
-    """Offer at most one plural spelling when a short query has no other anchors."""
-    if (
-        len(term) < 4
-        or not term.isalpha()
-        or term in {"news", "series", "species"}
-        or term.endswith(("is", "us"))
-        or _plural_key(term) != term
-    ):
-        return None
-    if term.endswith("y") and term[-2] not in "aeiou":
-        return f"{term[:-1]}ies"
-    return f"{term}es" if term.endswith(("s", "x", "z", "ch", "sh")) else f"{term}s"
-
-
-def _rank_pages(hits: tuple[MemoryHit, ...], question: str) -> list[MemoryHit]:
-    """BM25 over the actual candidate pages, with deterministic identity ties."""
-    terms = {_plural_key(term) for term in re.findall(r"[a-z]+|\d+", analyze_fts_query(question))}
-    counts = [Counter(_plural_key(term) for term in re.findall(r"[a-z]+|\d+", hit.text.lower())) for hit in hits]
-    lengths = [sum(count.values()) for count in counts]
-    average = sum(lengths) / max(len(lengths), 1) or 1
-    frequencies = {term: sum(term in count for count in counts) for term in terms}
-    scores = []
-    for index, (hit, count) in enumerate(zip(hits, counts, strict=True)):
-        score = 0.0
-        for term in terms:
-            frequency = count[term]
-            if frequency:
-                inverse = math.log(1 + (len(hits) - frequencies[term] + 0.5) / (frequencies[term] + 0.5))
-                score += inverse * frequency * 2.2 / (frequency + 1.2 * (0.25 + 0.75 * lengths[index] / average))
-        scores.append((score, hit))
-    scores.sort(key=lambda pair: (-pair[0], pair[1].memory_ref.artifact_id, pair[1].entry_id, pair[1].entry_version_id))
-    return [hit for _, hit in scores]
-
-
 async def _gather_pdf_pages(
-    memory: ScopedMemoryApplication, question: str, queries: Sequence[str], limit: int
+    memory: ScopedMemoryApplication, question: str, limit: int
 ) -> tuple[tuple[MemoryHit, ...], dict[str, Counter[str]]]:
-    """Collect the candidate pages of one question and rank them.
+    """Search the scope for the pages that answer one question.
 
-    The primary view asks for the channel the deployment can serve: the Runtime
-    resolves ``auto`` to the hybrid channel when a semantic one is available and
-    to the lexical channel when it is not.  The alternate lexical views are only
-    issued when the lexical channel is the one that ran, so a deployment with a
-    semantic channel pays for one embedding call instead of one per view.
-
-    When a semantic channel ran, the Runtime already fused it with the lexical
-    one, so that order is kept instead of being re-sorted lexically here.
+    One view of the question is searched.  The Runtime resolves ``auto`` to the
+    hybrid channel when the deployment has a semantic one and to the lexical
+    channel when it does not, and its own ranking is returned unchanged: a
+    page-local lexical re-sort would undo that ranking, and widening the pool
+    with alternate word forms only dilutes it.
     """
 
-    candidates: dict[tuple[str, str, str], MemoryHit] = {}
-    ordered: list[MemoryHit] = []
-    identities: dict[str, Counter[str]] = {}
-
-    def collect(hits: tuple[MemoryHit, ...]) -> None:
-        for hit in hits:
-            identity = (hit.memory_ref.artifact_id, hit.entry_id, hit.entry_version_id)
-            if identity in candidates:
-                continue
-            candidates[identity] = hit
-            ordered.append(hit)
-            document = _document_identity(hit.text or "")
-            if document:
-                identities.setdefault(document, Counter()).update(_document_terms(document))
-
     depth = max(100, limit * 10)
-    primary = await memory.search(SearchMemoryRequest(query=question, mode="auto", limit=depth))
-    collect(primary.hits)
-    if primary.mode == "fts":
-        # Only the lexical channel ran, so widen the pool with the alternate
-        # views and rank the pool locally.
-        for query in queries[1:]:
-            page = await memory.search(SearchMemoryRequest(query=query, mode="fts", limit=depth))
-            collect(page.hits)
-        return _rank_pages(tuple(candidates.values()), question), identities
-    return tuple(ordered), identities
+    page = await memory.search(SearchMemoryRequest(query=question, mode="auto", limit=depth))
+    identities: dict[str, Counter[str]] = {}
+    for hit in page.hits:
+        document = _document_identity(hit.text or "")
+        if document:
+            identities.setdefault(document, Counter()).update(_document_terms(document))
+    return tuple(page.hits), identities
 
 
 async def search_pdf_pages(
@@ -258,32 +201,10 @@ async def search_pdf_pages(
     """Return actual persisted distinct-page citations, never synthetic references."""
     if type(limit) is not int or limit < 1 or not question.strip():
         raise ValueError("question must be nonblank and limit must be a positive integer")  # noqa: TRY003
-    # A table may contain just a few content words from a long natural-language
-    # question. The shared FTS admission floor measures whole-query coverage,
-    # so collect short lexical views before ranking against the complete question.
-    terms = tuple(dict.fromkeys(analyze_fts_query(question).split()))
-    queries = [question]
-    if len(terms) > 2:
-        queries.extend(" ".join(terms[index : index + 2]) for index in range(0, len(terms), 2))
-    # The stored FTS index remains exact. Alternate forms need their own lexical
-    # views before the page-local ranker can compare the same inflection keys.
-    inflections = tuple(dict.fromkeys(_plural_key(term) for term in terms if _plural_key(term) != term))
-    if len(terms) <= 2:
-        inflections = tuple(
-            dict.fromkeys((
-                *inflections,
-                *(plural for term in terms if (plural := _short_query_plural(term)) is not None),
-            ))
-        )
-    queries.extend(" ".join(inflections[index : index + 2]) for index in range(0, len(inflections), 2))
-    # Fiscal-year notation is common in questions, while table headers usually
-    # contain bare years. Retain every original view for pages using the prefix.
-    years = tuple(dict.fromkeys(re.findall(r"\bfy(\d{4})\b", question, flags=re.IGNORECASE)))
-    queries.extend(" ".join(years[index : index + 2]) for index in range(0, len(years), 2))
-    ranked, identities = await _gather_pdf_pages(memory, question, queries, limit)
+    ranked, identities = await _gather_pdf_pages(memory, question, limit)
     # The twenty result slots are worth most when they belong to the report the
     # question is about, and every page of a report carries its identifier.
-    question_terms = {_plural_key(term) for term in terms}
+    question_terms = {_plural_key(term) for term in analyze_fts_query(question).split()}
     selected_document = _select_document(question_terms, identities)
     if selected_document is not None:
         ranked = tuple(hit for hit in ranked if _document_identity(hit.text or "") == selected_document) + tuple(
