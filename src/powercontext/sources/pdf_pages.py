@@ -7,6 +7,7 @@ import io
 import math
 import re
 from collections import Counter
+from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, Field, field_validator
@@ -178,11 +179,17 @@ async def _gather_pdf_pages(
 ) -> tuple[tuple[MemoryHit, ...], dict[str, Counter[str]]]:
     """Search the scope for the pages that answer one question.
 
-    One view of the question is searched.  The Runtime resolves ``auto`` to the
-    hybrid channel when the deployment has a semantic one and to the lexical
-    channel when it does not, and its own ranking is returned unchanged: a
-    page-local lexical re-sort would undo that ranking, and widening the pool
-    with alternate word forms only dilutes it.
+    The Runtime resolves ``auto`` to the hybrid channel when the deployment has
+    a semantic one and to the lexical channel when it does not.  Its own
+    ranking is kept: a page-local lexical re-sort would undo the fusion the
+    Runtime performed, and widening the pool with alternate word forms only
+    dilutes it.
+
+    When the deployment served a semantic channel, the lexical channel is asked
+    as well and the two orderings are fused.  The native full-text index on its
+    own is the stronger of the two on financial reports, so keeping it in the
+    result protects the lexical ranking while the semantic candidates get their
+    own chance to enter.
     """
 
     depth = max(100, limit * 10)
@@ -192,7 +199,32 @@ async def _gather_pdf_pages(
         document = _document_identity(hit.text or "")
         if document:
             identities.setdefault(document, Counter()).update(_document_terms(document))
-    return tuple(page.hits), identities
+    if page.mode == "fts":
+        return tuple(page.hits), identities
+
+    lexical = await memory.search(SearchMemoryRequest(query=question, mode="fts", limit=depth))
+    for hit in lexical.hits:
+        document = _document_identity(hit.text or "")
+        if document:
+            identities.setdefault(document, Counter()).update(_document_terms(document))
+    return _fuse_hit_orders(page.hits, lexical.hits), identities
+
+
+def _fuse_hit_orders(primary: Sequence[MemoryHit], secondary: Sequence[MemoryHit]) -> tuple[MemoryHit, ...]:
+    """Fuse two ranked page lists with reciprocal rank fusion."""
+
+    scores: dict[tuple[str, str, str], float] = {}
+    order: list[tuple[str, str, str]] = []
+    hits: dict[tuple[str, str, str], MemoryHit] = {}
+    for ranking in (primary, secondary):
+        for rank, hit in enumerate(ranking, start=1):
+            identity = (hit.memory_ref.artifact_id, hit.entry_id, hit.entry_version_id)
+            if identity not in hits:
+                hits[identity] = hit
+                order.append(identity)
+            scores[identity] = scores.get(identity, 0.0) + 1.0 / (60 + rank)
+    order.sort(key=lambda identity: (-scores[identity], identity))
+    return tuple(hits[identity] for identity in order)
 
 
 async def search_pdf_pages(
