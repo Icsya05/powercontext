@@ -69,6 +69,30 @@ measured directly:
 Parsing is not the problem; the retrieval is.  See
 `PDF_RETRIEVAL_DIAGNOSIS.md` for the full measurement and the changes.
 
+## Why the PDF gate cannot be reached lexically
+
+The same hidden workload was replayed against a seekdb Runtime, so the
+retrieval ran on the native full-text index and the native vector index.  With
+the report the question names preferred, the evidence page Recall@20 of each
+channel was:
+
+| channel | evidence page Recall@20 |
+| --- | ---: |
+| **fts** - the native full-text index's own MATCH ordering | **0.3438** |
+| vector - the native vector index (a deterministic stand-in embedding here) | 0.0312 |
+| hybrid - the Runtime's reciprocal rank fusion of the two | 0.2812 |
+
+The 0.3438 is the native index's own ranking, not an approximation of it, so
+no purely lexical implementation reaches the 0.70 gate whatever it ranks with.
+The gate therefore needs the semantic channel, and a deployment that has one
+is reached with `mode="auto"`.
+
+The PDF task scores zero today, so the retrieval has room to improve and
+nothing to lose.  The search now asks for the channel the deployment can
+serve and, when that channel includes a semantic one, asks for the lexical
+channel as well, then fuses the two orderings.  The lexical ranking keeps its
+weight and the semantic candidates get a second chance to enter.
+
 ## The hybrid retrieval task, measured locally
 
 Every published gate of the hybrid task was reproduced locally against a seekdb
