@@ -100,12 +100,16 @@ LIMIT :candidate_limit
 _OCEANBASE_HYBRID_SEARCH_SQL = """
 SELECT candidates.memory_artifact_id, candidates.head_revision,
        candidates.entry_id, candidates.entry_version_id,
-       v.text, candidates.channel, candidates.distance
+       candidates.text, candidates.channel, candidates.distance
 FROM (
-    (SELECT 'fts' AS channel, f.scope_id, f.memory_artifact_id, f.head_revision,
-            f.entry_id, f.entry_version_id, NULL AS distance,
+    (SELECT 'fts' AS channel, f.memory_artifact_id, f.head_revision,
+            f.entry_id, f.entry_version_id, v.text, NULL AS distance,
             -MATCH(f.searchable_text) AGAINST (:query) AS channel_order
      FROM pc_memory_entry_heads AS f
+     JOIN pc_memory_entry_versions AS v
+       ON v.scope_id = f.scope_id
+      AND v.memory_artifact_id = f.memory_artifact_id
+      AND v.entry_version_id = f.entry_version_id
      WHERE f.scope_id = :scope_id
        AND f.memory_artifact_id IN :memory_artifact_ids
        AND MATCH(f.searchable_text) AGAINST (:query)
@@ -114,24 +118,29 @@ FROM (
               f.memory_artifact_id, f.entry_id, f.entry_version_id
      LIMIT :candidate_limit)
     UNION ALL
-    (SELECT 'vector' AS channel, m.scope_id, m.memory_artifact_id, m.head_revision,
-            m.entry_id, m.entry_version_id,
+    (SELECT 'vector' AS channel, m.memory_artifact_id, m.head_revision,
+            m.entry_id, m.entry_version_id, v.text,
             l2_distance(m.embedding, :query_vector) AS distance,
             l2_distance(m.embedding, :query_vector) AS channel_order
      FROM pc_memory_vector_entries AS m
+     JOIN pc_memory_entry_versions AS v
+       ON v.scope_id = m.scope_id
+      AND v.memory_artifact_id = m.memory_artifact_id
+      AND v.entry_version_id = m.entry_version_id
      WHERE m.scope_id = :scope_id
        AND m.memory_artifact_id IN :memory_artifact_ids
        /* vector_tags */
      ORDER BY l2_distance(m.embedding, :query_vector) APPROXIMATE
      LIMIT :candidate_limit)
 ) AS candidates
-JOIN pc_memory_entry_versions AS v
-  ON v.scope_id = candidates.scope_id
- AND v.memory_artifact_id = candidates.memory_artifact_id
- AND v.entry_version_id = candidates.entry_version_id
 ORDER BY candidates.channel, candidates.channel_order,
          candidates.memory_artifact_id, candidates.entry_id, candidates.entry_version_id
 """
+# Each arm above is the frozen single-channel query with a channel tag added, so the
+# one statement returns exactly the candidates and the order the two separate
+# statements returned. The exact-body join stays inside each arm on purpose: the
+# vector arm orders by an approximate nearest-neighbour scan, and moving that join
+# outside the arm changes the plan and therefore the approximate candidate set.
 # Join eligible identities before ANN runs. A scalar JSON membership predicate
 # can drop sparse tagged matches in seekdb's native vector pre-filter. Keep
 # eligible keys on the left of a parameterized nested loop: a merge join can
