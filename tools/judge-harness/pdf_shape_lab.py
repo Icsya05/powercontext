@@ -108,10 +108,11 @@ def main() -> None:
             return False
         return matched / len(query) >= 0.25
 
-    def heading_mass(question_terms: set[str], weights: dict[str, float], text: str) -> float:
-        head = " ".join(lines_of(text)[:3])
-        counts = set(tokenize(head))
-        return sum(weights[term] for term in counts if term in question_terms)
+    def head_mass(question_terms: set[str], weights: dict[str, float], text: str, size: int) -> float:
+        # The parsed page text carries almost no line structure - a page is one
+        # long line - so the heading of a page is its first words.
+        head = set(tokenize(text)[:size])
+        return sum(weights[term] for term in head if term in question_terms)
 
     def window_mass(question_terms: set[str], weights: dict[str, float], text: str) -> float:
         best = 0.0
@@ -141,16 +142,20 @@ def main() -> None:
             return None
         return best
 
+    # (head weight, window weight, page weight, head words)
     variants = {
-        "page": (0.0, 0.0, 1.0),
-        "window": (0.0, 1.0, 0.0),
-        "heading": (1.0, 0.0, 0.0),
-        "heading+window": (1.0, 1.0, 0.0),
-        "heading+window+page": (2.0, 1.0, 0.5),
-        "window+page": (0.0, 1.0, 0.5),
-        "2heading+window+page": (4.0, 1.0, 0.5),
+        "page": (0.0, 0.0, 1.0, 0),
+        "head4": (1.0, 0.0, 0.0, 4),
+        "head5": (1.0, 0.0, 0.0, 5),
+        "head6": (1.0, 0.0, 0.0, 6),
+        "head7": (1.0, 0.0, 0.0, 7),
+        "head8": (1.0, 0.0, 0.0, 8),
+        "head9": (1.0, 0.0, 0.0, 9),
+        "head10": (1.0, 0.0, 0.0, 10),
+        "head12": (1.0, 0.0, 0.0, 12),
+        "head8*2+page": (2.0, 0.0, 0.25, 8),
     }
-    pool_sizes = (8, 12, 20)
+    pool_sizes = (30,)
     results: dict[tuple[str, int], dict[str, list[tuple[int, int]]]] = {
         (name, pool): {} for name in variants for pool in pool_sizes
     }
@@ -173,12 +178,12 @@ def main() -> None:
                 for index, text in enumerate(texts)
                 if admitted(set(tokenize(text)), keywords)
             ]
-            for variant, (heading_w, window_w, page_w) in variants.items():
+            for variant, (heading_w, window_w, page_w, head_words) in variants.items():
                 scored = []
                 for index in admitted_indexes:
                     text = texts[index]
                     score = (
-                        heading_w * heading_mass(question_terms, weights, text)
+                        heading_w * head_mass(question_terms, weights, text, head_words)
                         + window_w * window_mass(question_terms, weights, text)
                         + page_w * page_mass(question_terms, weights, text)
                     )
