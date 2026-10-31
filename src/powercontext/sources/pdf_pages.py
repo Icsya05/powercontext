@@ -8,6 +8,7 @@ import math
 import re
 from collections import Counter
 from collections.abc import Sequence
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, Field, field_validator
@@ -15,7 +16,12 @@ from pypdf import PdfReader
 
 from powercontext.builtin.artifacts.memory.models import MemoryCitation, MemoryHit
 from powercontext.builtin.artifacts.search import analyze_fts_query
-from powercontext.builtin.runtime.models import GetMemoryEntryRequest, SearchMemoryRequest
+from powercontext.builtin.runtime.models import (
+    GetMemoryEntryRequest,
+    MemoryEntriesPage,
+    MemoryEntryRecord,
+    SearchMemoryRequest,
+)
 from powercontext.sources.definitions import AdapterSourceDefinition
 from powercontext.sources.models import Source, SourceMaterialization
 from powercontext.sources.projections import TEXT_EVIDENCE_PROJECTION_KEY, TextEvidence
@@ -198,7 +204,7 @@ async def _gather_pdf_pages(
     for hit in page.hits:
         document = _document_identity(hit.text or "")
         if document:
-            identities.setdefault(document, Counter()).update(_document_terms(document))
+            identities.setdefault(document, _document_terms(document))
     if page.mode == "fts":
         return tuple(page.hits), identities
 
@@ -206,7 +212,7 @@ async def _gather_pdf_pages(
     for hit in lexical.hits:
         document = _document_identity(hit.text or "")
         if document:
-            identities.setdefault(document, Counter()).update(_document_terms(document))
+            identities.setdefault(document, _document_terms(document))
     return _fuse_hit_orders(page.hits, lexical.hits), identities
 
 
@@ -227,21 +233,235 @@ def _fuse_hit_orders(primary: Sequence[MemoryHit], secondary: Sequence[MemoryHit
     return tuple(hits[identity] for identity in order)
 
 
+_PDF_QUERY_STOPWORDS = frozenset([
+    "a",
+    "an",
+    "and",
+    "are",
+    "as",
+    "at",
+    "be",
+    "been",
+    "based",
+    "by",
+    "for",
+    "from",
+    "has",
+    "have",
+    "how",
+    "in",
+    "into",
+    "is",
+    "it",
+    "its",
+    "of",
+    "on",
+    "or",
+    "s",
+    "that",
+    "the",
+    "their",
+    "there",
+    "these",
+    "they",
+    "this",
+    "to",
+    "was",
+    "were",
+    "what",
+    "when",
+    "which",
+    "who",
+    "why",
+    "with",
+    "within",
+    "would",
+    "your",
+    "you",
+    "if",
+    "not",
+    "please",
+    "state",
+    "then",
+    "like",
+    "shown",
+    "using",
+    "show",
+    "use",
+    "line",
+    "items",
+    "information",
+    "answer",
+    "address",
+    "question",
+    "round",
+    "places",
+    "decimal",
+    "two",
+    "much",
+    "many",
+    "does",
+    "do",
+    "did",
+    "can",
+    "will",
+    "about",
+    "above",
+    "below",
+    "between",
+    "out",
+    "over",
+    "under",
+    "each",
+    "all",
+    "any",
+    "may",
+    "also",
+    "more",
+    "most",
+    "some",
+    "such",
+    "only",
+    "other",
+    "fy",
+    "fiscal",
+    "year",
+    "data",
+    "report",
+])
+_PDF_PAGE_ID = re.compile(r"pdf:[0-9a-f]{64}:[0-9a-f]{64}:([1-9]\d*)\Z")
+
+
+def _pdf_word_keys(text: str) -> list[str]:
+    """Share inflected English words through a bounded prefix channel."""
+    return [term[:5] for term in re.findall(r"[a-z]+", text.lower())]
+
+
+@dataclass(frozen=True)
+class _PDFSearchPage:
+    hit: MemoryHit
+    page_number: int
+    counts: Counter[str]
+    heading_terms: frozenset[str]
+    financial_table: bool
+
+
+def _pdf_search_page(hit: MemoryHit, record: MemoryEntryRecord) -> _PDFSearchPage | None:
+    sources = [source for source in record.entry.sources if source.source_type == "pdf-page"]
+    if len(sources) != 1 or (match := _PDF_PAGE_ID.fullmatch(sources[0].source_id)) is None:
+        return None
+    _, separator, text = record.entry.text.partition("\n")
+    if not separator:
+        return None
+    text = re.sub(r"^\s*t\s*able\s+of\s+contents\s*", "", text, flags=re.IGNORECASE)
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    titles = []
+    for line in lines:
+        words = line.split()
+        if (
+            1 < len(_pdf_word_keys(line)) <= 10
+            and not re.search(r"\d", line)
+            and (line.isupper() or sum(word[0].isupper() for word in words) / len(words) >= 0.5)
+        ):
+            titles.append(line)
+    statement = re.search(
+        r"consolidated\s+(?:statements?\s+of|balance\s+sheets?)",
+        " ".join(text.split()[:40]),
+        re.IGNORECASE,
+    )
+    note_table = any(
+        re.search(r"notes?\s+to\s+(?:the\s+)?consolidated\s+financial\s+statements?", line, re.IGNORECASE)
+        for line in lines[:6]
+    )
+    tokens = re.findall(r"[a-z]+|\d+", text.lower())
+    numeric_share = sum(term.isdigit() for term in tokens) / max(1, len(tokens))
+    return _PDFSearchPage(
+        hit=hit,
+        page_number=int(match[1]),
+        counts=Counter(_pdf_word_keys(text)),
+        heading_terms=frozenset(_pdf_word_keys(" ".join(titles))),
+        financial_table=bool(statement or (note_table and numeric_share >= 0.15)),
+    )
+
+
+def _rank_pdf_report(pages: Sequence[_PDFSearchPage], question: str, document: str) -> tuple[MemoryHit, ...]:
+    """Rank actual report candidates by body, headings and financial structure."""
+    terms = set(_pdf_word_keys(question)) - {word[:5] for word in _PDF_QUERY_STOPWORDS}
+    terms.difference_update(_pdf_word_keys(document))
+    if not terms:
+        return tuple(page.hit for page in pages)
+    frequency = Counter(term for page in pages for term in page.counts)
+    weights = {term: math.log(1 + (len(pages) - frequency[term] + 0.5) / (frequency[term] + 0.5)) for term in terms}
+    scored: list[tuple[float, _PDFSearchPage]] = []
+    for page in pages:
+        matched = terms.intersection(page.counts)
+        if not matched:
+            continue
+        length = sum(page.counts.values())
+        body = sum(
+            weights[term] * page.counts[term] * 2.2 / (page.counts[term] + 1.2 * (0.25 + 0.75 * length / 500))
+            for term in matched
+        )
+        heading = sum(weights[term] for term in terms.intersection(page.heading_terms))
+        score = (body + 2 * heading) * (4 if page.financial_table else 1)
+        # Main report sections precede exhibits; this prior decays continuously.
+        score /= (page.page_number + 20) / 20
+        scored.append((score, page))
+    scored.sort(key=lambda item: (-item[0], item[1].page_number, item[1].hit.entry_id))
+    return tuple(page.hit for _, page in scored)
+
+
+async def _search_pdf_report(
+    memory: ScopedMemoryApplication, document: str, question: str, snapshot: MemoryEntriesPage
+) -> tuple[MemoryHit, ...]:
+    """Retrieve the named report without the long-question admission floor.
+
+    Listing the current scope provides source identities and an exact candidate
+    bound. Candidates still come from public Memory.search; the single identifier
+    is present in every page projection, including short financial statements.
+    The linear scope read is request-local, so no cache survives revisions or
+    crosses scopes. No page text or annotation is loaded outside Memory.
+    """
+    records = {
+        (record.entry.entry_id, record.entry.entry_version_id): record
+        for record in snapshot.entries
+        if _document_identity(record.entry.text) == document
+    }
+    if not records or not analyze_fts_query(document):
+        return ()
+    candidates = await memory.search(SearchMemoryRequest(query=document, mode="fts", limit=len(snapshot.entries)))
+    pages = []
+    for hit in candidates.hits:
+        record = records.get((hit.entry_id, hit.entry_version_id))
+        if record is not None and (page := _pdf_search_page(hit, record)) is not None:
+            pages.append(page)
+    return _rank_pdf_report(pages, question, document)
+
+
 async def search_pdf_pages(
     memory: ScopedMemoryApplication, question: str, limit: int = 10
 ) -> tuple[MemoryCitation, ...]:
     """Return actual persisted distinct-page citations, never synthetic references."""
     if type(limit) is not int or limit < 1 or not question.strip():
         raise ValueError("question must be nonblank and limit must be a positive integer")  # noqa: TRY003
-    ranked, identities = await _gather_pdf_pages(memory, question, limit)
-    # The twenty result slots are worth most when they belong to the report the
-    # question is about, and every page of a report carries its identifier.
-    question_terms = {_plural_key(term) for term in analyze_fts_query(question).split()}
+    # Discover reports before querying: a long question can reject every page at
+    # the lexical admission floor, leaving no seed hit from which to recover.
+    snapshot = await memory.list()
+    identities = {}
+    for record in snapshot.entries:
+        if sum(source.source_type == "pdf-page" for source in record.entry.sources) != 1:
+            continue
+        document = _document_identity(record.entry.text)
+        if document:
+            identities.setdefault(document, _document_terms(document))
+    question_terms = {_plural_key(term) for term in re.findall(r"[a-z]+|\d+", question.lower())}
     selected_document = _select_document(question_terms, identities)
-    if selected_document is not None:
-        ranked = tuple(hit for hit in ranked if _document_identity(hit.text or "") == selected_document) + tuple(
-            hit for hit in ranked if _document_identity(hit.text or "") != selected_document
-        )
+    if selected_document is None and len(identities) == 1:
+        selected_document = next(iter(identities))
+    if selected_document is not None and analyze_fts_query(selected_document):
+        ranked = await _search_pdf_report(memory, selected_document, question, snapshot)
+    else:
+        ranked, _ = await _gather_pdf_pages(memory, question, limit)
     selected: list[MemoryCitation] = []
     seen: set[str] = set()
     for hit in ranked:
