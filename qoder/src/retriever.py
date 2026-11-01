@@ -40,6 +40,8 @@ TEXT_COVER_POWER = 2
 PROPER_NOUN_MIN_IDF = 2.2
 PROPER_NOUN_PENALTY = 0.4
 MEMORY_LIMIT = 3
+# 记忆召回的候选池：先粗取一批，再按实义单元过滤到 MEMORY_LIMIT 条
+MEMORY_CANDIDATES = 20
 # 构造"实义单元"时剔除的功能字：哪个 n-gram 沾上这些字，哪个 n-gram 就是碎片
 _QUERY_FUNC_CHARS = set("的了是么吗哪什这在有和与个每道把当来对呀呢吧就都还也怎该之其")
 
@@ -249,18 +251,30 @@ def _rank(fused: list[dict], expanded_tokens: list[str], query: str,
     return results
 
 
-def _memory_route(expanded: str) -> list[dict]:
+def _memory_route(expanded: str, units: set[str]) -> list[dict]:
     if not expanded.strip():
         return []
+    # 先按全文相关度取一批候选，再按实义单元过滤：ngram 只要命中一个二元组就会召回，
+    # 「怎么」「什么」这类功能字二元组会把毫不相关的记忆也带出来（问「构建加速比怎么算」
+    # 却弹出「仓库地址怎么填」那条）。要求至少共享一个实义单元才算命中。
     sql = ("SELECT id, author, question, answer, tags, created_at, "
            "MATCH(search_text) AGAINST(%s) AS score "
            "FROM notes "
            "WHERE MATCH(search_text) AGAINST(%s) "
-           f"ORDER BY score DESC LIMIT {MEMORY_LIMIT}")
+           f"ORDER BY score DESC LIMIT {MEMORY_CANDIDATES}")
     with connect() as conn:
         with conn.cursor() as cur:
             cur.execute(sql, (expanded, expanded))
-            return cur.fetchall()
+            rows = cur.fetchall()
+    kept: list[dict] = []
+    for r in rows:
+        note_units = _clean_units(
+            " ".join(str(r[k] or "") for k in ("question", "answer", "tags")))
+        if units & note_units:
+            kept.append(r)
+        if len(kept) >= MEMORY_LIMIT:
+            break
+    return kept
 
 
 def search(query: str, topk: int = 6) -> dict:
@@ -285,7 +299,7 @@ def search(query: str, topk: int = 6) -> dict:
                   | {"fused": len(fused)},
         "expanded_by": triggered,
         "results": results,
-        "memory": _memory_route(expanded),
+        "memory": _memory_route(expanded, units),
     }
 
 
